@@ -1,0 +1,7 @@
+{
+  "name": "unify_api_v1",
+  "requires": [
+    "protobuf==3.6.1",
+    "requests==2.19.1"
+  ]
+}

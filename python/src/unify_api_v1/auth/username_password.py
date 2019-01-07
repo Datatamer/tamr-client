@@ -1,0 +1,32 @@
+from __future__ import absolute_import
+from base64 import b64encode
+from requests.auth import HTTPBasicAuth
+from requests.utils import to_native_string
+
+
+def _basic_auth_str(username, password):
+    auth = f"{username}:{password}"
+    encoded = b64encode(auth.encode("latin1"))
+    return "BasicCreds " + to_native_string(encoded.strip())
+
+
+class UsernamePasswordAuth(HTTPBasicAuth):
+    """Provides username/password authentication for Unify.
+    Specifically, sets the `Authorization` HTTP header with Unify's custom `BasicCreds` format.
+
+    :param str username:
+    :param str password:
+
+    Usage:
+        >>> from unify_api_v1.auth import UsernamePasswordAuth
+        >>> auth = UsernamePasswordAuth('my username', 'my password')
+        >>> import unify_api_v1 as api
+        >>> unify = api.Client(auth)
+    """
+
+    def __init__(self, username, password):
+        super(self.__class__, self).__init__(username, password)
+
+    def __call__(self, r):
+        r.headers["Authorization"] = _basic_auth_str(self.username, self.password)
+        return r
