@@ -1,21 +1,12 @@
 from setuptools import find_packages, setup
-import json
-import os
-
-# note: gradle needs to be able to *read* values like `name`, `version`,
-#       `install_requires`, etc...from a *static, non-executable* file
-# read src/main/python/pyproject.json
-root = os.path.dirname(os.path.realpath(__file__))
-with open(os.path.join(root, "pyproject.json")) as f:
-    pyproject = json.load(f)
 
 setup(
-    name=pyproject["name"],
-    version=pyproject["version"],
+    name="tamr_unify_client",
+    version="0.1.0",
     description="Python Client for the Tamr Unify API",
-    url="https://github.com/Datatamer/javasrc/tree/develop/pubapi/client",
+    url="https://github.com/Datatamer/unify-python-client",
     maintainer="Pedro Cattori",
     maintainer_email="pedro.cattori@tamr.com",
     packages=find_packages(),
-    install_requires=pyproject["requires"],
+    install_requires=["protobuf==3.6.1", "requests==2.19.1"],
 )
