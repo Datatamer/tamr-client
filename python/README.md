@@ -44,8 +44,7 @@ Beta
 
 ## Install
 
-<!--- TODO choose project name -->
-<!--- TODO `pip install <project>` -->
+`pip install tamr_unify_client`
 
 ## Contributing
 
