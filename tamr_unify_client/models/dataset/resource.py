@@ -2,7 +2,6 @@ import json
 
 from tamr_unify_client.models.base_resource import BaseResource
 from tamr_unify_client.models.operation import Operation
-from tamr_unify_client_proto.dataset_pb2 import Dataset as DatasetProto
 
 
 class Dataset(BaseResource):
@@ -10,27 +9,27 @@ class Dataset(BaseResource):
 
     @classmethod
     def from_json(cls, client, resource_json, api_path=None):
-        return super().from_json(client, resource_json, DatasetProto, api_path)
+        return super().from_data(client, resource_json, api_path)
 
     @property
     def name(self):
         """:type: str"""
-        return self.data.name
+        return self.data["name"]
 
     @property
     def description(self):
         """:type: str"""
-        return self.data.description
+        return self.data["description"]
 
     @property
     def version(self):
         """:type: str"""
-        return self.data.version
+        return self.data["version"]
 
     @property
     def tags(self):
         """:type: list[str]"""
-        return self.data.tags
+        return self.data["tags"]
 
     def update_records(self, records):
         """Send a batch of record creations/updates/deletions to this dataset.

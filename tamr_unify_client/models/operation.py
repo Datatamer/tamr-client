@@ -1,8 +1,6 @@
 from time import time as now, sleep
 
 from tamr_unify_client.models.base_resource import BaseResource
-from tamr_unify_client_proto.operation_pb2 import Operation as OperationProto
-from tamr_unify_client_proto.common_pb2 import OperationState as OperationStateProto
 
 
 class Operation(BaseResource):
@@ -18,7 +16,7 @@ class Operation(BaseResource):
 
     @classmethod
     def from_json(cls, client, resource_json, api_path=None):
-        return super().from_json(client, resource_json, OperationProto, api_path)
+        return super().from_data(client, resource_json, api_path)
 
     def apply_options(self, asynchronous=False, **options):
         """Applies operation options to this operation.
@@ -50,16 +48,16 @@ class Operation(BaseResource):
     @property
     def type(self):
         """:type: str"""
-        return self.data.type
+        return self.data["type"]
 
     @property
     def description(self):
         """:type: str"""
-        return self.data.description
+        return self.data["description"]
 
     @property
     def status(self):
-        return self.data.status
+        return self.data["status"]
 
     @property
     def state(self):
@@ -81,7 +79,7 @@ class Operation(BaseResource):
             >>> op.status
             'SUCCEEDED'
         """
-        return OperationStateProto.Name(self.status.state)
+        return self.status["state"]
 
     def poll(self):
         """Poll this operation for server-side updates.
@@ -107,7 +105,6 @@ class Operation(BaseResource):
         started = now()
         op = self
         while timeout_seconds is None or now() - started < timeout_seconds:
-            # https://github.com/Datatamer/javasrc/blob/f8495f0c1bac91ee2f52958059a8dcaa94fce352/pubapi/proto/src/main/proto/v1.common.proto#L13
             if op.state in ["PENDING", "RUNNING"]:
                 sleep(poll_interval_seconds)
             elif op.state in ["CANCELED", "SUCCEEDED", "FAILED"]:

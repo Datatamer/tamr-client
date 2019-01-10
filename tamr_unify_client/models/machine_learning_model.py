@@ -1,6 +1,5 @@
 from tamr_unify_client.models.base_resource import BaseResource
 from tamr_unify_client.models.operation import Operation
-from tamr_unify_client_proto.dataset_pb2 import Dataset as DatasetProto
 
 
 class MachineLearningModel(BaseResource):
@@ -8,7 +7,7 @@ class MachineLearningModel(BaseResource):
 
     @classmethod
     def from_json(cls, client, resource_json, api_path=None):
-        return super().from_json(client, resource_json, DatasetProto, api_path)
+        return super().from_data(client, resource_json, api_path)
 
     def train(self, **options):
         """Learn from verified labels.

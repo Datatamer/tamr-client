@@ -1,9 +1,5 @@
 from tamr_unify_client.models.base_resource import BaseResource
 from tamr_unify_client.models.dataset.resource import Dataset
-from tamr_unify_client_proto.project_pb2 import (
-    Project as ProjectProto,
-    ProjectType as ProjectTypeProto,
-)
 
 
 class Project(BaseResource):
@@ -11,17 +7,17 @@ class Project(BaseResource):
 
     @classmethod
     def from_json(cls, client, resource_json, api_path=None):
-        return super().from_json(client, resource_json, ProjectProto, api_path)
+        return super().from_data(client, resource_json, api_path)
 
     @property
     def name(self):
         """:type: str"""
-        return self.data.name
+        return self.data["name"]
 
     @property
     def description(self):
         """:type: str"""
-        return self.data.description
+        return self.data["description"]
 
     @property
     def type(self):
@@ -33,7 +29,7 @@ class Project(BaseResource):
 
         :type: str
         """
-        return ProjectTypeProto.Name(self.data.type)
+        return self.data["type"]
 
     def unified_dataset(self):
         """Unified dataset for this project.
@@ -52,7 +48,9 @@ class Project(BaseResource):
         :rtype: :class:`~tamr_unify_client.models.project.categorization.CategorizationProject`
         :raises TypeError: If the :attr:`~tamr_unify_client.models.project.resource.Project.type` of this project is not ``"CATEGORIZATION"``
         """
-        from tamr_unify_client.models.project.categorization import CategorizationProject
+        from tamr_unify_client.models.project.categorization import (
+            CategorizationProject,
+        )
 
         if self.type != "CATEGORIZATION":
             raise TypeError(

@@ -8,5 +8,5 @@ setup(
     maintainer="Pedro Cattori",
     maintainer_email="pedro.cattori@tamr.com",
     packages=find_packages(),
-    install_requires=["protobuf==3.6.1", "requests==2.19.1"],
+    install_requires=["requests==2.19.1"],
 )
