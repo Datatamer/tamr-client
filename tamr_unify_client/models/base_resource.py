@@ -4,7 +4,7 @@ from abc import ABC as AbstractBaseClass
 class BaseResource(AbstractBaseClass):
     """Base class for client-side resources.
 
-    :param :class:`tamr_unify_client.Client` client: Delegate underlying API calls to this client.
+    :param :class:`~tamr_unify_client.Client` client: Delegate underlying API calls to this client.
     :param :py:class:`dict` data: JSON data received from server for this resource
     :param str alias: API alias for this resource.
     | If set to ``None``, the ``api_path`` of this instance will be set to ``data["relativeId"]``.
