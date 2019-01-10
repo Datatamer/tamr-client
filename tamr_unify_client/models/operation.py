@@ -36,7 +36,7 @@ class Operation(BaseResource):
 
         :param asynchronous: Whether or not to run in asynchronous mode. Default: ``False``.
         :type asynchronous: bool
-        :param **options: When running in synchronous mode, these options are
+        :param ``**options``: When running in synchronous mode, these options are
             passed to the underlying :func:`~tamr_unify_client.models.operation.Operation.wait` call.
         :return: Operation with options applied.
         :rtype: :class:`~tamr_unify_client.models.operation.Operation`

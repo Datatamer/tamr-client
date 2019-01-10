@@ -43,7 +43,7 @@ class Dataset(BaseResource):
     def refresh(self, **options):
         """Brings dataset up-to-date if needed, taking whatever actions are required.
 
-        :param **options: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
             See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
         """
         op_json = self.client.post(self.api_path + ":refresh").json()

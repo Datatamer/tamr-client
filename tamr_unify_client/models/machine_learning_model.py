@@ -12,7 +12,7 @@ class MachineLearningModel(BaseResource):
     def train(self, **options):
         """Learn from verified labels.
 
-        :param **options: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
             See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
         """
         op_json = self.client.post(self.api_path + ":refresh").json()
@@ -22,7 +22,7 @@ class MachineLearningModel(BaseResource):
     def predict(self, **options):
         """Suggest labels for unverified records.
 
-        :param **options: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
             See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
         """
         dependent_dataset = "/".join(self.api_path.split("/")[:-1])
