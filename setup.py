@@ -1,7 +1,6 @@
 from setuptools import find_packages, setup
 import os
 
-# path to VERSION.txt
 project_root = os.path.dirname(__file__)
 with open(os.path.join(project_root, "VERSION.txt")) as f:
     version = f.readline().rstrip()
