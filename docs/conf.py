@@ -25,11 +25,14 @@ copyright = "2018, Tamr"
 author = "Tamr"
 
 
+project_root = os.path.dirname(os.path.dirname(__file__))
+with open(os.path.join(project_root, "VERSION.txt")) as f:
+    version = f.readline().rstrip()
+
 # The short X.Y version
-version = ""
+version = ".".join(version.split(".")[:-1])
 # The full version, including alpha/beta/rc tags
-# TODO deal with release/version
-release = os.environ["UNIFY_VERSION"]  # UNIFY_VERSION set by Gradle task
+release = version
 
 
 # -- General configuration ---------------------------------------------------
