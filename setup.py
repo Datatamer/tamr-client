@@ -17,7 +17,7 @@ setup(
     maintainer="Pedro Cattori",
     maintainer_email="pedro.cattori@tamr.com",
     packages=find_packages(),
-    install_requires=["requests==2.19.1"],
+    install_requires=["requests==2.21.0"],
     keywords=["tamr", "unify"],
     classifiers=[
         "Development Status :: 4 - Beta",
