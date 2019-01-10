@@ -1,7 +1,7 @@
 import requests
 
-from unify_api_v1.models.dataset.collection import DatasetCollection
-from unify_api_v1.models.project.collection import ProjectCollection
+from tamr_unify_client.models.dataset.collection import DatasetCollection
+from tamr_unify_client.models.project.collection import ProjectCollection
 
 
 class Client:
@@ -21,8 +21,8 @@ class Client:
     :type base_path: str
 
     Usage:
-        >>> import unify_api_v1 as api
-        >>> from unify_api_v1.auth import UsernamePasswordAuth
+        >>> import tamr_unify_client as api
+        >>> from tamr_unify_client.auth import UsernamePasswordAuth
         >>> auth = UsernamePasswordAuth('my username', 'my password')
         >>> local = api.Client(auth) # on http://localhost:9100
         >>> remote = api.Client(auth, protocol='https', host='10.0.10.0') # on https://10.0.10.0:9100
@@ -82,22 +82,22 @@ class Client:
         return response
 
     def get(self, endpoint, **kwargs):
-        """Calls :func:`~unify_api_v1.Client.request` with the ``"GET"`` method.
+        """Calls :func:`~tamr_unify_client.Client.request` with the ``"GET"`` method.
         """
         return self.request("GET", endpoint, **kwargs)
 
     def post(self, endpoint, **kwargs):
-        """Calls :func:`~unify_api_v1.Client.request` with the ``"POST"`` method.
+        """Calls :func:`~tamr_unify_client.Client.request` with the ``"POST"`` method.
         """
         return self.request("POST", endpoint, **kwargs)
 
     def put(self, endpoint, **kwargs):
-        """Calls :func:`~unify_api_v1.Client.request` with the ``"PUT"`` method.
+        """Calls :func:`~tamr_unify_client.Client.request` with the ``"PUT"`` method.
         """
         return self.request("PUT", endpoint, **kwargs)
 
     def delete(self, endpoint, **kwargs):
-        """Calls :func:`~unify_api_v1.Client.request` with the ``"DELETE"`` method.
+        """Calls :func:`~tamr_unify_client.Client.request` with the ``"DELETE"`` method.
         """
         return self.request("DELETE", endpoint, **kwargs)
 
@@ -106,7 +106,7 @@ class Client:
         """Collection of all projects on this Unify instance.
 
         :return: Collection of all projects.
-        :rtype: :class:`~unify_api_v1.models.ProjectCollection`
+        :rtype: :class:`~tamr_unify_client.models.ProjectCollection`
         """
         return self._projects
 
@@ -115,6 +115,6 @@ class Client:
         """Collection of all datasets on this Unify instance.
 
         :return: Collection of all datasets.
-        :rtype: :class:`~unify_api_v1.models.DatasetCollection`
+        :rtype: :class:`~tamr_unify_client.models.DatasetCollection`
         """
         return self._datasets

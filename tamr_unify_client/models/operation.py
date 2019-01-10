@@ -1,8 +1,8 @@
 from time import time as now, sleep
 
-from unify_api_v1.models.base_resource import BaseResource
-from unify_api_v1_proto.operation_pb2 import Operation as OperationProto
-from unify_api_v1_proto.common_pb2 import OperationState as OperationStateProto
+from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client_proto.operation_pb2 import Operation as OperationProto
+from tamr_unify_client_proto.common_pb2 import OperationState as OperationStateProto
 
 
 class Operation(BaseResource):
@@ -24,7 +24,7 @@ class Operation(BaseResource):
         """Applies operation options to this operation.
 
         **NOTE**: This function **should not** be called directly. Rather, options should be
-        passed in through a higher-level function e.g. :func:`~unify_api_v1.models.dataset.resource.Dataset.refresh` .
+        passed in through a higher-level function e.g. :func:`~tamr_unify_client.models.dataset.resource.Dataset.refresh` .
 
         Synchronous mode:
             Automatically waits for operation to resolve before returning the
@@ -33,15 +33,15 @@ class Operation(BaseResource):
         asynchronous mode:
             Immediately return the ``'PENDING'`` operation. It is
             up to the user to coordinate this operation with their code via
-            :func:`~unify_api_v1.models.operation.Operation.wait` and/or
-            :func:`~unify_api_v1.models.operation.Operation.poll` .
+            :func:`~tamr_unify_client.models.operation.Operation.wait` and/or
+            :func:`~tamr_unify_client.models.operation.Operation.poll` .
 
         :param asynchronous: Whether or not to run in asynchronous mode. Default: ``False``.
         :type asynchronous: bool
         :param **options: When running in synchronous mode, these options are
-            passed to the underlying :func:`~unify_api_v1.models.operation.Operation.wait` call.
+            passed to the underlying :func:`~tamr_unify_client.models.operation.Operation.wait` call.
         :return: Operation with options applied.
-        :rtype: :class:`~unify_api_v1.models.operation.Operation`
+        :rtype: :class:`~tamr_unify_client.models.operation.Operation`
         """
         if asynchronous:
             return self
@@ -86,11 +86,11 @@ class Operation(BaseResource):
     def poll(self):
         """Poll this operation for server-side updates.
 
-        Does not update the calling :class:`~unify_api_v1.models.Operation` object.
-        Instead, returns a new :class:`~unify_api_v1.models.Operation`.
+        Does not update the calling :class:`~tamr_unify_client.models.Operation` object.
+        Instead, returns a new :class:`~tamr_unify_client.models.Operation`.
 
         :return: Updated representation of this operation.
-        :rtype: :class:`~unify_api_v1.models.Operation`
+        :rtype: :class:`~tamr_unify_client.models.Operation`
         """
         op_json = self.client.get(self.api_path).json()
         return Operation.from_json(self.client, op_json)
@@ -102,7 +102,7 @@ class Operation(BaseResource):
         :param int timeout_seconds: Time (in seconds) to wait for operation to resolve.
         :raises TimeoutError: If operation takes longer than `timeout_seconds` to resolve.
         :return: Resolved operation.
-        :rtype: :class:`~unify_api_v1.models.Operation`
+        :rtype: :class:`~tamr_unify_client.models.Operation`
         """
         started = now()
         op = self

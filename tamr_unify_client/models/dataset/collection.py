@@ -1,12 +1,12 @@
-from unify_api_v1.models.base_collection import BaseCollection
-from unify_api_v1.models.dataset.resource import Dataset
+from tamr_unify_client.models.base_collection import BaseCollection
+from tamr_unify_client.models.dataset.resource import Dataset
 
 
 class DatasetCollection(BaseCollection):
-    """Collection of :class:`~unify_api_v1.models.dataset.resource.Dataset` s.
+    """Collection of :class:`~tamr_unify_client.models.dataset.resource.Dataset` s.
 
     :param client: Client for API call delegation.
-    :type client: :class:`~unify_api_v1.Client`
+    :type client: :class:`~tamr_unify_client.Client`
     :param api_path: API path used to access this collection.
         E.g. ``"projects/1/inputDatasets"``.
         Default: ``"datasets"``.
@@ -22,7 +22,7 @@ class DatasetCollection(BaseCollection):
         :param resource_id: The resource ID. E.g. ``"1"``
         :type resource_id: str
         :returns: The specified dataset.
-        :rtype: :class:`~unify_api_v1.models.dataset.resource.Dataset`
+        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
         """
         return super().by_resource_id("datasets", resource_id)
 
@@ -32,7 +32,7 @@ class DatasetCollection(BaseCollection):
         :param relative_id: The resource ID. E.g. ``"datasets/1"``
         :type relative_id: str
         :returns: The specified dataset.
-        :rtype: :class:`~unify_api_v1.models.dataset.resource.Dataset`
+        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
         """
         return super().by_relative_id(Dataset, relative_id)
 
@@ -41,7 +41,7 @@ class DatasetCollection(BaseCollection):
         over this collection.
 
         :returns: Stream of datasets.
-        :rtype: Python generator yielding :class:`~unify_api_v1.models.dataset.resource.Dataset`
+        :rtype: Python generator yielding :class:`~tamr_unify_client.models.dataset.resource.Dataset`
 
         Usage:
             >>> for dataset in collection.stream(): # explicit
@@ -57,7 +57,7 @@ class DatasetCollection(BaseCollection):
         :param dataset_name: Name of the desired dataset.
         :type dataset_name: str
         :return: Dataset with matching name in this collection.
-        :rtype: :class:`~unify_api_v1.models.dataset.resource.Dataset`
+        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
         :raises KeyError: If no dataset with specified name was found.
         """
         for dataset in self:

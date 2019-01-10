@@ -1,12 +1,12 @@
-from unify_api_v1.models.base_collection import BaseCollection
-from unify_api_v1.models.project.resource import Project
+from tamr_unify_client.models.base_collection import BaseCollection
+from tamr_unify_client.models.project.resource import Project
 
 
 class ProjectCollection(BaseCollection):
-    """Collection of :class:`~unify_api_v1.models.project.resource.Project` s.
+    """Collection of :class:`~tamr_unify_client.models.project.resource.Project` s.
 
     :param client: Client for API call delegation.
-    :type client: :class:`~unify_api_v1.Client`
+    :type client: :class:`~tamr_unify_client.Client`
     :param api_path: API path used to access this collection.
         Default: ``"projects"``.
     :type api_path: str
@@ -21,7 +21,7 @@ class ProjectCollection(BaseCollection):
         :param resource_id: The resource ID. E.g. ``"1"``
         :type resource_id: str
         :returns: The specified project.
-        :rtype: :class:`~unify_api_v1.models.project.resource.Project`
+        :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
         """
         return super().by_resource_id("projects", resource_id)
 
@@ -31,7 +31,7 @@ class ProjectCollection(BaseCollection):
         :param relative_id: The resource ID. E.g. ``"projects/1"``
         :type relative_id: str
         :returns: The specified project.
-        :rtype: :class:`~unify_api_v1.models.project.resource.Project`
+        :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
         """
         return super().by_relative_id(Project, relative_id)
 
@@ -40,7 +40,7 @@ class ProjectCollection(BaseCollection):
         over this collection.
 
         :returns: Stream of projects.
-        :rtype: Python generator yielding :class:`~unify_api_v1.models.project.resource.Project`
+        :rtype: Python generator yielding :class:`~tamr_unify_client.models.project.resource.Project`
 
         Usage:
             >>> for project in collection.stream(): # explicit

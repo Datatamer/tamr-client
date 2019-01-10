@@ -6,51 +6,51 @@ Version: |release|
 Client
 ------
 
-.. autoclass:: unify_api_v1.Client
+.. autoclass:: tamr_unify_client.Client
   :members:
 
 Datasets
 --------
 
-.. autoclass:: unify_api_v1.models.dataset.collection.DatasetCollection
+.. autoclass:: tamr_unify_client.models.dataset.collection.DatasetCollection
   :members:
 
 ----
 
-.. autoclass:: unify_api_v1.models.dataset.resource.Dataset
+.. autoclass:: tamr_unify_client.models.dataset.resource.Dataset
   :members:
 
 Projects
 --------
 
-.. autoclass:: unify_api_v1.models.project.collection.ProjectCollection
+.. autoclass:: tamr_unify_client.models.project.collection.ProjectCollection
   :members:
 
 ----
 
-.. autoclass:: unify_api_v1.models.project.resource.Project
+.. autoclass:: tamr_unify_client.models.project.resource.Project
   :members:
 
 ----
 
-.. autoclass:: unify_api_v1.models.project.categorization.CategorizationProject
+.. autoclass:: tamr_unify_client.models.project.categorization.CategorizationProject
   :members:
 
 ----
 
-.. autoclass:: unify_api_v1.models.project.mastering.MasteringProject
+.. autoclass:: tamr_unify_client.models.project.mastering.MasteringProject
   :members:
 
 Machine Learning Models
 -----------------------
 
-.. autoclass:: unify_api_v1.models.machine_learning_model.MachineLearningModel
+.. autoclass:: tamr_unify_client.models.machine_learning_model.MachineLearningModel
   :members:
 
 Operations
 ----------
 
-.. autoclass:: unify_api_v1.models.operation.Operation
+.. autoclass:: tamr_unify_client.models.operation.Operation
   :members:
 
 .. _authentication:
@@ -58,4 +58,4 @@ Operations
 Authentication
 --------------
 
-.. autoclass:: unify_api_v1.auth.UsernamePasswordAuth
+.. autoclass:: tamr_unify_client.auth.UsernamePasswordAuth

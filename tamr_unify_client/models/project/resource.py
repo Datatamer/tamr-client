@@ -1,6 +1,6 @@
-from unify_api_v1.models.base_resource import BaseResource
-from unify_api_v1.models.dataset.resource import Dataset
-from unify_api_v1_proto.project_pb2 import (
+from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client.models.dataset.resource import Dataset
+from tamr_unify_client_proto.project_pb2 import (
     Project as ProjectProto,
     ProjectType as ProjectTypeProto,
 )
@@ -39,20 +39,20 @@ class Project(BaseResource):
         """Unified dataset for this project.
 
         :return: Unified dataset for this project.
-        :rtype: :class:`~unify_api_v1.models.dataset.resource.Dataset`
+        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
         """
         alias = self.api_path + "/unifiedDataset"
         resource_json = self.client.get(alias).json()
         return Dataset.from_json(self.client, resource_json, alias)
 
     def as_categorization(self):
-        """Convert this project to a :class:`~unify_api_v1.models.project.categorization.CategorizationProject`
+        """Convert this project to a :class:`~tamr_unify_client.models.project.categorization.CategorizationProject`
 
         :return: This project.
-        :rtype: :class:`~unify_api_v1.models.project.categorization.CategorizationProject`
-        :raises TypeError: If the :attr:`~unify_api_v1.models.project.resource.Project.type` of this project is not ``"CATEGORIZATION"``
+        :rtype: :class:`~tamr_unify_client.models.project.categorization.CategorizationProject`
+        :raises TypeError: If the :attr:`~tamr_unify_client.models.project.resource.Project.type` of this project is not ``"CATEGORIZATION"``
         """
-        from unify_api_v1.models.project.categorization import CategorizationProject
+        from tamr_unify_client.models.project.categorization import CategorizationProject
 
         if self.type != "CATEGORIZATION":
             raise TypeError(
@@ -61,13 +61,13 @@ class Project(BaseResource):
         return CategorizationProject(self.client, self.data, self.api_path)
 
     def as_mastering(self):
-        """Convert this project to a :class:`~unify_api_v1.models.project.mastering.MasteringProject`
+        """Convert this project to a :class:`~tamr_unify_client.models.project.mastering.MasteringProject`
 
         :return: This project.
-        :rtype: :class:`~unify_api_v1.models.project.mastering.MasteringProject`
-        :raises TypeError: If the :attr:`~unify_api_v1.models.project.resource.Project.type` of this project is not ``"DEDUP"``
+        :rtype: :class:`~tamr_unify_client.models.project.mastering.MasteringProject`
+        :raises TypeError: If the :attr:`~tamr_unify_client.models.project.resource.Project.type` of this project is not ``"DEDUP"``
         """
-        from unify_api_v1.models.project.mastering import MasteringProject
+        from tamr_unify_client.models.project.mastering import MasteringProject
 
         if self.type != "DEDUP":
             raise TypeError(

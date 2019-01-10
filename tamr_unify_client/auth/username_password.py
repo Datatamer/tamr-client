@@ -18,9 +18,9 @@ class UsernamePasswordAuth(HTTPBasicAuth):
     :param str password:
 
     Usage:
-        >>> from unify_api_v1.auth import UsernamePasswordAuth
+        >>> from tamr_unify_client.auth import UsernamePasswordAuth
         >>> auth = UsernamePasswordAuth('my username', 'my password')
-        >>> import unify_api_v1 as api
+        >>> import tamr_unify_client as api
         >>> unify = api.Client(auth)
     """
 

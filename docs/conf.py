@@ -15,12 +15,12 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../src"))
+sys.path.insert(0, os.path.abspath(".."))
 
 
 # -- Project information -----------------------------------------------------
 
-project = "Unify Python Client"
+project = "Tamr Unify Python Client"
 copyright = "2018, Tamr"
 author = "Tamr"
 
@@ -28,6 +28,7 @@ author = "Tamr"
 # The short X.Y version
 version = ""
 # The full version, including alpha/beta/rc tags
+# TODO deal with release/version
 release = os.environ["UNIFY_VERSION"]  # UNIFY_VERSION set by Gradle task
 
 
@@ -110,7 +111,7 @@ html_sidebars = {"**": ["localtoc.html", "relations.html", "searchbox.html"]}
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "UnifyPythonClientdoc"
+htmlhelp_basename = "TamrUnifyPythonClientdoc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -136,8 +137,8 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "UnifyPythonClient.tex",
-        "Unify Python Client Documentation",
+        "TamrUnifyPythonClient.tex",
+        "Tamr Unify Python Client Documentation",
         "Tamr",
         "manual",
     )
@@ -149,7 +150,13 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, "unifypythonclient", "Unify Python Client Documentation", [author], 1)
+    (
+        master_doc,
+        "tamrunifypythonclient",
+        "Tamr Unify Python Client Documentation",
+        [author],
+        1,
+    )
 ]
 
 
@@ -161,10 +168,10 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "UnifyPythonClient",
-        "Unify Python Client Documentation",
+        "TamrUnifyPythonClient",
+        "Tamr Unify Python Client Documentation",
         author,
-        "UnifyPythonClient",
+        "TamrUnifyPythonClient",
         "One line description of project.",
         "Miscellaneous",
     )

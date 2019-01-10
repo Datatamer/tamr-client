@@ -1,8 +1,8 @@
 from .utils import mock_api
 import os
 
-from unify_api_v1.auth import UsernamePasswordAuth
-import unify_api_v1 as api
+from tamr_unify_client.auth import UsernamePasswordAuth
+import tamr_unify_client as api
 
 
 basedir = os.path.dirname(__file__)

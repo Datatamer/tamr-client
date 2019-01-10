@@ -1,8 +1,8 @@
 import json
 
-from unify_api_v1.models.base_resource import BaseResource
-from unify_api_v1.models.operation import Operation
-from unify_api_v1_proto.dataset_pb2 import Dataset as DatasetProto
+from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client.models.operation import Operation
+from tamr_unify_client_proto.dataset_pb2 import Dataset as DatasetProto
 
 
 class Dataset(BaseResource):
@@ -44,8 +44,8 @@ class Dataset(BaseResource):
     def refresh(self, **options):
         """Brings dataset up-to-date if needed, taking whatever actions are required.
 
-        :param **options: Options passed to underlying :class:`~unify_api_v1.models.operation.Operation` .
-            See :func:`~unify_api_v1.models.operation.Operation.apply_options` .
+        :param **options: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
+            See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
         """
         op_json = self.client.post(self.api_path + ":refresh").json()
         op = Operation.from_json(self.client, op_json)
