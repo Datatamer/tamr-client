@@ -1,6 +1,11 @@
 # Python Client
 Programmatically 💻 interact with Tamr Unify using Python 🐍
 
+[![Version](https://img.shields.io/pypi/v/tamr-unify-client.svg?style=flat-square)](https://pypi.org/project/tamr-unify-client/)
+![Supported Python Versions](https://img.shields.io/pypi/pyversions/tamr-unify-client.svg?style=flat-square)
+[![License](https://img.shields.io/pypi/l/tamr-unify-client.svg?style=flat-square)](LICENSE)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/ambv/black)
+
 ---
 
 *Contents:*
