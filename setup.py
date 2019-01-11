@@ -14,10 +14,11 @@ setup(
     description="Python Client for the Tamr Unify API",
     long_description=long_description,
     url="https://github.com/Datatamer/unify-client-python",
-    maintainer="Pedro Cattori",
-    maintainer_email="pedro.cattori@tamr.com",
+    license="Apache 2.0",
     packages=find_packages(),
     install_requires=["requests==2.21.0"],
+    maintainer="Pedro Cattori",
+    maintainer_email="pedro.cattori@tamr.com",
     keywords=["tamr", "unify"],
     classifiers=[
         "Development Status :: 4 - Beta",
