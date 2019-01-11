@@ -44,7 +44,7 @@ Beta
 
 ## Install
 
-`pip install tamr_unify_client`
+`pip install tamr-unify-client`
 
 ## Contributing
 
