@@ -49,3 +49,13 @@ class Dataset(BaseResource):
         op_json = self.client.post(self.api_path + ":refresh").successful().json()
         op = Operation.from_json(self.client, op_json)
         return op.apply_options(**options)
+
+    def records(self):
+        """Stream this dataset's records as Python dictionaries.
+
+        :return: Stream of records.
+        :rtype: Python generator yielding :py:class:`dict`
+        """
+        with self.client.get(self.api_path + "/records", stream=True) as response:
+            for line in response.iter_lines():
+                yield json.loads(line)
