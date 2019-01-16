@@ -38,7 +38,7 @@ class Project(BaseResource):
         :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
         """
         alias = self.api_path + "/unifiedDataset"
-        resource_json = self.client.get(alias).json()
+        resource_json = self.client.get_json(alias)
         return Dataset.from_json(self.client, resource_json, alias)
 
     def as_categorization(self):

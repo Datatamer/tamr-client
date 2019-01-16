@@ -46,7 +46,7 @@ class BaseCollection(Iterable):
         :returns: The specified item.
         :rtype: ``resource_class``
         """
-        resource_json = self.client.get(relative_id).json()
+        resource_json = self.client.get_json(relative_id)
         return resource_class.from_json(
             self.client, resource_json, api_path=relative_id
         )
@@ -63,7 +63,7 @@ class BaseCollection(Iterable):
         :returns: Generator that yields each item.
         :rtype: Python generator of ``resource_class``
         """
-        resources = self.client.get(self.api_path).json()
+        resources = self.client.get_json(self.api_path)
         for resource_json in resources:
             yield resource_class.from_json(self.client, resource_json)
 

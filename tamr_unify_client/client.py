@@ -83,25 +83,41 @@ class Client:
 
         return response
 
-    def get(self, endpoint, **kwargs):
-        """Calls :func:`~tamr_unify_client.Client.request` with the ``"GET"`` method.
-        """
-        return self.request("GET", endpoint, **kwargs)
+    def request_json(self, method, endpoint, **kwargs):
+        """Same as :func:`~tamr_unify_client.client.Client.request`, except it
+        raises HTTP errors as exceptions and extracts the response body as JSON.
 
-    def post(self, endpoint, **kwargs):
-        """Calls :func:`~tamr_unify_client.Client.request` with the ``"POST"`` method.
+        :param method: The HTTP method for the request to be sent.
+        :type method: str
+        :param endpoint: API endpoint to call (relative to the Base API path for this client).
+        :type endpoint: str
+        :raises :class:`requests.HTTPError`: If an HTTP error occurred.
+        :return: Response body parsed as JSON.
+        :rtype: :py:class:`dict`
         """
-        return self.request("POST", endpoint, **kwargs)
+        response = self.request(method, endpoint, **kwargs)
+        response.raise_for_status()
+        return response.json()
 
-    def put(self, endpoint, **kwargs):
-        """Calls :func:`~tamr_unify_client.Client.request` with the ``"PUT"`` method.
+    def get_json(self, endpoint, **kwargs):
+        """Calls :func:`~tamr_unify_client.Client.request_json` with the ``"GET"`` method.
         """
-        return self.request("PUT", endpoint, **kwargs)
+        return self.request_json("GET", endpoint, **kwargs)
 
-    def delete(self, endpoint, **kwargs):
-        """Calls :func:`~tamr_unify_client.Client.request` with the ``"DELETE"`` method.
+    def post_json(self, endpoint, **kwargs):
+        """Calls :func:`~tamr_unify_client.Client.request_json` with the ``"POST"`` method.
         """
-        return self.request("DELETE", endpoint, **kwargs)
+        return self.request_json("POST", endpoint, **kwargs)
+
+    def put_json(self, endpoint, **kwargs):
+        """Calls :func:`~tamr_unify_client.Client.request_json` with the ``"PUT"`` method.
+        """
+        return self.request_json("PUT", endpoint, **kwargs)
+
+    def delete_json(self, endpoint, **kwargs):
+        """Calls :func:`~tamr_unify_client.Client.request_json` with the ``"DELETE"`` method.
+        """
+        return self.request_json("DELETE", endpoint, **kwargs)
 
     @property
     def projects(self):
