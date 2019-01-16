@@ -2,7 +2,7 @@ from .utils import mock_api
 import os
 
 from tamr_unify_client.auth import UsernamePasswordAuth
-import tamr_unify_client as api
+from tamr_unify_client import Client
 
 
 basedir = os.path.dirname(__file__)
@@ -14,7 +14,7 @@ response_log_path = os.path.join(
 @mock_api(response_log_path)
 def test_continuous_mastering():
     auth = UsernamePasswordAuth("username", "password")
-    unify = api.Client(auth)
+    unify = Client(auth)
 
     project_id = "1"
     project = unify.projects.by_resource_id(project_id)
