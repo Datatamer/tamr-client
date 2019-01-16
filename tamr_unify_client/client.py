@@ -70,6 +70,8 @@ class Client:
         :type method: str
         :param endpoint: API endpoint to call (relative to the Base API path for this client).
         :type endpoint: str
+        :return: HTTP response
+        :rtype: :class:`requests.Response`
         """
         url = "/".join([self.origin, self.base_path, endpoint])
         response = requests.request(method, url, auth=self.auth, **kwargs)
