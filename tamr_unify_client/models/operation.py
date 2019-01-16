@@ -90,7 +90,7 @@ class Operation(BaseResource):
         :return: Updated representation of this operation.
         :rtype: :class:`~tamr_unify_client.models.Operation`
         """
-        op_json = self.client.get(self.api_path).json()
+        op_json = self.client.get(self.api_path).successful().json()
         return Operation.from_json(self.client, op_json)
 
     def wait(self, poll_interval_seconds=3, timeout_seconds=None):

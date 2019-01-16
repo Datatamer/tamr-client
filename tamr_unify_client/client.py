@@ -3,6 +3,23 @@ import requests
 from tamr_unify_client.models.dataset.collection import DatasetCollection
 from tamr_unify_client.models.project.collection import ProjectCollection
 
+# monkey-patch Response.successful
+from requests import Response
+
+
+def successful(self):
+    """Checks that this response did not encounter an HTTP error (i.e. status code indicates success: 2xx, 3xx).
+
+    :raises :class:`requests.exceptions.HTTPError`: If an HTTP error is encountered.
+    :return: The calling response (i.e. ``self``).
+    :rtype: :class:`requests.Response`
+    """
+    self.raise_for_status()
+    return self
+
+
+Response.successful = successful
+
 
 class Client:
     """Python Client for Unify API. Each client is specific to a specific origin
@@ -70,6 +87,8 @@ class Client:
         :type method: str
         :param endpoint: API endpoint to call (relative to the Base API path for this client).
         :type endpoint: str
+        :return: HTTP response
+        :rtype: :class:`requests.Response`
         """
         url = "/".join([self.origin, self.base_path, endpoint])
         response = requests.request(method, url, auth=self.auth, **kwargs)

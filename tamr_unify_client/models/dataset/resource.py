@@ -46,6 +46,6 @@ class Dataset(BaseResource):
         :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
             See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
         """
-        op_json = self.client.post(self.api_path + ":refresh").json()
+        op_json = self.client.post(self.api_path + ":refresh").successful().json()
         op = Operation.from_json(self.client, op_json)
         return op.apply_options(**options)
