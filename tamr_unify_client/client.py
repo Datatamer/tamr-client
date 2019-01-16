@@ -3,6 +3,17 @@ import requests
 from tamr_unify_client.models.dataset.collection import DatasetCollection
 from tamr_unify_client.models.project.collection import ProjectCollection
 
+# monkey-patch Response.successful
+from requests import Response
+
+
+def successful(self):
+    self.raise_for_status()
+    return self
+
+
+Response.successful = successful
+
 
 class Client:
     """Python Client for Unify API. Each client is specific to a specific origin
