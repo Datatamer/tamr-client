@@ -8,6 +8,12 @@ from requests import Response
 
 
 def successful(self):
+    """Checks that this response did not encounter an HTTP error (i.e. status code indicates success: 2xx, 3xx).
+
+    :raises :class:`requests.exceptions.HTTPError`: If an HTTP error is encountered.
+    :return: The calling response (i.e. ``self``).
+    :rtype: :class:`requests.Response`
+    """
     self.raise_for_status()
     return self
 
