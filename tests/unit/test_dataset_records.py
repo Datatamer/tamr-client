@@ -17,5 +17,5 @@ def test_dataset_records():
     unify = Client(auth)
 
     dataset = unify.datasets.by_resource_id(dataset_id)
-    records = list(dataset.stream_records())
+    records = list(dataset.records())
     assert records == [{"attribute1": 1}, {"attribute1": 2}]
