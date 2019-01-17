@@ -8,4 +8,6 @@ before_install:
 install:
   - pip install .
   - pip install -r tests/requirements.txt
-script: pytest tests
+script:
+  - black --check .
+  - pytest tests
