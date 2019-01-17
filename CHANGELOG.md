@@ -1,5 +1,32 @@
+## v0.2.0
+*released on 2019-1-17*
+
+  **ADDED**
+  - Docs via readthedocs
+    - ([TravisCI project](https://tamr-unify-python-client.readthedocs.io/en/stable/))
+    - [TravisCI config](https://github.com/Datatamer/unify-client-python/commit/ae381ce29593a70ed992f88a3e3ef3eb170a5cd4)
+  - CI testing via TravisCI ([details](https://travis-ci.org/Datatamer/unify-client-python))
+  - Release process documented in RELEASE.md (this file) ([details](https://github.com/Datatamer/unify-client-python/commit/fe717bbddca96b82bc1e447a93ae5c8817481675))
+  - README Badges
+    - Version, Python version, License, Codestyle ([details](https://github.com/Datatamer/unify-client-python/pull/1))
+    - Docs ([details](https://github.com/Datatamer/unify-client-python/pull/14))
+    - CI build/test ([details](https://github.com/Datatamer/unify-client-python/pull/19))
+  - HTTP errors raised as exceptions. More helpful than always getting `JSONDecodeError`s. ([details](https://github.com/Datatamer/unify-client-python/pull/7))
+  - Stream records from a dataset ([details](https://github.com/Datatamer/unify-client-python/pull/13))
+  - Migrate all Python Client docs from docs.tamr.com to Sphinx docs ([details](https://github.com/Datatamer/unify-client-python/pull/21))
+
+
+  **FIXED**
+  - PyPI metadata
+    - `-` not `_` in project name ([details](https://github.com/Datatamer/unify-client-python/commit/5e25c45ec9bff0d0f9f40f52e81aacecdccb3e1b))
+    - correct github repo URL ([details](https://github.com/Datatamer/unify-client-python/commit/767cf537f247d20293aa3a81b7830534aa6f84ec))
+    - "Apache 2.0" as license value ([details](https://github.com/Datatamer/unify-client-python/pull/2))
+    - README now parsed/rendered as Markdown ([details](https://github.com/Datatamer/unify-client-python/pull/4))
+  - Change Log for 0.1.0 release ([details](https://github.com/Datatamer/unify-client-python/commit/852d6f0fd11f8ea33d2ea49d60a406f4e7267143))
+  - readthedocs compatibility ([details](https://github.com/Datatamer/unify-client-python/pull/12))
+
 ## v0.1.0
-*released on 2019-10-10*
+*released on 2019-1-10*
 
   Initial public release
 
