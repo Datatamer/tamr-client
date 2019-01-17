@@ -21,9 +21,7 @@ Programmatically 💻 interact with Tamr Unify using Python 🐍
 
 ---
 
-## Docs
-
-<!--- TODO link to readthedocs.com -->
+## [Docs](https://tamr-unify-python-client.readthedocs.io/en/stable/)
 
 ## Features
 <!--- TODO link each feature to docs -->
