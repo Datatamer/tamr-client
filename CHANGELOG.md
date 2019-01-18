@@ -4,7 +4,7 @@
   **ADDED**
   - [Docs via readthedocs](https://tamr-unify-python-client.readthedocs.io/en/stable/)
   - [CI testing via TravisCI](https://travis-ci.org/Datatamer/unify-client-python) ([details](https://github.com/Datatamer/unify-client-python/commit/ae381ce29593a70ed992f88a3e3ef3eb170a5cd4))
-  - Release process documented in RELEASE.md (this file) ([details](https://github.com/Datatamer/unify-client-python/commit/fe717bbddca96b82bc1e447a93ae5c8817481675))
+  - Release process documented in [RELEASE.md](https://github.com/Datatamer/unify-client-python/blob/master/RELEASE.md) ([details](https://github.com/Datatamer/unify-client-python/commit/fe717bbddca96b82bc1e447a93ae5c8817481675))
   - README Badges
     - Version, Python version, License, Codestyle ([details](https://github.com/Datatamer/unify-client-python/pull/1))
     - Docs ([details](https://github.com/Datatamer/unify-client-python/pull/14))
