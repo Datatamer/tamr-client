@@ -30,10 +30,10 @@
 
   **ADDED**
   - Repo Documentation ([details](https://github.com/pcattori/unify-client-python/commit/5f25bcf41ba64fce67c2cfc1bba81d382bc70efe))
-    - [CHANGELOG.md](CHANGLOG.md)
-    - [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
-    - [LICENSE](LICENSE)
-    - [README.md](README.md)
+    - [CHANGELOG.md](https://github.com/Datatamer/unify-client-python/blob/master/CHANGELOG.md)
+    - [CODE_OF_CONDUCT.md](https://github.com/Datatamer/unify-client-python/blob/master/CODE_OF_CONDUCT.md)
+    - [LICENSE](https://github.com/Datatamer/unify-client-python/blob/master/LICENSE)
+    - [README.md](https://github.com/Datatamer/unify-client-python/blob/master/README.md)
   - Version in [VERSION.txt](VERSION.txt) ([details](https://github.com/pcattori/unify-client-python/commit/41e93d4dba03bc7445f1935345bfd76cf45b877c))
 
   **REMOVED**

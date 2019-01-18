@@ -26,7 +26,6 @@ Programmatically 💻 interact with Tamr Unify using Python 🐍
 ## [Docs](https://tamr-unify-python-client.readthedocs.io/en/stable/)
 
 ## Features
-<!--- TODO link each feature to docs -->
 - 🐍 Python objects/methods/functions instead of raw HTTP requests
 - 🤖 Automate operational workflows
   - Continuous Mastering
@@ -53,11 +52,11 @@ Beta
 
 ## [Contributing](https://tamr-unify-python-client.readthedocs.io/en/stable/contributor-guide.html)
 
-## [Code of Conduct](CODE_OF_CONDUCT.md)
+## [Code of Conduct](https://github.com/Datatamer/unify-client-python/blob/master/CODE_OF_CONDUCT.md)
 
-## [Change Log](CHANGELOG.md)
+## [Change Log](https://github.com/Datatamer/unify-client-python/blob/master/CHANGELOG.md)
 
-## [License](LICENSE)
+## [License](https://github.com/Datatamer/unify-client-python/blob/master/LICENSE)
 
 ## Maintainers
 
