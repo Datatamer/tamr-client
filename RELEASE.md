@@ -14,7 +14,7 @@
     - `ADDED` (only if applicable)
     - `REMOVED` (only if applicable)
     - `FIXED` (only if applicable)
-5. Build `sdist` and `bdist_wheel` artifacts
+5. Build release candidate artifacts
   `python setup.py sdist bdist_wheel`
 6. Test publish to test.pypi.org
   `twine upload --repository-url https://test.pypi.org/legacy/ dist/*<rc version>*`
@@ -23,6 +23,8 @@
 9. Tag latest commit with version number on Github
   `git tag -a v<version> -m "Release v<version>"`
   `git push Datatamer --tags`
-10. Publish to PyPI
+10. Build release artifacts
+  `python setup.py sdist bdist_wheel`
+11. Publish to PyPI
   `twine upload dist/*<version>*`
     - If necessary, update the version/date of the corresponding entry in [CHANGELOG](CHANGELOG.md)
