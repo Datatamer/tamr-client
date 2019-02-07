@@ -18,20 +18,20 @@ Installation is as simple as::
 Offline installs
 ----------------
 
-First, download ``tamr-unify-client`` and its dependencies on a machine with online access to PyPI:
+First, download ``tamr-unify-client`` and its dependencies on a machine with online access to PyPI::
 
-  pip download tamr-unify-client -d tamr-unify-client-requirements
-  zip -r tamr-unify-client-requirements.zip tamr-unify-client-requirements
+    pip download tamr-unify-client -d tamr-unify-client-requirements
+    zip -r tamr-unify-client-requirements.zip tamr-unify-client-requirements
 
 Then, ship the ``.zip`` file to the target machine where you want ``tamr-unify-client`` installed.
 You can do this via email, cloud drives, ``scp`` or any other mechanism.
 
-Finally, install ``tamr-unify-client`` from the saved dependencies:
+Finally, install ``tamr-unify-client`` from the saved dependencies::
 
-  unzip tamr-unify-client-requirements.zip
-  pip install --no-index --find-links=tamr-unify-client-requirements tamr-unify-client
+    unzip tamr-unify-client-requirements.zip
+    pip install --no-index --find-links=tamr-unify-client-requirements tamr-unify-client
 
 If you are not using a virtual environment, you may need to specify the ``--user`` flag
-if you get permissions errors:
+if you get permissions errors::
 
-  pip install --user --no-index --find-links=tamr-unify-client-requirements tamr-unify-client
+    pip install --user --no-index --find-links=tamr-unify-client-requirements tamr-unify-client
