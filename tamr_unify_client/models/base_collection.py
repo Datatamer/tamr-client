@@ -69,3 +69,35 @@ class BaseCollection(Iterable):
 
     def __iter__(self):
         return self.stream()
+
+    @abstractmethod
+    def by_external_id(self, resource_class, external_id):
+        """Retrieve an item in this collection by external ID.
+
+        Subclasses should override this method and pass in the specific
+        ``resource_class`` for that collection.
+
+        :param resource_class: Resource class corresponding to items in this collection.
+        :type resource_class: Python class
+        :param external_id: The external ID.
+        :type external_id: str
+        :returns: The specified item, if found.
+        :rtype: ``resource_class``
+        :raises KeyError: If no resource with the specified external_id is found
+        :raises LookupError: If multiple resources with the specified external_id are found
+        """
+        params = {"filter": "externalId==" + external_id}
+        resources = self.client.get(self.api_path, params=params).successful().json()
+        items = [
+            resource_class.from_json(self.client, resource_json)
+            for resource_json in resources
+        ]
+
+        if len(items) == 0:
+            raise KeyError(f'No item found with external ID "{external_id}"')
+        elif len(items) > 1:
+            raise LookupError(
+                f'More than one item found with external ID "{external_id}"'
+            )
+
+        return items[0]
