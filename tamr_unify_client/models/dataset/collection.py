@@ -36,6 +36,18 @@ class DatasetCollection(BaseCollection):
         """
         return super().by_relative_id(Dataset, relative_id)
 
+    def by_external_id(self, external_id):
+        """Retrieve a dataset by external ID.
+
+        :param external_id: The external ID.
+        :type external_id: str
+        :returns: The specified dataset, if found.
+        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
+        :raises KeyError: If no dataset with the specified external_id is found
+        :raises LookupError: If multiple datasets with the specified external_id are found
+        """
+        return super().by_external_id(Dataset, external_id)
+
     def stream(self):
         """Stream datasets in this collection. Implicitly called when iterating
         over this collection.

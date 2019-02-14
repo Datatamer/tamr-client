@@ -1,6 +1,7 @@
 import json
 
 from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client.models.dataset_status import DatasetStatus
 from tamr_unify_client.models.operation import Operation
 
 
@@ -15,6 +16,11 @@ class Dataset(BaseResource):
     def name(self):
         """:type: str"""
         return self.data["name"]
+
+    @property
+    def external_id(self):
+        """:type: str"""
+        return self.data["externalId"]
 
     @property
     def description(self):
@@ -59,3 +65,14 @@ class Dataset(BaseResource):
         with self.client.get(self.api_path + "/records", stream=True) as response:
             for line in response.iter_lines():
                 yield json.loads(line)
+
+    def status(self) -> DatasetStatus:
+        """Retrieve this dataset's streamability status.
+
+        :return: Dataset streamability status.
+        :rtype: :class:`~tamr_unify_client.models.dataset_status.DatasetStatus`
+        """
+        status_json = self.client.get(self.api_path + "/status").successful().json()
+        return DatasetStatus.from_json(
+            self.client, status_json, api_path=self.api_path + "/status"
+        )

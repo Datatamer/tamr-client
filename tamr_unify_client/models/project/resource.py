@@ -15,6 +15,11 @@ class Project(BaseResource):
         return self.data["name"]
 
     @property
+    def external_id(self):
+        """:type: str"""
+        return self.data["externalId"]
+
+    @property
     def description(self):
         """:type: str"""
         return self.data["description"]
