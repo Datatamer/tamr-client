@@ -1,5 +1,11 @@
 Developer Interface
 ===================
+.. _authentication:
+
+Authentication
+--------------
+
+.. autoclass:: tamr_unify_client.auth.UsernamePasswordAuth
 
 Client
 ------
@@ -7,36 +13,22 @@ Client
 .. autoclass:: tamr_unify_client.Client
   :members:
 
-Datasets
---------
-
-.. autoclass:: tamr_unify_client.models.dataset.collection.DatasetCollection
-  :members:
-
-----
+Dataset
+-------
 
 .. autoclass:: tamr_unify_client.models.dataset.resource.Dataset
   :members:
 
-Projects
+Dataset Status
+--------------
+
+.. autoclass:: tamr_unify_client.models.dataset_status.DatasetStatus
+  :members:
+
+Datasets
 --------
 
-.. autoclass:: tamr_unify_client.models.project.collection.ProjectCollection
-  :members:
-
-----
-
-.. autoclass:: tamr_unify_client.models.project.resource.Project
-  :members:
-
-----
-
-.. autoclass:: tamr_unify_client.models.project.categorization.CategorizationProject
-  :members:
-
-----
-
-.. autoclass:: tamr_unify_client.models.project.mastering.MasteringProject
+.. autoclass:: tamr_unify_client.models.dataset.collection.DatasetCollection
   :members:
 
 Machine Learning Models
@@ -51,9 +43,25 @@ Operations
 .. autoclass:: tamr_unify_client.models.operation.Operation
   :members:
 
-.. _authentication:
 
-Authentication
---------------
+Project
+-------
 
-.. autoclass:: tamr_unify_client.auth.UsernamePasswordAuth
+.. autoclass:: tamr_unify_client.models.project.resource.Project
+  :members:
+
+----
+
+.. autoclass:: tamr_unify_client.models.project.categorization.CategorizationProject
+  :members:
+
+----
+
+.. autoclass:: tamr_unify_client.models.project.mastering.MasteringProject
+  :members:
+
+Projects
+--------
+
+.. autoclass:: tamr_unify_client.models.project.collection.ProjectCollection
+  :members:
