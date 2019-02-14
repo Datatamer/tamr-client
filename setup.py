@@ -17,7 +17,7 @@ setup(
     url="https://github.com/Datatamer/unify-client-python",
     license="Apache 2.0",
     packages=find_packages(),
-    install_requires=["requests==2.21.0"],
+    install_requires=["requests>=2.20.0"],
     maintainer="Pedro Cattori",
     maintainer_email="pedro.cattori@tamr.com",
     keywords=["tamr", "unify"],
