@@ -6,5 +6,5 @@ class TokenAuth(AuthBase):
         self.token = token
 
     def __call__(self, r):
-        r.headers["Authorization"] = "BasicCreds " + token
+        r.headers["Authorization"] = "BasicCreds " + self.token
         return r

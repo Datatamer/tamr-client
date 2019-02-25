@@ -15,5 +15,5 @@ def test_http_error():
     auth = UsernamePasswordAuth("nonexistent-username", "invalid-password")
     unify = Client(auth)
     with pytest.raises(HTTPError) as e:
-        project = unify.projects.by_resource_id("1")
+        unify.projects.by_resource_id("1")
     assert f"401 Client Error: Unauthorized for url: {endpoint}" in str(e)
