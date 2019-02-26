@@ -65,6 +65,7 @@ class Client:
         # logging
         self.logger = None
         # https://docs.python.org/3/howto/logging-cookbook.html#implementing-structured-logging
+
         def default_log_entry(method, url, response):
             return f"{method} {url} : {response.status_code}"
 
