@@ -1,3 +1,4 @@
+from urllib.parse import urljoin
 import requests
 
 from tamr_unify_client.models.dataset.collection import DatasetCollection
@@ -51,7 +52,7 @@ class Client:
         host="localhost",
         protocol="http",
         port=9100,
-        base_path="api/versioned/v1",
+        base_path="api/versioned/v1/",
     ):
         self.auth = auth
         self.host = host
@@ -91,7 +92,7 @@ class Client:
         :return: HTTP response
         :rtype: :class:`requests.Response`
         """
-        url = "/".join([self.origin, self.base_path, endpoint])
+        url = urljoin(self.origin + "/" + self.base_path, endpoint)
         response = requests.request(method, url, auth=self.auth, **kwargs)
 
         # logging
