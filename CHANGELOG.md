@@ -1,4 +1,4 @@
-## v0.2.0
+## 0.2.0
 *released on 2019-1-17*
 
   **ADDED**
@@ -23,7 +23,7 @@
   - Change Log for 0.1.0 release ([details](https://github.com/Datatamer/unify-client-python/commit/852d6f0fd11f8ea33d2ea49d60a406f4e7267143))
   - readthedocs compatibility ([details](https://github.com/Datatamer/unify-client-python/pull/12))
 
-## v0.1.0
+## 0.1.0
 *released on 2019-1-10*
 
   Initial public release
