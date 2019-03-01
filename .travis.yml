@@ -6,8 +6,7 @@ python:
 before_install:
   - pip install -U pip setuptools
 install:
-  - pip install .
-  - pip install -r tests/requirements.txt
+  - pip install .[dev]
 script:
   - black --check .
   - flake8 .

@@ -1,4 +1,0 @@
-black==18.9b0
-pytest==3.8.2
-responses==0.10.4
-flake8==3.5.0
