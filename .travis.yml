@@ -11,3 +11,12 @@ script:
   - black --check .
   - flake8 .
   - pytest tests
+deploy:
+  provider: pypi
+  user: tamr
+  password:
+    secure: b4dzseGGsaX2yDPm+RHMLpQjSpuAfkLU0Q7HysQ487oaRDjN37fcvcClZOWqnJ1oSxbbM59srS0yU9mMgFuiYBMb04miYWd8k2pBYNNSrPZLM2nSuPEQcY1ABQ7gPJteGlz4ktRajfPvcQx02YHkXsmscaxrijndattH6afen5RBRSO5ZRf65sER87FTTm8e2Fw78XyxvpfdYWqqFpM8B1KyxmJ9zcZZu7qsUARPYKhd/dMl9eqZrFT1/mYtWRz2OFFF9bjYy82Ft9wE9dM0LhyoImsgD9r/RlnNil68YdQV1Q17/7XOGO4VU3lc1IdOIPPh40mOVZHJIjn/vSaoKBDgRiql/aElMZ/Rha7NCkFJ1Evs0SPW7SED3fANdnYcgVSK0tEIfg74xsD69vVJHfgdHqkgF3hJ1zBYtpgmMOrPkH6JoLT+/WebxYBjpj+NxAAnbksv1syYYbJHwNne+v6S/Qp08XD/XHP0rC3wZkyyPq78txFKoF1eKv1fBdtL1aDLnqYQSJ28HEJHkN89lLQcUxUrfKpZhrbYBsAC3yK1n6jx/c28TrSjtHugB5UGhhIMtVSkosLrDoxSbS62YWOltmziBiLK01YmIJBvJnKZysBxiGWeE8nP36aJaUVP3Abr0JpL1JIcJy7JXUHw+Kgxxpa6YwL/UoFUe6t4maQ=
+  on:
+    # only publish to PyPI when tag is a release version (i.e. matches semver pattern x.y.z)
+    tags: true
+    condition: "$TRAVIS_TAG =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$"
