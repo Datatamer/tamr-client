@@ -1,4 +1,4 @@
-## 0.3.0-dev
+## 0.3.0
   **ADDED**
   - Versioning example in FAQ
   - Offline installation docs
