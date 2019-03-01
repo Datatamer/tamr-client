@@ -1,3 +1,15 @@
+## 0.3.0-dev
+  **ADDED**
+  - Versioning example in FAQ
+  - Offline installation docs
+  - `by_external_id` methods for `Dataset` and `Project`
+  - `DatasetStatus` resource (subresource of `Dataset`)
+  - `Client.request` accepts absolute paths as relative to origin
+
+  **FIXED**
+  - `requests` version specified changed to `>=2.20.0` for Airflow compatibility
+  - `setup.py` reads `VERSION.txt` and `README.md` with explicit `utf-8` encodings
+
 ## 0.2.0
 *released on 2019-1-17*
 
@@ -12,7 +24,6 @@
   - HTTP errors raised as exceptions. More helpful than always getting `JSONDecodeError`s. ([details](https://github.com/Datatamer/unify-client-python/pull/7))
   - Stream records from a dataset ([details](https://github.com/Datatamer/unify-client-python/pull/13))
   - Migrate all Python Client docs from docs.tamr.com to Sphinx docs ([details](https://github.com/Datatamer/unify-client-python/pull/21))
-
 
   **FIXED**
   - PyPI metadata
