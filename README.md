@@ -10,20 +10,20 @@ Programmatically 💻 interact with Tamr Unify using Python 🐍
 
 ---
 
-*Contents:*
-**[Docs](#docs)** |
-**[Features](#features)** |
-**[Development Status](#development-status)** |
-**[Install](#install)** |
-**[Contributing](#contributing)** |
-**[Code of Conduct](#code-of-conduct)** |
-**[Change Log](#change-log)** |
-**[License](#license)** |
-**[Maintainers](#maintainers)**
+*Quick links:*
+**[Docs](https://tamr-unify-python-client.readthedocs.io/en/stable/)** |
+**[Contributing](https://tamr-unify-python-client.readthedocs.io/en/stable/contributor-guide.html)** |
+**[Code of Conduct](https://github.com/Datatamer/unify-client-python/blob/master/CODE_OF_CONDUCT.md)** |
+**[Change Log](https://github.com/Datatamer/unify-client-python/blob/master/CHANGELOG.md)** |
+**[License](https://github.com/Datatamer/unify-client-python/blob/master/LICENSE)** |
 
 ---
 
-## [Docs](https://tamr-unify-python-client.readthedocs.io/en/stable/)
+## Install
+
+```sh
+pip install tamr-unify-client
+```
 
 ## Features
 - 🐍 Python objects/methods/functions instead of raw HTTP requests
@@ -41,22 +41,6 @@ Programmatically 💻 interact with Tamr Unify using Python 🐍
 - ⚠️ Advanced
   - Logging for API requests/responses
   - Call custom/arbitrary API endpoints
-
-## Development Status
-
-Beta
-
-## Install
-
-`pip install tamr-unify-client`
-
-## [Contributing](https://tamr-unify-python-client.readthedocs.io/en/stable/contributor-guide.html)
-
-## [Code of Conduct](https://github.com/Datatamer/unify-client-python/blob/master/CODE_OF_CONDUCT.md)
-
-## [Change Log](https://github.com/Datatamer/unify-client-python/blob/master/CHANGELOG.md)
-
-## [License](https://github.com/Datatamer/unify-client-python/blob/master/LICENSE)
 
 ## Maintainers
 
