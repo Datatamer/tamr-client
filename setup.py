@@ -26,6 +26,7 @@ setup(
             "flake8==3.5.0",
             "pytest==3.8.2",
             "responses==0.10.4",
+            "twine==1.13.0",
             "wheel==0.32.3",
         ]
     },
