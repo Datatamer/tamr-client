@@ -1,4 +1,4 @@
-from time import time as now, sleep
+from time import sleep, time as now
 
 from tamr_unify_client.models.base_resource import BaseResource
 

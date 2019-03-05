@@ -1,5 +1,6 @@
-from setuptools import find_packages, setup
 import os
+
+from setuptools import find_packages, setup
 
 project_root = os.path.dirname(__file__)
 with open(os.path.join(project_root, "VERSION.txt"), encoding="utf-8") as f:

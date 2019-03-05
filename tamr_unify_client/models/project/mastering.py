@@ -1,6 +1,6 @@
-from tamr_unify_client.models.project.resource import Project
-from tamr_unify_client.models.machine_learning_model import MachineLearningModel
 from tamr_unify_client.models.dataset.resource import Dataset
+from tamr_unify_client.models.machine_learning_model import MachineLearningModel
+from tamr_unify_client.models.project.resource import Project
 
 
 class MasteringProject(Project):

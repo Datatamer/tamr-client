@@ -1,9 +1,9 @@
-import responses
+from pytest import raises
 from requests.exceptions import HTTPError
-import pytest
+import responses
 
-from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client import Client
+from tamr_unify_client.auth import UsernamePasswordAuth
 
 
 @responses.activate
@@ -14,6 +14,6 @@ def test_http_error():
     responses.add(responses.GET, endpoint, status=401)
     auth = UsernamePasswordAuth("nonexistent-username", "invalid-password")
     unify = Client(auth)
-    with pytest.raises(HTTPError) as e:
+    with raises(HTTPError) as e:
         unify.projects.by_resource_id("1")
     assert f"401 Client Error: Unauthorized for url: {endpoint}" in str(e)
