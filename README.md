@@ -15,7 +15,7 @@ Programmatically 💻 interact with Tamr Unify using Python 🐍
 **[Contributing](https://tamr-unify-python-client.readthedocs.io/en/stable/contributor-guide.html)** |
 **[Code of Conduct](https://github.com/Datatamer/unify-client-python/blob/master/CODE_OF_CONDUCT.md)** |
 **[Change Log](https://github.com/Datatamer/unify-client-python/blob/master/CHANGELOG.md)** |
-**[License](https://github.com/Datatamer/unify-client-python/blob/master/LICENSE)** |
+**[License](https://github.com/Datatamer/unify-client-python/blob/master/LICENSE)**
 
 ---
 
