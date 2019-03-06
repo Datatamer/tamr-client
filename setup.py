@@ -1,5 +1,6 @@
-from setuptools import find_packages, setup
 import os
+
+from setuptools import find_packages, setup
 
 project_root = os.path.dirname(__file__)
 with open(os.path.join(project_root, "VERSION.txt"), encoding="utf-8") as f:
@@ -23,7 +24,8 @@ setup(
         "dev": [
             "Sphinx==1.8.2",
             "black==18.9b0",
-            "flake8==3.5.0",
+            "flake8==3.7.7",
+            "flake8-import-order==0.18.1",
             "pytest==3.8.2",
             "responses==0.10.4",
             "wheel==0.32.3",

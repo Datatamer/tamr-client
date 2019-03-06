@@ -1,5 +1,7 @@
 from __future__ import absolute_import
+
 from base64 import b64encode
+
 from requests.auth import HTTPBasicAuth
 from requests.utils import to_native_string
 

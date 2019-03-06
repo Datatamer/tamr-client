@@ -1,11 +1,12 @@
 from urllib.parse import urljoin
+
 import requests
+from requests import Response
 
 from tamr_unify_client.models.dataset.collection import DatasetCollection
 from tamr_unify_client.models.project.collection import ProjectCollection
 
 # monkey-patch Response.successful
-from requests import Response
 
 
 def successful(self):
