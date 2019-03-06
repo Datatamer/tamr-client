@@ -1,6 +1,6 @@
 ---
 name: 🙋 Feature Request
-about: Want us to add something to parcel?
+about: Want us to add something to tamr-unify-client?
 ---
 
 <!---
