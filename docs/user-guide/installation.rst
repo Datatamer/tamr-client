@@ -1,6 +1,10 @@
 Installation
 ============
 
+``tamr-unify-client`` is compatible with Python 3.6 or newer.
+
+----
+
 Installation is as simple as::
 
   pip install tamr-unify-client
