@@ -66,5 +66,8 @@ Continuous Mastering
   op = model.predict()
   assert op.succeeded()
 
+  op = project.record_clusters().refresh()
+  assert op.succeeded()
+
   op = project.published_clusters().refresh()
   assert op.succeeded()
