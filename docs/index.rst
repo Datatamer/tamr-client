@@ -33,11 +33,11 @@ User Guide
 .. toctree::
   :maxdepth: 2
 
+  user-guide/faq
   user-guide/installation
   user-guide/quickstart
   user-guide/workflows
   user-guide/advanced-usage
-  user-guide/faq
 
 Contributor Guide
 -----------------
