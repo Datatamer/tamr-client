@@ -1,4 +1,9 @@
 ## 0.4.0-dev
+  **ADDED**
+  - Record Clusters API endpoint to finish working mastering workflow.
+
+  **FIXED**
+  - Mastering workflow example was missing the generate clusters step, which has been rectified using proper endpoint
 
 ## 0.3.0
   **ADDED**
