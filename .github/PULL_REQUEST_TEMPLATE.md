@@ -15,14 +15,11 @@ Please look for any issues that this PR resolves and tag them in the PR.
 
 <!-- Examples help us understand the requested feature better -->
 
-## 🚨 Test instructions
-
-<!-- In case it is impossible (or too hard) to reliably test this feature/fix with unit tests, please provide test instructions! -->
-
 ## ✔️ PR Todo
 
-- [ ] Added/updated unit tests for this change
-- [ ] Filled out test instructions (In case there aren't any unit tests)
+- [ ] Added/updated testing for this change
 - [ ] Included links to related issues/PRs
-- [ ] Update relevant docs + docstrings
-- [ ] Add ("Added", "FIXED", "REMOVED") entry/entries for the current development version in the changelog
+- [ ] Update relevant [docs](https://github.com/Datatamer/unify-client-python/tree/master/docs) + docstrings
+- [ ] Update the [CHANGELOG](https://github.com/Datatamer/unify-client-python/blob/master/CHANGELOG.md) under the current `-dev` version:
+  - Add changelog entries under any that apply: **ADDED**, **FIXED**, **REMOVED**.
+  - Changelog entry format: `[#<issue number>](<link to issue>) <change description>`
