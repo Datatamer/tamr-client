@@ -40,8 +40,8 @@ standard `Python logging mechanisms <https://docs.python.org/3/library/logging.h
   )
   unify.logger = logging.getLogger(name)
 
-By default, when logging is set up, the client will log ``{method} {url} : {response_status}``
-for each API call.
+By default, when logging is set up, the client will log ``{method} {url} :
+{response_status}`` for each API call.
 
 You can customize this by passing in a value for ``log_entry``::
 
@@ -59,19 +59,23 @@ You can customize this by passing in a value for ``log_entry``::
   # after configuring `unify.logger`
   unify.log_entry = log_entry
 
-Custom HTTP requests
---------------------
+Custom HTTP requests and Unversioned API Access
+-----------------------------------------------
 
-We encourage you to use the higher-level, object-oriented interface offered by
-the Python Client. If you aren't sure if you need to send low-level HTTP requests,
-you probably don't.
+We encourage you to use the high-level, object-oriented interface offered by
+the Python Client. If you aren't sure whether you need to send low-level HTTP
+requests, you probably don't.
 
-But sometimes it's useful to directly send HTTP requests to Unify.
+But sometimes it's useful to directly send HTTP requests to Unify; for example,
+Unify has many APIs that are not covered by the higher-level interface (most of
+which are neither versioned nor supported). You can still call these endpoints
+using the Python Client, but you'll need to work with raw ``Response`` objects.
 
-Specific endpoint
-^^^^^^^^^^^^^^^^^
+Custom endpoint
+^^^^^^^^^^^^^^^
 
-The client exposes a ``request`` method with the same interface as ``requests.request``::
+The client exposes a ``request`` method with the same interface as
+``requests.request``::
 
   # import Python Client library and configure your client
 
@@ -79,18 +83,30 @@ The client exposes a ``request`` method with the same interface as ``requests.re
   # do stuff with the `unify` client
 
   # now I NEED to send a request to a specific endpoint
-  response = unify.request('GET', 'some/specific/endpoint')
+  response = unify.request('GET', 'relative/path/to/resource')
 
-You can also use the ``get``, ``post``, ``put``, ``delete`` convenience methods::
+This will post a request relative to the base_path registered with the client.
+If you provide an absolute path to the resource, the base_path will be ignored
+when composing the request::
+
+  # import Python Client library and configure your client
+
+  unify = Client(auth)
+
+  # request a resource outside the configured base_path
+  response = unify.request('GET', '/absolute/path/to/resource')
+
+You can also use the ``get``, ``post``, ``put``, ``delete`` convenience
+methods::
 
   # e.g. `get` convenience method
-  response = unify.get('some/specific/endpoint')
+  response = unify.get('relative/path/to/reosurce')
 
 Custom Host / Port / Base API path
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you need to repeatedly send requests to another port or base API path
-(i.e. not ``api/versioned/v1``), you can simply instantiate a different client.
+(i.e. not ``api/versioned/v1/``), you can simply instantiate a different client.
 
 Then just call ``request`` as described above::
 
@@ -106,9 +122,14 @@ Then just call ``request`` as described above::
     auth,
     host="10.10.0.1",
     port=9090,
-    base_path="api/some_service",
+    base_path="api/some_service/",
   )
-  response = custom_client.get('some/specific/endpoint')
+  response = custom_client.get('relative/path/to/resource')
+
+Note that any component of the base_path after the final slash will be ignored;
+see the documentation on  `urljoin
+<https://docs.python.org/3.6/library/urllib.parse.html#urllib.parse.urljoin>`_
+for details.
 
 One-off authenticated request
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -128,3 +149,4 @@ Authentication provider directly to the ``requests`` library::
   auth = UsernamePasswordAuth(username, password)
 
   response = requests.request('GET', 'some/specific/endpoint', auth=auth)
+
