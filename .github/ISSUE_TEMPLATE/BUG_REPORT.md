@@ -43,6 +43,7 @@ Search open/closed issues before submitting since someone might have asked the s
 
 | Software          | Version(s) |
 | ----------------- | ---------- |
-| Python            |
 | tamr-unify-client |
+| Tamr Unify server |
+| Python            |
 | Operating System  |
