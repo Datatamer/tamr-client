@@ -48,16 +48,16 @@ class Operation(BaseResource):
     @property
     def type(self):
         """:type: str"""
-        return self.data["type"]
+        return self._data["type"]
 
     @property
     def description(self):
         """:type: str"""
-        return self.data["description"]
+        return self._data["description"]
 
     @property
     def status(self):
-        return self.data["status"]
+        return self._data["status"]
 
     @property
     def state(self):

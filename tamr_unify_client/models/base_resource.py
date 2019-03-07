@@ -13,7 +13,7 @@ class BaseResource(AbstractBaseClass):
 
     def __init__(self, client, data, alias=None):
         self.client = client
-        self.data = data
+        self._data = data
         self.api_path = alias or data["relativeId"]
 
     @classmethod
@@ -23,7 +23,7 @@ class BaseResource(AbstractBaseClass):
     @property
     def relative_id(self):
         """:type: str"""
-        return self.data["relativeId"]
+        return self._data["relativeId"]
 
     @property
     def resource_id(self):

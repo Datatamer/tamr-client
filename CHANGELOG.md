@@ -5,8 +5,14 @@
   **FIXED**
   - Mastering workflow example was missing the generate clusters step, which has been rectified using proper endpoint
   - [#30](https://github.com/Datatamer/unify-client-python/issues/30) Better docs for how to call directly call APIs
+  - [#61](https://github.com/Datatamer/unify-client-python/issues/61) `data` field renamed to `_data` (private).
+
+  **REMOVED**
+  - [#61](https://github.com/Datatamer/unify-client-python/issues/61) `data` field renamed to `_data` (private).
 
 ## 0.3.0
+*released on 2019-3-1*
+
   **ADDED**
   - Versioning example in FAQ
   - Offline installation docs

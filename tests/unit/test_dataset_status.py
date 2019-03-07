@@ -24,4 +24,4 @@ def test_dataset_status():
 
     dataset = unify.datasets.by_resource_id(dataset_id)
     status = dataset.status()
-    assert status.data == status_json
+    assert status._data == status_json
