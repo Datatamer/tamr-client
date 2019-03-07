@@ -59,6 +59,8 @@ You can customize this by passing in a value for ``log_entry``::
   # after configuring `unify.logger`
   unify.log_entry = log_entry
 
+.. _custom-http-requests-and-unversioned-api-access:
+
 Custom HTTP requests and Unversioned API Access
 -----------------------------------------------
 
