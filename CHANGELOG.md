@@ -1,4 +1,6 @@
 ## 0.4.0-dev
+  **FIXED**
+  - #30 "Better docs for how to call directly call APIs"
 
 ## 0.3.0
   **ADDED**
