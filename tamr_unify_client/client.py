@@ -36,7 +36,7 @@ class Client:
     :type protocol: str
     :param port: Unify instance main port. Default: `9100`
     :type port: int
-    :param base_path: Base API path. Requests made by this client will be relative to this path. Default: ``"api/versioned/v1"``
+    :param base_path: Base API path. Requests made by this client will be relative to this path. Default: ``"api/versioned/v1/"``
     :type base_path: str
 
     Usage:
@@ -84,7 +84,7 @@ class Client:
 
     def request(self, method, endpoint, **kwargs):
         """Sends an authenticated request to the server. The URL for the request
-        will be ``"<origin>/<base_path>/<endpoint"``.
+        will be ``"<origin>/<base_path>/<endpoint>"``.
 
         :param method: The HTTP method for the request to be sent.
         :type method: str
