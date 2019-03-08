@@ -87,7 +87,7 @@ The client exposes a ``request`` method with the same interface as
   # now I NEED to send a request to a specific endpoint
   response = unify.request('GET', 'relative/path/to/resource')
 
-This will post a request relative to the base_path registered with the client.
+This will send a request relative to the base_path registered with the client.
 If you provide an absolute path to the resource, the base_path will be ignored
 when composing the request::
 
