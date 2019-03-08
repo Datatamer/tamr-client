@@ -33,5 +33,8 @@ def test_continuous_mastering():
     op = model.predict(poll_interval_seconds=0)
     assert op.succeeded()
 
+    op = project.record_clusters().refresh(poll_interval_seconds=0)
+    assert op.succeeded()
+
     op = project.published_clusters().refresh(poll_interval_seconds=0)
     assert op.succeeded()

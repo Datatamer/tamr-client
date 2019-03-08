@@ -1,5 +1,9 @@
 ## 0.4.0-dev
+  **ADDED**
+  - Record Clusters API endpoint to finish working mastering workflow.
+
   **FIXED**
+  - Mastering workflow example was missing the generate clusters step, which has been rectified using proper endpoint
   - [#30](https://github.com/Datatamer/unify-client-python/issues/30) Better docs for how to call directly call APIs
 
 ## 0.3.0
