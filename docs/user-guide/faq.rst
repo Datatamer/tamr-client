@@ -69,3 +69,23 @@ E.g. ``unify.datasets.by_name(some_dataset_name)``
 
   To check what endpoints your version of the Unify API supports, see `docs.tamr.com/reference <https://docs.tamr.com/reference>`_
   (be sure to select the correct version in the top left!).
+
+
+How do I call custom endpoints, e.g. endpoints outside the Unify API?
+---------------------------------------------------------------------
+
+To call a custom endpoint *within* the Unify API, use the ``client.request()`` method, and
+provide an endpoint described by a path relative to ``base_path``. For example, if ``base_path``
+is ``/api/versioned/v1/`` (the default), and you want to get ``/api/versioned/v1/projects/1``,
+you only need to provide ``projects/1`` (the relative ID provided by the project) as the endpoint,
+and the Client will resolve that into ``/api/versioned/v1/projects/1``.
+
+There are various APIs outside the ``/api/versioned/v1/`` prefix that are often useful or necessary
+to call - e.g. ``/api/service/health``, or other un-versioned / unsupported APIs. To call a custom
+endpoint *outside* the Unify API, use the ``client.request()`` method, and provide an endpoint
+described by an *absolute* path (a path starting with ``/``). For example, to get
+``/api/service/health`` (no matter what ``base_path`` is), call ``client.request()`` with
+``/api/service/health`` as the endpoint. The Client will ignore ``base_path`` and send the
+request directly against the absolute path provided.
+
+For additional detail, see :ref:`custom-http-requests-and-unversioned-api-access`.
