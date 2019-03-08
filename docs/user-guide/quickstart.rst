@@ -21,7 +21,9 @@ Next, create an authentication provider and use that to create an authenticated 
 
 .. warning::
   For security, it's best to read your credentials in from environment variables
-  instead of hardcoding them directly into your code.
+  or secure files instead of hardcoding them directly into your code.
+
+  For more, see `User Guide > Secure Credentials <secure-credentials.html>`_ .
 
 By default, the client tries to find the Unify instance on ``localhost``.
 To point to a different host, set the host argument when instantiating the Client.

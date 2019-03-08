@@ -35,6 +35,7 @@ User Guide
 
   user-guide/installation
   user-guide/quickstart
+  user-guide/secure-credentials
   user-guide/workflows
   user-guide/advanced-usage
   user-guide/faq
