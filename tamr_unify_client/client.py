@@ -36,8 +36,10 @@ class Client:
     :type protocol: str
     :param port: Unify instance main port. Default: `9100`
     :type port: int
-    :param base_path: Base API path. Requests made by this client will be relative to this path. Default: ``"api/versioned/v1/"``
+    :param base_path: Base API path. Requests made by this client will be relative to this path. Default: `'api/versioned/v1/'`
     :type base_path: str
+    :param session: Session to use for API calls. Default: A new default `requests.Session()`.
+    :type session: requests.Session
 
     Usage:
         >>> import tamr_unify_client as api
@@ -54,12 +56,14 @@ class Client:
         protocol="http",
         port=9100,
         base_path="api/versioned/v1/",
+        session=None,
     ):
         self.auth = auth
         self.host = host
         self.protocol = protocol
         self.port = port
         self.base_path = base_path
+        self.session = session or requests.Session()
 
         self._projects = ProjectCollection(self)
         self._datasets = DatasetCollection(self)
@@ -94,7 +98,7 @@ class Client:
         :rtype: :class:`requests.Response`
         """
         url = urljoin(self.origin + "/" + self.base_path, endpoint)
-        response = requests.request(method, url, auth=self.auth, **kwargs)
+        response = self.session.request(method, url, auth=self.auth, **kwargs)
 
         # logging
         if self.logger:
