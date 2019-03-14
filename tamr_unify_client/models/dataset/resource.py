@@ -76,3 +76,12 @@ class Dataset(BaseResource):
         return DatasetStatus.from_json(
             self.client, status_json, api_path=self.api_path + "/status"
         )
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"relative_id={self.relative_id!r}, "
+            f"name={self.name!r}, "
+            f"version={self.version!r})"
+        )

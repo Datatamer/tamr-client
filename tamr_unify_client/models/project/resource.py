@@ -77,3 +77,12 @@ class Project(BaseResource):
                 f"Cannot convert project to mastering project. Project type: {self.type}"
             )
         return MasteringProject(self.client, self._data, self.api_path)
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"relative_id={self.relative_id!r}, "
+            f"name={self.name!r}, "
+            f"type={self.type!r})"
+        )

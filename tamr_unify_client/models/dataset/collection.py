@@ -76,3 +76,5 @@ class DatasetCollection(BaseCollection):
             if dataset.name == dataset_name:
                 return dataset
         raise KeyError(f"No dataset found with name: {dataset_name}")
+
+    # super.__repr__ is sufficient

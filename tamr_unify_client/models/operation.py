@@ -121,3 +121,12 @@ class Operation(BaseResource):
         :rtype: :py:class:`bool`
         """
         return self.state == "SUCCEEDED"
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"relative_id={self.relative_id!r}, "
+            f"description={self.description!r}, "
+            f"state={self.state!r})"
+        )

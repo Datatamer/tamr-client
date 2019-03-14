@@ -31,3 +31,13 @@ class DatasetStatus(BaseResource):
         :type: bool
         """
         return self._data["isStreamable"]
+
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"relative_id={self.relative_id!r}, "
+            f"dataset_name={self.dataset_name!r}, "
+            f"relative_dataset_id={self.relative_dataset_id!r}, "
+            f"is_streamable={self.is_streamable!r})"
+        )

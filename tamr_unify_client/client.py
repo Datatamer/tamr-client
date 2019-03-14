@@ -146,12 +146,13 @@ class Client:
         return self._datasets
 
     def __repr__(self):
-        # intentionally leaving out auth in order to avoid security concerns
+        # Show only the type `auth` to mitigate any security concerns.
         return (
             f"{self.__class__.__module__}."
             f"{self.__class__.__qualname__}("
             f"host={self.host!r}, "
             f"protocol={self.protocol!r}, "
             f"port={self.port!r}, "
-            f"base_path={self.base_path!r})"
+            f"base_path={self.base_path!r}, "
+            f"auth={type(self.auth).__name__})"
         )

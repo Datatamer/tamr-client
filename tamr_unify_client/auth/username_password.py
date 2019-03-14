@@ -32,3 +32,11 @@ class UsernamePasswordAuth(HTTPBasicAuth):
     def __call__(self, r):
         r.headers["Authorization"] = _basic_auth_str(self.username, self.password)
         return r
+
+    def __repr__(self):
+        # intentionally leave out password (potentially sensitive)
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"username={self.username!r})"
+        )
