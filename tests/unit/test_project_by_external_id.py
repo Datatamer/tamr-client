@@ -47,4 +47,4 @@ def test_project_by_external_id_succeeds():
     auth = UsernamePasswordAuth("username", "password")
     unify = Client(auth)
     actual_project = unify.projects.by_external_id(project_external_id)
-    assert actual_project.data == project_json[0]
+    assert actual_project._data == project_json[0]

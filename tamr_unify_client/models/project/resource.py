@@ -12,17 +12,17 @@ class Project(BaseResource):
     @property
     def name(self):
         """:type: str"""
-        return self.data["name"]
+        return self._data["name"]
 
     @property
     def external_id(self):
         """:type: str"""
-        return self.data["externalId"]
+        return self._data["externalId"]
 
     @property
     def description(self):
         """:type: str"""
-        return self.data["description"]
+        return self._data["description"]
 
     @property
     def type(self):
@@ -34,7 +34,7 @@ class Project(BaseResource):
 
         :type: str
         """
-        return self.data["type"]
+        return self._data["type"]
 
     def unified_dataset(self):
         """Unified dataset for this project.
@@ -61,7 +61,7 @@ class Project(BaseResource):
             raise TypeError(
                 f"Cannot convert project to categorization project. Project type: {self.type}"
             )
-        return CategorizationProject(self.client, self.data, self.api_path)
+        return CategorizationProject(self.client, self._data, self.api_path)
 
     def as_mastering(self):
         """Convert this project to a :class:`~tamr_unify_client.models.project.mastering.MasteringProject`
@@ -76,4 +76,4 @@ class Project(BaseResource):
             raise TypeError(
                 f"Cannot convert project to mastering project. Project type: {self.type}"
             )
-        return MasteringProject(self.client, self.data, self.api_path)
+        return MasteringProject(self.client, self._data, self.api_path)

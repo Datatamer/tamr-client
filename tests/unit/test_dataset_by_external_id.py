@@ -49,4 +49,4 @@ def test_dataset_by_external_id_succeeds():
     auth = UsernamePasswordAuth("username", "password")
     unify = Client(auth)
     actual_dataset = unify.datasets.by_external_id(dataset_external_id)
-    assert actual_dataset.data == dataset_json[0]
+    assert actual_dataset._data == dataset_json[0]
