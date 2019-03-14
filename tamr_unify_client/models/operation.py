@@ -70,13 +70,13 @@ class Operation(BaseResource):
         Note: you only need to manually pick up server-side changes when opting into asynchronous mode when kicking off this operation.
 
         Usage:
-            >>> op.status # operation is currently 'PENDING'
+            >>> op.state # operation is currently 'PENDING'
             'PENDING'
             >>> op.wait() # continually polls until operation resolves
-            >>> op.status # incorrect usage; operation object status never changes.
+            >>> op.state # incorrect usage; operation object state never changes.
             'PENDING'
             >>> op = op.poll() # correct usage; use value returned by Operation.poll or Operation.wait
-            >>> op.status
+            >>> op.state
             'SUCCEEDED'
         """
         return self.status["state"]
