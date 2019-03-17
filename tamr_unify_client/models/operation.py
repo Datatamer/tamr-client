@@ -48,16 +48,16 @@ class Operation(BaseResource):
     @property
     def type(self):
         """:type: str"""
-        return self._data["type"]
+        return self._data.get("type")
 
     @property
     def description(self):
         """:type: str"""
-        return self._data["description"]
+        return self._data.get("description")
 
     @property
     def status(self):
-        return self._data["status"]
+        return self._data.get("status")
 
     @property
     def state(self):
@@ -79,7 +79,7 @@ class Operation(BaseResource):
             >>> op.state
             'SUCCEEDED'
         """
-        return self.status["state"]
+        return (self.status or {}).get("state")
 
     def poll(self):
         """Poll this operation for server-side updates.

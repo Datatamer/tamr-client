@@ -12,17 +12,17 @@ class Project(BaseResource):
     @property
     def name(self):
         """:type: str"""
-        return self._data["name"]
+        return self._data.get("name")
 
     @property
     def external_id(self):
         """:type: str"""
-        return self._data["externalId"]
+        return self._data.get("externalId")
 
     @property
     def description(self):
         """:type: str"""
-        return self._data["description"]
+        return self._data.get("description")
 
     @property
     def type(self):
@@ -34,7 +34,7 @@ class Project(BaseResource):
 
         :type: str
         """
-        return self._data["type"]
+        return self._data.get("type")
 
     def unified_dataset(self):
         """Unified dataset for this project.

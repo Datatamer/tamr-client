@@ -13,8 +13,8 @@ class BaseResource(AbstractBaseClass):
 
     def __init__(self, client, data, alias=None):
         self.client = client
-        self._data = data
-        self.api_path = alias or data["relativeId"]
+        self._data = data or {}
+        self.api_path = alias or data.get("relativeId")
 
     @classmethod
     def from_data(cls, client, data, api_path=None):
@@ -23,9 +23,12 @@ class BaseResource(AbstractBaseClass):
     @property
     def relative_id(self):
         """:type: str"""
-        return self._data["relativeId"]
+        return self._data.get("relativeId")
 
     @property
     def resource_id(self):
         """:type: str"""
-        return self.relative_id.split("/")[-1]
+        rid = self.relative_id
+        if rid is None:
+            return None
+        return rid.split("/")[-1]

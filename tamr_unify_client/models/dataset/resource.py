@@ -15,27 +15,27 @@ class Dataset(BaseResource):
     @property
     def name(self):
         """:type: str"""
-        return self._data["name"]
+        return self._data.get("name")
 
     @property
     def external_id(self):
         """:type: str"""
-        return self._data["externalId"]
+        return self._data.get("externalId")
 
     @property
     def description(self):
         """:type: str"""
-        return self._data["description"]
+        return self._data.get("description")
 
     @property
     def version(self):
         """:type: str"""
-        return self._data["version"]
+        return self._data.get("version")
 
     @property
     def tags(self):
         """:type: list[str]"""
-        return self._data["tags"]
+        return self._data.get("tags")
 
     def update_records(self, records):
         """Send a batch of record creations/updates/deletions to this dataset.
