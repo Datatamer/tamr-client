@@ -21,5 +21,5 @@ Please look for any issues that this PR resolves and tag them in the PR.
 - [ ] Included links to related issues/PRs
 - [ ] Update relevant [docs](https://github.com/Datatamer/unify-client-python/tree/master/docs) + docstrings
 - [ ] Update the [CHANGELOG](https://github.com/Datatamer/unify-client-python/blob/master/CHANGELOG.md) under the current `-dev` version:
-  - Add changelog entries under any that apply: **ADDED**, **FIXED**, **REMOVED**.
+  - Add changelog entries under any that apply: **BREAKING CHANGES**, **NEW FEATURES**, **BUG FIXES**.
   - Changelog entry format: `[#<issue number>](<link to issue>) <change description>`

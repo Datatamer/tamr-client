@@ -38,4 +38,4 @@ Tell us how the feature should work
 - [ ] Filled out test instructions (In case there aren't any unit tests)
 - [ ] Included links to related issues/PRs
 - [ ] Update relevant docs + docstrings
-- [ ] Add an "Added" entry for the current development version in the changelog
+- [ ] Add an "NEW FEATURES" entry for the current development version in the changelog

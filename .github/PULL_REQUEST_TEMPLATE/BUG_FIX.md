@@ -41,4 +41,4 @@ Search open/closed similar issues and pull requests before submitting since some
 - [ ] Filled out test instructions (In case there aren't any unit tests)
 - [ ] Included links to related issues/PRs
 - [ ] Update relevant docs + docstrings
-- [ ] Add a "Fixed" entry for the current development version in the changelog
+- [ ] Add a "Bug Fixes" entry for the current development version in the changelog
