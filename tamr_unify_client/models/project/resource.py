@@ -12,17 +12,17 @@ class Project(BaseResource):
     @property
     def name(self):
         """:type: str"""
-        return self._data["name"]
+        return self._data.get("name")
 
     @property
     def external_id(self):
         """:type: str"""
-        return self._data["externalId"]
+        return self._data.get("externalId")
 
     @property
     def description(self):
         """:type: str"""
-        return self._data["description"]
+        return self._data.get("description")
 
     @property
     def type(self):
@@ -34,7 +34,7 @@ class Project(BaseResource):
 
         :type: str
         """
-        return self._data["type"]
+        return self._data.get("type")
 
     def unified_dataset(self):
         """Unified dataset for this project.
@@ -77,3 +77,12 @@ class Project(BaseResource):
                 f"Cannot convert project to mastering project. Project type: {self.type}"
             )
         return MasteringProject(self.client, self._data, self.api_path)
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"relative_id={self.relative_id!r}, "
+            f"name={self.name!r}, "
+            f"type={self.type!r})"
+        )

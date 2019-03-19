@@ -15,27 +15,27 @@ class Dataset(BaseResource):
     @property
     def name(self):
         """:type: str"""
-        return self._data["name"]
+        return self._data.get("name")
 
     @property
     def external_id(self):
         """:type: str"""
-        return self._data["externalId"]
+        return self._data.get("externalId")
 
     @property
     def description(self):
         """:type: str"""
-        return self._data["description"]
+        return self._data.get("description")
 
     @property
     def version(self):
         """:type: str"""
-        return self._data["version"]
+        return self._data.get("version")
 
     @property
     def tags(self):
         """:type: list[str]"""
-        return self._data["tags"]
+        return self._data.get("tags")
 
     def update_records(self, records):
         """Send a batch of record creations/updates/deletions to this dataset.
@@ -75,4 +75,13 @@ class Dataset(BaseResource):
         status_json = self.client.get(self.api_path + "/status").successful().json()
         return DatasetStatus.from_json(
             self.client, status_json, api_path=self.api_path + "/status"
+        )
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"relative_id={self.relative_id!r}, "
+            f"name={self.name!r}, "
+            f"version={self.version!r})"
         )

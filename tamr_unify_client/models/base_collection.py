@@ -101,3 +101,10 @@ class BaseCollection(Iterable):
             )
 
         return items[0]
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"api_path={self.api_path!r})"
+        )

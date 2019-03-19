@@ -61,3 +61,5 @@ class ProjectCollection(BaseCollection):
             >>>     do_stuff(project)
         """
         return super().stream(Project)
+
+    # super.__repr__ is sufficient

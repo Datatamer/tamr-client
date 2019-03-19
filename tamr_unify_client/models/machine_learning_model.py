@@ -29,3 +29,10 @@ class MachineLearningModel(BaseResource):
         op_json = self.client.post(dependent_dataset + ":refresh").successful().json()
         op = Operation.from_json(self.client, op_json)
         return op.apply_options(**options)
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"relative_id={self.relative_id!r})"
+        )

@@ -14,3 +14,5 @@ class CategorizationProject(Project):
         """
         alias = self.api_path + "/categorizations/model"
         return MachineLearningModel(self.client, None, alias)
+
+    # super.__repr__ is sufficient

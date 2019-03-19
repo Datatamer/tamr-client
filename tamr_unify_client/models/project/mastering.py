@@ -75,3 +75,5 @@ class MasteringProject(Project):
         """
         alias = self.api_path + "/publishedClusters"
         return Dataset(self.client, None, alias)
+
+    # super.__repr__ is sufficient
