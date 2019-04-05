@@ -1,4 +1,4 @@
-## 0.4.0-dev
+## 0.4.0
   **BREAKING CHANGES**
   - [#61](https://github.com/Datatamer/unify-client-python/issues/61) `data` field renamed to `_data` (private).
   - [#78](https://github.com/Datatamer/unify-client-python/issues/78) Property accessors return `None` rather than raise `KeyError`
