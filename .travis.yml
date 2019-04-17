@@ -1,22 +1,20 @@
 dist: xenial
 language: python
 python:
-  - 3.6
-  - 3.7
+- 3.6
 before_install:
-  - pip install -U pip setuptools
+- pip install -U pip setuptools
 install:
-  - pip install .[dev]
+- pip install .[dev]
 script:
-  - black --check .
-  - flake8 .
-  - pytest tests
+- black --check .
+- flake8 .
+- pytest tests
 deploy:
   provider: pypi
   user: tamr
   password:
-    secure: b4dzseGGsaX2yDPm+RHMLpQjSpuAfkLU0Q7HysQ487oaRDjN37fcvcClZOWqnJ1oSxbbM59srS0yU9mMgFuiYBMb04miYWd8k2pBYNNSrPZLM2nSuPEQcY1ABQ7gPJteGlz4ktRajfPvcQx02YHkXsmscaxrijndattH6afen5RBRSO5ZRf65sER87FTTm8e2Fw78XyxvpfdYWqqFpM8B1KyxmJ9zcZZu7qsUARPYKhd/dMl9eqZrFT1/mYtWRz2OFFF9bjYy82Ft9wE9dM0LhyoImsgD9r/RlnNil68YdQV1Q17/7XOGO4VU3lc1IdOIPPh40mOVZHJIjn/vSaoKBDgRiql/aElMZ/Rha7NCkFJ1Evs0SPW7SED3fANdnYcgVSK0tEIfg74xsD69vVJHfgdHqkgF3hJ1zBYtpgmMOrPkH6JoLT+/WebxYBjpj+NxAAnbksv1syYYbJHwNne+v6S/Qp08XD/XHP0rC3wZkyyPq78txFKoF1eKv1fBdtL1aDLnqYQSJ28HEJHkN89lLQcUxUrfKpZhrbYBsAC3yK1n6jx/c28TrSjtHugB5UGhhIMtVSkosLrDoxSbS62YWOltmziBiLK01YmIJBvJnKZysBxiGWeE8nP36aJaUVP3Abr0JpL1JIcJy7JXUHw+Kgxxpa6YwL/UoFUe6t4maQ=
+    secure: b3JQZWcjD9GEXPl8v/Kb0BHtRY8P6nlAibdalTKWprNYoZ2jUYt7tLODuKJ14CgPUgkbEJYG8w+FaELdx6O+Gd9T1Pk/nAxDD2LB7E/RcezjxZtLsNfgGEMz8i7aOAW3d1glX7c/M0CglQnHs8waHv6Vibp5lhm8Wfnp6YO3TnHBq47R8/p8wYpefsZ7V+Ex1LTqybriVb6+LJ4iPxQ08HlQ5hz08d+pprAU+C6f0QSLFUbOosz9HakZvIMEVTBTUYM2E6vyUzJFPwphOJWz464uRDmB3MBvImOoG4wcR94ecPNebYN1gg3TXBeGVMqtONLF4WBqUZf1smWMasD4QmOOHVn0zkVi6z3JmSkbmkgNwqvxmnmx0aqcrzElVc+yvH1+vuTDGSxXw/bQ7K1t3DbOvMd33OdejRiqhyHapmhB51rgIBeZ+Tkw2ATBKyR1OQz/Jvme00cByuAljdsXwnzz22UicUr6Cm9pROXd0g3LZZXKbYEh0BHj9GJrpl7NvpAIYeBLzN70bM6r4g6shn+09gYFCSHoaJRrJjrxAwy/qOIz11mTiQ4jcTjnhN+qTg6oDITRNIvn7N6F0d3ge/qIVIXaaFsPJ/y3dD4PSnSg0oGYPtHs/s3/NbthbZS9d9uxpX3GJSijyajSIHGSxxCIAbE2h1UfDMaFSDiXI1Y=
   on:
-    # only publish to PyPI when tag is a release version (i.e. matches semver pattern x.y.z)
     tags: true
     condition: "$TRAVIS_TAG =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$"
