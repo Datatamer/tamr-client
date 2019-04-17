@@ -43,6 +43,10 @@ Title the release with the release version. Do not include anything else in the 
 - Incorrect: `v0.3.0`
 - Incorrect: `Release 0.3.0`
 
+Select the corresponding release branch in the `Target` branch dropdown.
+
+Copy/paste the `CHANGELOG.md` entries for this release into the description for the release (only the entries, not the header since the version number is already encoded as the title for this release).
+
 Create the release. This should also implicitly create a tag for the release under [Tags](https://github.com/Datatamer/unify-client-python/tags).
 
 # 5. Check on published artifacts
