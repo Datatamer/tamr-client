@@ -65,7 +65,6 @@ class TestAttribute(TestCase):
         responses.add(responses.GET, dataset_url, json=self._dataset_json)
         responses.add(responses.GET, attributes_url, json=self._attributes_json)
         dataset = self.unify.datasets.by_resource_id("1")
-        print(dataset._data)
         self.assertSequenceEqual(
             self._dataset_json["keyAttributeNames"], dataset.key_attribute_names
         )
