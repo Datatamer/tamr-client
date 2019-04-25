@@ -39,6 +39,11 @@ class Dataset(BaseResource):
         return self._data.get("tags")
 
     @property
+    def key_attribute_names(self):
+        """:type: list[str]"""
+        return self._data.get("keyAttributeNames")
+
+    @property
     def attributes(self):
         """Attributes of this dataset.
 

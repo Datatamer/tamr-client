@@ -65,34 +65,37 @@ class TestAttribute(TestCase):
         responses.add(responses.GET, dataset_url, json=self._dataset_json)
         responses.add(responses.GET, attributes_url, json=self._attributes_json)
         dataset = self.unify.datasets.by_resource_id("1")
+        print(dataset._data)
+        self.assertSequenceEqual(
+            self._dataset_json["keyAttributeNames"],
+            dataset.key_attribute_names
+        )
         attributes = list(dataset.attributes)
         self.assertEqual(2, len(attributes))
         alias = "datasets/1/attributes/RowNum"
         self.assertEqual(alias, attributes[0].relative_id)
 
-    _dataset_json = [
-        {
-            "id": "unify://unified-data/v1/datasets/1",
-            "externalId": "number 1",
-            "name": "dataset 1 name",
-            "description": "dataset 1 description",
-            "version": "dataset 1 version",
-            "keyAttributeNames": ["tamr_id"],
-            "tags": [],
-            "created": {
-                "username": "admin",
-                "time": "2018-09-10T16:06:20.636Z",
-                "version": "dataset 1 created version",
-            },
-            "lastModified": {
-                "username": "admin",
-                "time": "2018-09-10T16:06:20.851Z",
-                "version": "dataset 1 modified version",
-            },
-            "relativeId": "datasets/1",
-            "upstreamDatasetIds": [],
-        }
-    ]
+    _dataset_json = {
+        "id": "unify://unified-data/v1/datasets/1",
+        "externalId": "number 1",
+        "name": "dataset 1 name",
+        "description": "dataset 1 description",
+        "version": "dataset 1 version",
+        "keyAttributeNames": ["tamr_id"],
+        "tags": [],
+        "created": {
+            "username": "admin",
+            "time": "2018-09-10T16:06:20.636Z",
+            "version": "dataset 1 created version",
+        },
+        "lastModified": {
+            "username": "admin",
+            "time": "2018-09-10T16:06:20.851Z",
+            "version": "dataset 1 modified version",
+        },
+        "relativeId": "datasets/1",
+        "upstreamDatasetIds": [],
+    }
 
     _attributes_json = [
         {
