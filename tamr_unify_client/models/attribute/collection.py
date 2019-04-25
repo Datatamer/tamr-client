@@ -41,12 +41,7 @@ class AttributeCollection(BaseCollection):
         :returns: The specified attribute.
         :rtype: :class:`~tamr_unify_client.models.attribute.resource.Attribute`
         """
-        split_id = relative_id.split("/")
-        if split_id[:-1] != self.api_path:
-            raise ValueError(
-                f"Attribute f{relative_id} is not in collection {self.api_path}"
-            )
-        resource_id = split_id[-1]
+        resource_id = relative_id.split("/")[-1]
         return self.by_resource_id(resource_id)
 
     def by_external_id(self, external_id):
