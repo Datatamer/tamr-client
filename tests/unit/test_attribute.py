@@ -46,16 +46,16 @@ class TestAttribute(TestCase):
     def test_complex_type(self):
         alias = "datasets/1/attributes/geom"
         geom = Attribute(self.unify, self._attributes_json[1], alias)
-        self.assertEqual('RECORD', geom.type.base_type)
+        self.assertEqual("RECORD", geom.type.base_type)
         self.assertIsNone(geom.type.inner_type)
         self.assertEqual(3, len(list(geom.type.attributes)))
 
         point = list(geom.type.attributes)[0]
-        self.assertEqual('point', point.name)
+        self.assertEqual("point", point.name)
         self.assertEqual(alias + "/type/attributes/point", point.relative_id)
         self.assertTrue(point.is_nullable)
-        self.assertEqual('ARRAY', point.type.base_type)
-        self.assertEqual('DOUBLE', point.type.inner_type.base_type)
+        self.assertEqual("ARRAY", point.type.base_type)
+        self.assertEqual("DOUBLE", point.type.inner_type.base_type)
         self.assertSequenceEqual([], list(point.type.attributes))
 
     @responses.activate
@@ -67,8 +67,7 @@ class TestAttribute(TestCase):
         dataset = self.unify.datasets.by_resource_id("1")
         print(dataset._data)
         self.assertSequenceEqual(
-            self._dataset_json["keyAttributeNames"],
-            dataset.key_attribute_names
+            self._dataset_json["keyAttributeNames"], dataset.key_attribute_names
         )
         attributes = list(dataset.attributes)
         self.assertEqual(2, len(attributes))
@@ -101,11 +100,8 @@ class TestAttribute(TestCase):
         {
             "name": "RowNum",
             "description": "Synthetic row number",
-            "type": {
-                "baseType": "STRING",
-                "attributes": []
-            },
-            "isNullable": False
+            "type": {"baseType": "STRING", "attributes": []},
+            "isNullable": False,
         },
         {
             "name": "geom",
@@ -117,13 +113,10 @@ class TestAttribute(TestCase):
                         "name": "point",
                         "type": {
                             "baseType": "ARRAY",
-                            "innerType": {
-                                "baseType": "DOUBLE",
-                                "attributes": []
-                            },
-                            "attributes": []
+                            "innerType": {"baseType": "DOUBLE", "attributes": []},
+                            "attributes": [],
                         },
-                        "isNullable": True
+                        "isNullable": True,
                     },
                     {
                         "name": "lineString",
@@ -131,15 +124,12 @@ class TestAttribute(TestCase):
                             "baseType": "ARRAY",
                             "innerType": {
                                 "baseType": "ARRAY",
-                                "innerType": {
-                                    "baseType": "DOUBLE",
-                                    "attributes": []
-                                },
-                                "attributes": []
+                                "innerType": {"baseType": "DOUBLE", "attributes": []},
+                                "attributes": [],
                             },
-                            "attributes": []
+                            "attributes": [],
                         },
-                        "isNullable": True
+                        "isNullable": True,
                     },
                     {
                         "name": "polygon",
@@ -151,18 +141,18 @@ class TestAttribute(TestCase):
                                     "baseType": "ARRAY",
                                     "innerType": {
                                         "baseType": "DOUBLE",
-                                        "attributes": []
+                                        "attributes": [],
                                     },
-                                    "attributes": []
+                                    "attributes": [],
                                 },
-                                "attributes": []
+                                "attributes": [],
                             },
-                            "attributes": []
+                            "attributes": [],
                         },
-                        "isNullable": True
-                    }
-                ]
+                        "isNullable": True,
+                    },
+                ],
             },
-            "isNullable": False
-        }
+            "isNullable": False,
+        },
     ]

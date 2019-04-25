@@ -54,7 +54,6 @@ class Dataset(BaseResource):
         resource_json = self.client.get(alias).successful().json()
         return AttributeCollection.from_json(self.client, resource_json, alias)
 
-
     def update_records(self, records):
         """Send a batch of record creations/updates/deletions to this dataset.
 

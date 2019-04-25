@@ -2,12 +2,8 @@ from tamr_unify_client.models.base_resource import BaseResource
 
 
 class AttributeType(BaseResource):
-
     @classmethod
     def from_json(cls, client, data, api_path):
-        # Need to fill in this path
-        # This attribute might be part of the collection on a dataset, or
-        # this attribute might be part of the collection on an attribute
         return super().from_data(client, data, api_path)
 
     @property
@@ -24,7 +20,9 @@ class AttributeType(BaseResource):
         """:type: :class:`~tamr_unify_client.models.attribute.type.AttributeType`"""
         if "innerType" in self._data:
             alias = self.api_path + "/type"
-            return AttributeType.from_data(self.client, self._data.get("innerType"), alias)
+            return AttributeType.from_data(
+                self.client, self._data.get("innerType"), alias
+            )
         else:
             return None
 
@@ -34,6 +32,7 @@ class AttributeType(BaseResource):
         collection_json = self._data.get("attributes")
         # Import locally to avoid circular dependency
         from tamr_unify_client.models.attribute.collection import AttributeCollection
+
         return AttributeCollection.from_json(self.client, collection_json, alias)
 
     def __repr__(self):

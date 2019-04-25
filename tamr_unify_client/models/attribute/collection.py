@@ -43,7 +43,9 @@ class AttributeCollection(BaseCollection):
         """
         split_id = relative_id.split("/")
         if split_id[:-1] != self.api_path:
-            raise ValueError(f"Attribute f{relative_id} is not in collection {self.api_path}")
+            raise ValueError(
+                f"Attribute f{relative_id} is not in collection {self.api_path}"
+            )
         resource_id = split_id[-1]
         return self.by_resource_id(resource_id)
 
@@ -63,17 +65,17 @@ class AttributeCollection(BaseCollection):
         raise NotImplementedError("Attributes do not have external_id")
 
     def stream(self):
-        """Stream datasets in this collection. Implicitly called when iterating
+        """Stream attributes in this collection. Implicitly called when iterating
         over this collection.
 
-        :returns: Stream of datasets.
-        :rtype: Python generator yielding :class:`~tamr_unify_client.models.dataset.resource.Dataset`
+        :returns: Stream of attributes.
+        :rtype: Python generator yielding :class:`~tamr_unify_client.models.attribute.resource.Attribute`
 
         Usage:
-            >>> for dataset in collection.stream(): # explicit
-            >>>     do_stuff(dataset)
-            >>> for dataset in collection: # implicit
-            >>>     do_stuff(dataset)
+            >>> for attribute in collection.stream(): # explicit
+            >>>     do_stuff(attribute)
+            >>> for attribute in collection: # implicit
+            >>>     do_stuff(attribute)
         """
         for resource_json in self._data:
             alias = self.api_path + "/" + resource_json["name"]
