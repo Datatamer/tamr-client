@@ -7,7 +7,8 @@ class AttributeCollection(BaseCollection):
 
     :param client: Client for API call delegation.
     :type client: :class:`~tamr_unify_client.Client`
-    :param :py:class:`dict` data: JSON data representing this resource
+    :param data: JSON data representing this resource
+    :type data: dict
     :param api_path: API path used to access this collection.
         E.g. ``"datasets/1/attributes"``.
     :type api_path: str
@@ -48,7 +49,7 @@ class AttributeCollection(BaseCollection):
         """Retrieve an attribute by external ID.
 
         Since attributes do not have external IDs, this method is not supported and will
-        raise a NotImplementedError.
+        raise a :class:`NotImplementedError` .
 
         :param external_id: The external ID.
         :type external_id: str

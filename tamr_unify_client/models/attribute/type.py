@@ -28,6 +28,7 @@ class AttributeType(BaseResource):
 
     @property
     def attributes(self):
+        """:type: :class:`~tamr_unify_client.models.attribute.collection.AttributeCollection`"""
         alias = self.api_path + "/attributes"
         collection_json = self._data.get("attributes")
         # Import locally to avoid circular dependency
