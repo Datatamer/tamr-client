@@ -32,12 +32,34 @@ class TestDatasetGeo(TestCase):
         }
         self.assertEqual(expected, actual)
 
+        record_with_multi_point = {"id": "1", "geom": {"multiPoint": [[1, 1]]}}
+        actual = Dataset._record_to_feature(
+            record_with_multi_point, key_value_single, ["id"], "geom"
+        )
+        expected = {
+            "type": "Feature",
+            "id": "1",
+            "geometry": {"type": "MultiPoint", "coordinates": [[1, 1]]}
+        }
+        self.assertEqual(expected, actual)
+
         record_with_line = {"id": "1", "geom": {"lineString": [[1, 1], [2, 2]]}}
         actual = Dataset._record_to_feature(record_with_line, key_value_single, ["id"], "geom")
         expected = {
             "type": "Feature",
             "id": "1",
             "geometry": {"type": "LineString", "coordinates": [[1, 1], [2, 2]]}
+        }
+        self.assertEqual(expected, actual)
+
+        record_with_multi_line = {"id": "1", "geom": {"multiLineString": [[[1, 1], [2, 2]]]}}
+        actual = Dataset._record_to_feature(
+            record_with_multi_line, key_value_single, ["id"], "geom"
+        )
+        expected = {
+            "type": "Feature",
+            "id": "1",
+            "geometry": {"type": "MultiLineString", "coordinates": [[[1, 1], [2, 2]]]}
         }
         self.assertEqual(expected, actual)
 
@@ -50,31 +72,50 @@ class TestDatasetGeo(TestCase):
         }
         self.assertEqual(expected, actual)
 
+        record_with_multi_polygon = {"id": "1",
+                                     "geom": {"multiPolygon": [[[[1, 1], [2, 2], [3, 3]]]]}
+                                     }
+        actual = Dataset._record_to_feature(
+            record_with_multi_polygon, key_value_single, ["id"], "geom"
+        )
+        expected = {
+            "type": "Feature",
+            "id": "1",
+            "geometry": {"type": "MultiPolygon", "coordinates": [[[[1, 1], [2, 2], [3, 3]]]]}
+        }
+        self.assertEqual(expected, actual)
+
         record_with_full_geo = {
             "id": "1",
             "geom": {
                 "point": None,
+                "multiPoint": None,
                 "lineString": None,
-                "polygon": [[[1, 1], [2, 2], [3, 3]]]
+                "multiLineString": None,
+                "polygon": None,
+                "multiPolygon": [[[[1, 1], [2, 2], [3, 3]]]]
             }
         }
         actual = Dataset._record_to_feature(record_with_full_geo, key_value_single, ["id"], "geom")
         expected = {
             "type": "Feature",
             "id": "1",
-            "geometry": {"type": "Polygon", "coordinates": [[[1, 1], [2, 2], [3, 3]]]}
+            "geometry": {"type": "MultiPolygon", "coordinates": [[[[1, 1], [2, 2], [3, 3]]]]}
         }
         self.assertEqual(expected, actual)
 
         record_with_null_geo = {
             "id": "1",
-            "geom": {"point": None, "lineString": None, "polygon": None}
+            "geom": {
+                "point": None, "multiPoint": None,
+                "lineString": None, "multiLineString": None,
+                "polygon": None, "multiPolygon": None
+            }
         }
         actual = Dataset._record_to_feature(record_with_null_geo, key_value_single, ["id"], "geom")
         expected = {
             "type": "Feature",
-            "id": "1",
-            "geometry": None
+            "id": "1"
         }
         self.assertEqual(expected, actual)
 
@@ -122,13 +163,19 @@ class TestDatasetGeo(TestCase):
             "name": "record with everything",
             "geom": {
                 "point": None,
+                "multiPoint": None,
                 "lineString": None,
-                "polygon": [[[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]]
+                "multiLineString": None,
+                "polygon": [[[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]],
+                "multiPolygon": None
             },
             "alternate_geom": {
                 "point": [1, 1],
+                "multiPoint": None,
                 "lineString": None,
-                "polygon": None
+                "multiLineString": None,
+                "polygon": None,
+                "multiPolygon": None
             }
         }
         actual = Dataset._record_to_feature(
@@ -145,8 +192,11 @@ class TestDatasetGeo(TestCase):
                 "name": "record with everything",
                 "alternate_geom": {
                     "point": [1, 1],
+                    "multiPoint": None,
                     "lineString": None,
-                    "polygon": None
+                    "multiLineString": None,
+                    "polygon": None,
+                    "multiPolygon": None
                 }
             },
             "geometry": {
@@ -170,9 +220,13 @@ class TestDatasetGeo(TestCase):
         ))
         dataset = self.unify.datasets.by_resource_id("1")
         features = [feature for feature in dataset.__geo_features__]
-        self.assertEqual(3, len(features))
+        self.assertEqual(6, len(features))
         self.assertSetEqual(
-            {"point", "lineString", "polygon"},
+            {
+                "point", "multiPoint",
+                "lineString", "multiLineString",
+                "polygon", "multiPolygon"
+            },
             {feature["id"] for feature in features}
         )
 
@@ -192,7 +246,11 @@ class TestDatasetGeo(TestCase):
         fc = dataset.__geo_interface__
         self.assertEqual("FeatureCollection", fc["type"])
         self.assertSetEqual(
-            {"point", "lineString", "polygon"},
+            {
+                "point", "multiPoint",
+                "lineString", "multiLineString",
+                "polygon", "multiPolygon"
+            },
             {feature["id"] for feature in fc["features"]}
         )
 
@@ -241,12 +299,45 @@ class TestDatasetGeo(TestCase):
                         "isNullable": True,
                     },
                     {
+                        "name": "multiPoint",
+                        "type": {
+                            "baseType": "ARRAY",
+                            "innerType": {
+                                "baseType": "ARRAY",
+                                "innerType": {"baseType": "DOUBLE", "attributes": []},
+                                "attributes": [],
+                            },
+                            "attributes": [],
+                        },
+                        "isNullable": True,
+                    },
+                    {
                         "name": "lineString",
                         "type": {
                             "baseType": "ARRAY",
                             "innerType": {
                                 "baseType": "ARRAY",
                                 "innerType": {"baseType": "DOUBLE", "attributes": []},
+                                "attributes": [],
+                            },
+                            "attributes": [],
+                        },
+                        "isNullable": True,
+                    },
+                    {
+                        "name": "multiLineString",
+                        "type": {
+                            "baseType": "ARRAY",
+                            "innerType": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "DOUBLE",
+                                        "attributes": [],
+                                    },
+                                    "attributes": [],
+                                },
                                 "attributes": [],
                             },
                             "attributes": [],
@@ -273,6 +364,30 @@ class TestDatasetGeo(TestCase):
                         },
                         "isNullable": True,
                     },
+                    {
+                        "name": "multiPolygon",
+                        "type": {
+                            "baseType": "ARRAY",
+                            "innerType": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "ARRAY",
+                                        "innerType": {
+                                            "baseType": "DOUBLE",
+                                            "attributes": [],
+                                        },
+                                        "attributes": [],
+                                    },
+                                    "attributes": [],
+                                },
+                                "attributes": [],
+                            },
+                            "attributes": [],
+                        },
+                        "isNullable": True,
+                    }
                 ],
             },
             "isNullable": False,
@@ -281,6 +396,12 @@ class TestDatasetGeo(TestCase):
 
     _records_json = [
         {"id": "point", "geom": {"point": [1, 1]}},
+        {"id": "multiPoint", "geom": {"multiPoint": [[1, 1], [2, 2]]}},
         {"id": "lineString", "geom": {"lineString": [[1, 1], [2, 2]]}},
-        {"id": "polygon", "geom": {"polygon": [[[1, 1], [2, 2], [3, 3], [1, 1]]]}}
+        {"id": "multiLineString",
+         "geom": {"multiLineString": [[[1, 1], [2, 2]], [[3, 3], [4, 4]]]}},
+        {"id": "polygon", "geom": {"polygon": [[[1, 1], [2, 2], [3, 3], [1, 1]]]}},
+        {"id": "multiPolygon", "geom": {
+            "multiPolygon": [[[[1, 1], [2, 2], [3, 3], [1, 1]]],
+                             [[[4, 4], [5, 5], [6, 6], [4, 4]]]]}}
     ]

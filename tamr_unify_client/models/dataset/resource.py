@@ -128,7 +128,11 @@ class Dataset(BaseResource):
                 return [rec[attr] for attr in key_attrs]
 
         # Duck-typing: find all the attributes that look like geometry
-        geo_attr_names = {"point", "lineString", "polygon"}
+        geo_attr_names = {
+            "point", "multiPoint",
+            "lineString", "multiLineString",
+            "polygon", "multiPolygon"
+        }
         geo_attrs = [
             attr.name
             for attr in self.attributes
@@ -159,26 +163,23 @@ class Dataset(BaseResource):
             "id": key_value(record)
         }
         reserved = {"bbox", geo_attr}.union(key_attrs)
+        conversion = {
+            "point": "Point",
+            "multiPoint": "MultiPoint",
+            "lineString": "LineString",
+            "multiLineString": "MultiLineString",
+            "polygon": "Polygon",
+            "multiPolygon": "MultiPolygon"
+        }
         if geo_attr in record:
             src_geo = record[geo_attr]
-            if "point" in src_geo and src_geo["point"]:
-                geometry = {
-                    "type": "Point",
-                    "coordinates": src_geo["point"]
-                }
-            elif "lineString" in src_geo and src_geo["lineString"]:
-                geometry = {
-                    "type": "LineString",
-                    "coordinates": src_geo["lineString"]
-                }
-            elif "polygon" in src_geo and src_geo["polygon"]:
-                geometry = {
-                    "type": "Polygon",
-                    "coordinates": src_geo["polygon"]
-                }
-            else:
-                geometry = None
-            feature["geometry"] = geometry
+            for unify_attr in conversion.keys():
+                if unify_attr in src_geo and src_geo[unify_attr]:
+                    feature["geometry"] = {
+                        "type": conversion[unify_attr],
+                        "coordinates": src_geo[unify_attr]
+                    }
+                    break
         if "bbox" in record:
             feature["bbox"] = record["bbox"]
         non_reserved = set(record.keys()).difference(reserved)

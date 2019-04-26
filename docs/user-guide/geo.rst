@@ -40,8 +40,9 @@ attribute, then the value of that attribute will be the value of ``id``. If the 
 composed of multiple attributes, then the value of the ``id`` will be an array with the values
 of the key attributes in order.
 
-The first attribute with type ``RECORD`` containing an attribute named ``point``, ``lineString``, or
-``polygon`` will be used as the geometry. No conversion is done between the coordinates as
+The first attribute with type ``RECORD`` containing an attribute named
+``point``, ``multiPoint``, ``lineString``, ``multiLineString``, ``polygon``, or ``multiPolygon``
+will be used as the geometry. No conversion is done between the coordinates as
 represented in Unify and the coordinates in the feature.
 
 If an attribute named ``bbox`` is available, it will be used as ``bbox``. No conversion is done
