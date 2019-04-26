@@ -94,6 +94,98 @@ class Dataset(BaseResource):
             self.client, status_json, api_path=self.api_path + "/status"
         )
 
+    @property
+    def __geo_interface__(self):
+        """Retrieve a representation of this dataset that conforms to the Python Geo Interface.
+
+        Note that this materializes all features; for a streaming interface to features,
+        see :method:`~tamr_unify_client.models.dataset.Dataset.__geo_features__()`
+
+        See https://gist.github.com/sgillies/2217756
+
+        :return: dict[str, object]
+        """
+        return {
+            "type": "FeatureCollection",
+            "features": [feature for feature in self.__geo_features__]
+        }
+
+    @property
+    def __geo_features__(self):
+        """A generator of the records in this dataset represented as geospatial features
+
+        See https://gist.github.com/sgillies/2217756
+
+        :return: stream of features
+        :rtype: Python generator yielding :py:class:`dict[str, object]`
+        """
+        key_attrs = self.key_attribute_names
+        if len(key_attrs) == 1:
+            def key_value(rec):
+                return rec[key_attrs[0]]
+        else:
+            def key_value(rec):
+                return [rec[attr] for attr in key_attrs]
+
+        # Duck-typing: find all the attributes that look like geometry
+        geo_attr_names = {"point", "lineString", "polygon"}
+        geo_attrs = [
+            attr.name
+            for attr in self.attributes
+            if "RECORD" == attr.type.base_type and geo_attr_names.intersection(
+                {sub_attr.name for sub_attr in attr.type.attributes}
+            )
+        ]
+        # We select the first such attribute as the geometry
+        if geo_attrs:
+            geo_attr = geo_attrs[0]
+        else:
+            geo_attr = None
+        for record in self.records():
+            yield self._record_to_feature(record, key_value, key_attrs, geo_attr)
+
+    @staticmethod
+    def _record_to_feature(record, key_value, key_attrs, geo_attr):
+        """Convert a Unify record to a Python Geo Interface Feature
+
+        :param record: Unify record
+        :param key_value: Function to extract the value of the primary key from the record
+        :param key_attrs: Set of attributes that comprise the primary key for the record
+        :param geo_attr: The singular attribute to use as the geometry
+        :return: map from str to object
+        """
+        feature = {
+            "type": "Feature",
+            "id": key_value(record)
+        }
+        reserved = {"bbox", geo_attr}.union(key_attrs)
+        if geo_attr in record:
+            src_geo = record[geo_attr]
+            if "point" in src_geo and src_geo["point"]:
+                geometry = {
+                    "type": "Point",
+                    "coordinates": src_geo["point"]
+                }
+            elif "lineString" in src_geo and src_geo["lineString"]:
+                geometry = {
+                    "type": "LineString",
+                    "coordinates": src_geo["lineString"]
+                }
+            elif "polygon" in src_geo and src_geo["polygon"]:
+                geometry = {
+                    "type": "Polygon",
+                    "coordinates": src_geo["polygon"]
+                }
+            else:
+                geometry = None
+            feature["geometry"] = geometry
+        if "bbox" in record:
+            feature["bbox"] = record["bbox"]
+        non_reserved = set(record.keys()).difference(reserved)
+        if non_reserved:
+            feature["properties"] = {attr: record[attr] for attr in non_reserved}
+        return feature
+
     def __repr__(self):
         return (
             f"{self.__class__.__module__}."

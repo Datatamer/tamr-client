@@ -38,6 +38,7 @@ User Guide
   user-guide/quickstart
   user-guide/secure-credentials
   user-guide/workflows
+  user-guide/geo
   user-guide/advanced-usage
 
 Contributor Guide
