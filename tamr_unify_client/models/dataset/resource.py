@@ -1,5 +1,6 @@
 import json
 
+from tamr_unify_client.models.attribute.collection import AttributeCollection
 from tamr_unify_client.models.base_resource import BaseResource
 from tamr_unify_client.models.dataset_status import DatasetStatus
 from tamr_unify_client.models.operation import Operation
@@ -36,6 +37,22 @@ class Dataset(BaseResource):
     def tags(self):
         """:type: list[str]"""
         return self._data.get("tags")
+
+    @property
+    def key_attribute_names(self):
+        """:type: list[str]"""
+        return self._data.get("keyAttributeNames")
+
+    @property
+    def attributes(self):
+        """Attributes of this dataset.
+
+        :return: Attributes of this dataset.
+        :rtype: :class:`~tamr_unify_client.models.attribute.collection.AttributeCollection`
+        """
+        alias = self.api_path + "/attributes"
+        resource_json = self.client.get(alias).successful().json()
+        return AttributeCollection.from_json(self.client, resource_json, alias)
 
     def update_records(self, records):
         """Send a batch of record creations/updates/deletions to this dataset.

@@ -31,6 +31,21 @@ Datasets
 .. autoclass:: tamr_unify_client.models.dataset.collection.DatasetCollection
   :members:
 
+Attribute
+---------
+
+.. autoclass:: tamr_unify_client.models.attribute.resource.Attribute
+
+Attribute Type
+--------------
+
+.. autoclass:: tamr_unify_client.models.attribute.type.AttributeType
+
+Attributes
+----------
+
+.. autoclass:: tamr_unify_client.models.attribute.collection.AttributeCollection
+
 Machine Learning Models
 -----------------------
 
