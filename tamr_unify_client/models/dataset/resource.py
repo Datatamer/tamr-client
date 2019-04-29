@@ -107,7 +107,7 @@ class Dataset(BaseResource):
         """
         return {
             "type": "FeatureCollection",
-            "features": [feature for feature in self.__geo_features__]
+            "features": [feature for feature in self.__geo_features__],
         }
 
     @property
@@ -121,22 +121,29 @@ class Dataset(BaseResource):
         """
         key_attrs = self.key_attribute_names
         if len(key_attrs) == 1:
+
             def key_value(rec):
                 return rec[key_attrs[0]]
+
         else:
+
             def key_value(rec):
                 return [rec[attr] for attr in key_attrs]
 
         # Duck-typing: find all the attributes that look like geometry
         geo_attr_names = {
-            "point", "multiPoint",
-            "lineString", "multiLineString",
-            "polygon", "multiPolygon"
+            "point",
+            "multiPoint",
+            "lineString",
+            "multiLineString",
+            "polygon",
+            "multiPolygon",
         }
         geo_attrs = [
             attr.name
             for attr in self.attributes
-            if "RECORD" == attr.type.base_type and geo_attr_names.intersection(
+            if "RECORD" == attr.type.base_type
+            and geo_attr_names.intersection(
                 {sub_attr.name for sub_attr in attr.type.attributes}
             )
         ]
@@ -158,10 +165,7 @@ class Dataset(BaseResource):
         :param geo_attr: The singular attribute to use as the geometry
         :return: map from str to object
         """
-        feature = {
-            "type": "Feature",
-            "id": key_value(record)
-        }
+        feature = {"type": "Feature", "id": key_value(record)}
         reserved = {"bbox", geo_attr}.union(key_attrs)
         conversion = {
             "point": "Point",
@@ -169,7 +173,7 @@ class Dataset(BaseResource):
             "lineString": "LineString",
             "multiLineString": "MultiLineString",
             "polygon": "Polygon",
-            "multiPolygon": "MultiPolygon"
+            "multiPolygon": "MultiPolygon",
         }
         if geo_attr in record:
             src_geo = record[geo_attr]
@@ -177,7 +181,7 @@ class Dataset(BaseResource):
                 if unify_attr in src_geo and src_geo[unify_attr]:
                     feature["geometry"] = {
                         "type": conversion[unify_attr],
-                        "coordinates": src_geo[unify_attr]
+                        "coordinates": src_geo[unify_attr],
                     }
                     break
         if "bbox" in record:

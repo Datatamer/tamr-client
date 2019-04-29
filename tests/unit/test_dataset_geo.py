@@ -19,16 +19,20 @@ class TestDatasetGeo(TestCase):
         def key_value_single(rec):
             return rec["id"]
 
-        actual = Dataset._record_to_feature(empty_record, key_value_single, ["id"], "geom")
+        actual = Dataset._record_to_feature(
+            empty_record, key_value_single, ["id"], "geom"
+        )
         expected = {"type": "Feature", "id": "1"}
         self.assertEqual(expected, actual)
 
         record_with_point = {"id": "1", "geom": {"point": [1, 1]}}
-        actual = Dataset._record_to_feature(record_with_point, key_value_single, ["id"], "geom")
+        actual = Dataset._record_to_feature(
+            record_with_point, key_value_single, ["id"], "geom"
+        )
         expected = {
             "type": "Feature",
             "id": "1",
-            "geometry": {"type": "Point", "coordinates": [1, 1]}
+            "geometry": {"type": "Point", "coordinates": [1, 1]},
         }
         self.assertEqual(expected, actual)
 
@@ -39,49 +43,63 @@ class TestDatasetGeo(TestCase):
         expected = {
             "type": "Feature",
             "id": "1",
-            "geometry": {"type": "MultiPoint", "coordinates": [[1, 1]]}
+            "geometry": {"type": "MultiPoint", "coordinates": [[1, 1]]},
         }
         self.assertEqual(expected, actual)
 
         record_with_line = {"id": "1", "geom": {"lineString": [[1, 1], [2, 2]]}}
-        actual = Dataset._record_to_feature(record_with_line, key_value_single, ["id"], "geom")
+        actual = Dataset._record_to_feature(
+            record_with_line, key_value_single, ["id"], "geom"
+        )
         expected = {
             "type": "Feature",
             "id": "1",
-            "geometry": {"type": "LineString", "coordinates": [[1, 1], [2, 2]]}
+            "geometry": {"type": "LineString", "coordinates": [[1, 1], [2, 2]]},
         }
         self.assertEqual(expected, actual)
 
-        record_with_multi_line = {"id": "1", "geom": {"multiLineString": [[[1, 1], [2, 2]]]}}
+        record_with_multi_line = {
+            "id": "1",
+            "geom": {"multiLineString": [[[1, 1], [2, 2]]]},
+        }
         actual = Dataset._record_to_feature(
             record_with_multi_line, key_value_single, ["id"], "geom"
         )
         expected = {
             "type": "Feature",
             "id": "1",
-            "geometry": {"type": "MultiLineString", "coordinates": [[[1, 1], [2, 2]]]}
+            "geometry": {"type": "MultiLineString", "coordinates": [[[1, 1], [2, 2]]]},
         }
         self.assertEqual(expected, actual)
 
-        record_with_polygon = {"id": "1", "geom": {"polygon": [[[1, 1], [2, 2], [3, 3]]]}}
-        actual = Dataset._record_to_feature(record_with_polygon, key_value_single, ["id"], "geom")
+        record_with_polygon = {
+            "id": "1",
+            "geom": {"polygon": [[[1, 1], [2, 2], [3, 3]]]},
+        }
+        actual = Dataset._record_to_feature(
+            record_with_polygon, key_value_single, ["id"], "geom"
+        )
         expected = {
             "type": "Feature",
             "id": "1",
-            "geometry": {"type": "Polygon", "coordinates": [[[1, 1], [2, 2], [3, 3]]]}
+            "geometry": {"type": "Polygon", "coordinates": [[[1, 1], [2, 2], [3, 3]]]},
         }
         self.assertEqual(expected, actual)
 
-        record_with_multi_polygon = {"id": "1",
-                                     "geom": {"multiPolygon": [[[[1, 1], [2, 2], [3, 3]]]]}
-                                     }
+        record_with_multi_polygon = {
+            "id": "1",
+            "geom": {"multiPolygon": [[[[1, 1], [2, 2], [3, 3]]]]},
+        }
         actual = Dataset._record_to_feature(
             record_with_multi_polygon, key_value_single, ["id"], "geom"
         )
         expected = {
             "type": "Feature",
             "id": "1",
-            "geometry": {"type": "MultiPolygon", "coordinates": [[[[1, 1], [2, 2], [3, 3]]]]}
+            "geometry": {
+                "type": "MultiPolygon",
+                "coordinates": [[[[1, 1], [2, 2], [3, 3]]]],
+            },
         }
         self.assertEqual(expected, actual)
 
@@ -93,50 +111,54 @@ class TestDatasetGeo(TestCase):
                 "lineString": None,
                 "multiLineString": None,
                 "polygon": None,
-                "multiPolygon": [[[[1, 1], [2, 2], [3, 3]]]]
-            }
+                "multiPolygon": [[[[1, 1], [2, 2], [3, 3]]]],
+            },
         }
-        actual = Dataset._record_to_feature(record_with_full_geo, key_value_single, ["id"], "geom")
+        actual = Dataset._record_to_feature(
+            record_with_full_geo, key_value_single, ["id"], "geom"
+        )
         expected = {
             "type": "Feature",
             "id": "1",
-            "geometry": {"type": "MultiPolygon", "coordinates": [[[[1, 1], [2, 2], [3, 3]]]]}
+            "geometry": {
+                "type": "MultiPolygon",
+                "coordinates": [[[[1, 1], [2, 2], [3, 3]]]],
+            },
         }
         self.assertEqual(expected, actual)
 
         record_with_null_geo = {
             "id": "1",
             "geom": {
-                "point": None, "multiPoint": None,
-                "lineString": None, "multiLineString": None,
-                "polygon": None, "multiPolygon": None
-            }
+                "point": None,
+                "multiPoint": None,
+                "lineString": None,
+                "multiLineString": None,
+                "polygon": None,
+                "multiPolygon": None,
+            },
         }
-        actual = Dataset._record_to_feature(record_with_null_geo, key_value_single, ["id"], "geom")
-        expected = {
-            "type": "Feature",
-            "id": "1"
-        }
+        actual = Dataset._record_to_feature(
+            record_with_null_geo, key_value_single, ["id"], "geom"
+        )
+        expected = {"type": "Feature", "id": "1"}
         self.assertEqual(expected, actual)
 
         record_with_bbox = {"id": "1", "bbox": [[0, 0], [1, 1]]}
-        actual = Dataset._record_to_feature(record_with_bbox, key_value_single, ["id"], "geom")
-        expected = {
-            "type": "Feature",
-            "id": "1",
-            "bbox": [[0, 0], [1, 1]]
-        }
+        actual = Dataset._record_to_feature(
+            record_with_bbox, key_value_single, ["id"], "geom"
+        )
+        expected = {"type": "Feature", "id": "1", "bbox": [[0, 0], [1, 1]]}
         self.assertEqual(expected, actual)
 
         record_with_props = {"id": "1", "p1": "v1", "p2": "v2"}
-        actual = Dataset._record_to_feature(record_with_props, key_value_single, ["id"], "geom")
+        actual = Dataset._record_to_feature(
+            record_with_props, key_value_single, ["id"], "geom"
+        )
         expected = {
             "type": "Feature",
             "id": "1",
-            "properties": {
-                "p1": "v1",
-                "p2": "v2"
-            }
+            "properties": {"p1": "v1", "p2": "v2"},
         }
         self.assertEqual(expected, actual)
 
@@ -145,15 +167,9 @@ class TestDatasetGeo(TestCase):
 
         record_with_composite_key = {"id1": "1", "id2": "2"}
         actual = Dataset._record_to_feature(
-            record_with_composite_key,
-            key_value_composite,
-            ["id1", "id2"],
-            "geom"
+            record_with_composite_key, key_value_composite, ["id1", "id2"], "geom"
         )
-        expected = {
-            "type": "Feature",
-            "id": ["1", "2"]
-        }
+        expected = {"type": "Feature", "id": ["1", "2"]}
         self.assertEqual(expected, actual)
 
         record_with_everything = {
@@ -167,7 +183,7 @@ class TestDatasetGeo(TestCase):
                 "lineString": None,
                 "multiLineString": None,
                 "polygon": [[[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]],
-                "multiPolygon": None
+                "multiPolygon": None,
             },
             "alternate_geom": {
                 "point": [1, 1],
@@ -175,14 +191,11 @@ class TestDatasetGeo(TestCase):
                 "lineString": None,
                 "multiLineString": None,
                 "polygon": None,
-                "multiPolygon": None
-            }
+                "multiPolygon": None,
+            },
         }
         actual = Dataset._record_to_feature(
-            record_with_everything,
-            key_value_composite,
-            ["id1", "id2"],
-            "geom"
+            record_with_everything, key_value_composite, ["id1", "id2"], "geom"
         )
         expected = {
             "type": "Feature",
@@ -196,12 +209,12 @@ class TestDatasetGeo(TestCase):
                     "lineString": None,
                     "multiLineString": None,
                     "polygon": None,
-                    "multiPolygon": None
-                }
+                    "multiPolygon": None,
+                },
             },
             "geometry": {
                 "type": "Polygon",
-                "coordinates": [[[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]]
+                "coordinates": [[[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]],
             },
         }
         self.assertEqual(expected, actual)
@@ -215,19 +228,24 @@ class TestDatasetGeo(TestCase):
         responses.add(responses.GET, attributes_url, json=self._attributes_json)
 
         records_url = f"{dataset_url}/records"
-        responses.add(responses.GET, records_url, body="\n".join(
-            [json.dumps(rec) for rec in self._records_json]
-        ))
+        responses.add(
+            responses.GET,
+            records_url,
+            body="\n".join([json.dumps(rec) for rec in self._records_json]),
+        )
         dataset = self.unify.datasets.by_resource_id("1")
         features = [feature for feature in dataset.__geo_features__]
         self.assertEqual(6, len(features))
         self.assertSetEqual(
             {
-                "point", "multiPoint",
-                "lineString", "multiLineString",
-                "polygon", "multiPolygon"
+                "point",
+                "multiPoint",
+                "lineString",
+                "multiLineString",
+                "polygon",
+                "multiPolygon",
             },
-            {feature["id"] for feature in features}
+            {feature["id"] for feature in features},
         )
 
     @responses.activate
@@ -239,19 +257,24 @@ class TestDatasetGeo(TestCase):
         responses.add(responses.GET, attributes_url, json=self._attributes_json)
 
         records_url = f"{dataset_url}/records"
-        responses.add(responses.GET, records_url, body="\n".join(
-            [json.dumps(rec) for rec in self._records_json]
-        ))
+        responses.add(
+            responses.GET,
+            records_url,
+            body="\n".join([json.dumps(rec) for rec in self._records_json]),
+        )
         dataset = self.unify.datasets.by_resource_id("1")
         fc = dataset.__geo_interface__
         self.assertEqual("FeatureCollection", fc["type"])
         self.assertSetEqual(
             {
-                "point", "multiPoint",
-                "lineString", "multiLineString",
-                "polygon", "multiPolygon"
+                "point",
+                "multiPoint",
+                "lineString",
+                "multiLineString",
+                "polygon",
+                "multiPolygon",
             },
-            {feature["id"] for feature in fc["features"]}
+            {feature["id"] for feature in fc["features"]},
         )
 
     _dataset_json = {
@@ -387,7 +410,7 @@ class TestDatasetGeo(TestCase):
                             "attributes": [],
                         },
                         "isNullable": True,
-                    }
+                    },
                 ],
             },
             "isNullable": False,
@@ -398,10 +421,18 @@ class TestDatasetGeo(TestCase):
         {"id": "point", "geom": {"point": [1, 1]}},
         {"id": "multiPoint", "geom": {"multiPoint": [[1, 1], [2, 2]]}},
         {"id": "lineString", "geom": {"lineString": [[1, 1], [2, 2]]}},
-        {"id": "multiLineString",
-         "geom": {"multiLineString": [[[1, 1], [2, 2]], [[3, 3], [4, 4]]]}},
+        {
+            "id": "multiLineString",
+            "geom": {"multiLineString": [[[1, 1], [2, 2]], [[3, 3], [4, 4]]]},
+        },
         {"id": "polygon", "geom": {"polygon": [[[1, 1], [2, 2], [3, 3], [1, 1]]]}},
-        {"id": "multiPolygon", "geom": {
-            "multiPolygon": [[[[1, 1], [2, 2], [3, 3], [1, 1]]],
-                             [[[4, 4], [5, 5], [6, 6], [4, 4]]]]}}
+        {
+            "id": "multiPolygon",
+            "geom": {
+                "multiPolygon": [
+                    [[[1, 1], [2, 2], [3, 3], [1, 1]]],
+                    [[[4, 4], [5, 5], [6, 6], [4, 4]]],
+                ]
+            },
+        },
     ]
