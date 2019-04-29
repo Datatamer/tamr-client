@@ -1,4 +1,4 @@
-import simplejson as json
+import json
 from unittest import TestCase
 
 import responses
