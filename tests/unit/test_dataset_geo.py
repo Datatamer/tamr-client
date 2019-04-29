@@ -219,6 +219,13 @@ class TestDatasetGeo(TestCase):
         }
         self.assertEqual(expected, actual)
 
+        record_without_geo = {"id": "1", "prop1": "val1"}
+        actual = Dataset._record_to_feature(
+            record_without_geo, key_value_single, ["id"], None
+        )
+        expected = {"type": "Feature", "id": "1", "properties": {"prop1": "val1"}}
+        self.assertEqual(expected, actual)
+
     @responses.activate
     def test_geo_features(self):
         dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"

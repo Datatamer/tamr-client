@@ -175,7 +175,7 @@ class Dataset(BaseResource):
             "polygon": "Polygon",
             "multiPolygon": "MultiPolygon",
         }
-        if geo_attr in record:
+        if geo_attr and geo_attr in record:
             src_geo = record[geo_attr]
             for unify_attr in conversion.keys():
                 if unify_attr in src_geo and src_geo[unify_attr]:
