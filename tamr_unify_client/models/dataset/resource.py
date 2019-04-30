@@ -94,6 +94,44 @@ class Dataset(BaseResource):
             self.client, status_json, api_path=self.api_path + "/status"
         )
 
+    def from_geo_features(self, features):
+        """Upsert this dataset from a geospatial FeatureCollection or iterable of Features.
+
+        `features` can be:
+
+        - An object that implements ``__geo_interface__`` as a FeatureCollection
+          (see https://gist.github.com/sgillies/2217756)
+        - An iterable of features, where each element is a feature dictionary or an object
+          that implements the ``__geo_interface__`` as a Feature
+        - A map where the "features" key contains an iterable of features
+
+        See: geopandas.GeoDataFrame.from_features()
+
+        :param features: geospatial features
+        """
+        if hasattr(features, "__geo_interface__"):
+            features = features.__geo_interface__
+        if hasattr(features, "get") and features.get("type") == "FeatureCollection":
+            features = features["features"]
+
+        key_attrs = self.key_attribute_names
+        if len(key_attrs) == 1:
+            record_id = "recordId"
+        else:
+            record_id = "compositeRecordId"
+
+        def upsert_stream(features):
+            for feature in features:
+                yield {
+                    "action": "CREATE",
+                    record_id: feature["id"],
+                    "record": self._feature_to_record(
+                        feature, key_attrs, self._geo_attr
+                    ),
+                }
+
+        self.update_records(upsert_stream(features))
+
     @property
     def __geo_interface__(self):
         """Retrieve a representation of this dataset that conforms to the Python Geo Interface.
@@ -152,7 +190,7 @@ class Dataset(BaseResource):
             attr.name
             for attr in self.attributes
             if "RECORD" == attr.type.base_type
-               and geo_attr_names.intersection(
+            and geo_attr_names.intersection(
                 {sub_attr.name for sub_attr in attr.type.attributes}
             )
         ]
@@ -198,6 +236,44 @@ class Dataset(BaseResource):
         if non_reserved:
             feature["properties"] = {attr: record[attr] for attr in non_reserved}
         return feature
+
+    @staticmethod
+    def _feature_to_record(feature, key_attrs, geo_attr):
+        """Convert a Python Geo Interface Feature to a Unify record
+
+        :param feature: Python Geo Interface Feature
+        :param key_attrs: Sequence of attributes that comprise the primary key for the record
+        :param geo_attr: The singluar attribute on the record to use for the geometry
+        :return: dict
+        """
+        if hasattr(feature, "__geo_interface__"):
+            feature = feature.__geo_interface__
+
+        record = {}
+
+        props = feature.get("properties")
+        if props:
+            for prop in props:
+                record[prop] = props[prop]
+
+        geometry = feature.get("geometry")
+        if geometry:
+            geo_type = geometry["type"]
+            # Convert e.g. "MultiLineString" -> "multiLineString"
+            geo_type = geo_type[0].lower() + geo_type[1:]
+            record[geo_attr] = {geo_type: geometry["coordinates"]}
+
+        bbox = feature.get("bbox")
+        if bbox:
+            record["bbox"] = bbox
+
+        if key_attrs[1:]:
+            key_vals = feature["id"]
+            for i, attr in enumerate(key_attrs):
+                record[attr] = key_vals[i]
+        else:
+            record[key_attrs[0]] = feature["id"]
+        return record
 
     def __repr__(self):
         return (
