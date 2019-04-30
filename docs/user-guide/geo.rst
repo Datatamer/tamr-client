@@ -40,7 +40,14 @@ To produce a GeoJSON representation of a dataset::
   with open("my_dataset.json", "w") as f:
     json.dump(dataset.__geo_interface__, f)
 
-Rules for converting between Unify records and Geospatial Features
+``Dataset`` can also be updated from a feature collection that supports the Python Geo Interface::
+
+  import geopandas
+  geodataframe = geopandas.GeoDataFrame(...)
+  dataset = client.dataset.by_name("my_dataset")
+  dataset.from_geo_features(geodataframe)
+
+Rules for converting from Unify records to Geospatial Features
 ------------------------------------------------------------------
 
 The record's primary key will be used as the feature's ``id``. If the primary key is a single
@@ -65,6 +72,21 @@ may be provided.
 
 All other attributes will be placed in ``properties``, with no type conversion. This includes
 all geometry attributes other than the first.
+
+Rules for converting from Geospatial Features to Unify records
+--------------------------------------------------------------
+
+The Feature's ``id`` will be converted into the primary key for the record. If the record uses
+a simple key, no value translation will be done. If the record uses a composite key, then the
+value of the Feature's ``id`` must be an array of values, one per attribute in the key.
+
+If the Feature contains keys in ``properties`` that conflict with the record keys, ``bbox``,
+or geometry, those keys are ignored (omitted).
+
+If the Feature contains a ``bbox``, it is copied to the record's ``bbox``.
+
+All other keys in the Feature's ``properties`` are propagated to the same-name attribute on the
+record, with no type conversion.
 
 Streaming data access
 ---------------------
