@@ -23,7 +23,7 @@ be used as the geometry; all other geometry attributes will appear as properties
 The :class:`~tamr_unify_client.models.dataset.resource.Dataset` class supports the
 ``__geo_interface__`` property. This will produce one ``FeatureCollection`` for the entire dataset.
 
-There is a companion property ``__geo_features__`` that returns a generator that allows you to
+There is a companion iterator ``iterfeatures()`` that returns a generator that allows you to
 stream the records in the dataset as Geospatial features.
 
 To produce a GeoJSON representation of a dataset::
@@ -53,10 +53,10 @@ All other attributes will be placed in ``properties``, with no type conversion.
 Streaming data access
 ---------------------
 
-The ``Dataset`` property ``__geo_features__`` is a generator that allows you to
+The ``Dataset`` method ``iterfeatures()`` returns a generator that allows you to
 stream the records in the dataset as Geospatial features::
 
   dataset = client.datasets.by_name("my_dataset")
-  for feature in dataset.__geo_features__:
+  for feature in dataset.iterfeatures():
     do_something(feature)
 
