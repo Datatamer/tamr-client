@@ -56,7 +56,15 @@ Streaming data access
 The ``Dataset`` method ``iterfeatures()`` returns a generator that allows you to
 stream the records in the dataset as Geospatial features::
 
-  dataset = client.datasets.by_name("my_dataset")
-  for feature in dataset.iterfeatures():
+  my_dataset = client.datasets.by_name("my_dataset")
+  for feature in my_dataset.iterfeatures():
     do_something(feature)
 
+Note that many packages that consume the Python Geo Interface will be able to consume this
+iterator directly. For example::
+
+  from geopandas import GeoDataFrame
+  df = GeoDataFrame.from_features(my_dataset.iterfeatures())
+
+This allows construction of a GeoDataFrame directly from the stream of records, without
+materializing the intermediate dataset.
