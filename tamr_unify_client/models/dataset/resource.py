@@ -129,6 +129,16 @@ class Dataset(BaseResource):
             def key_value(rec):
                 return [rec[attr] for attr in key_attrs]
 
+        for record in self.records():
+            yield self._record_to_feature(record, key_value, key_attrs, self._geo_attr)
+
+    @property
+    def _geo_attr(self):
+        """The name of the attribute that contains geometry
+
+        :return: the name of the attribute that contains geometry
+        :rtype: str
+        """
         # Duck-typing: find all the attributes that look like geometry
         geo_attr_names = {
             "point",
@@ -142,7 +152,7 @@ class Dataset(BaseResource):
             attr.name
             for attr in self.attributes
             if "RECORD" == attr.type.base_type
-            and geo_attr_names.intersection(
+               and geo_attr_names.intersection(
                 {sub_attr.name for sub_attr in attr.type.attributes}
             )
         ]
@@ -151,8 +161,7 @@ class Dataset(BaseResource):
             geo_attr = geo_attrs[0]
         else:
             geo_attr = None
-        for record in self.records():
-            yield self._record_to_feature(record, key_value, key_attrs, geo_attr)
+        return geo_attr
 
     @staticmethod
     def _record_to_feature(record, key_value, key_attrs, geo_attr):
