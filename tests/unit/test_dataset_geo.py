@@ -241,7 +241,7 @@ class TestDatasetGeo(TestCase):
             body="\n".join([json.dumps(rec) for rec in self._records_json]),
         )
         dataset = self.unify.datasets.by_resource_id("1")
-        features = [feature for feature in dataset.iterfeatures()]
+        features = [feature for feature in dataset.itergeofeatures()]
         self.assertEqual(6, len(features))
         self.assertSetEqual(
             {

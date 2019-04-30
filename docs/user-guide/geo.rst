@@ -31,7 +31,7 @@ properties, Unify has a more restricted set of supported types. See https://docs
 The :class:`~tamr_unify_client.models.dataset.resource.Dataset` class supports the
 ``__geo_interface__`` property. This will produce one ``FeatureCollection`` for the entire dataset.
 
-There is a companion iterator ``iterfeatures()`` that returns a generator that allows you to
+There is a companion iterator ``itergeofeatures()`` that returns a generator that allows you to
 stream the records in the dataset as Geospatial features.
 
 To produce a GeoJSON representation of a dataset::
@@ -69,18 +69,18 @@ all geometry attributes other than the first.
 Streaming data access
 ---------------------
 
-The ``Dataset`` method ``iterfeatures()`` returns a generator that allows you to
+The ``Dataset`` method ``itergeofeatures()`` returns a generator that allows you to
 stream the records in the dataset as Geospatial features::
 
   my_dataset = client.datasets.by_name("my_dataset")
-  for feature in my_dataset.iterfeatures():
+  for feature in my_dataset.itergeofeatures():
     do_something(feature)
 
 Note that many packages that consume the Python Geo Interface will be able to consume this
 iterator directly. For example::
 
   from geopandas import GeoDataFrame
-  df = GeoDataFrame.from_features(my_dataset.iterfeatures())
+  df = GeoDataFrame.from_features(my_dataset.itergeofeatures())
 
 This allows construction of a GeoDataFrame directly from the stream of records, without
 materializing the intermediate dataset.

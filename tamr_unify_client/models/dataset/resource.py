@@ -107,10 +107,10 @@ class Dataset(BaseResource):
         """
         return {
             "type": "FeatureCollection",
-            "features": [feature for feature in self.iterfeatures()],
+            "features": [feature for feature in self.itergeofeatures()],
         }
 
-    def iterfeatures(self):
+    def itergeofeatures(self):
         """Returns an iterator that yields feature dictionaries that comply with __geo_interface__
 
         See https://gist.github.com/sgillies/2217756
