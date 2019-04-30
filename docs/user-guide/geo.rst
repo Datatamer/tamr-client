@@ -6,19 +6,27 @@ What geospatial data is supported?
 
 In general, the Python Geo Interface is supported; see https://gist.github.com/sgillies/2217756
 
-There are three layers of information:
+There are three layers of information, modeled after GeoJSON; see https://tools.ietf.org/html/rfc7946 :
 
 - The outermost layer is a FeatureCollection
-- Within a FeatureCollection are Features. Each feature has a type, an id, an optional
-  geometry, an optional bbox (bounding box), and optional properties.
-- A geometry has a type and coordinates.
+- Within a FeatureCollection are Features, each of which represents one "thing", like a building
+  or a river. Each feature has:
 
-Although the Python Geo Interface is non-prescriptive when it comes to the data types of
+  - type (string; required)
+  - id (object; required)
+  - geometry (Geometry, see below; optional)
+  - bbox ("bounding box", 4 doubles; optional)
+  - properties (map[string, object]; optional)
+
+- Within a Feature is a Geometry, which represents a shape, like a point or a polygon. Each
+  geometry has:
+
+  - type (one of "Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon";
+    required)
+  - coordinates (doubles; exactly how these are structured depends on the type of the geometry)
+
+Although the Python Geo Interface is non-prescriptive when it comes to the data types of the id and
 properties, Unify has a more restricted set of supported types. See https://docs.tamr.com/reference#attribute-types
-
-Unify allows any number of geometry attributes per record; the Python Geo Interface is limited to
-one. When converting Unify records to Python Geo Features, the first geometry attribute will
-be used as the geometry; all other geometry attributes will appear as properties.
 
 The :class:`~tamr_unify_client.models.dataset.resource.Dataset` class supports the
 ``__geo_interface__`` property. This will produce one ``FeatureCollection`` for the entire dataset.
@@ -40,15 +48,23 @@ attribute, then the value of that attribute will be the value of ``id``. If the 
 composed of multiple attributes, then the value of the ``id`` will be an array with the values
 of the key attributes in order.
 
-The first attribute with type ``RECORD`` containing an attribute named
-``point``, ``multiPoint``, ``lineString``, ``multiLineString``, ``polygon``, or ``multiPolygon``
-will be used as the geometry. No conversion is done between the coordinates as
-represented in Unify and the coordinates in the feature.
+Unify allows any number of geometry attributes per record; the Python Geo Interface is limited to
+one. When converting Unify records to Python Geo Features, the first geometry attribute in the schema
+will be used as the geometry; all other geometry attributes will appear as properties with no type
+conversion. In the future, additional control over the handling of multiple geometries may be
+provided; the current set of capabilities is intended primarily to support the use case of working
+with FeatureCollections within Unify, and FeatureCollection has only one geometry per feature.
+
+An attribute is considered to have geometry type if it has type ``RECORD`` and contains an attribute
+named ``point``, ``multiPoint``, ``lineString``, ``multiLineString``, ``polygon``, or
+``multiPolygon``.
 
 If an attribute named ``bbox`` is available, it will be used as ``bbox``. No conversion is done
-on the value of ``bbox``.
+on the value of ``bbox``. In the future, additional control over the handling of ``bbox`` attributes
+may be provided.
 
-All other attributes will be placed in ``properties``, with no type conversion.
+All other attributes will be placed in ``properties``, with no type conversion. This includes
+all geometry attributes other than the first.
 
 Streaming data access
 ---------------------
