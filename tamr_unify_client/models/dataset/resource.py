@@ -58,7 +58,7 @@ class Dataset(BaseResource):
         """Send a batch of record creations/updates/deletions to this dataset.
 
         :param records: Each record should be formatted as specified in the `Public Docs for Dataset updates <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
-        :type records: list[dict]
+        :type records: iterable[dict]
         """
         body = "\n".join([json.dumps(r) for r in records])
         self.client.post(self.api_path + ":updateRecords", data=body)
@@ -120,17 +120,9 @@ class Dataset(BaseResource):
         else:
             record_id = "compositeRecordId"
 
-        def upsert_stream(features):
-            for feature in features:
-                yield {
-                    "action": "CREATE",
-                    record_id: feature["id"],
-                    "record": self._feature_to_record(
-                        feature, key_attrs, self._geo_attr
-                    ),
-                }
-
-        self.update_records(upsert_stream(features))
+        self.update_records(
+            self._features_to_updates(features, record_id, key_attrs, self._geo_attr)
+        )
 
     @property
     def __geo_interface__(self):
@@ -178,19 +170,11 @@ class Dataset(BaseResource):
         :rtype: str
         """
         # Duck-typing: find all the attributes that look like geometry
-        geo_attr_names = {
-            "point",
-            "multiPoint",
-            "lineString",
-            "multiLineString",
-            "polygon",
-            "multiPolygon",
-        }
         geo_attrs = [
             attr.name
             for attr in self.attributes
             if "RECORD" == attr.type.base_type
-            and geo_attr_names.intersection(
+            and self._geo_attr_names().intersection(
                 {sub_attr.name for sub_attr in attr.type.attributes}
             )
         ]
@@ -213,20 +197,13 @@ class Dataset(BaseResource):
         """
         feature = {"type": "Feature", "id": key_value(record)}
         reserved = {"bbox", geo_attr}.union(key_attrs)
-        conversion = {
-            "point": "Point",
-            "multiPoint": "MultiPoint",
-            "lineString": "LineString",
-            "multiLineString": "MultiLineString",
-            "polygon": "Polygon",
-            "multiPolygon": "MultiPolygon",
-        }
         if geo_attr and geo_attr in record:
             src_geo = record[geo_attr]
-            for unify_attr in conversion.keys():
+            for unify_attr in Dataset._geo_attr_names():
                 if unify_attr in src_geo and src_geo[unify_attr]:
                     feature["geometry"] = {
-                        "type": conversion[unify_attr],
+                        # Convert e.g. multiLineString -> MultiLineString
+                        "type": unify_attr[0].upper() + unify_attr[1:],
                         "coordinates": src_geo[unify_attr],
                     }
                     break
@@ -240,6 +217,9 @@ class Dataset(BaseResource):
     @staticmethod
     def _feature_to_record(feature, key_attrs, geo_attr):
         """Convert a Python Geo Interface Feature to a Unify record
+
+        feature can be a dict representing a Geospatial Feature, or a Feature object
+        that implements the __geo_interface__ property.
 
         :param feature: Python Geo Interface Feature
         :param key_attrs: Sequence of attributes that comprise the primary key for the record
@@ -268,12 +248,21 @@ class Dataset(BaseResource):
             record["bbox"] = bbox
 
         if key_attrs[1:]:
-            key_vals = feature["id"]
+            key_values = feature["id"]
             for i, attr in enumerate(key_attrs):
-                record[attr] = key_vals[i]
+                record[attr] = key_values[i]
         else:
             record[key_attrs[0]] = feature["id"]
         return record
+
+    @staticmethod
+    def _features_to_updates(features, id_attr, key_attrs, geo_attr):
+        for feature in features:
+            yield {
+                "action": "CREATE",
+                id_attr: feature["id"],
+                "record": Dataset._feature_to_record(feature, key_attrs, geo_attr),
+            }
 
     def __repr__(self):
         return (
@@ -283,3 +272,14 @@ class Dataset(BaseResource):
             f"name={self.name!r}, "
             f"version={self.version!r})"
         )
+
+    @staticmethod
+    def _geo_attr_names():
+        return {
+            "point",
+            "multiPoint",
+            "lineString",
+            "multiLineString",
+            "polygon",
+            "multiPolygon",
+        }
