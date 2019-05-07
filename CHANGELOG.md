@@ -2,6 +2,8 @@
   **NEW FEATURES**
   - [#94](https://github.com/Datatamer/unify-client-python/issues/94) Add access to Attributes of a Dataset
   - [#103](https://github.com/Datatamer/unify-client-python/issues/103) Dataset `update_records` improvements
+  - [#98](https://github.com/Datatamer/unify-client-python/issues/98) Add `__geo_interface__` to Dataset
+  - [#100](https://github.com/Datatamer/unify-client-python/issues/100) Add `from_geo_features` to Dataset
 
 ## 0.4.0
   **BREAKING CHANGES**

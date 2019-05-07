@@ -58,6 +58,7 @@ CI is wired to ["deploy"](https://github.com/Datatamer/unify-client-python/blob/
 Check that CI tests passed.
 Check that CI successfully published the release version to [PyPI](https://pypi.org/project/tamr-unify-client/#history).
 
+On the `master` branch, add release date for this release in the `CHANGELOG.md`.
 ---
 
 If everything went correctly `pip install -U tamr-unify-client` should install the new release of the Python Client.
