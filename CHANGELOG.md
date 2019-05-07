@@ -1,6 +1,7 @@
 ## 0.5.0-dev
   **NEW FEATURES**
   - [#94](https://github.com/Datatamer/unify-client-python/issues/94) Add access to Attributes of a Dataset
+  - [#103](https://github.com/Datatamer/unify-client-python/issues/103) Dataset `update_records` improvements
 
 ## 0.4.0
   **BREAKING CHANGES**
