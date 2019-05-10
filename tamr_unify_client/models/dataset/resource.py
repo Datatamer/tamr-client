@@ -60,8 +60,9 @@ class Dataset(BaseResource):
         :param records: Each record should be formatted as specified in the `Public Docs for Dataset updates <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
         :type records: iterable[dict]
         """
-        for update in updates:
-            yield f"{update}\n".encode("utf-8")
+        def _stringify_updates(updates):
+            for update in updates:
+                yield f"{update}\n".encode("utf-8")
 
         return self.client.post(
             self.api_path + ":updateRecords",
