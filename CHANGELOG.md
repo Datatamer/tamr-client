@@ -1,7 +1,7 @@
 ## 0.5.0-dev
   **NEW FEATURES**
   - [#94](https://github.com/Datatamer/unify-client-python/issues/94) Add access to Attributes of a Dataset
-  - [#103](https://github.com/Datatamer/unify-client-python/issues/103) Dataset `update_records` improvements
+  - [#103](https://github.com/Datatamer/unify-client-python/issues/103) Dataset `update_records` now returns the JSON response body for the underlying `POST datasets/{id}:updateRecords` call
   - [#98](https://github.com/Datatamer/unify-client-python/issues/98) Add `__geo_interface__` to Dataset
   - [#100](https://github.com/Datatamer/unify-client-python/issues/100) Add `from_geo_features` to Dataset
 
