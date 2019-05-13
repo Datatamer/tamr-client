@@ -479,7 +479,7 @@ class TestDatasetGeo(TestCase):
             },
         ]
         expected = "\n".join(json.dumps(update) for update in updates)
-        actual = snoop["payload"]
+        actual = list(snoop["payload"])
         self.assertEqual(expected, actual)
 
         class NotAFeatureCollection:
@@ -538,7 +538,7 @@ class TestDatasetGeo(TestCase):
             },
         ]
         expected = "\n".join(json.dumps(update) for update in updates)
-        actual = snoop["payload"]
+        actual = list(snoop["payload"])
         self.assertEqual(expected, actual)
 
     _dataset_json = {
