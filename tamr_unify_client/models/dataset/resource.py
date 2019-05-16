@@ -64,11 +64,11 @@ class Dataset(BaseResource):
         """
         def _stringify_updates(updates):
             for update in updates:
-                yield f"{update}\n".encode("utf-8")
+                yield f'{update}'.encode('utf-8')
 
         return self.client.post(
-            self.api_path + ":updateRecords",
-            headers={"Content-Encoding": "utf-8"},
+            self.api_path + ':updateRecords',
+            headers={'Content-Encoding': "utf-8"},
             data=_stringify_updates(records)).successful().json()
 
     def refresh(self, **options):
