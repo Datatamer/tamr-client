@@ -478,7 +478,7 @@ class TestDatasetGeo(TestCase):
                 "record": {"geom": {"point": [1, 1]}, "id": "2"},
             },
         ]
-        expected = "\n".join(json.dumps(update) for update in updates)
+        expected = [json.dumps(update).encode('utf8') for update in updates]
         actual = list(snoop["payload"])
         self.assertEqual(expected, actual)
 
@@ -537,7 +537,8 @@ class TestDatasetGeo(TestCase):
                 "record": {"geom": {"point": [1, 1]}, "id1": "2", "id2": "b"},
             },
         ]
-        expected = "\n".join(json.dumps(update) for update in updates)
+        expected = [json.dumps(update).encode('utf8') for update in updates]
+        self.maxDiff = None
         actual = list(snoop["payload"])
         self.assertEqual(expected, actual)
 
