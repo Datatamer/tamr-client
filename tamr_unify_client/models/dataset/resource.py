@@ -62,14 +62,20 @@ class Dataset(BaseResource):
         :returns: JSON response body from server.
         :rtype: :py:class:`dict`
         """
+
         def _stringify_updates(updates):
             for update in updates:
-                yield f'{update}'.encode('utf-8')
+                yield f"{update}".encode("utf-8")
 
-        return self.client.post(
-            self.api_path + ':updateRecords',
-            headers={'Content-Encoding': "utf-8"},
-            data=_stringify_updates(records)).successful().json()
+        return (
+            self.client.post(
+                self.api_path + ":updateRecords",
+                headers={"Content-Encoding": "utf-8"},
+                data=_stringify_updates(records),
+            )
+            .successful()
+            .json()
+        )
 
     def refresh(self, **options):
         """Brings dataset up-to-date if needed, taking whatever actions are required.

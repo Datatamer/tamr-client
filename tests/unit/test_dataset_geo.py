@@ -478,8 +478,8 @@ class TestDatasetGeo(TestCase):
                 "record": {"geom": {"point": [1, 1]}, "id": "2"},
             },
         ]
-        expected = [json.dumps(update).encode('utf8') for update in updates]
-        actual = list(snoop["payload"])
+        expected = [json.dumps(update).replace('"', "'") for update in updates]
+        actual = [a.decode("utf8") for a in list(snoop["payload"])]
         self.assertEqual(expected, actual)
 
         class NotAFeatureCollection:
@@ -490,7 +490,7 @@ class TestDatasetGeo(TestCase):
         snoop["payload"] = None
         nafc = NotAFeatureCollection()
         dataset.from_geo_features(nafc)
-        actual = snoop["payload"]
+        actual = [a.decode("utf8") for a in list(snoop["payload"])]
         self.assertEqual(expected, actual)
 
     @responses.activate
@@ -537,9 +537,9 @@ class TestDatasetGeo(TestCase):
                 "record": {"geom": {"point": [1, 1]}, "id1": "2", "id2": "b"},
             },
         ]
-        expected = [json.dumps(update).encode('utf8') for update in updates]
+        expected = [json.dumps(update).replace('"', "'") for update in updates]
         self.maxDiff = None
-        actual = list(snoop["payload"])
+        actual = [a.decode("utf8") for a in list(snoop["payload"])]
         self.assertEqual(expected, actual)
 
     _dataset_json = {
