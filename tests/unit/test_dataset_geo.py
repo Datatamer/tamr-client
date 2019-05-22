@@ -1,8 +1,8 @@
+import ast
 from copy import deepcopy
 from functools import partial
 import json
 from unittest import TestCase
-import ast
 
 import responses
 
