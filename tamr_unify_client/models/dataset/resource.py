@@ -59,9 +59,23 @@ class Dataset(BaseResource):
 
         :param records: Each record should be formatted as specified in the `Public Docs for Dataset updates <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
         :type records: iterable[dict]
+        :returns: JSON response body from server.
+        :rtype: :py:class:`dict`
         """
-        body = "\n".join([json.dumps(r) for r in records])
-        self.client.post(self.api_path + ":updateRecords", data=body)
+
+        def _stringify_updates(updates):
+            for update in updates:
+                yield f"{update}".encode("utf-8")
+
+        return (
+            self.client.post(
+                self.api_path + ":updateRecords",
+                headers={"Content-Encoding": "utf-8"},
+                data=_stringify_updates(records),
+            )
+            .successful()
+            .json()
+        )
 
     def refresh(self, **options):
         """Brings dataset up-to-date if needed, taking whatever actions are required.
