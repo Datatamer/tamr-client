@@ -20,7 +20,6 @@ class MasteringProject(Project):
         resource_json = self.client.get(alias).successful().json()
         return Dataset.from_json(self.client, resource_json, alias)
 
-
     def pair_matching_model(self):
         """Machine learning model for pair-matching for this Mastering project.
         Learns from verified labels and predicts categorization labels for unlabeled pairs.
