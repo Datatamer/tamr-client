@@ -91,7 +91,9 @@ class Project(BaseResource):
         :return: None
         """
         dataset_id = dataset.relative_id.split("/")[-1]
-        self.client.post(self.api_path + "/inputDatasets" + f"?id={dataset_id}").successful()
+        self.client.post(
+            self.api_path + "/inputDatasets" + f"?id={dataset_id}"
+        ).successful()
         return None
 
     def __repr__(self):
