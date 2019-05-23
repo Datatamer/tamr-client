@@ -1,7 +1,7 @@
+import ast
 from copy import deepcopy
 from functools import partial
 import json
-import ast
 from unittest import TestCase
 
 import responses
@@ -539,8 +539,7 @@ class TestDatasetGeo(TestCase):
             },
         ]
         expected = updates
-        actual = [ast.literal_eval(a.decode("utf8")) for a in snoop["payload"]]
-        
+        actual = [ast.literal_eval(a.decode("utf8")) for a in (snoop["payload"])]
         self.assertEqual(expected, actual)
 
     _dataset_json = {
