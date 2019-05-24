@@ -65,7 +65,7 @@ class Dataset(BaseResource):
 
         def _stringify_updates(updates):
             for update in updates:
-                yield f"{update}".encode("utf-8")
+                yield json.dumps(update).encode("utf-8")
 
         return (
             self.client.post(
