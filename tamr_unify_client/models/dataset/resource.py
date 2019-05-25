@@ -54,28 +54,44 @@ class Dataset(BaseResource):
         resource_json = self.client.get(alias).successful().json()
         return AttributeCollection.from_json(self.client, resource_json, alias)
 
-    def update_records(self, records):
-        """Send a batch of record creations/updates/deletions to this dataset.
+    def update_records(self, records, commit_interval=None):
+        """Send a stream of record creations/updates/deletions to this dataset.
+
+        If commit_interval is specified, it must be an integer > 0.
+        In this case, the updates are processed in batches of up to commit_interval
+        updates, which allows the server to commit each batch. Only the status
+        of the last batch is returned.
 
         :param records: Each record should be formatted as specified in the `Public Docs for Dataset updates <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
         :type records: iterable[dict]
-        :returns: JSON response body from server.
+        :returns: JSON response body from the last commit.
         :rtype: :py:class:`dict`
         """
+        from itertools import islice
+        from more_itertools import peekable
 
         def _stringify_updates(updates):
             for update in updates:
                 yield json.dumps(update).encode("utf-8")
 
-        return (
-            self.client.post(
-                self.api_path + ":updateRecords",
-                headers={"Content-Encoding": "utf-8"},
-                data=_stringify_updates(records),
-            )
-            .successful()
-            .json()
-        )
+        # updates is a peekable generator of updates.
+        # we use islice() to process up to commit_interval items from it
+        # at a time; it retains state across batches, so the next batch
+        # can pick up where the previous left off.
+        updates = peekable(_stringify_updates(records))
+        try:
+            while True:
+                result = self.client.post(
+                    self.api_path + ":updateRecords",
+                    headers={"Content-Encoding": "utf-8"},
+                    data=islice(updates, commit_interval) if commit_interval else updates
+                ).successful().json()
+                # peekable.peek() raises StopIteration when done
+                updates.peek()
+        except StopIteration:
+            pass
+
+        return result
 
     def refresh(self, **options):
         """Brings dataset up-to-date if needed, taking whatever actions are required.
@@ -108,7 +124,7 @@ class Dataset(BaseResource):
             self.client, status_json, api_path=self.api_path + "/status"
         )
 
-    def from_geo_features(self, features):
+    def from_geo_features(self, features, **kwargs):
         """Upsert this dataset from a geospatial FeatureCollection or iterable of Features.
 
         `features` can be:
@@ -135,7 +151,8 @@ class Dataset(BaseResource):
             record_id = "compositeRecordId"
 
         self.update_records(
-            self._features_to_updates(features, record_id, key_attrs, self._geo_attr)
+            self._features_to_updates(features, record_id, key_attrs, self._geo_attr),
+            **kwargs
         )
 
     @property
