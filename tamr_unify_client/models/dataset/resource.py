@@ -81,6 +81,7 @@ class Dataset(BaseResource):
         updates = peekable(_stringify_updates(records))
         try:
             while True:
+                # Create a session here to take advantage of keep alive
                 result = self.client.post(
                     self.api_path + ":updateRecords",
                     headers={"Content-Encoding": "utf-8"},
