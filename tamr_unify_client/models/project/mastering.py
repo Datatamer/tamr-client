@@ -79,4 +79,7 @@ class MasteringProject(Project):
     def data_with_cluster(self):
         print("Hello World")
 
+    def random(self):
+        pass
+
     # super.__repr__ is sufficient
