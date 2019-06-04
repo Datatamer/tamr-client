@@ -1,4 +1,3 @@
-import ast
 from copy import deepcopy
 from functools import partial
 import json
@@ -480,11 +479,7 @@ class TestDatasetGeo(TestCase):
             },
         ]
         expected = updates
-<<<<<<< add-source-dataset
-        actual = [ast.literal_eval(a.decode("utf8")) for a in (snoop["payload"])]
-=======
         actual = [json.loads(item) for item in snoop["payload"]]
->>>>>>> master
         self.assertEqual(expected, actual)
 
         class NotAFeatureCollection:
@@ -495,11 +490,7 @@ class TestDatasetGeo(TestCase):
         snoop["payload"] = None
         nafc = NotAFeatureCollection()
         dataset.from_geo_features(nafc)
-<<<<<<< add-source-dataset
-        actual = [ast.literal_eval(a.decode("utf8")) for a in (snoop["payload"])]
-=======
         actual = [json.loads(item) for item in snoop["payload"]]
->>>>>>> master
         self.assertEqual(expected, actual)
 
     @responses.activate
@@ -547,11 +538,7 @@ class TestDatasetGeo(TestCase):
             },
         ]
         expected = updates
-<<<<<<< add-source-dataset
-        actual = [ast.literal_eval(a.decode("utf8")) for a in (snoop["payload"])]
-=======
         actual = [json.loads(item) for item in snoop["payload"]]
->>>>>>> master
         self.assertEqual(expected, actual)
 
     _dataset_json = {
