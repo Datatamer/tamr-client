@@ -102,7 +102,9 @@ class Dataset(BaseResource):
         if info.is_up_to_date:
             return info
         else:
-            op_json = self.client.post(self.api_path + "/profile:refresh").successful().json()
+            op_json = (
+                self.client.post(self.api_path + "/profile:refresh").successful().json()
+            )
             op = Operation.from_json(self.client, op_json)
             op.apply_options(**options)
             return self.profile()
