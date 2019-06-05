@@ -1,7 +1,6 @@
 from tamr_unify_client.models.base_resource import BaseResource
 from tamr_unify_client.models.dataset.resource import Dataset
 
-
 class Project(BaseResource):
     """A Unify project."""
 
@@ -91,10 +90,8 @@ class Project(BaseResource):
         :return: None
         """
         dataset_id = dataset.relative_id.split("/")[-1]
-        self.client.post(
-            self.api_path + "/inputDatasets" + f"?id={dataset_id}"
-        ).successful()
-        return None
+        response = self.client.post(self.api_path + "/inputDatasets" + f"?id={dataset_id}").successful()
+        return response
 
     def __repr__(self):
         return (
