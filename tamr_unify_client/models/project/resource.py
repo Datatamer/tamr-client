@@ -89,7 +89,7 @@ class Project(BaseResource):
         :param project: Unify Project
         :param dataset: Unify Dataset
         :return: HTTP response from the server
-        :rtype: :class:`requests.models.Response`
+        :rtype: :class:`requests.Response`
         """
         dataset_id = dataset.relative_id.split("/")[-1]
         response = self.client.post(
