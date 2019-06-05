@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "tamr-unify-client"
+version = "0.5.0-dev"
+description = "Python Client for the Tamr Unify API"
+license = "Apache-2.0"
+authors = ["Pedro Cattori <pedro.cattori@tamr.com>"]
+readme = "README.md"
+homepage = "tamr-unify-python-client.rtfd.io"
+repository = "https://github.com/Datatamer/unify-client-python"
+keywords = ["tamr", "unify"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7"
+]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+requests = "^2.22"
+
+[tool.poetry.dev-dependencies]
+Sphinx = "^2.1"
+responses = "^0.10.6"
+flake8-import-order = "^0.18.1"
+pytest = "^4.6"
+black = {version = "^19.3b0",allows-prereleases = true}
+flake8 = "^3.7"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

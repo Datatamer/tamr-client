@@ -3,13 +3,15 @@ language: python
 python:
 - 3.6
 before_install:
-- pip install -U pip setuptools
+- pip install poetry
 install:
-- pip install .[dev]
+- poetry install
 script:
-- black --check .
-- flake8 .
-- pytest tests
+- poetry run black --check .
+- poetry run flake8 .
+- poetry run pytest tests
+
+# TODO change/remove the pypi section?
 deploy:
   provider: pypi
   user: tamr
