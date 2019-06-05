@@ -6,22 +6,18 @@ from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
 
 profile_json1 = {
-  "datasetName": "ds3",
-  "relativeDatasetId": "v1/datasets/3",
-  "isUpToDate": "false",
-  "profiledDataVersion": "3",
-  "profiledAt": {
-    "username": "system",
-    "time": "2019-06-05T14:23:25.860Z",
-    "version": "46"
-  },
-  "simpleMetrics": [
-    {
-      "metricName": "rowCount",
-      "metricValue": "1999"
-    }
-  ]
+    "datasetName": "ds3",
+    "relativeDatasetId": "v1/datasets/3",
+    "isUpToDate": "false",
+    "profiledDataVersion": "3",
+    "profiledAt": {
+        "username": "system",
+        "time": "2019-06-05T14:23:25.860Z",
+        "version": "46",
+    },
+    "simpleMetrics": [{"metricName": "rowCount", "metricValue": "1999"}],
 }
+
 
 @responses.activate
 def test_dataset_profile():
