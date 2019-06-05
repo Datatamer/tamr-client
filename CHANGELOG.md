@@ -17,7 +17,6 @@
   - Record Clusters API endpoint to finish working mastering workflow.
   - [#78](https://github.com/Datatamer/unify-client-python/issues/78) Improved repr for objects through the library
   - [#42](https://github.com/Datatamer/unify-client-python/issues/42) Optional `session` argument to `Client` to use a specific `requests.Session` instance
-  - [#116](https://github.com/Datatamer/unify-client-python/pull/116) `add_source_dataset` method for a project to associate a dataset
 
   **BUG FIXES**
   - Mastering workflow example was missing the generate clusters step, which has been rectified using proper endpoint
