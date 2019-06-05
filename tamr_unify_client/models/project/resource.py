@@ -88,12 +88,11 @@ class Project(BaseResource):
 
         :param project: Unify Project
         :param dataset: Unify Dataset
-        :return: None
+        :return: HTTP response from the server
+        :rtype: :class:`requests.models.Response`
         """
         dataset_id = dataset.relative_id.split("/")[-1]
-        response = self.client.post(
-            self.api_path + "/inputDatasets" + f"?id={dataset_id}"
-        ).successful()
+        response = self.client.post(self.api_path + "/inputDatasets" + f"?id={dataset_id}").successful()
         return response
 
     def __repr__(self):
