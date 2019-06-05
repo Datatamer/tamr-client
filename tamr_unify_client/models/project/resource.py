@@ -92,7 +92,9 @@ class Project(BaseResource):
         :rtype: :class:`requests.models.Response`
         """
         dataset_id = dataset.relative_id.split("/")[-1]
-        response = self.client.post(self.api_path + "/inputDatasets" + f"?id={dataset_id}").successful()
+        response = self.client.post(
+            self.api_path + "/inputDatasets" + f"?id={dataset_id}"
+        ).successful()
         return response
 
     def __repr__(self):
