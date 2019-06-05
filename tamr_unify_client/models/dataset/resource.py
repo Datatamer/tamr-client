@@ -2,8 +2,8 @@ import json
 
 from tamr_unify_client.models.attribute.collection import AttributeCollection
 from tamr_unify_client.models.base_resource import BaseResource
-from tamr_unify_client.models.dataset_status import DatasetStatus
 from tamr_unify_client.models.dataset_profile import DatasetProfile
+from tamr_unify_client.models.dataset_status import DatasetStatus
 from tamr_unify_client.models.operation import Operation
 
 
@@ -66,7 +66,7 @@ class Dataset(BaseResource):
 
         def _stringify_updates(updates):
             for update in updates:
-                yield json.dumps(update).encode("utf-8")
+                yield f"{update}".encode("utf-8")
 
         return (
             self.client.post(
@@ -86,7 +86,7 @@ class Dataset(BaseResource):
         op_json = self.client.post(self.api_path + ":refresh").successful().json()
         op = Operation.from_json(self.client, op_json)
         return op.apply_options(**options)
-    
+
     def profile(self, **options):
         """Generates profile information if not already generated.
 
@@ -94,7 +94,7 @@ class Dataset(BaseResource):
         :return: Dataset Profile information.
         :rtype: :class:`~tamr_unify_client.models.dataset_status.DatasetProfile`
         """
-        
+
         profile_json = self.client.get(self.api_path + "/profile").successful().json()
         info = DatasetProfile.from_json(
             self.client, profile_json, api_path=self.api_path + "/profile"
@@ -102,11 +102,13 @@ class Dataset(BaseResource):
         if info.is_up_to_date:
             return info
         else:
-            op_json = self.client.post(self.api_path + "/profile:refresh").successful().json()
+            op_json = (
+                self.client.post(self.api_path + "/profile:refresh").successful().json()
+            )
             op = Operation.from_json(self.client, op_json)
             op.apply_options(**options)
             return self.profile()
-                
+
     def records(self):
         """Stream this dataset's records as Python dictionaries.
 
