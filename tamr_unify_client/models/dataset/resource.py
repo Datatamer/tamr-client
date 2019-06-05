@@ -88,7 +88,7 @@ class Dataset(BaseResource):
         return op.apply_options(**options)
 
     def profile(self, **options):
-        """Generates profile information if not already generated.
+        """Returns up to date profile information for a dataset, re-profiling if not up to date.
 
         :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
         :return: Dataset Profile information.
