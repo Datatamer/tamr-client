@@ -1,0 +1,4 @@
+# TODO(pcattori) Delete this file once RTD fully supports poetry
+Sphinx
+toml
+.
