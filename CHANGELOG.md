@@ -9,6 +9,7 @@
   **BUG FIXES**
    - [#118](https://github.com/Datatamer/unify-client-python/issues/118) Fix JSON sent for Dataset.update_records
 
+
 ## 0.4.0
   **BREAKING CHANGES**
   - [#61](https://github.com/Datatamer/unify-client-python/issues/61) `data` field renamed to `_data` (private).

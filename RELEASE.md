@@ -2,7 +2,7 @@
 
 During the following steps, we'll consider releasing the `0.3.0` version as an example.
 
-For our example, that means `master` branch is currently on version `0.3.0-dev` (you can check the actual version in `VERSION.txt`).
+For our example, that means `master` branch is currently on version `0.3.0-dev` (you can check the actual version in `pyproject.toml`).
 
 Be sure to substitute `0.3.0` appropriately with the actual version being released.
 
@@ -11,7 +11,7 @@ NOTE: You should make sure the commit you plan to use for the release branch is 
 # 1. Version bump on `master`
 
 Create a PR with the following changes:
-- `Version.txt`: bump the version to the next one, keeping the `-dev` suffix e.g. `0.3.0-dev` -> `0.4.0-dev`.
+- `pyproject.toml`: bump the version to the next one, keeping the `-dev` suffix e.g. `0.3.0-dev` -> `0.4.0-dev`.
 - `CHANGELOG.md`:
   - Create a new section for the new development version e.g. Add `# 0.4.0-dev` to the top of the changelog (with an empty line between it and the next version header).
   - Remove the `-dev` suffix from the version being released e.g. `# 0.3.0-dev` -> `# 0.3.0`.
@@ -29,7 +29,7 @@ NOTE: This release branch should *not* contain the version bump changes from Ste
 # 3. Remove `-dev` suffix on release branch
 
 Create a PR *to the release branch* with the following changes:
-- `VERSION.txt`: Remove `-dev` suffix from version e.g. `0.3.0-dev` -> `0.3.0`.
+- `pyproject.toml`: Remove `-dev` suffix from version e.g. `0.3.0-dev` -> `0.3.0`.
 - `CHANGELOG.md`: Remove the `-dev` suffix from the version being released e.g. `# 0.3.0-dev` -> `# 0.3.0`.
 
 Ensure CI tests pass for your PR and merge your changes into the release branch e.g. `release-0.3.0`.
