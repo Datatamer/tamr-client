@@ -24,11 +24,6 @@ classifiers = [
 python = "^3.6"
 requests = "^2.22"
 
-# TODO(pcattori): Remove extras once RTD properly supports poetry
-# https://github.com/rtfd/readthedocs.org/issues/4912#issuecomment-483756581
-[tool.poetry.extras]
-docs = ["Sphinx", "toml"]
-
 [tool.poetry.dev-dependencies]
 Sphinx = "^2.1"
 responses = "^0.10.6"

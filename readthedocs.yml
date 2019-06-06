@@ -4,8 +4,8 @@ build:
 
 python:
     version: 3.6
-    # TODO(pcattori): Remove the next 3 lines once RTD properly supports poetry
+    # TODO(pcattori): Remove `pip_install` and `requirements_file` once RTD fully support poetry
     # https://github.com/rtfd/readthedocs.org/issues/4912#issuecomment-483756581
     pip_install: true
-    extra_requirements:
-    - docs
+
+requirements_file: docs/requirements.txt
