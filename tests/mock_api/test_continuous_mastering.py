@@ -1,5 +1,7 @@
 import os
 
+import responses
+
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
 from .utils import mock_api
@@ -38,3 +40,10 @@ def test_continuous_mastering():
 
     op = project.published_clusters().refresh(poll_interval_seconds=0)
     assert op.succeeded()
+
+    estimate_url = f"http://localhost:9100/api/versioned/v1/projects/1/estimatedPairCounts"
+    estimate_json = {"isUpToDate": True}
+    responses.add(responses.GET, estimate_url, json=estimate_json)
+
+    status = project.estimate_pairs().is_up_to_date
+    assert status
