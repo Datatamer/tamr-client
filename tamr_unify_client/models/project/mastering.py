@@ -78,9 +78,8 @@ class MasteringProject(Project):
         return Dataset(self.client, None, alias)
 
     def estimate_pairs(self):
-        """Returns up to date estimated pair counts for a mastering project, re-estimating if not up to date.
+        """Returns pair estimate information for a mastering project
 
-        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
         :return: Pairs Estimate information.
         :rtype: :class:`~tamr_unify_client.models.project.estimated_pair_counts`
         """
