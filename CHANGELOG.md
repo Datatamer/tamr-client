@@ -6,6 +6,7 @@
   - [#100](https://github.com/Datatamer/unify-client-python/issues/100) Add `from_geo_features` to Dataset
   - [#116](https://github.com/Datatamer/unify-client-python/issues/116) Add support for associating a dataset with a project
   - [#109](https://github.com/Datatamer/unify-client-python/issues/109) Add support for profiling datasets
+  - [#114](https://github.com/Datatamer/unify-client-python/issues/114) Add support for generate pairs estimate
   
   **BUG FIXES**
   - [#118](https://github.com/Datatamer/unify-client-python/issues/118) Fix JSON sent for Dataset.update_records
