@@ -19,6 +19,12 @@ Dataset
 .. autoclass:: tamr_unify_client.models.dataset.resource.Dataset
   :members:
 
+Dataset Profile
+---------------
+
+.. autoclass:: tamr_unify_client.models.dataset_profile.DatasetProfile
+  :members:
+
 Dataset Status
 --------------
 
