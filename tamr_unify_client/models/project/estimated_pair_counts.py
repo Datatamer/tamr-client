@@ -10,7 +10,7 @@ class EstimatedPairCounts(BaseResource):
 
     @property
     def is_up_to_date(self) -> bool:
-        """Whether the associated dataset is up to date.
+        """Whether an estimate pairs job has been run since the last edit to the binning model.
 
         :type: bool
         """
@@ -18,7 +18,7 @@ class EstimatedPairCounts(BaseResource):
 
     @property
     def total_estimate(self) -> dict:
-        """Info about when profile info was generated.
+        """The total number of estimated candidate pairs and generated pairs for the model across all clauses.
 
         :type: dict
         """
@@ -26,7 +26,7 @@ class EstimatedPairCounts(BaseResource):
 
     @property
     def clause_estimates(self) -> dict:
-        """Info about when profile info was generated.
+        """The clause name, candidate pair count, and generated pair count for each clause in the model.
 
         :type: dict
         """
