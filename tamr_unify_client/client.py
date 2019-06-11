@@ -97,6 +97,7 @@ class Client:
         :return: HTTP response
         :rtype: :class:`requests.Response`
         """
+
         url = urljoin(self.origin + "/" + self.base_path, endpoint)
         response = self.session.request(method, url, auth=self.auth, **kwargs)
 
@@ -144,6 +145,22 @@ class Client:
         :rtype: :class:`~tamr_unify_client.models.DatasetCollection`
         """
         return self._datasets
+
+    def create_project(unify, project_config):
+        """
+        Create a Project in Unify
+
+        :param: Project configuration should be formatted as specified in the `Public Docs for Creating a Project <https://docs.tamr.com/reference#create-a-project>`_.
+        :type: dict
+        :returns: The created Project
+        :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
+        """
+        from tamr_unify_client.models.project.resource import Project
+
+        data = (
+            unify.post(unify.projects.api_path, json=project_config).successful().json()
+        )
+        return Project(unify, data)
 
     def __repr__(self):
         # Show only the type `auth` to mitigate any security concerns.
