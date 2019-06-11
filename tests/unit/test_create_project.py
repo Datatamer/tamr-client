@@ -17,15 +17,15 @@ def test_create_project():
         "type": "DEDUP",
         "unifiedDatasetName": "Project 1 - Unified Dataset",
         "externalId": "Project1",
-        "resourceId": "1",
+        "resourceId": "1"
     }
 
     projects_url = f"http://localhost:9100/api/versioned/v1/projects"
     project_url = f"http://localhost:9100/api/versioned/v1/projects/1"
 
-    responses.add(responses.POST, projects_url, json={}, status=204)
+    responses.add(responses.POST, projects_url, json=project_config, status=204)
     responses.add(responses.GET, project_url, json=project_config)
 
-    unify.create_project(project_config)
+    u = unify.create_project(project_config)
     p = unify.projects.by_resource_id("1")
-    print(p)
+    assert print(p) == print(u)
