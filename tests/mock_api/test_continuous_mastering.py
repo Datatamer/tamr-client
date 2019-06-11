@@ -45,25 +45,13 @@ def test_continuous_mastering():
         f"http://localhost:9100/api/versioned/v1/projects/1/estimatedPairCounts"
     )
     estimate_json = {
-      "isUpToDate": "true",
-      "totalEstimate": {
-        "candidatePairCount": "200",
-        "generatedPairCount": "100"
-      },
-      "clauseEstimates": {
-        "clause1": {
-          "candidatePairCount": "50",
-          "generatedPairCount": "25"
+        "isUpToDate": "true",
+        "totalEstimate": {"candidatePairCount": "200", "generatedPairCount": "100"},
+        "clauseEstimates": {
+            "clause1": {"candidatePairCount": "50", "generatedPairCount": "25"},
+            "clause2": {"candidatePairCount": "50", "generatedPairCount": "25"},
+            "clause3": {"candidatePairCount": "100", "generatedPairCount": "50"},
         },
-        "clause2": {
-          "candidatePairCount": "50",
-          "generatedPairCount": "25"
-        },
-        "clause3": {
-          "candidatePairCount": "100",
-          "generatedPairCount": "50"
-        }
-      }
     }
     responses.add(responses.GET, estimate_url, json=estimate_json)
 
@@ -75,5 +63,3 @@ def test_continuous_mastering():
 
     clause1 = project.estimate_pairs().clause_estimates["clause1"]
     assert clause1["generatedPairCount"] == "25"
-
-
