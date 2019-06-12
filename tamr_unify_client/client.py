@@ -155,7 +155,10 @@ class Client:
         :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
         """
         from tamr_unify_client.models.project.resource import Project
-        data = self.post(self.projects.api_path, json=project_config).successful().json()
+
+        data = (
+            self.post(self.projects.api_path, json=project_config).successful().json()
+        )
         return Project.from_json(self, data)
 
     def __repr__(self):
