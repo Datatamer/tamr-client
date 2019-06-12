@@ -145,6 +145,22 @@ class Client:
         """
         return self._datasets
 
+    def create_project(self, project_config):
+        """
+        Create a Project in Unify
+
+        :param project_config: Project configuration should be formatted as specified in the `Public Docs for Creating a Project <https://docs.tamr.com/reference#create-a-project>`_.
+        :type project_config: dict[str, str]
+        :returns: The created Project
+        :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
+        """
+        from tamr_unify_client.models.project.resource import Project
+
+        data = (
+            self.post(self.projects.api_path, json=project_config).successful().json()
+        )
+        return Project.from_json(self, data)
+
     def __repr__(self):
         # Show only the type `auth` to mitigate any security concerns.
         return (
