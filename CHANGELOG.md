@@ -1,4 +1,5 @@
 ## 0.6.0-dev
+  - [#121](https://github.com/Datatamer/unify-client-python/issues/121) Fetches record clusters with data represented as a dataset.
 
 ## 0.5.0
   **NEW FEATURES**
