@@ -88,4 +88,19 @@ class MasteringProject(Project):
         info = EstimatedPairCounts.from_json(self.client, estimate_json, api_path=alias)
         return info
 
+    def record_clusters_with_data(self):
+        """Record clusters with data.
+
+        Call :func:`~tamr_unify_client.models.dataset.resource.Dataset.refresh` from
+        this dataset to generate clusters with data.
+
+        Function is a workaround because API is broken.
+
+        :returns: The record clusters with data represented as a dataset
+        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
+        """
+        unified_dataset = self.unified_dataset()
+        name = unified_dataset.name + "_dedup_clusters_with_data"
+        return self.client.datasets.by_name(name)
+
     # super.__repr__ is sufficient
