@@ -12,7 +12,7 @@ class EstimatedPairCounts(BaseResource):
     def is_up_to_date(self) -> bool:
         """Whether an estimate pairs job has been run since the last edit to the binning model.
 
-        :type: bool
+        :rtype: bool
         """
         return self._data.get("isUpToDate")
 
@@ -20,15 +20,17 @@ class EstimatedPairCounts(BaseResource):
     def total_estimate(self) -> dict:
         """The total number of estimated candidate pairs and generated pairs for the model across all clauses.
 
-        :type: dict
+        :return: Candidate pairs and estimated pairs with corresponding estimated counts
+        :rtype: dict[str, int]
         """
         return self._data.get("totalEstimate")
 
     @property
     def clause_estimates(self) -> dict:
-        """The clause name, candidate pair count, and generated pair count for each clause in the model.
+        """The estimated candidate pair count and generated pair count for each clause in the model.
 
-        :type: dict
+        :return: Each clause with corresponding estimated candidate pair count and generated pair count.
+        :rtype: dict[str, [dict[str, int]]
         """
         return self._data.get("clauseEstimates")
 
