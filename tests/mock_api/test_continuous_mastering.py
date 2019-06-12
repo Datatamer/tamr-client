@@ -1,5 +1,5 @@
 import os
-import json
+
 import responses
 
 from tamr_unify_client import Client
@@ -102,4 +102,3 @@ def test_rcwd():
     project = unify.projects.by_resource_id("1")
     actual_rcwd_dataset = project.as_mastering().record_clusters_with_data()
     assert actual_rcwd_dataset._data == rcwd_json
-

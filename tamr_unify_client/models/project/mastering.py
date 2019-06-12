@@ -82,12 +82,14 @@ class MasteringProject(Project):
         Call :func:`~tamr_unify_client.models.dataset.resource.Dataset.refresh` from
         this dataset to generate clusters with data.
 
-        Function is a workaround because API is broken.
-
         :returns: The record clusters with data represented as a dataset
         :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
         """
         unified_dataset = self.unified_dataset()
+
+        # Replace this workaround with a direct API call once the API
+        # has an alias for the "clusters with data" dataset. Until then, we grab the dataset by
+        # constructing its name from the corresponding Unified Dataset's name
         name = unified_dataset.name + "_dedup_clusters_with_data"
         return self.client.datasets.by_name(name)
 
