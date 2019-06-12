@@ -17,7 +17,7 @@ def test_create_project():
         "type": "DEDUP",
         "unifiedDatasetName": "Project 1 - Unified Dataset",
         "externalId": "Project1",
-        "resourceId": "1"
+        "resourceId": "1",
     }
 
     projects_url = f"http://localhost:9100/api/versioned/v1/projects"
