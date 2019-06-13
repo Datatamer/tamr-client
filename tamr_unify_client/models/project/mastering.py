@@ -1,5 +1,6 @@
 from tamr_unify_client.models.dataset.resource import Dataset
 from tamr_unify_client.models.machine_learning_model import MachineLearningModel
+from tamr_unify_client.models.project.estimated_pair_counts import EstimatedPairCounts
 from tamr_unify_client.models.project.resource import Project
 
 
@@ -75,5 +76,16 @@ class MasteringProject(Project):
         """
         alias = self.api_path + "/publishedClusters"
         return Dataset(self.client, None, alias)
+
+    def estimate_pairs(self):
+        """Returns pair estimate information for a mastering project
+
+        :return: Pairs Estimate information.
+        :rtype: :class:`~tamr_unify_client.models.project.estimated_pair_counts`
+        """
+        alias = self.api_path + "/estimatedPairCounts"
+        estimate_json = self.client.get(alias).successful().json()
+        info = EstimatedPairCounts.from_json(self.client, estimate_json, api_path=alias)
+        return info
 
     # super.__repr__ is sufficient
