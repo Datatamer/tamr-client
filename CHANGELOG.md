@@ -7,6 +7,7 @@
   - [#116](https://github.com/Datatamer/unify-client-python/issues/116) Add support for associating a dataset with a project
   - [#109](https://github.com/Datatamer/unify-client-python/issues/109) Add support for profiling datasets
   - [#86](https://github.com/Datatamer/unify-client-python/issues/86) Add support for creating projects
+  - [#114](https://github.com/Datatamer/unify-client-python/issues/114) Add support for generating pairs estimate
   - [#106](https://github.com/Datatamer/unify-client-python/issues/106) Add support for initializing a source dataset
   
   **BUG FIXES**

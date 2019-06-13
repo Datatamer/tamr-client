@@ -81,6 +81,11 @@ Project
 .. autoclass:: tamr_unify_client.models.project.mastering.MasteringProject
   :members:
 
+----
+
+.. autoclass:: tamr_unify_client.models.project.estimated_pair_counts.EstimatedPairCounts
+  :members:
+
 Projects
 --------
 
