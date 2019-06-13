@@ -16,7 +16,7 @@ def test_create_dataset():
         "name": "dataset",
         "keyAttributeNames": ["F1"],
         "description": "So much data in here!",
-        "externalId": "Dataset created with pubapi",
+  			"externalId": "Dataset created with pubapi"
     }
 
     datasets_url = f"http://localhost:9100/api/versioned/v1/datasets"
@@ -27,4 +27,7 @@ def test_create_dataset():
 
     u = unify.create_dataset(dataset_config)
     p = unify.datasets.by_resource_id("1")
-    assert print(p) == print(u)
+    assert u.name == p.name
+    assert u.key_attribute_names == p.key_attribute_names
+    assert u.description == p.description
+    assert u.external_id == p.external_id
