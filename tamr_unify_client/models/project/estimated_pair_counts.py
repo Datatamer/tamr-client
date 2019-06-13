@@ -21,7 +21,7 @@ class EstimatedPairCounts(BaseResource):
         """The total number of estimated candidate pairs and generated pairs for the model across all clauses.
 
         :return: A dictionary containing candidate pairs and estimated pairs mapped to their corresponding estimated counts
-                For example: 
+                For example:
                 {
                     "candidatePairCount": "54321",
                     "generatedPairCount": "12345"
