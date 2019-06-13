@@ -20,13 +20,13 @@ class EstimatedPairCounts(BaseResource):
     def total_estimate(self) -> dict:
         """The total number of estimated candidate pairs and generated pairs for the model across all clauses.
 
-        :return: A dictionary containing candidate pairs and estimated pairs mapped to their corresponding estimated counts
-                For example:
-                {
-                    "candidatePairCount": "54321",
-                    "generatedPairCount": "12345"
-                }
-        :rtype: dict[str, int]
+        :return: A dictionary containing candidate pairs and estimated pairs mapped to their corresponding estimated counts.
+            For example:\n
+            {\n
+                "candidatePairCount": "54321",\n
+                "generatedPairCount": "12345"\n
+            }
+        :rtype: dict[str, str]
         """
         return self._data.get("totalEstimate")
 
@@ -34,19 +34,19 @@ class EstimatedPairCounts(BaseResource):
     def clause_estimates(self) -> dict:
         """The estimated candidate pair count and generated pair count for each clause in the model.
 
-        :return: A dictionary containing each clause name mapped to a dictionary containing the corresponding estimated candidate and generated pair counts
-                For example:
-                  {
-                    "Clause1": {
-                      "candidatePairCount": "321",
-                      "generatedPairCount": "123"
-                    },
-                    "Clause2": {
-                      "candidatePairCount": "654",
-                      "generatedPairCount": "456"
-                    }
-                  }
-        :rtype: dict[str, dict[str, int]]
+        :return: A dictionary containing each clause name mapped to a dictionary containing the corresponding estimated candidate and generated pair counts.
+            For example:\n
+            {\n
+                "Clause1": {\n
+                    "candidatePairCount": "321",\n
+                    "generatedPairCount": "123"\n
+                },\n
+                "Clause2": {\n
+                    "candidatePairCount": "654",\n
+                    "generatedPairCount": "456"\n
+                }\n
+            }
+        :rtype: dict[str, dict[str, str]]
         """
         return self._data.get("clauseEstimates")
 
