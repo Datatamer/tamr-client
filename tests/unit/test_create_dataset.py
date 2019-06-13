@@ -16,7 +16,7 @@ def test_create_dataset():
         "name": "dataset",
         "keyAttributeNames": ["F1"],
         "description": "So much data in here!",
-  			"externalId": "Dataset created with pubapi"
+        "externalId": "Dataset created with pubapi",
     }
 
     datasets_url = f"http://localhost:9100/api/versioned/v1/datasets"
