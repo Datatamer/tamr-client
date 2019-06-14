@@ -41,6 +41,28 @@ def test_continuous_mastering():
     op = project.published_clusters().refresh(poll_interval_seconds=0)
     assert op.succeeded()
 
+    estimate_url = (
+        f"http://localhost:9100/api/versioned/v1/projects/1/estimatedPairCounts"
+    )
+    estimate_json = {
+        "isUpToDate": "true",
+        "totalEstimate": {"candidatePairCount": "200", "generatedPairCount": "100"},
+        "clauseEstimates": {
+            "clause1": {"candidatePairCount": "50", "generatedPairCount": "25"},
+            "clause2": {"candidatePairCount": "50", "generatedPairCount": "25"},
+            "clause3": {"candidatePairCount": "100", "generatedPairCount": "50"},
+        },
+    }
+    responses.add(responses.GET, estimate_url, json=estimate_json)
+
+    status = project.estimate_pairs().is_up_to_date
+    assert status
+
+    candidate = project.estimate_pairs().total_estimate["candidatePairCount"]
+    assert candidate == "200"
+
+    clause1 = project.estimate_pairs().clause_estimates["clause1"]
+    assert clause1["generatedPairCount"] == "25"
 
 project_config = {
     "name": "Project 1",
@@ -77,7 +99,6 @@ rcwd_json = {
     "relativeId": "datasets/36",
     "version": "251",
 }
-
 
 @responses.activate
 def test_rcwd():

@@ -19,6 +19,12 @@ Dataset
 .. autoclass:: tamr_unify_client.models.dataset.resource.Dataset
   :members:
 
+Dataset Profile
+---------------
+
+.. autoclass:: tamr_unify_client.models.dataset_profile.DatasetProfile
+  :members:
+
 Dataset Status
 --------------
 
@@ -73,6 +79,11 @@ Project
 ----
 
 .. autoclass:: tamr_unify_client.models.project.mastering.MasteringProject
+  :members:
+
+----
+
+.. autoclass:: tamr_unify_client.models.project.estimated_pair_counts.EstimatedPairCounts
   :members:
 
 Projects
