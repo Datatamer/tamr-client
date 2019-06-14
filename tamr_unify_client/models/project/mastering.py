@@ -76,18 +76,4 @@ class MasteringProject(Project):
         alias = self.api_path + "/publishedClusters"
         return Dataset(self.client, None, alias)
 
-    def record_clusters_with_data(self):
-        """Record clusters with data.
-
-        Call :func:`~tamr_unify_client.models.dataset.resource.Dataset.refresh` from
-        this dataset to generate clusters with data.
-
-        :returns: Record clusters with its corresponding data (i.e. relative_id, name, version).
-        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
-        """
-
-        unified_dataset = self.unified_dataset()
-        rcwd = unified_dataset.name + "_dedup_clusters_with_data"
-        return self.client.datasets.by_name(rcwd)
-
     # super.__repr__ is sufficient
