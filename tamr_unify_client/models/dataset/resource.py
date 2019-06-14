@@ -57,7 +57,7 @@ class Dataset(BaseResource):
 
     def create_attribute(self, attribute_config):
         """Create an Attribute in Unify
-        
+
         :param dataset: the Unify Dataset to which to add the attribute
         :type dataset: :class:`tamr_unify_client.models.dataset.resource.Dataset`
         :param attribute_config: the configuration of the attribute to create
@@ -65,9 +65,14 @@ class Dataset(BaseResource):
         :return: the created Attribute
         """
         from tamr_unify_client.models.attribute.resource import Attribute
-        data = dataset.client.post(dataset.attributes.api_path, json=attribute_config).successful().json()
-        alias = dataset.attributes.api_path + "/" + attribute_config["name"]
-        return Attribute(dataset.client, data, alias)
+
+        data = (
+            self.client.post(self.attributes.api_path, json=attribute_config)
+            .successful()
+            .json()
+        )
+        alias = self.attributes.api_path + "/" + attribute_config["name"]
+        return Attribute(self.client, data, alias)
 
     def update_records(self, records):
         """Send a batch of record creations/updates/deletions to this dataset.
