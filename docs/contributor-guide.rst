@@ -57,39 +57,56 @@ review process if you think it will help reviewers and onlookers navigate your c
 
 Don't be afraid to ``push -f`` on your PRs when it helps our eyes read your code.
 
-Installation
-------------
+Install
+-------
 
-  1. Clone your fork and ``cd`` into the project::
+  1. Install Python 3.6 or newer.
+
+  2. Install ``poetry`` as `described here <https://poetry.eustace.io/docs/#installation>`_
+
+  3. Clone your fork and ``cd`` into the project::
 
       git clone https://github.com/<your-github-username>/unify-client-python
       cd unify-client-python
 
-  2. Create a virtualenv::
+  4. Install dependencies via ``poetry``::
 
-      python3 -m venv .venv
-      source .venv/bin/activate
+      poetry install
 
-    .. note::
-      See `User Guide > Installation <user-guide/installation.html>`_ for compatible
-      Python versions.
-
-    .. caution::
-      If you place your virtualenv within the project codebase, you must name it
-      ``.venv`` for ``flake8`` to know how to exclude it from linting.
-
-  3. Install dev dependencies::
-
-      pip install -e .[dev]
-
-Tests
------
+Run tests
+---------
 
 To run all tests::
 
-    pytest .
+    poetry run pytest .
 
 To run specific tests, see `these pytest docs <https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests>`_ .
+
+Run style checks
+----------------
+
+To run linter::
+
+    poetry run flake8 .
+
+To run formatter::
+
+    poetry run black --check .
+
+Run the formatter without the `--check` flag to fix formatting in-place.
+
+Build docs
+----------
+
+To build the docs::
+
+    cd docs/
+    poetry run make html
+
+After docs are build, view them by::
+
+    cd docs/ # unless you are there already
+    open -a 'Google Chrome' _build/html/index.html # open in your favorite browser
 
 Editor config
 -------------
@@ -97,4 +114,4 @@ Editor config
 `Atom <https://atom.io/>`_ :
 
 - `python-black <https://atom.io/packages/python-black>`_
-- `linter-flake8 <https://atom.io/packages/linter-flake8>`_ (be sure to activate your virtualenv BEFORE opening Atom)
+- `linter-flake8 <https://atom.io/packages/linter-flake8>`_

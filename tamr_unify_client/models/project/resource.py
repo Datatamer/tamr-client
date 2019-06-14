@@ -78,6 +78,25 @@ class Project(BaseResource):
             )
         return MasteringProject(self.client, self._data, self.api_path)
 
+    def add_source_dataset(self, dataset):
+        """
+        Associate a dataset with a project in Unify.
+
+        By default, datasets are not associated with any projects.
+        They need to be added as input to a project before they can be used
+        as part of that project
+
+        :param project: Unify Project
+        :param dataset: Unify Dataset
+        :return: HTTP response from the server
+        :rtype: :class:`requests.Response`
+        """
+        dataset_id = dataset.relative_id.split("/")[-1]
+        response = self.client.post(
+            self.api_path + "/inputDatasets" + f"?id={dataset_id}"
+        ).successful()
+        return response
+
     def __repr__(self):
         return (
             f"{self.__class__.__module__}."

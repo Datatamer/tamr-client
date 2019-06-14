@@ -3,18 +3,20 @@ language: python
 python:
 - 3.6
 before_install:
-- pip install -U pip setuptools
+- pip install poetry
 install:
-- pip install .[dev]
+- poetry install
 script:
-- black --check .
-- flake8 .
-- pytest tests
+- poetry run black --check .
+- poetry run flake8 .
+- poetry run pytest tests
+before_deploy:
+- poetry build
+- poetry config http-basic.pypi $PYPI_USERNAME $PYPI_PASSWORD
 deploy:
-  provider: pypi
-  user: tamr
-  password:
-    secure: b3JQZWcjD9GEXPl8v/Kb0BHtRY8P6nlAibdalTKWprNYoZ2jUYt7tLODuKJ14CgPUgkbEJYG8w+FaELdx6O+Gd9T1Pk/nAxDD2LB7E/RcezjxZtLsNfgGEMz8i7aOAW3d1glX7c/M0CglQnHs8waHv6Vibp5lhm8Wfnp6YO3TnHBq47R8/p8wYpefsZ7V+Ex1LTqybriVb6+LJ4iPxQ08HlQ5hz08d+pprAU+C6f0QSLFUbOosz9HakZvIMEVTBTUYM2E6vyUzJFPwphOJWz464uRDmB3MBvImOoG4wcR94ecPNebYN1gg3TXBeGVMqtONLF4WBqUZf1smWMasD4QmOOHVn0zkVi6z3JmSkbmkgNwqvxmnmx0aqcrzElVc+yvH1+vuTDGSxXw/bQ7K1t3DbOvMd33OdejRiqhyHapmhB51rgIBeZ+Tkw2ATBKyR1OQz/Jvme00cByuAljdsXwnzz22UicUr6Cm9pROXd0g3LZZXKbYEh0BHj9GJrpl7NvpAIYeBLzN70bM6r4g6shn+09gYFCSHoaJRrJjrxAwy/qOIz11mTiQ4jcTjnhN+qTg6oDITRNIvn7N6F0d3ge/qIVIXaaFsPJ/y3dD4PSnSg0oGYPtHs/s3/NbthbZS9d9uxpX3GJSijyajSIHGSxxCIAbE2h1UfDMaFSDiXI1Y=
+  provider: script
+  script: poetry publish
+  skip_cleanup: true
   on:
     tags: true
     condition: "$TRAVIS_TAG =~ ^[0-9]+\\.[0-9]+\\.[0-9]+$"
