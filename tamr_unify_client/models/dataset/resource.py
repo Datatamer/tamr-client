@@ -60,17 +60,12 @@ class Dataset(BaseResource):
 
         :param dataset: the Unify Dataset to which to add the attribute
         :type dataset: :class:`tamr_unify_client.models.dataset.resource.Dataset`
-        :param attribute_config: the configuration of the attribute to create
+        :param attribute_config: the configuration of the attribute to create, formatted as described in the `Public Docs for Adding an Attribute <https://docs.tamr.com/reference#add-attributes>`_.
         :type attribute_config: dict[str, object]
         :return: the created Attribute
         """
         from tamr_unify_client.models.attribute.resource import Attribute
-
-        data = (
-            self.client.post(self.attributes.api_path, json=attribute_config)
-            .successful()
-            .json()
-        )
+        data = self.client.post(self.attributes.api_path, json=attribute_config).successful().json()
         alias = self.attributes.api_path + "/" + attribute_config["name"]
         return Attribute(self.client, data, alias)
 
