@@ -60,16 +60,36 @@ Don't be afraid to ``push -f`` on your PRs when it helps our eyes read your code
 Install
 -------
 
-  1. Install Python 3.6 or newer.
+This project uses ``poetry`` as its package manager. For details on ``poetry``,
+see the `official documentation <https://poetry.eustace.io/>`_ .
 
-  2. Install ``poetry`` as `described here <https://poetry.eustace.io/docs/#installation>`_
+  1. Install `pyenv <https://github.com/pyenv/pyenv#installation>`_::
 
-  3. Clone your fork and ``cd`` into the project::
+      curl https://pyenv.run | bash
+
+  2. Clone your fork and ``cd`` into the project::
 
       git clone https://github.com/<your-github-username>/unify-client-python
       cd unify-client-python
 
-  4. Install dependencies via ``poetry``::
+  3. Use ``pyenv`` to install a compatible Python version (``3.6`` or newer; e.g. ``3.7.3``)::
+
+      pyenv install 3.7.3
+
+  4. Set that Python version to be your version for this project(e.g. ``3.7.3``)::
+
+      pyenv local 3.7.3
+
+  5. Check that your Python version matches the version specified in ``.python-version``::
+
+      cat .python-version
+      python --version
+
+  6. Install ``poetry`` as `described here <https://poetry.eustace.io/docs/#installation>`_::
+
+      curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+
+  7. Install dependencies via ``poetry``::
 
       poetry install
 
