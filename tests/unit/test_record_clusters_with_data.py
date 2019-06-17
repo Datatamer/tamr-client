@@ -38,9 +38,7 @@ def test_record_clusters_with_data():
 
     project_id = "1"
 
-    project_url = (
-        f"http://localhost:9100/api/versioned/v1/projects/{project_id}"
-    )
+    project_url = f"http://localhost:9100/api/versioned/v1/projects/{project_id}"
     unified_dataset_url = (
         f"http://localhost:9100/api/versioned/v1/projects/{project_id}/unifiedDataset"
     )
@@ -51,4 +49,4 @@ def test_record_clusters_with_data():
     responses.add(responses.GET, datasets_url, json=datasets_json)
     project = unify.projects.by_resource_id(project_id)
     actual_rcwd_dataset = project.as_mastering().record_clusters_with_data()
-    assert actual_rcwd_dataset.name == rcwd_json['name']
+    assert actual_rcwd_dataset.name == rcwd_json["name"]
