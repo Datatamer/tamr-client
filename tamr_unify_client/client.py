@@ -55,7 +55,7 @@ class Client:
         host="localhost",
         protocol="http",
         port=9100,
-        base_path="api/versioned/v1/",
+        base_path="/api/versioned/v1/",
         session=None,
     ):
         self.auth = auth
@@ -71,6 +71,12 @@ class Client:
         # logging
         self.logger = None
         # https://docs.python.org/3/howto/logging-cookbook.html#implementing-structured-logging
+
+        if not self.base_path.startswith("/"):
+            self.base_path = "/" + self.base_path
+
+        if not self.base_path.endswith("/"):
+            self.base_path = self.base_path + "/"
 
         def default_log_entry(method, url, response):
             return f"{method} {url} : {response.status_code}"
@@ -97,7 +103,7 @@ class Client:
         :return: HTTP response
         :rtype: :class:`requests.Response`
         """
-        url = urljoin(self.origin + "/" + self.base_path, endpoint)
+        url = urljoin(self.origin + self.base_path, endpoint)
         response = self.session.request(method, url, auth=self.auth, **kwargs)
 
         # logging

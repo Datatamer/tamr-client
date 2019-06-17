@@ -102,13 +102,13 @@ You can also use the ``get``, ``post``, ``put``, ``delete`` convenience
 methods::
 
   # e.g. `get` convenience method
-  response = unify.get('relative/path/to/reosurce')
+  response = unify.get('relative/path/to/resource')
 
 Custom Host / Port / Base API path
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you need to repeatedly send requests to another port or base API path
-(i.e. not ``api/versioned/v1/``), you can simply instantiate a different client.
+(i.e. not ``/api/versioned/v1/``), you can simply instantiate a different client.
 
 Then just call ``request`` as described above::
 
@@ -124,14 +124,9 @@ Then just call ``request`` as described above::
     auth,
     host="10.10.0.1",
     port=9090,
-    base_path="api/some_service/",
+    base_path="/api/some_service/",
   )
   response = custom_client.get('relative/path/to/resource')
-
-Note that any component of the base_path after the final slash will be ignored;
-see the documentation on  `urljoin
-<https://docs.python.org/3.6/library/urllib.parse.html#urllib.parse.urljoin>`_
-for details.
 
 One-off authenticated request
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -151,4 +146,3 @@ Authentication provider directly to the ``requests`` library::
   auth = UsernamePasswordAuth(username, password)
 
   response = requests.request('GET', 'some/specific/endpoint', auth=auth)
-
