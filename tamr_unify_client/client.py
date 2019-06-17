@@ -163,19 +163,21 @@ class Client:
         )
         return Project.from_json(self, data)
 
-    def create_dataset(self, dataset_config):
+    def create_dataset(self, dataset_creation_spec):
         """
         Create a Dataset in Unify
 
-        :param dataset_config: Project configuration should be formatted as specified in the `Public Docs for Creating a Dataset <https://docs.tamr.com/reference#create-dataset>`_.
-        :type dataset_config: dict[str, str]
+        :param dataset_creation_spec: Project creation specification should be formatted as specified in the `Public Docs for Creating a Dataset <https://docs.tamr.com/reference#create-dataset>`_.
+        :type dataset_creation_spec: dict[str, str]
         :returns: The created Dataset
         :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
         """
         from tamr_unify_client.models.dataset.resource import Dataset
 
         data = (
-            self.post(self.datasets.api_path, json=dataset_config).successful().json()
+            self.post(self.datasets.api_path, json=dataset_creation_spec)
+            .successful()
+            .json()
         )
         return Dataset.from_json(self, data)
 
