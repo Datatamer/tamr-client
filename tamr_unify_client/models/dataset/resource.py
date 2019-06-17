@@ -65,7 +65,12 @@ class Dataset(BaseResource):
         :return: the created Attribute
         """
         from tamr_unify_client.models.attribute.resource import Attribute
-        data = self.client.post(self.attributes.api_path, json=attribute_info).successful().json()
+
+        data = (
+            self.client.post(self.attributes.api_path, json=attribute_info)
+            .successful()
+            .json()
+        )
         alias = self.attributes.api_path + "/" + attribute_info["name"]
         return Attribute(self.client, data, alias)
 

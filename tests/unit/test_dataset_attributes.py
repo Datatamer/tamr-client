@@ -15,17 +15,16 @@ def test_dataset_attributes():
     attribute_info = {
         "name": "myAttribute",
         "description": "",
-        "type": {
-            "baseType": "STRING",
-            "attributes": []
-        },
-        "isNullable": "false"
+        "type": {"baseType": "STRING", "attributes": []},
+        "isNullable": "false",
     }
 
     dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
 
     responses.add(responses.GET, dataset_url, json={})
-    responses.add(responses.POST, dataset_url + "/attributes", json=attribute_info, status=204)
+    responses.add(
+        responses.POST, dataset_url + "/attributes", json=attribute_info, status=204
+    )
     responses.add(responses.GET, dataset_url + "/attributes", json=[attribute_info])
 
     dataset = unify.datasets.by_resource_id("1")
