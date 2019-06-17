@@ -66,7 +66,7 @@ def test_continuous_mastering():
 
 
 @responses.activate
-def test_rcwd():
+def test_record_clusters_with_data():
 
     project_config = {
         "name": "Project 1",
