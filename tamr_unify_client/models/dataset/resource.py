@@ -55,7 +55,7 @@ class Dataset(BaseResource):
         resource_json = self.client.get(alias).successful().json()
         return AttributeCollection.from_json(self.client, resource_json, alias)
 
-    def create_attribute(self, attribute_info):
+    def create_attribute(self, attribute_creation_spec):
         """Create an Attribute in Unify
 
         :param dataset: the Unify Dataset to which to add the attribute
@@ -67,11 +67,11 @@ class Dataset(BaseResource):
         from tamr_unify_client.models.attribute.resource import Attribute
 
         data = (
-            self.client.post(self.attributes.api_path, json=attribute_info)
+            self.client.post(self.attributes.api_path, json=attribute_creation_spec)
             .successful()
             .json()
         )
-        alias = self.attributes.api_path + "/" + attribute_info["name"]
+        alias = self.attributes.api_path + "/" + attribute_creation_spec["name"]
         return Attribute(self.client, data, alias)
 
     def update_records(self, records):

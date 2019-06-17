@@ -12,7 +12,7 @@ unify = Client(auth)
 
 @responses.activate
 def test_dataset_attributes():
-    attribute_info = {
+    attribute_creation_spec = {
         "name": "myAttribute",
         "description": "",
         "type": {"baseType": "STRING", "attributes": []},
@@ -23,12 +23,17 @@ def test_dataset_attributes():
 
     responses.add(responses.GET, dataset_url, json={})
     responses.add(
-        responses.POST, dataset_url + "/attributes", json=attribute_info, status=204
+        responses.POST,
+        dataset_url + "/attributes",
+        json=attribute_creation_spec,
+        status=204,
     )
-    responses.add(responses.GET, dataset_url + "/attributes", json=[attribute_info])
+    responses.add(
+        responses.GET, dataset_url + "/attributes", json=[attribute_creation_spec]
+    )
 
     dataset = unify.datasets.by_resource_id("1")
-    create = dataset.create_attribute(attribute_info)
+    create = dataset.create_attribute(attribute_creation_spec)
     created = dataset.attributes.by_name("myAttribute")
 
     assert (create.relative_id) == (created.relative_id)
