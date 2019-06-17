@@ -3,6 +3,7 @@ import responses
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
 
+
 @responses.activate
 def test_record_clusters_with_data():
 
