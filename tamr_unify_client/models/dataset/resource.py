@@ -252,19 +252,14 @@ class Dataset(BaseResource):
         reserved = {"bbox", geo_attr}.union(key_attrs)
         if geo_attr and geo_attr in record:
             src_geo = record[geo_attr]
-            if src_geo:
-                for unify_attr in Dataset._geo_attr_names():
-                    if unify_attr in src_geo and src_geo[unify_attr]:
-                        feature["geometry"] = {
-                            # Convert e.g. multiLineString -> MultiLineString
-                            "type": unify_attr[0].upper() + unify_attr[1:],
-                            "coordinates": src_geo[unify_attr],
-                        }
-                        break
-                    else:
-                        feature["geometry"] = None
-            else:
-                feature["geometry"] = None
+            for unify_attr in Dataset._geo_attr_names():
+                if unify_attr in src_geo and src_geo[unify_attr]:
+                    feature["geometry"] = {
+                        # Convert e.g. multiLineString -> MultiLineString
+                        "type": unify_attr[0].upper() + unify_attr[1:],
+                        "coordinates": src_geo[unify_attr],
+                    }
+                    break
         if "bbox" in record:
             feature["bbox"] = record["bbox"]
         non_reserved = set(record.keys()).difference(reserved)
