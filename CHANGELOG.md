@@ -9,6 +9,7 @@
   - [#86](https://github.com/Datatamer/unify-client-python/issues/86) Add support for creating projects
   - [#114](https://github.com/Datatamer/unify-client-python/issues/114) Add support for generating pairs estimate
   - [#106](https://github.com/Datatamer/unify-client-python/issues/106) Add support for initializing a source dataset
+  - [#107](https://github.com/Datatamer/unify-client-python/issues/107) Add support for creating a dataset attribute
   
   **BUG FIXES**
   - [#118](https://github.com/Datatamer/unify-client-python/issues/118) Fix JSON sent for Dataset.update_records
