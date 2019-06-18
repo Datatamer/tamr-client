@@ -143,7 +143,7 @@ class TestDatasetGeo(TestCase):
         actual = Dataset._record_to_feature(
             record_with_null_geo, key_value_single, ["id"], "geom"
         )
-        expected = {"type": "Feature", "id": "1"}
+        expected = {"geometry": None, "type": "Feature", "id": "1"}
         self.assertEqual(expected, actual)
 
         record_with_bbox = {"id": "1", "bbox": [[0, 0], [1, 1]]}
