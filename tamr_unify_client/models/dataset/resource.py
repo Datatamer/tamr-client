@@ -58,8 +58,6 @@ class Dataset(BaseResource):
     def create_attribute(self, attribute_creation_spec):
         """Create an Attribute in Unify
 
-        :param dataset: the Unify Dataset to which to add the attribute
-        :type dataset: :class:`tamr_unify_client.models.dataset.resource.Dataset`
         :param attribute_info: the name and type (and optional description) of the attribute to create, formatted as described in the `Public Docs for Adding an Attribute <https://docs.tamr.com/reference#add-attributes>`_.
         :type attribute_info: dict[str, object]
         :return: the created Attribute
