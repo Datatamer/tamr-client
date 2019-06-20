@@ -1,6 +1,7 @@
 from tamr_unify_client.models.base_collection import BaseCollection
 from tamr_unify_client.models.project.resource import Project
 
+
 class ProjectCollection(BaseCollection):
     """Collection of :class:`~tamr_unify_client.models.project.resource.Project` s.
 
