@@ -86,7 +86,11 @@ class DatasetCollection(BaseCollection):
         :returns: The created Dataset
         :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
         """
-        data = self.client.post(self.api_path, json=dataset_creation_spec).successful().json()
+        data = (
+            self.client.post(self.api_path, json=dataset_creation_spec)
+            .successful()
+            .json()
+        )
         return Dataset.from_json(self, data)
 
     # super.__repr__ is sufficient
