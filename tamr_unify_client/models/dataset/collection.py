@@ -77,7 +77,7 @@ class DatasetCollection(BaseCollection):
                 return dataset
         raise KeyError(f"No dataset found with name: {dataset_name}")
 
-    def create_dataset(self, dataset_creation_spec):
+    def create(self, dataset_creation_spec):
         """
         Create a Dataset in Unify
 
