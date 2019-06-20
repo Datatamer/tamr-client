@@ -71,11 +71,7 @@ class ProjectCollection(BaseCollection):
         :returns: The created Project
         :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
         """
-        data = (
-            self.client.post(self.api_path, json=creation_spec)
-            .successful()
-            .json()
-        )
+        data = self.client.post(self.api_path, json=creation_spec).successful().json()
         return Project.from_json(self, data)
 
     # super.__repr__ is sufficient
