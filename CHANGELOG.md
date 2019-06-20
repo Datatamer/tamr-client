@@ -4,6 +4,7 @@
 
   **BUG FIXES**
   - [#140](https://github.com/Datatamer/unify-client-python/issues/140) Dataset `itergeofeatures` now supports data with geo attribute NULL
+  - [#123](https://github.com/Datatamer/unify-client-python/issues/123) Fix base_path bug for a custom api endpoint
 
 ## 0.5.0
   **NEW FEATURES**
