@@ -1,4 +1,6 @@
-## 0.6.0-dev
+## 0.7.0-dev
+
+## 0.6.0
   **BREAKING CHANGES**
   - [#150](https://github.com/Datatamer/unify-client-python/issues/150) Move `create_project` and `create_dataset` from client.py to corresponding collection.py
 
