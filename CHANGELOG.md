@@ -1,4 +1,7 @@
 ## 0.6.0-dev
+  **NEW FEATURES**
+  - [#121](https://github.com/Datatamer/unify-client-python/issues/121) Fetches record clusters with data represented as a dataset.
+
   **BUG FIXES**
   - [#140](https://github.com/Datatamer/unify-client-python/issues/140) Dataset `itergeofeatures` now supports data with geo attribute NULL
 
