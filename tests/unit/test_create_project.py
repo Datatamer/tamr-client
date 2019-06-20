@@ -26,6 +26,6 @@ def test_create_project():
     responses.add(responses.POST, projects_url, json=project_creation_spec, status=204)
     responses.add(responses.GET, project_url, json=project_creation_spec)
 
-    u = unify.create_project(project_creation_spec)
+    u = unify.projects.create_project(project_creation_spec)
     p = unify.projects.by_resource_id("1")
     assert print(p) == print(u)

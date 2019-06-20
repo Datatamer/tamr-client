@@ -25,7 +25,7 @@ def test_create_dataset():
     responses.add(responses.POST, datasets_url, json=dataset_creation_spec, status=204)
     responses.add(responses.GET, dataset_url, json=dataset_creation_spec)
 
-    u = unify.create_dataset(dataset_creation_spec)
+    u = unify.datasets.create_dataset(dataset_creation_spec)
     p = unify.datasets.by_resource_id("1")
     assert u.name == p.name
     assert u.key_attribute_names == p.key_attribute_names
