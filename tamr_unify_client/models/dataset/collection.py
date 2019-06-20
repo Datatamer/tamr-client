@@ -77,4 +77,16 @@ class DatasetCollection(BaseCollection):
                 return dataset
         raise KeyError(f"No dataset found with name: {dataset_name}")
 
+    def create(self, creation_spec):
+        """
+        Create a Dataset in Unify
+
+        :param creation_spec: Dataset creation specification should be formatted as specified in the `Public Docs for Creating a Dataset <https://docs.tamr.com/reference#create-a-dataset>`_.
+        :type creation_spec: dict[str, str]
+        :returns: The created Dataset
+        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
+        """
+        data = self.client.post(self.api_path, json=creation_spec).successful().json()
+        return Dataset.from_json(self, data)
+
     # super.__repr__ is sufficient

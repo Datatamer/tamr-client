@@ -62,4 +62,16 @@ class ProjectCollection(BaseCollection):
         """
         return super().stream(Project)
 
+    def create(self, creation_spec):
+        """
+        Create a Project in Unify
+
+        :param creation_spec: Project creation specification should be formatted as specified in the `Public Docs for Creating a Project <https://docs.tamr.com/reference#create-a-project>`_.
+        :type creation_spec: dict[str, str]
+        :returns: The created Project
+        :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
+        """
+        data = self.client.post(self.api_path, json=creation_spec).successful().json()
+        return Project.from_json(self, data)
+
     # super.__repr__ is sufficient

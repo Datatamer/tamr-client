@@ -11,7 +11,7 @@ unify = Client(auth)
 
 @responses.activate
 def test_create_dataset():
-    dataset_creation_spec = {
+    creation_spec = {
         "id": "unify://unified-data/v1/datasets/1",
         "name": "dataset",
         "keyAttributeNames": ["F1"],
@@ -22,10 +22,10 @@ def test_create_dataset():
     datasets_url = f"http://localhost:9100/api/versioned/v1/datasets"
     dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
 
-    responses.add(responses.POST, datasets_url, json=dataset_creation_spec, status=204)
-    responses.add(responses.GET, dataset_url, json=dataset_creation_spec)
+    responses.add(responses.POST, datasets_url, json=creation_spec, status=204)
+    responses.add(responses.GET, dataset_url, json=creation_spec)
 
-    u = unify.create_dataset(dataset_creation_spec)
+    u = unify.datasets.create(creation_spec)
     p = unify.datasets.by_resource_id("1")
     assert u.name == p.name
     assert u.key_attribute_names == p.key_attribute_names
