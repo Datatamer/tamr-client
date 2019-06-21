@@ -1,4 +1,6 @@
 ## 0.7.0-dev
+  **NEW FEATURES**
+  - [#65] (https://github.com/Datatamer/unify-client-python/issues/65) Fetches published clusters with data represented as a dataset.
 
 ## 0.6.0
   **BREAKING CHANGES**
