@@ -1,4 +1,5 @@
 from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client.models.operation import Operation
 
 
 class DatasetProfile(BaseResource):
@@ -64,6 +65,20 @@ class DatasetProfile(BaseResource):
         """
         return self._data.get("attributeProfiles")
 
+    def refresh(self, **options):
+        """Updates the dataset profile if needed.
+
+        The dataset profile is updated on the server; you will need to call
+        :func:`~tamr_unify_client.models.dataset.resource.Dataset.profile`
+        to retrieve the updated profile.
+
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
+            See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
+        """
+        op_json = self.client.post(self.api_path + ":refresh").successful().json()
+        op = Operation.from_json(self.client, op_json)
+        return op.apply_options(**options)
+
     def __repr__(self) -> str:
         return (
             f"{self.__class__.__module__}."
@@ -71,7 +86,7 @@ class DatasetProfile(BaseResource):
             f"relative_id={self.relative_id!r}, "
             f"dataset_name={self.dataset_name!r}, "
             f"relative_dataset_id={self.relative_dataset_id!r}, "
-            f"up_to_date={self.is_up_to_date!r}, "
+            f"is_up_to_date={self.is_up_to_date!r}, "
             f"profiled_data_version={self.profiled_data_version!r}, "
             f"profiled_at={self.profiled_at!r}, "
             f"simple_metrics={self.simple_metrics!r})"
