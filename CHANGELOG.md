@@ -1,4 +1,7 @@
 ## 0.7.0-dev
+  **BREAKING CHANGES**
+  - [#156](https://github.com/Datatamer/unify-client-python/issues/156) Fetch Dataset profile, even if out of date.
+
   **NEW FEATURES**
   - [#65] (https://github.com/Datatamer/unify-client-python/issues/65) Fetches published clusters with data represented as a dataset.
 

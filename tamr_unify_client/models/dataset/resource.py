@@ -104,27 +104,37 @@ class Dataset(BaseResource):
         op = Operation.from_json(self.client, op_json)
         return op.apply_options(**options)
 
-    def profile(self, **options):
-        """Returns up to date profile information for a dataset, re-profiling if not up to date.
+    def profile(self):
+        """Returns profile information for a dataset.
+
+        If profile information has not been generated, call create_profile() first.
+        If the returned profile information is out-of-date, you can call refresh() on the returned
+        object to bring it up-to-date.
 
         :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
         :return: Dataset Profile information.
         :rtype: :class:`~tamr_unify_client.models.dataset_status.DatasetProfile`
         """
-
         profile_json = self.client.get(self.api_path + "/profile").successful().json()
-        info = DatasetProfile.from_json(
+        return DatasetProfile.from_json(
             self.client, profile_json, api_path=self.api_path + "/profile"
         )
-        if info.is_up_to_date:
-            return info
-        else:
-            op_json = (
-                self.client.post(self.api_path + "/profile:refresh").successful().json()
-            )
-            op = Operation.from_json(self.client, op_json)
-            op.apply_options(**options)
-            return self.profile()
+
+    def create_profile(self, **options):
+        """Create a profile for this dataset.
+
+        If a profile already exists, the existing profile will be brought
+        up to date.
+
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
+            See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
+        :return: the operation to create the profile.
+        """
+        op_json = (
+            self.client.post(self.api_path + "/profile:refresh").successful().json()
+        )
+        op = Operation.from_json(self.client, op_json)
+        return op.apply_options(**options)
 
     def records(self):
         """Stream this dataset's records as Python dictionaries.
