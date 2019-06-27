@@ -55,23 +55,6 @@ class Dataset(BaseResource):
         resource_json = self.client.get(alias).successful().json()
         return AttributeCollection.from_json(self.client, resource_json, alias)
 
-    def create_attribute(self, attribute_creation_spec):
-        """Create an Attribute in Unify
-
-        :param attribute_creation_spec: the name and type (and optional description) of the attribute to create, formatted as described in the `Public Docs for Adding an Attribute <https://docs.tamr.com/reference#add-attributes>`_.
-        :type attribute_creation_spec: dict[str, object]
-        :return: the created Attribute
-        """
-        from tamr_unify_client.models.attribute.resource import Attribute
-
-        data = (
-            self.client.post(self.attributes.api_path, json=attribute_creation_spec)
-            .successful()
-            .json()
-        )
-        alias = self.attributes.api_path + "/" + attribute_creation_spec["name"]
-        return Attribute(self.client, data, alias)
-
     def update_records(self, records):
         """Send a batch of record creations/updates/deletions to this dataset.
 

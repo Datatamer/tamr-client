@@ -33,7 +33,7 @@ def test_dataset_attributes():
     )
 
     dataset = unify.datasets.by_resource_id("1")
-    create = dataset.create_attribute(attribute_creation_spec)
+    create = dataset.attributes.create(attribute_creation_spec)
     created = dataset.attributes.by_name("myAttribute")
 
     assert (create.relative_id) == (created.relative_id)
