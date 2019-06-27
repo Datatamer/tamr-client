@@ -3,6 +3,7 @@ from functools import partial
 import json
 from unittest import TestCase
 
+import pytest
 import responses
 
 from tamr_unify_client import Client
@@ -427,6 +428,29 @@ class TestDatasetGeo(TestCase):
         actual = Dataset._feature_to_record(feature, ["pk1", "pk2"], "geo")
         expected = {"pk1": "1", "pk2": "2", "geo": {"point": [0, 0]}}
         self.assertEqual(expected, actual)
+
+        feature = {
+            "type": "Feature",
+            "id": "1",
+            "geometry": None,
+        }
+        Dataset._feature_to_record(feature, ["pk"], "geo")
+        # feature_to_record is required to not raise an exception
+
+        feature = {
+            "type": "Feature",
+            "id": None,
+            "geometry": {"type": "Point", "coordinates": [0, 0]},
+        }
+        with pytest.raises(ValueError):
+            Dataset._feature_to_record(feature, ["pk"], "geo")
+
+        feature = {
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [0, 0]},
+        }
+        with pytest.raises(ValueError):
+            Dataset._feature_to_record(feature, ["pk"], "geo")
 
         class NotAFeature:
             @property
