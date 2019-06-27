@@ -100,7 +100,6 @@ class AttributeCollection(BaseCollection):
         :returns: The created Attribute
         :rtype: :class:`~tamr_unify_client.models.attribute.resource.Attribute`
         """
-        from tamr_unify_client.models.attribute.resource import Attribute
         data = self.client.post(self.api_path, json=creation_spec).successful().json()
         alias = self.api_path + "/" + creation_spec["name"]
         return Attribute.from_json(self.client, data, alias)
