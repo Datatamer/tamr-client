@@ -429,11 +429,7 @@ class TestDatasetGeo(TestCase):
         expected = {"pk1": "1", "pk2": "2", "geo": {"point": [0, 0]}}
         self.assertEqual(expected, actual)
 
-        feature = {
-            "type": "Feature",
-            "id": "1",
-            "geometry": None,
-        }
+        feature = {"type": "Feature", "id": "1", "geometry": None}
         Dataset._feature_to_record(feature, ["pk"], "geo")
         # feature_to_record is required to not raise an exception
 
