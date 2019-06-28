@@ -110,4 +110,14 @@ class MasteringProject(Project):
         name = unified_dataset.name + "_dedup_clusters_with_data"
         return self.client.datasets.by_name(name)
 
-    # super.__repr__ is sufficient
+        # super.__repr__ is sufficient
+
+    def published_clusters_with_data(self):
+        """Project's unified dataset with associated clusters.
+        :returns: The published clusters with data represented as a dataset
+        :rtype :class `~tamr_unify_client.models.dataset.resource.Dataset`
+        """
+
+        unified_dataset = self.unified_dataset()
+        name = unified_dataset.name + "_dedup_published_clusters_with_data"
+        return self.client.datasets.by_name(name)
