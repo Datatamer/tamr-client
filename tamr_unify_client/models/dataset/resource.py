@@ -277,6 +277,7 @@ class Dataset(BaseResource):
         :param geo_attr: The singluar attribute on the record to use for the geometry
         :return: dict
         """
+
         if hasattr(feature, "__geo_interface__"):
             feature = feature.__geo_interface__
 
@@ -297,9 +298,11 @@ class Dataset(BaseResource):
         bbox = feature.get("bbox")
         if bbox:
             record["bbox"] = bbox
-
+        if "id" not in feature or feature["id"] is None:
+            raise ValueError("id must have a non-null value")
         if key_attrs[1:]:
             key_values = feature["id"]
+
             for i, attr in enumerate(key_attrs):
                 record[attr] = key_values[i]
         else:
