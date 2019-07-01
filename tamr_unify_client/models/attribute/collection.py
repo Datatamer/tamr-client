@@ -91,4 +91,17 @@ class AttributeCollection(BaseCollection):
                 return attribute
         raise KeyError(f"No attribute found with name: {attribute_name}")
 
+    def create(self, creation_spec):
+        """
+        Create an Attribute in this collection
+
+        :param creation_spec: Attribute creation specification should be formatted as specified in the `Public Docs for adding an Attribute <https://docs.tamr.com/reference#add-attributes>`_.
+        :type creation_spec: dict[str, str]
+        :returns: The created Attribute
+        :rtype: :class:`~tamr_unify_client.models.attribute.resource.Attribute`
+        """
+        data = self.client.post(self.api_path, json=creation_spec).successful().json()
+        alias = self.api_path + "/" + creation_spec["name"]
+        return Attribute.from_json(self.client, data, alias)
+
     # super.__repr__ is sufficient
