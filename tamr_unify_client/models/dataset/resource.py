@@ -205,8 +205,10 @@ class Dataset(BaseResource):
             def key_value(rec):
                 return [rec[attr] for attr in key_attrs]
 
+        geo_attr = self._geo_attr
+
         for record in self.records():
-            yield self._record_to_feature(record, key_value, key_attrs, self._geo_attr)
+            yield self._record_to_feature(record, key_value, key_attrs, geo_attr)
 
     @property
     def _geo_attr(self):
