@@ -5,6 +5,7 @@
 
   **NEW FEATURES**
   - [#65](https://github.com/Datatamer/unify-client-python/issues/65) Fetches published clusters with data represented as a dataset.
+  - [#155](https://github.com/Datatamer/unify-client-python/issues/155) Adds read-only support for binning model.
 
   **BUG FIXES**
   - [#148](https://github.com/Datatamer/unify-client-python/issues/148) Fix null geo, id and absent id bug for geospatial datasets. 
