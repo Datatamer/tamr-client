@@ -6,10 +6,12 @@
   **NEW FEATURES**
   - [#65](https://github.com/Datatamer/unify-client-python/issues/65) Fetches published clusters with data represented as a dataset.
   - [#155](https://github.com/Datatamer/unify-client-python/issues/155) Adds read-only support for binning model.
+  - [#165](https://github.com/Datatamer/unify-client-python/issues/165) Add `geo_attr` parameter to `Dataset.itergeofeatures()` and `Dataset.from_geo_features()`
 
   **BUG FIXES**
   - [#148](https://github.com/Datatamer/unify-client-python/issues/148) Fix null geo, id and absent id bug for geospatial datasets. 
   - [#161](https://github.com/Datatamer/unify-client-python/issues/161) DatasetCollection.create() and ProjectCollection.create() don't work
+  - [#165](https://github.com/Datatamer/unify-client-python/issues/165) Dataset.itergeofeatures() is too slow
 
 ## 0.6.0
   **BREAKING CHANGES**

@@ -259,6 +259,33 @@ class TestDatasetGeo(TestCase):
         )
 
     @responses.activate
+    def test_geo_features_geo_attr(self):
+        dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
+        responses.add(responses.GET, dataset_url, json=self._dataset_json)
+
+        # Create a dataset with multiple geometry attributes
+        multi_geo_attrs = deepcopy(self._attributes_json)
+        geo2_attr = deepcopy(multi_geo_attrs[-1])
+        geo2_attr["name"] = "geom2"
+        multi_geo_attrs.append(geo2_attr)
+        attributes_url = f"{dataset_url}/attributes"
+        responses.add(responses.GET, attributes_url, json=multi_geo_attrs)
+
+        # Create a record with multiple geometry attributes
+        record = {"id": "point", "geom": {"point": [1, 1]}, "geom2": {"point": [2, 2]}}
+        records_url = f"{dataset_url}/records"
+        responses.add(responses.GET, records_url, body=json.dumps(record))
+        dataset = self.unify.datasets.by_resource_id("1")
+
+        # Default is to get the first attribute with geometry type
+        feature = next(dataset.itergeofeatures())
+        self.assertEqual(feature["geometry"]["coordinates"], record["geom"]["point"])
+
+        # We can override which geometry attribute is used for geometry
+        feature = next(dataset.itergeofeatures(geo_attr="geom2"))
+        self.assertEqual(feature["geometry"]["coordinates"], record["geom2"]["point"])
+
+    @responses.activate
     def test_geo_interface(self):
         dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
         responses.add(responses.GET, dataset_url, json=self._dataset_json)
@@ -510,6 +537,57 @@ class TestDatasetGeo(TestCase):
         snoop["payload"] = None
         nafc = NotAFeatureCollection()
         dataset.from_geo_features(nafc)
+        actual = [json.loads(item) for item in snoop["payload"]]
+        self.assertEqual(expected, actual)
+
+    @responses.activate
+    def test_from_geo_features_geo_attr(self):
+        def update_callback(request, snoop):
+            snoop["payload"] = request.body
+            return 200, {}, "{}"
+
+        dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
+        responses.add(responses.GET, dataset_url, json=self._dataset_json)
+
+        # Create a dataset with multiple geometry attributes
+        multi_geo_attrs = deepcopy(self._attributes_json)
+        geo2_attr = deepcopy(multi_geo_attrs[-1])
+        geo2_attr["name"] = "geom2"
+        multi_geo_attrs.append(geo2_attr)
+        attributes_url = f"{dataset_url}/attributes"
+        responses.add(responses.GET, attributes_url, json=multi_geo_attrs)
+
+        records_url = f"{dataset_url}:updateRecords"
+        snoop = {}
+        responses.add_callback(
+            responses.POST, records_url, callback=partial(update_callback, snoop=snoop)
+        )
+
+        dataset = self.unify.datasets.by_resource_id("1")
+        features = [{"id": "1", "geometry": {"type": "Point", "coordinates": [0, 0]}}]
+
+        # by default, the first attribute with geometry type is used for geometry
+        dataset.from_geo_features(features)
+        expected = [
+            {
+                "action": "CREATE",
+                "recordId": "1",
+                "record": {"geom": {"point": [0, 0]}, "id": "1"},
+            }
+        ]
+        actual = [json.loads(item) for item in snoop["payload"]]
+        self.assertEqual(expected, actual)
+
+        # We can override which geometry attribute is used for geometry
+        snoop["payload"] = None
+        dataset.from_geo_features(features, geo_attr="geom2")
+        expected = [
+            {
+                "action": "CREATE",
+                "recordId": "1",
+                "record": {"geom2": {"point": [0, 0]}, "id": "1"},
+            }
+        ]
         actual = [json.loads(item) for item in snoop["payload"]]
         self.assertEqual(expected, actual)
 

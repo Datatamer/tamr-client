@@ -40,12 +40,21 @@ To produce a GeoJSON representation of a dataset::
   with open("my_dataset.json", "w") as f:
     json.dump(dataset.__geo_interface__, f)
 
+
+By default, ``itergeofeatures()`` will use the first dataset attribute with geometry type to fill
+in the feature geometry. You can override this by specifying the geometry attribute to use in the
+``geo_attr`` parameter to ``itergeofeatures``.
+
 ``Dataset`` can also be updated from a feature collection that supports the Python Geo Interface::
 
   import geopandas
   geodataframe = geopandas.GeoDataFrame(...)
   dataset = client.dataset.by_name("my_dataset")
   dataset.from_geo_features(geodataframe)
+
+By default the features' geometries will be placed into the first dataset attribute with geometry
+type. You can override this by specifying the geometry attribute to use in the ``geo_attr``
+parameter to ``from_geo_features``.
 
 Rules for converting from Unify records to Geospatial Features
 ------------------------------------------------------------------
