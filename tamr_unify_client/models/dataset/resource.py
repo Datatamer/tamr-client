@@ -140,7 +140,7 @@ class Dataset(BaseResource):
             self.client, status_json, api_path=self.api_path + "/status"
         )
 
-    def from_geo_features(self, features):
+    def from_geo_features(self, features, geo_attr=None):
         """Upsert this dataset from a geospatial FeatureCollection or iterable of Features.
 
         `features` can be:
@@ -153,7 +153,13 @@ class Dataset(BaseResource):
 
         See: geopandas.GeoDataFrame.from_features()
 
+        If geo_attr is provided, then the named Unify attribute will be used for the geometry.
+        If geo_attr is not provided, then the first attribute on the dataset with geometry type
+        will be used for the geometry.
+
         :param features: geospatial features
+        :param geo_attr: (optional) name of the Unify attribute to use for the feature's geometry
+        :type geo_attr: str
         """
         if hasattr(features, "__geo_interface__"):
             features = features.__geo_interface__
@@ -166,8 +172,11 @@ class Dataset(BaseResource):
         else:
             record_id = "compositeRecordId"
 
+        if geo_attr is None:
+            geo_attr = self._geo_attr
+
         self.update_records(
-            self._features_to_updates(features, record_id, key_attrs, self._geo_attr)
+            self._features_to_updates(features, record_id, key_attrs, geo_attr)
         )
 
     @property
@@ -186,11 +195,13 @@ class Dataset(BaseResource):
             "features": [feature for feature in self.itergeofeatures()],
         }
 
-    def itergeofeatures(self):
+    def itergeofeatures(self, geo_attr=None):
         """Returns an iterator that yields feature dictionaries that comply with __geo_interface__
 
         See https://gist.github.com/sgillies/2217756
 
+        :param geo_attr: (optional) name of the Unify attribute to use for the feature's geometry
+        :type geo_attr: str
         :return: stream of features
         :rtype: Python generator yielding :py:class:`dict[str, object]`
         """
@@ -205,8 +216,11 @@ class Dataset(BaseResource):
             def key_value(rec):
                 return [rec[attr] for attr in key_attrs]
 
+        if geo_attr is None:
+            geo_attr = self._geo_attr
+
         for record in self.records():
-            yield self._record_to_feature(record, key_value, key_attrs, self._geo_attr)
+            yield self._record_to_feature(record, key_value, key_attrs, geo_attr)
 
     @property
     def _geo_attr(self):
