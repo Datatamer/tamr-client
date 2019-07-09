@@ -45,6 +45,42 @@ class TestProject(TestCase):
         actual_project = unify.projects.by_external_id(self.project_external_id)
         self.assertEqual(self.project_json[0], actual_project._data)
 
+    @responses.activate
+    def test_project_attributes_get(self):
+        responses.add(responses.GET, self.projects_url, json=self.project_json)
+        responses.add(
+            responses.GET,
+            self.project_attributes_url,
+            json=self.project_attributes_json,
+        )
+        unify = Client(UsernamePasswordAuth("username", "password"))
+        project = unify.projects.by_external_id(self.project_external_id)
+        attributes = list(project.attributes)
+        self.assertEqual(len(self.project_attributes_json), len(attributes))
+        id_attribute = project.attributes.by_name("id")
+        self.assertEqual(self.project_attributes_json[0]["name"], id_attribute.name)
+
+    @responses.activate
+    def test_project_attributes_post(self):
+        responses.add(responses.GET, self.projects_url, json=self.project_json)
+        responses.add(
+            responses.GET,
+            self.project_attributes_url,
+            json=self.project_attributes_json,
+        )
+        responses.add(
+            responses.POST,
+            self.project_attributes_url,
+            json=self.project_attributes_json[0],
+            status=204,
+        )
+        unify = Client(UsernamePasswordAuth("username", "password"))
+        project = unify.projects.by_external_id(self.project_external_id)
+        # project.attributes.create MUST make a POST request to self.project_attributes_url
+        # If it posts to some other URL, responses will raise an exception;
+        # If it does not post to any URL, responses will also raise an exception.
+        project.attributes.create(self.project_attributes_json[0])
+
     dataset_external_id = "1"
     datasets_url = f"http://localhost:9100/api/versioned/v1/datasets?filter=externalId=={dataset_external_id}"
     dataset_json = [
@@ -98,3 +134,27 @@ class TestProject(TestCase):
         f"http://localhost:9100/api/versioned/v1/projects/1/inputDatasets"
     )
     get_input_datasets_json = dataset_json
+
+    project_attributes_url = (
+        "http://localhost:9100/api/versioned/v1/projects/1/attributes"
+    )
+    project_attributes_json = [
+        {
+            "name": "id",
+            "description": "identifier",
+            "type": {"baseType": "STRING"},
+            "isNullable": False,
+        },
+        {
+            "name": "name",
+            "description": "full name",
+            "type": {"baseType": "ARRAY", "innerType": {"baseType": "STRING"}},
+            "isNullable": True,
+        },
+        {
+            "name": "description",
+            "description": "human readable description",
+            "type": {"baseType": "ARRAY", "innerType": {"baseType": "STRING"}},
+            "isNullable": True,
+        },
+    ]
