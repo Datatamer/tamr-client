@@ -36,6 +36,19 @@ class Project(BaseResource):
         """
         return self._data.get("type")
 
+    @property
+    def attributes(self):
+        """Attributes of this project.
+
+        :return: Attributes of this project.
+        :rtype: :class:`~tamr_unify_client.models.attribute.collection.AttributeCollection`
+        """
+        from tamr_unify_client.models.attribute.collection import AttributeCollection
+
+        alias = self.api_path + "/attributes"
+        resource_json = self.client.get(alias).successful().json()
+        return AttributeCollection.from_json(self.client, resource_json, alias)
+
     def unified_dataset(self):
         """Unified dataset for this project.
 
