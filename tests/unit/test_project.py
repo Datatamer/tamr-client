@@ -1,6 +1,5 @@
 from unittest import TestCase
 
-import pytest
 import responses
 
 from tamr_unify_client import Client
@@ -28,14 +27,14 @@ class TestProject(TestCase):
         project.add_source_dataset(dataset)
         alias = project.api_path + "/inputDatasets"
         input_datasets = project.client.get(alias).successful().json()
-        assert input_datasets == self.dataset_json
+        self.assertEqual(self.dataset_json, input_datasets)
 
     @responses.activate
     def test_project_by_external_id__raises_when_not_found(self):
         responses.add(responses.GET, self.projects_url, json=[])
         auth = UsernamePasswordAuth("username", "password")
         unify = Client(auth)
-        with pytest.raises(KeyError):
+        with self.assertRaises(KeyError):
             unify.projects.by_external_id(self.project_external_id)
 
     @responses.activate
@@ -44,7 +43,7 @@ class TestProject(TestCase):
         auth = UsernamePasswordAuth("username", "password")
         unify = Client(auth)
         actual_project = unify.projects.by_external_id(self.project_external_id)
-        assert actual_project._data == self.project_json[0]
+        self.assertEqual(self.project_json[0], actual_project._data)
 
     dataset_external_id = "1"
     datasets_url = f"http://localhost:9100/api/versioned/v1/datasets?filter=externalId=={dataset_external_id}"
