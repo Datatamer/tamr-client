@@ -1,3 +1,4 @@
+from tamr_unify_client.models.binning_model import BinningModel
 from tamr_unify_client.models.dataset.resource import Dataset
 from tamr_unify_client.models.machine_learning_model import MachineLearningModel
 from tamr_unify_client.models.project.estimated_pair_counts import EstimatedPairCounts
@@ -140,3 +141,16 @@ class MasteringProject(Project):
             self.client, attribute_json, api_path=alias
         )
         return info
+
+    def binning_model(self):
+        """
+        Binning model for this project.
+
+        :return: Binning model for this project.
+        :rtype: :class:`~tamr_unify_client.models.binning_model.BinningModel`
+        """
+        alias = self.api_path + "/binningModel"
+
+        # Cannot get this resource and so we hard code
+        resource_json = {"relativeId": alias}
+        return BinningModel.from_json(self.client, resource_json, alias)
