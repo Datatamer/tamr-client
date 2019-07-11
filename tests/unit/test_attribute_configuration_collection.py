@@ -1,9 +1,10 @@
 from unittest import TestCase
 
+import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.attribute_configuration.MYcollection import (
+from tamr_unify_client.models.attribute_configuration.collection import (
     AttributeConfigurationCollection,
 )
 
@@ -24,7 +25,64 @@ class TestAttributeConfigurationsCollection(TestCase):
 
         expected = self.ACC_json[0]
         self.assertEqual(expected["relativeId"], next(test.stream()).relative_id)
-        # buggy :(
+
+    @responses.activate
+    def test_create(self):
+        create_json = [
+            {
+                "id": "unify://unified-data/v1/projects/1/attributeConfigurations/35",
+                "relativeId": "projects/1/attributeConfigurations/35",
+                "relativeAttributeId": "datasets/79/attributes/Tester",
+                "attributeRole": "",
+                "similarityFunction": "ABSOLUTE_DIFF",
+                "enabledForMl": False,
+                "tokenizer": "",
+                "numericFieldResolution": [],
+                "attributeName": "Tester",
+            }
+        ]
+
+        project_json = [
+            {
+                "id": "unify://unified-data/v1/projects/1",
+                "externalId": "project 1 external ID",
+                "name": "project 1 name",
+                "description": "project 1 description",
+                "type": "DEDUP",
+                "unifiedDatasetName": "project 1 unified dataset",
+                "created": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.636Z",
+                    "version": "project 1 created version",
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.851Z",
+                    "version": "project 1 modified version",
+                },
+                "relativeId": "projects/1",
+            }
+        ]
+
+        url = f"http://10.10.0.90:9100/api/versioned/v1/projects/1/attributeConfigurations"
+        projectURL = f"http://10.10.0.90:9100/api/versioned/v1/projects/1"
+        responses.add(responses.GET, url, json={})
+        responses.add(responses.POST, url, json=create_json[0], status=204)
+        responses.add(responses.GET, url, json=create_json)
+        responses.add(responses.GET, projectURL, json=project_json[0])
+
+        auth = UsernamePasswordAuth("admin", "dt")
+        self.unify = Client(auth, host="10.10.0.90")
+
+        attributeconfig = (
+            self.unify.projects.by_resource_id("1")
+            .as_mastering()
+            .attribute_configurations()
+        )
+        create = attributeconfig.create(create_json)
+        # created = attributeconfig.by_relative_id("projects/1/attributeConfigurations/35")
+
+        assert create.relative_id == create_json[0]["relativeId"]
 
     ACC_json = [
         {

@@ -1,14 +1,11 @@
+from tamr_unify_client.models.attribute_configuration.collection import (
+    AttributeConfigurationCollection,
+)
 from tamr_unify_client.models.binning_model import BinningModel
 from tamr_unify_client.models.dataset.resource import Dataset
 from tamr_unify_client.models.machine_learning_model import MachineLearningModel
 from tamr_unify_client.models.project.estimated_pair_counts import EstimatedPairCounts
 from tamr_unify_client.models.project.resource import Project
-from tamr_unify_client.models.attribute_configuration.MYresource import (
-    AttributeConfiguration,
-)
-from tamr_unify_client.models.attribute_configuration.MYcollection import (
-    AttributeConfigurationCollection,
-)
 
 
 class MasteringProject(Project):
@@ -132,10 +129,10 @@ class MasteringProject(Project):
     def attribute_configurations(self):
         """ Project's attribute's configurations.
         :returns: the configurations of the attributes of a project
-        :rtype : tamr_unify_client.models.attribute_configuration.collection.AttributeConfigurations
+        :rtype : tamr_unify_client.models.attribute_configuration.collection.AttributeConfigurationCollection
         """
 
-        alias = self.api_path + "/attributeConfigurations/"
+        alias = self.api_path + "/attributeConfigurations"
         attribute_json = self.client.get(alias).successful().json()
         info = AttributeConfigurationCollection.from_json(
             self.client, attribute_json, api_path=alias

@@ -1,9 +1,8 @@
 from unittest import TestCase
 
-
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.attribute_configuration.MYresource import (
+from tamr_unify_client.models.attribute_configuration.resource import (
     AttributeConfiguration,
 )
 
