@@ -25,9 +25,7 @@ class CategorizationProject(Project):
         :rtype: :class:`~tamr_unify_client.models.taxonomy.resource.Taxonomy
         """
         alias = self.api_path + "/taxonomy"
-        resource_json = self.client.post(
-            alias, json={"name":  name}
-        ).successful().json()
+        resource_json = self.client.post(alias, json={"name": name}).successful().json()
         return Taxonomy.from_json(self.client, resource_json, alias)
 
     def taxonomy(self):
