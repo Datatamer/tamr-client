@@ -4,7 +4,6 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-
 from tamr_unify_client.models.attribute_configuration.collection import (
     AttributeConfigurationCollection,
 )
