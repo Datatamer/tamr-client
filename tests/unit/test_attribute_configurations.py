@@ -9,8 +9,8 @@ from tamr_unify_client.models.attribute_configuration.resource import (
 
 class TestAttributeConfigurations(TestCase):
     def setUp(self):
-        auth = UsernamePasswordAuth("admin", "dt")
-        self.unify = Client(auth, host="10.10.0.90")
+        auth = UsernamePasswordAuth("username", "password")
+        self.unify = Client(auth)
 
     def test_resource(self):
         alias = "projects/1/attributeConfigurations/26"

@@ -4,27 +4,33 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.attribute_configuration.collection import (
-    AttributeConfigurationCollection,
-)
+from tamr_unify_client.models.attribute_configuration.collection import AttributeConfigurationCollection
 
 
 class TestAttributeConfigurationsCollection(TestCase):
     def setUp(self):
-        auth = UsernamePasswordAuth("admin", "dt")
-        self.unify = Client(auth, host="10.10.0.90")
+        auth = UsernamePasswordAuth("username", "password")
+        self.unify = Client(auth)
 
-    def test_resource(self):
-
+    @responses.activate
+    def test_relative(self):
+        AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
         alias = "projects/1/attributeConfigurations"
-        test = AttributeConfigurationCollection(self.unify, self.ACC_json, alias)
-
-        expected = self.ACC_json[0]["relativeId"]
-        self.assertEqual(expected, test.by_relative_id(test.api_path + "/1").api_path)
-        self.assertEqual(expected, test.by_resource_id("1").api_path)
-
+        AC_test = AttributeConfigurationCollection(self.unify, self.ACC_json[0], alias)
         expected = self.ACC_json[0]
-        self.assertEqual(expected["relativeId"], next(test.stream()).relative_id)
+        responses.add(responses.GET, AC_url, json=self.ACC_json)
+        self.assertEqual(expected, AC_test.by_relative_id("projects/1/attributeConfigurations/1"))
+        return expected, AC_test.by_relative_id("projects/1/attributeConfigurations/1")
+
+
+    @responses.activate
+    def test_resource(self):
+        AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
+        alias = "projects/1/attributeConfigurations"
+        AC_test = AttributeConfigurationCollection(self.unify, self.ACC_json[0], alias)
+        expected = self.ACC_json[0]
+        responses.add(responses.GET, AC_url, json=self.ACC_json)
+        self.assertEqual(expected, AC_test.by_resource_id("unify://unified-data/v1/projects/1/attributeConfigurations/35"))
 
     @responses.activate
     def test_create(self):
@@ -64,15 +70,14 @@ class TestAttributeConfigurationsCollection(TestCase):
             }
         ]
 
-        url = f"http://10.10.0.90:9100/api/versioned/v1/projects/1/attributeConfigurations"
-        projectURL = f"http://10.10.0.90:9100/api/versioned/v1/projects/1"
+        url = (
+            f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
+        )
+        project_url = f"http://localhost:9100/api/versioned/v1/projects/1"
+        responses.add(responses.GET, project_url, json=project_json[0])
         responses.add(responses.GET, url, json={})
         responses.add(responses.POST, url, json=create_json[0], status=204)
         responses.add(responses.GET, url, json=create_json)
-        responses.add(responses.GET, projectURL, json=project_json[0])
-
-        auth = UsernamePasswordAuth("admin", "dt")
-        self.unify = Client(auth, host="10.10.0.90")
 
         attributeconfig = (
             self.unify.projects.by_resource_id("1")
@@ -80,7 +85,6 @@ class TestAttributeConfigurationsCollection(TestCase):
             .attribute_configurations()
         )
         create = attributeconfig.create(create_json)
-        # created = attributeconfig.by_relative_id("projects/1/attributeConfigurations/35")
 
         assert create.relative_id == create_json[0]["relativeId"]
 
@@ -317,3 +321,4 @@ class TestAttributeConfigurationsCollection(TestCase):
             "attributeName": "Address2",
         },
     ]
+

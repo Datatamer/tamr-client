@@ -36,7 +36,7 @@ class AttributeConfigurationCollection(BaseCollection):
     def by_relative_id(self, relative_id):
         """Retrieve an attribute configuration by relative ID.
        :param relative_id: The resource ID.
-       :type resource_id: str
+       :type relative_id: str
        :returns: The specified attribute configuration.
        :rtype: :class:`~tamr_unify_client.models.attribute_configuration.resource.AttributeConfiguration`
        """
