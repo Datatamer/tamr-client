@@ -4,7 +4,10 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.attribute_configuration.collection import AttributeConfigurationCollection
+
+from tamr_unify_client.models.attribute_configuration.collection import (
+    AttributeConfigurationCollection,
+)
 
 
 class TestAttributeConfigurationsCollection(TestCase):
@@ -14,23 +17,27 @@ class TestAttributeConfigurationsCollection(TestCase):
 
     @responses.activate
     def test_relative(self):
-        AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/"
+        AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
         alias = "projects/1/attributeConfigurations/"
         AC_test = AttributeConfigurationCollection(self.unify, self.ACC_json[0], alias)
         expected = self.ACC_json[0]
-        responses.add(responses.GET, AC_url, json=self.ACC_json)
-        #self.assertEqual(expected, AC_test.by_relative_id("projects/1/attributeConfigurations/1"))
+        responses.add(responses.GET, AC_url, json=self.ACC_json[0])
+        self.assertEqual(
+            expected["relativeId"],
+            AC_test.by_relative_id("projects/1/attributeConfigurations/1").relative_id,
+        )
 
+    @responses.activate
+    def test_resource(self):
+        AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
+        alias = "projects/1/attributeConfigurations/"
+        AC_test = AttributeConfigurationCollection(self.unify, self.ACC_json[0], alias)
+        expected = self.ACC_json[0]
+        responses.add(responses.GET, AC_url, json=self.ACC_json[0])
+        self.assertEqual(
+            expected["relativeId"], AC_test.by_resource_id("1").relative_id
+        )
 
-
-    # @responses.activate
-    # def test_resource(self):
-    #     AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
-    #     alias = "projects/1/attributeConfigurations"
-    #     AC_test = AttributeConfigurationCollection(self.unify, self.ACC_json[0], alias)
-    #     expected = self.ACC_json[0]
-    #     self.assertEqual(expected, AC_test.by_resource_id("unify://unified-data/v1/projects/1/attributeConfigurations/35"))
-    #
     @responses.activate
     def test_create(self):
         create_json = [
@@ -321,3 +328,16 @@ class TestAttributeConfigurationsCollection(TestCase):
         },
     ]
 
+    Acc_Json2 = [
+        {
+            "id": "unify://unified-data/v1/projects/1/attributeConfigurations/1",
+            "relativeId": "projects/1/attributeConfigurations/1",
+            "relativeAttributeId": "datasets/8/attributes/suburb",
+            "attributeRole": "",
+            "similarityFunction": "COSINE",
+            "enabledForMl": True,
+            "tokenizer": "DEFAULT",
+            "numericFieldResolution": [],
+            "attributeName": "suburb",
+        }
+    ]
