@@ -28,13 +28,12 @@ class CategoryCollection(BaseCollection):
     def by_relative_id(self, relative_id):
         """Retrieve a category by relative ID.
 
-        :param relative_id: The resource ID. E.g. ``"categories/1"`` or ``"projects/1/categories/1"``
+        :param relative_id: The relative ID. E.g. ``"projects/1/categories/1"``
         :type relative_id: str
         :returns: The specified category.
         :rtype: :class:`~tamr_unify_client.models.taxonomy.resource.Category`
         """
-        resource_id = relative_id.split("/")[-1]
-        return self.by_resource_id(resource_id)
+        return super().by_relative_id(Category, relative_id)
 
     def by_external_id(self, external_id):
         """Retrieve an attribute by external ID.
@@ -69,13 +68,15 @@ class CategoryCollection(BaseCollection):
     def create(self, creation_spec):
         """ Creates a new category.
 
-        :param creation_spec:
+        :param creation_spec: Category creation specification.
+            It needs the following fields: name (str) and path (list[str]).
+            It can also have description (str) but that currently does nothing.
         :type: dict
         :return: The newly created category.
         :rtype: :class:`~tamr_unify_client.models.taxonomy.resource.Category`
         """
         resource_json = (
-            self.client.post(self.api_path, json=creation_spec).successful().as_json()
+            self.client.post(self.api_path, json=creation_spec).successful().json()
         )
         return Category.from_json(self.client, resource_json)
 

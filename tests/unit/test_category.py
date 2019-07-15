@@ -37,10 +37,10 @@ class TestCategory(TestCase):
             self.unify, self._categories_json[1], "projects/1/taxonomy/categories/2"
         )
 
-        parent_path = (
+        parent_url = (
             "http://localhost:9100/api/versioned/v1/projects/1/taxonomy/categories/1"
         )
-        responses.add(responses.GET, parent_path, json=self._categories_json[0])
+        responses.add(responses.GET, parent_url, json=self._categories_json[0])
         t1 = t2.parent()
 
         self.assertEqual(self._categories_json[0]["relativeId"], t1.relative_id)
