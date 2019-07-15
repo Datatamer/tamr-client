@@ -129,14 +129,11 @@ class MasteringProject(Project):
     def attribute_configurations(self):
         """ Project's attribute's configurations.
         :returns: the configurations of the attributes of a project
-        :rtype : tamr_unify_client.models.attribute_configuration.collection.AttributeConfigurationCollection
+        :rtype :class: 'tamr_unify_client.models.attribute_configuration.collection.AttributeConfigurationCollection'
         """
 
         alias = self.api_path + "/attributeConfigurations"
-        attribute_json = self.client.get(alias).successful().json()
-        info = AttributeConfigurationCollection.from_json(
-            self.client, attribute_json, api_path=alias
-        )
+        info = AttributeConfigurationCollection(self.client, api_path=alias)
         return info
 
     def binning_model(self):

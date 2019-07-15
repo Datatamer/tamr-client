@@ -15,73 +15,67 @@ class TestAttributeConfigurationsCollection(TestCase):
         self.unify = Client(auth)
 
     @responses.activate
-    def test_relative(self):
+    def test_by_relative_id(self):
         AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
         alias = "projects/1/attributeConfigurations/"
-        AC_test = AttributeConfigurationCollection(self.unify, self.ACC_json[0], alias)
-        expected = self.ACC_json[0]
+        AC_test = AttributeConfigurationCollection(self.unify, alias)
+        expected = self.ACC_json[0]["relativeId"]
         responses.add(responses.GET, AC_url, json=self.ACC_json[0])
         self.assertEqual(
-            expected["relativeId"],
+            expected,
             AC_test.by_relative_id("projects/1/attributeConfigurations/1").relative_id,
         )
 
     @responses.activate
-    def test_resource(self):
+    def test_by_resource_id(self):
         AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
         alias = "projects/1/attributeConfigurations/"
-        AC_test = AttributeConfigurationCollection(self.unify, self.ACC_json[0], alias)
-        expected = self.ACC_json[0]
+        AC_test = AttributeConfigurationCollection(self.unify, alias)
+        expected = self.ACC_json[0]["relativeId"]
         responses.add(responses.GET, AC_url, json=self.ACC_json[0])
-        self.assertEqual(
-            expected["relativeId"], AC_test.by_resource_id("1").relative_id
-        )
+        self.assertEqual(expected, AC_test.by_resource_id("1").relative_id)
 
     @responses.activate
     def test_create(self):
-        create_json = [
-            {
-                "id": "unify://unified-data/v1/projects/1/attributeConfigurations/35",
-                "relativeId": "projects/1/attributeConfigurations/35",
-                "relativeAttributeId": "datasets/79/attributes/Tester",
-                "attributeRole": "",
-                "similarityFunction": "ABSOLUTE_DIFF",
-                "enabledForMl": False,
-                "tokenizer": "",
-                "numericFieldResolution": [],
-                "attributeName": "Tester",
-            }
-        ]
+        create_json = {
+            "id": "unify://unified-data/v1/projects/1/attributeConfigurations/35",
+            "relativeId": "projects/1/attributeConfigurations/35",
+            "relativeAttributeId": "datasets/79/attributes/Tester",
+            "attributeRole": "",
+            "similarityFunction": "ABSOLUTE_DIFF",
+            "enabledForMl": False,
+            "tokenizer": "",
+            "numericFieldResolution": [],
+            "attributeName": "Tester",
+        }
 
-        project_json = [
-            {
-                "id": "unify://unified-data/v1/projects/1",
-                "externalId": "project 1 external ID",
-                "name": "project 1 name",
-                "description": "project 1 description",
-                "type": "DEDUP",
-                "unifiedDatasetName": "project 1 unified dataset",
-                "created": {
-                    "username": "admin",
-                    "time": "2018-09-10T16:06:20.636Z",
-                    "version": "project 1 created version",
-                },
-                "lastModified": {
-                    "username": "admin",
-                    "time": "2018-09-10T16:06:20.851Z",
-                    "version": "project 1 modified version",
-                },
-                "relativeId": "projects/1",
-            }
-        ]
+        project_json = {
+            "id": "unify://unified-data/v1/projects/1",
+            "externalId": "project 1 external ID",
+            "name": "project 1 name",
+            "description": "project 1 description",
+            "type": "DEDUP",
+            "unifiedDatasetName": "project 1 unified dataset",
+            "created": {
+                "username": "admin",
+                "time": "2018-09-10T16:06:20.636Z",
+                "version": "project 1 created version",
+            },
+            "lastModified": {
+                "username": "admin",
+                "time": "2018-09-10T16:06:20.851Z",
+                "version": "project 1 modified version",
+            },
+            "relativeId": "projects/1",
+        }
 
         url = (
             f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
         )
         project_url = f"http://localhost:9100/api/versioned/v1/projects/1"
-        responses.add(responses.GET, project_url, json=project_json[0])
+        responses.add(responses.GET, project_url, json=project_json)
         responses.add(responses.GET, url, json={})
-        responses.add(responses.POST, url, json=create_json[0], status=204)
+        responses.add(responses.POST, url, json=create_json, status=204)
         responses.add(responses.GET, url, json=create_json)
 
         attributeconfig = (
@@ -91,7 +85,7 @@ class TestAttributeConfigurationsCollection(TestCase):
         )
         create = attributeconfig.create(create_json)
 
-        assert create.relative_id == create_json[0]["relativeId"]
+        self.assertEqual(create.relative_id, create_json["relativeId"])
 
     ACC_json = [
         {

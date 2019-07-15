@@ -2,8 +2,7 @@ from tamr_unify_client.models.base_resource import BaseResource
 
 
 class AttributeConfiguration(BaseResource):
-    """
-   The configurations of Unify Attributes.
+    """The configurations of Unify Attributes.
 
    See https://docs.tamr.com/reference#the-attribute-configuration-object
    """
@@ -25,22 +24,22 @@ class AttributeConfiguration(BaseResource):
         return self._data.get("id")
 
     @property
-    def relativeAttributeId(self):
+    def relative_attribute_id(self):
         """:type: str"""
         return self._data.get("relativeAttributeId")
 
     @property
-    def attributeRole(self):
+    def attribute_role(self):
         """:type: str"""
         return self._data.get("attributeRole")
 
     @property
-    def similarityFunction(self):
+    def similarity_function(self):
         """:type: str"""
         return self._data.get("similarityFunction")
 
     @property
-    def enabledForMl(self):
+    def enabled_for_ml(self):
         """:type: bool"""
         return self._data.get("enabledForMl")
 
@@ -50,12 +49,12 @@ class AttributeConfiguration(BaseResource):
         return self._data.get("tokenizer")
 
     @property
-    def numericFieldResolution(self):
+    def numeric_field_resolution(self):
         """:type: array (?) """
         return self._data.get("numericFieldResolution")
 
     @property
-    def attributeName(self):
+    def attribute_name(self):
         """:type: str"""
         return self._data.get("attributeName")
 
@@ -65,11 +64,11 @@ class AttributeConfiguration(BaseResource):
             f"{self.__class__.__qualname__}("
             f"relative_id={self.relative_id!r}, "
             f"id={self.id!r}, "
-            f"relativeAttributeId={self.relativeAttributeId!r}, "
-            f"attributeRole={self.attributeRole!r}, "
-            f"similarityFunction={self.similarityFunction!r}, "
-            f"enabledForMl={self.enabledForMl!r}, "
+            f"relativeAttributeId={self.relative_attribute_id!r}, "
+            f"attributeRole={self.attribute_role!r}, "
+            f"similarityFunction={self.similarity_function!r}, "
+            f"enabledForMl={self.enabled_for_ml!r}, "
             f"tokenizer={self.tokenizer!r}, "
-            f"numericFieldResolution={self.numericFieldResolution!r}, "
-            f"attributeName={self.attributeName!r})"
+            f"numericFieldResolution={self.numeric_field_resolution!r}, "
+            f"attributeName={self.attribute_name!r})"
         )
