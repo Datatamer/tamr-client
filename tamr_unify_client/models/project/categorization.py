@@ -16,16 +16,18 @@ class CategorizationProject(Project):
         alias = self.api_path + "/categorizations/model"
         return MachineLearningModel(self.client, None, alias)
 
-    def create_taxonomy(self, name=""):
+    def create_taxonomy(self, creation_spec):
         """Creates a Taxonomy for this Categorization project.
 
         A taxonomy cannot already be associated with this project.
 
+        :param creation_spec: The creation specification for the taxonomy, which can include name.
+        :type: dict
         :returns: The new Taxonomy
-        :rtype: :class:`~tamr_unify_client.models.taxonomy.resource.Taxonomy
+        :rtype: :class:`~tamr_unify_client.models.taxonomy.resource.Taxonomy`
         """
         alias = self.api_path + "/taxonomy"
-        resource_json = self.client.post(alias, json={"name": name}).successful().json()
+        resource_json = self.client.post(alias, json=creation_spec).successful().json()
         return Taxonomy.from_json(self.client, resource_json, alias)
 
     def taxonomy(self):
@@ -34,7 +36,7 @@ class CategorizationProject(Project):
         If a taxonomy is not already associated with this project, call create_taxonomy() first.
 
         :returns: The project's Taxonomy
-        :rtype: :class:`~tamr_unify_client.models.taxonomy.resource.Taxonomy
+        :rtype: :class:`~tamr_unify_client.models.taxonomy.resource.Taxonomy`
         """
         alias = self.api_path + "/taxonomy"
         resource_json = self.client.get(alias).successful().json()

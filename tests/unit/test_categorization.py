@@ -19,7 +19,8 @@ class TestCategorization(TestCase):
         responses.add(responses.POST, taxonomy_url, json=self._taxonomy_json)
 
         project = self.unify.projects.by_resource_id("1").as_categorization()
-        u = project.create_taxonomy("Test Taxonomy")
+        creation_spec = {"name": "Test Taxonomy"}
+        u = project.create_taxonomy(creation_spec)
 
         responses.add(responses.GET, taxonomy_url, json=self._taxonomy_json)
         t = project.taxonomy()
