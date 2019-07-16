@@ -48,8 +48,8 @@ class TestAttributeConfigurationsCollection(TestCase):
 
         attributeconfig = (
             self.unify.projects.by_resource_id("1")
-                .as_mastering()
-                .attribute_configurations()
+            .as_mastering()
+            .attribute_configurations()
         )
         create = attributeconfig.create(self.create_json)
 
