@@ -48,8 +48,8 @@ class TestAttributeConfigurationsCollection(TestCase):
 
         attributeconfig = (
             self.unify.projects.by_resource_id("1")
-            .as_mastering()
-            .attribute_configurations()
+                .as_mastering()
+                .attribute_configurations()
         )
         create = attributeconfig.create(self.create_json)
 
@@ -58,35 +58,15 @@ class TestAttributeConfigurationsCollection(TestCase):
     @responses.activate
     def test_stream(self):
 
-        url = (
-            f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
-        )
-        project_url = f"http://localhost:9100/api/versioned/v1/projects/1"
+        AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/"
         alias = "projects/1/attributeConfigurations/"
-        responses.add(responses.GET, project_url, json=self.acc_json)
-        responses.add(responses.GET, url, json={})
-        responses.add(responses.GET, url, json=self.acc_json)
-
-        # attributeconfig = (
-        #     self.unify.projects.by_resource_id("1")
-        #         .as_mastering()
-        #         .attribute_configurations().by_resource_id("1")
-        # )
-
-        testing_stream = AttributeConfigurationCollection(self.unify, alias)
-        print(next(testing_stream.stream()))
-
-        print("hello")
-
-
-       # print (attributeconfig.api_path)
-       # streamer = attributeconfig.stream()
-       # print(next(streamer))
-
-        #stream="hello"
-        #print(stream)
-        #self.assertEqual(next(stream), json)
-
+        AC_test = AttributeConfigurationCollection(self.unify, alias)
+        responses.add(responses.GET, AC_url, json=self.acc_json)
+        streamer = AC_test.stream()
+        stream_content = []
+        for char in streamer:
+            stream_content.append(char._data)
+        self.assertEqual(self.acc_json, stream_content)
 
     create_json = {
         "id": "unify://unified-data/v1/projects/1/attributeConfigurations/35",
