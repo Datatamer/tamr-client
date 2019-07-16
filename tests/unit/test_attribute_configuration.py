@@ -7,7 +7,7 @@ from tamr_unify_client.models.attribute_configuration.resource import (
 )
 
 
-class TestAttributeConfigurations(TestCase):
+class TestAttributeConfiguration(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
         self.unify = Client(auth)

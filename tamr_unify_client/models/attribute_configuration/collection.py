@@ -5,7 +5,6 @@ from tamr_unify_client.models.base_collection import BaseCollection
 
 
 class AttributeConfigurationCollection(BaseCollection):
-
     """Collection of :class'tamr_unify_client.models.attribute_configuration.resource.AttributeConfigurations
     :param client: Client for API call delegation.
     :type client: :class:`~tamr_unify_client.Client`
@@ -15,9 +14,6 @@ class AttributeConfigurationCollection(BaseCollection):
         E.g. ``"projects/1/attributeConfigurations"``.
     :type api_path: str
     """
-
-    def __init__(self, client, api_path):
-        super().__init__(client, api_path)
 
     def by_resource_id(self, resource_id):
         """Retrieve an attribute configuration by resource ID.
