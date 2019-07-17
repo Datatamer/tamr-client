@@ -10,6 +10,7 @@
   - [#113](https://github.com/Datatamer/unify-client-python/issues/113) Add support for uploading a binningModel
   - [#168](https://github.com/Datatamer/unify-client-python/issues/168) Add support for project attributes
   - [#171](https://github.com/Datatamer/unify-client-python/issues/171) Add support for creating and retrieving taxonomies
+  - [#178](https://github.com/Datatamer/unify-client-python/issues/178) Add support for retrieving input datasets
 
   **BUG FIXES**
   - [#148](https://github.com/Datatamer/unify-client-python/issues/148) Fix null geo, id and absent id bug for geospatial datasets. 
