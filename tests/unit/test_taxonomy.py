@@ -61,6 +61,29 @@ class TestTaxonomy(TestCase):
         c = coll.create(creation_spec)
         self.assertEqual(alias + "/1", c.relative_id)
 
+    @responses.activate
+    def test_bulk_create(self):
+        post_url = (
+            "http://localhost:9100/api/versioned/v1/projects/1/taxonomy/categories:bulk"
+        )
+        responses.add(responses.POST, post_url, json=self._bulk_json)
+
+        alias = "projects/1/taxonomy/categories"
+        coll = CategoryCollection(self.unify, alias)
+
+        creation_specs = [
+            {
+                "name": self._categories_json[0]["name"],
+                "path": self._categories_json[0]["path"],
+            },
+            {
+                "name": self._categories_json[1]["name"],
+                "path": self._categories_json[1]["path"],
+            },
+        ]
+        j = coll.bulk_create(creation_specs)
+        self.assertEqual(j, self._bulk_json)
+
     _taxonomy_json = {
         "id": "unify://unified-data/v1/projects/1/taxonomy",
         "name": "Test Taxonomy",
@@ -115,3 +138,9 @@ class TestTaxonomy(TestCase):
             "relativeId": "projects/1/taxonomy/categories/2",
         },
     ]
+
+    _bulk_json = {
+        "numCommandsProcessed": 2,
+        "allCommandsSucceeded": True,
+        "validationErrors": [],
+    }

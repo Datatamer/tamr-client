@@ -1,3 +1,5 @@
+import json
+
 from tamr_unify_client.models.base_collection import BaseCollection
 from tamr_unify_client.models.taxonomy.category import Category
 
@@ -79,5 +81,23 @@ class CategoryCollection(BaseCollection):
             self.client.post(self.api_path, json=creation_spec).successful().json()
         )
         return Category.from_json(self.client, resource_json)
+
+    def bulk_create(self, creation_specs):
+        """Creates new categories in bulk.
+
+        :param creation_specs: A collection of creation specifications, as detailed for create.
+        :type: iterable[dict]
+        :returns: JSON response from the server
+        """
+        body = "\n".join([json.dumps(s) for s in creation_specs]).encode("utf-8")
+        return (
+            self.client.post(
+                self.api_path + ":bulk",
+                headers={"Content-Encoding": "utf-8"},
+                data=body,
+            )
+            .successful()
+            .json()
+        )
 
     # super.__repr__ is sufficient
