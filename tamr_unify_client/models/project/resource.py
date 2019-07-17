@@ -1,4 +1,5 @@
 from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client.models.dataset.collection import DatasetCollection
 from tamr_unify_client.models.dataset.resource import Dataset
 
 
@@ -109,6 +110,15 @@ class Project(BaseResource):
             self.api_path + "/inputDatasets" + f"?id={dataset_id}"
         ).successful()
         return response
+
+    def source_datasets(self):
+        """Retrieve a collection of this project's source datasets.
+
+        :return: The project's input datasets.
+        :rtype: :class: `~tamr_unify_client.models.dataset.collection.DatasetCollection`
+        """
+        alias = self.api_path + "/inputDatasets"
+        return DatasetCollection(self.client, alias)
 
     def __repr__(self):
         return (

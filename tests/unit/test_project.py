@@ -4,6 +4,7 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
+from tamr_unify_client.models.project.resource import Project
 
 
 class TestProject(TestCase):
@@ -80,6 +81,14 @@ class TestProject(TestCase):
         # If it posts to some other URL, responses will raise an exception;
         # If it does not post to any URL, responses will also raise an exception.
         project.attributes.create(self.project_attributes_json[0])
+
+    def test_project_get_source_datasets(self):
+        auth = UsernamePasswordAuth("username", "password")
+        unify = Client(auth)
+
+        p = Project(unify, self.project_json[0])
+        datasets = p.source_datasets()
+        self.assertEqual(datasets.api_path, "projects/1/inputDatasets")
 
     dataset_external_id = "1"
     datasets_url = f"http://localhost:9100/api/versioned/v1/datasets?filter=externalId=={dataset_external_id}"
