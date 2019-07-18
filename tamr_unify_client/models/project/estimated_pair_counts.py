@@ -1,4 +1,5 @@
 from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client.models.operation import Operation
 
 
 class EstimatedPairCounts(BaseResource):
@@ -49,6 +50,20 @@ class EstimatedPairCounts(BaseResource):
         :rtype: dict[str, dict[str, str]]
         """
         return self._data.get("clauseEstimates")
+
+    def refresh(self, **options):
+        """Updates the estimated pair counts if needed.
+
+        The pair count estimates are updated on the server; you will need to call
+        :func:`~tamr_unify_client.models.project.mastering.MasteringProject.estimate_pairs`
+        to retrieve the updated estimate.
+
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
+            See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
+        """
+        op_json = self.client.post(self.api_path + ":refresh").successful().json()
+        op = Operation.from_json(self.client, op_json)
+        return op.apply_options(**options)
 
     def __repr__(self) -> str:
         return (
