@@ -1,3 +1,5 @@
+from functools import partial
+import json
 from unittest import TestCase
 
 import responses
@@ -63,10 +65,15 @@ class TestTaxonomy(TestCase):
 
     @responses.activate
     def test_bulk_create(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = request.body
+            return 200, {}, json.dumps(self._bulk_json)
+
         post_url = (
             "http://localhost:9100/api/versioned/v1/projects/1/taxonomy/categories:bulk"
         )
-        responses.add(responses.POST, post_url, json=self._bulk_json)
+        snoop_dict = {}
+        responses.add_callback(responses.POST, post_url, partial(create_callback, snoop=snoop_dict))
 
         alias = "projects/1/taxonomy/categories"
         coll = CategoryCollection(self.unify, alias)
@@ -83,6 +90,11 @@ class TestTaxonomy(TestCase):
         ]
         j = coll.bulk_create(creation_specs)
         self.assertEqual(j, self._bulk_json)
+
+        sent = []
+        for line in snoop_dict["payload"].split(b"\n"):
+            sent.append(json.loads(line))
+        self.assertEqual(sent, creation_specs)
 
     _taxonomy_json = {
         "id": "unify://unified-data/v1/projects/1/taxonomy",
