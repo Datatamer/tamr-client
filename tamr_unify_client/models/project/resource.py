@@ -1,4 +1,5 @@
 from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client.models.dataset.collection import DatasetCollection
 from tamr_unify_client.models.dataset.resource import Dataset
 
 
@@ -91,7 +92,7 @@ class Project(BaseResource):
             )
         return MasteringProject(self.client, self._data, self.api_path)
 
-    def add_source_dataset(self, dataset):
+    def add_input_dataset(self, dataset):
         """
         Associate a dataset with a project in Unify.
 
@@ -109,6 +110,15 @@ class Project(BaseResource):
             self.api_path + "/inputDatasets" + f"?id={dataset_id}"
         ).successful()
         return response
+
+    def input_datasets(self):
+        """Retrieve a collection of this project's input datasets.
+
+        :return: The project's input datasets.
+        :rtype: :class: `~tamr_unify_client.models.dataset.collection.DatasetCollection`
+        """
+        alias = self.api_path + "/inputDatasets"
+        return DatasetCollection(self.client, alias)
 
     def __repr__(self):
         return (
