@@ -92,7 +92,7 @@ class Project(BaseResource):
             )
         return MasteringProject(self.client, self._data, self.api_path)
 
-    def add_source_dataset(self, dataset):
+    def add_input_dataset(self, dataset):
         """
         Associate a dataset with a project in Unify.
 
@@ -111,8 +111,8 @@ class Project(BaseResource):
         ).successful()
         return response
 
-    def source_datasets(self):
-        """Retrieve a collection of this project's source datasets.
+    def input_datasets(self):
+        """Retrieve a collection of this project's input datasets.
 
         :return: The project's input datasets.
         :rtype: :class: `~tamr_unify_client.models.dataset.collection.DatasetCollection`

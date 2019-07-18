@@ -2,6 +2,7 @@
   **BREAKING CHANGES**
   - [#156](https://github.com/Datatamer/unify-client-python/issues/156) Fetch Dataset profile, even if out of date.
   - [#161](https://github.com/Datatamer/unify-client-python/issues/161) Move `create_attribute` from Dataset to AttributeCollection 
+  - The `Project` method `add_source_dataset` has been renamed `add_input_dataset` to model the API endpoint.
 
   **NEW FEATURES**
   - [#65](https://github.com/Datatamer/unify-client-python/issues/65) Fetches published clusters with data represented as a dataset.

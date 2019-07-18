@@ -13,7 +13,7 @@ class TestProject(TestCase):
         self.unify = Client(auth)
 
     @responses.activate
-    def test_project_add_source_dataset(self):
+    def test_project_add_input_dataset(self):
         responses.add(responses.GET, self.datasets_url, json=self.dataset_json)
         responses.add(responses.GET, self.projects_url, json=self.project_json)
         responses.add(
@@ -28,7 +28,7 @@ class TestProject(TestCase):
 
         dataset = self.unify.datasets.by_external_id(self.dataset_external_id)
         project = self.unify.projects.by_external_id(self.project_external_id)
-        project.add_source_dataset(dataset)
+        project.add_input_dataset(dataset)
         alias = project.api_path + "/inputDatasets"
         input_datasets = project.client.get(alias).successful().json()
         self.assertEqual(self.dataset_json, input_datasets)
@@ -79,9 +79,9 @@ class TestProject(TestCase):
         # If it does not post to any URL, responses will also raise an exception.
         project.attributes.create(self.project_attributes_json[0])
 
-    def test_project_get_source_datasets(self):
+    def test_project_get_input_datasets(self):
         p = Project(self.unify, self.project_json[0])
-        datasets = p.source_datasets()
+        datasets = p.input_datasets()
         self.assertEqual(datasets.api_path, "projects/1/inputDatasets")
 
     dataset_external_id = "1"
