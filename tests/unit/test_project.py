@@ -84,6 +84,15 @@ class TestProject(TestCase):
         datasets = p.input_datasets()
         self.assertEqual(datasets.api_path, "projects/1/inputDatasets")
 
+    @responses.activate
+    def test_return_attribute_collection(self):
+        responses.add(responses.GET, self.projects_url, json=self.project_json)
+        project = self.unify.projects.by_external_id(self.project_external_id)
+        attribute_configs = project.as_mastering().attribute_configurations()
+        self.assertEqual(
+            attribute_configs.api_path, "projects/1/attributeConfigurations"
+        )
+
     dataset_external_id = "1"
     datasets_url = f"http://localhost:9100/api/versioned/v1/datasets?filter=externalId=={dataset_external_id}"
     dataset_json = [

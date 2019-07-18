@@ -1,3 +1,6 @@
+from tamr_unify_client.models.attribute_configuration.collection import (
+    AttributeConfigurationCollection,
+)
 from tamr_unify_client.models.base_resource import BaseResource
 from tamr_unify_client.models.dataset.collection import DatasetCollection
 from tamr_unify_client.models.dataset.resource import Dataset
@@ -118,6 +121,15 @@ class Project(BaseResource):
         """
         alias = self.api_path + "/inputDatasets"
         return DatasetCollection(self.client, alias)
+
+    def attribute_configurations(self):
+        """ Project's attribute's configurations.
+        :returns: the configurations of the attributes of a project
+        :rtype :class: '~tamr_unify_client.models.attribute_configuration.collection.AttributeConfigurationCollection'
+        """
+        alias = self.api_path + "/attributeConfigurations"
+        info = AttributeConfigurationCollection(self.client, api_path=alias)
+        return info
 
     def __repr__(self):
         return (
