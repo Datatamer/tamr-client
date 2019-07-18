@@ -1,7 +1,7 @@
 import json
 
 from tamr_unify_client.models.base_collection import BaseCollection
-from tamr_unify_client.models.taxonomy.category import Category
+from tamr_unify_client.models.category.resource import Category
 
 
 class CategoryCollection(BaseCollection):

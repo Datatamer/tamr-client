@@ -1,5 +1,5 @@
 from tamr_unify_client.models.base_resource import BaseResource
-from tamr_unify_client.models.taxonomy.category_collection import CategoryCollection
+from tamr_unify_client.models.category.collection import CategoryCollection
 
 
 class Taxonomy(BaseResource):
