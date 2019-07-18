@@ -89,7 +89,7 @@ class MasteringProject(Project):
         """Returns pair estimate information for a mastering project
 
         :return: Pairs Estimate information.
-        :rtype: :class:`~tamr_unify_client.models.project.estimated_pair_counts`
+        :rtype: :class:`~tamr_unify_client.models.project.estimated_pair_counts.EstimatedPairCounts`
         """
         alias = self.api_path + "/estimatedPairCounts"
         estimate_json = self.client.get(alias).successful().json()
