@@ -5,7 +5,7 @@ from tamr_unify_client.models.category.resource import Category
 
 
 class CategoryCollection(BaseCollection):
-    """Collection of :class:`~tamr_unify_client.models.dataset.resource.Category` s.
+    """Collection of :class:`~tamr_unify_client.models.category.resource.Category` s.
 
     :param client: Client for API call delegation.
     :type client: :class:`~tamr_unify_client.Client`
@@ -23,7 +23,7 @@ class CategoryCollection(BaseCollection):
         :param resource_id: The resource ID. E.g. ``"1"``
         :type resource_id: str
         :returns: The specified category.
-        :rtype: :class:`~tamr_unify_client.models.taxonomy.resource.Category`
+        :rtype: :class:`~tamr_unify_client.models.category.resource.Category`
         """
         return super().by_resource_id(self.api_path, resource_id)
 
@@ -33,7 +33,7 @@ class CategoryCollection(BaseCollection):
         :param relative_id: The relative ID. E.g. ``"projects/1/categories/1"``
         :type relative_id: str
         :returns: The specified category.
-        :rtype: :class:`~tamr_unify_client.models.taxonomy.resource.Category`
+        :rtype: :class:`~tamr_unify_client.models.category.resource.Category`
         """
         return super().by_relative_id(Category, relative_id)
 
@@ -46,7 +46,7 @@ class CategoryCollection(BaseCollection):
         :param external_id: The external ID.
         :type external_id: str
         :returns: The specified category, if found.
-        :rtype: :class:`~tamr_unify_client.models.taxonomy.category.Category`
+        :rtype: :class:`~tamr_unify_client.models.category.resource.Category`
         :raises KeyError: If no category with the specified external_id is found
         :raises LookupError: If multiple categories with the specified external_id are found
         """
@@ -57,7 +57,7 @@ class CategoryCollection(BaseCollection):
         over this collection.
 
         :returns: Stream of categories.
-        :rtype: Python generator yielding :class:`~tamr_unify_client.models.taxonomy.category.Category`
+        :rtype: Python generator yielding :class:`~tamr_unify_client.models.category.resource.Category`
 
         Usage:
             >>> for category in collection.stream(): # explicit
@@ -70,12 +70,11 @@ class CategoryCollection(BaseCollection):
     def create(self, creation_spec):
         """ Creates a new category.
 
-        :param creation_spec: Category creation specification.
-            It needs the following fields: name (str) and path (list[str]).
-            It can also have description (str) but that currently does nothing.
+        :param creation_spec: Category creation specification, formatted as specified in the
+            `Public Docs for Creating a Category <https://docs.tamr.com/reference#create-a-category>`_.
         :type: dict
         :return: The newly created category.
-        :rtype: :class:`~tamr_unify_client.models.taxonomy.resource.Category`
+        :rtype: :class:`~tamr_unify_client.models.category.resource.Category`
         """
         resource_json = (
             self.client.post(self.api_path, json=creation_spec).successful().json()

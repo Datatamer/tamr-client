@@ -6,8 +6,8 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.category.resource import Category
 from tamr_unify_client.models.category.collection import CategoryCollection
+from tamr_unify_client.models.category.resource import Category
 from tamr_unify_client.models.taxonomy.resource import Taxonomy
 
 
@@ -73,7 +73,9 @@ class TestTaxonomy(TestCase):
             "http://localhost:9100/api/versioned/v1/projects/1/taxonomy/categories:bulk"
         )
         snoop_dict = {}
-        responses.add_callback(responses.POST, post_url, partial(create_callback, snoop=snoop_dict))
+        responses.add_callback(
+            responses.POST, post_url, partial(create_callback, snoop=snoop_dict)
+        )
 
         alias = "projects/1/taxonomy/categories"
         coll = CategoryCollection(self.unify, alias)

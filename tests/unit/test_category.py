@@ -44,7 +44,7 @@ class TestCategory(TestCase):
         t1 = t2.parent()
 
         self.assertEqual(self._categories_json[0]["relativeId"], t1.relative_id)
-        self.assertEqual(t1.parent(), None)
+        self.assertIsNone(t1.parent())
 
         self.assertEqual(t1.path, [t1.name])
         self.assertEqual(t2.path, [t1.name, t2.name])

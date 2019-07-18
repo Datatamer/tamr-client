@@ -14,7 +14,6 @@ class Category(BaseResource):
         return self._data.get("name")
 
     @property
-    # note: this is broken in the api and will always be blank
     def description(self):
         """:type: str"""
         return self._data.get("description")
