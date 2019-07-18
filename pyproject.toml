@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tamr-unify-client"
-version = "0.7.0-dev"
+version = "0.7.0"
 description = "Python Client for the Tamr Unify API"
 license = "Apache-2.0"
 authors = ["Pedro Cattori <pedro.cattori@tamr.com>"]
