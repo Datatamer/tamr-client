@@ -1,4 +1,6 @@
-## 0.7.0-dev
+## 0.8.0-dev
+
+## 0.7.0
   **BREAKING CHANGES**
   - [#156](https://github.com/Datatamer/unify-client-python/issues/156) Fetch Dataset profile, even if out of date.
   - [#161](https://github.com/Datatamer/unify-client-python/issues/161) Move `create_attribute` from Dataset to AttributeCollection 
