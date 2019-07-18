@@ -9,31 +9,31 @@ from tamr_unify_client.models.attribute_configuration.collection import (
 )
 
 
-class TestAttributeConfigurationsCollection(TestCase):
+class TestAttributeConfigurationCollection(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
         self.unify = Client(auth)
 
     @responses.activate
     def test_by_relative_id(self):
-        AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
+        ac_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
         alias = "projects/1/attributeConfigurations/"
-        AC_test = AttributeConfigurationCollection(self.unify, alias)
+        ac_test = AttributeConfigurationCollection(self.unify, alias)
         expected = self.acc_json[0]["relativeId"]
-        responses.add(responses.GET, AC_url, json=self.acc_json[0])
+        responses.add(responses.GET, ac_url, json=self.acc_json[0])
         self.assertEqual(
             expected,
-            AC_test.by_relative_id("projects/1/attributeConfigurations/1").relative_id,
+            ac_test.by_relative_id("projects/1/attributeConfigurations/1").relative_id,
         )
 
     @responses.activate
     def test_by_resource_id(self):
-        AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
+        ac_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
         alias = "projects/1/attributeConfigurations/"
-        AC_test = AttributeConfigurationCollection(self.unify, alias)
+        ac_test = AttributeConfigurationCollection(self.unify, alias)
         expected = self.acc_json[0]["relativeId"]
-        responses.add(responses.GET, AC_url, json=self.acc_json[0])
-        self.assertEqual(expected, AC_test.by_resource_id("1").relative_id)
+        responses.add(responses.GET, ac_url, json=self.acc_json[0])
+        self.assertEqual(expected, ac_test.by_resource_id("1").relative_id)
 
     @responses.activate
     def test_create(self):
@@ -57,12 +57,11 @@ class TestAttributeConfigurationsCollection(TestCase):
 
     @responses.activate
     def test_stream(self):
-
-        AC_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/"
+        ac_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/"
         alias = "projects/1/attributeConfigurations/"
-        AC_test = AttributeConfigurationCollection(self.unify, alias)
-        responses.add(responses.GET, AC_url, json=self.acc_json)
-        streamer = AC_test.stream()
+        ac_test = AttributeConfigurationCollection(self.unify, alias)
+        responses.add(responses.GET, ac_url, json=self.acc_json)
+        streamer = ac_test.stream()
         stream_content = []
         for char in streamer:
             stream_content.append(char._data)
