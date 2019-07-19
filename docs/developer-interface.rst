@@ -52,6 +52,19 @@ Attributes
 
 .. autoclass:: tamr_unify_client.models.attribute.collection.AttributeCollection
 
+
+Attribute Configuration
+----------
+
+.. autoclass:: tamr_unify_client.models.attribute_configuration.resource.AttributeConfiguration
+
+
+Attribute Configurations
+----------
+
+.. autoclass:: tamr_unify_client.models.attribute_configuration.collection.AttributeConfigurations
+
+
 Machine Learning Models
 -----------------------
 
