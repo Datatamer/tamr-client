@@ -85,6 +85,20 @@ class MasteringProject(Project):
         alias = self.api_path + "/publishedClusters"
         return Dataset.from_json(self.client, resource_json, alias)
 
+    def published_clusters_configuration(self):
+        """Retrives published clusters configuration for this project.
+
+        :returns: The returned JSON body, as specified in the
+            `Public Docs for Cluster Configurations
+            <https://docs.tamr.com/reference#the-published-clusters-configuration-object>`_.
+        :rtype: dict
+        """
+        return (
+            self.client.get(self.api_path + "/publishedClustersConfiguration")
+            .successful()
+            .json()
+        )
+
     def estimate_pairs(self):
         """Returns pair estimate information for a mastering project
 
