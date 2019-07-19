@@ -13,6 +13,18 @@ Client
 .. autoclass:: tamr_unify_client.Client
   :members:
 
+Category
+--------
+
+.. autoclass:: tamr_unify_client.models.category.resource.Category
+  :members:
+
+Categories
+----------
+
+.. autoclass:: tamr_unify_client.models.category.collection.CategoryCollection
+  :members:
+
 Dataset
 -------
 
@@ -90,4 +102,10 @@ Projects
 --------
 
 .. autoclass:: tamr_unify_client.models.project.collection.ProjectCollection
+  :members:
+
+Taxonomy
+--------
+
+.. autoclass:: tamr_unify_client.models.taxonomy.resource.Taxonomy
   :members:
