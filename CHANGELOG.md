@@ -1,4 +1,9 @@
 ## 0.8.0-dev
+**BREAKING CHANGES**
+
+**NEW FEATURES**
+-[#112](https://github.com/Datatamer/unify-client-python/issues/112) Add support for attribute configurations
+**BUG FIXES**
 
 ## 0.7.0
   **BREAKING CHANGES**
