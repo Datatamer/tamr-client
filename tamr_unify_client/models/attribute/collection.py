@@ -7,22 +7,13 @@ class AttributeCollection(BaseCollection):
 
     :param client: Client for API call delegation.
     :type client: :class:`~tamr_unify_client.Client`
-    :param data: JSON data representing this resource
-    :type data: dict
     :param api_path: API path used to access this collection.
         E.g. ``"datasets/1/attributes"``.
     :type api_path: str
     """
 
-    def __init__(self, client, data, api_path):
+    def __init__(self, client, api_path):
         super().__init__(client, api_path)
-        self._data = data
-
-    @classmethod
-    def from_json(cls, client, data, api_path):
-        # BaseCollection doesn't really implement from_json / from_data
-        # but we pretend it does.
-        return AttributeCollection(client, data, api_path)
 
     def by_resource_id(self, resource_id):
         """Retrieve an attribute by resource ID.
@@ -73,7 +64,8 @@ class AttributeCollection(BaseCollection):
             >>> for attribute in collection: # implicit
             >>>     do_stuff(attribute)
         """
-        for resource_json in self._data:
+        data = self.client.get(self.api_path).successful().json()
+        for resource_json in data:
             alias = self.api_path + "/" + resource_json["name"]
             yield Attribute.from_json(self.client, resource_json, alias)
 

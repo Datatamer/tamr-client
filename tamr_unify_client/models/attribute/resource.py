@@ -44,9 +44,8 @@ class Attribute(BaseResource):
     @property
     def type(self):
         """:type: :class:`~tamr_unify_client.models.attribute.type.AttributeType`"""
-        alias = self.api_path + "/type"
         type_json = self._data.get("type")
-        return AttributeType.from_data(self.client, type_json, alias)
+        return AttributeType(self.client, type_json)
 
     @property
     def is_nullable(self):
