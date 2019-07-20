@@ -1,6 +1,9 @@
 from tamr_unify_client.models.binning_model import BinningModel
 from tamr_unify_client.models.dataset.resource import Dataset
 from tamr_unify_client.models.machine_learning_model import MachineLearningModel
+from tamr_unify_client.models.project.cluster_configuration import (
+    PublishedClustersConfiguration,
+)
 from tamr_unify_client.models.project.estimated_pair_counts import EstimatedPairCounts
 from tamr_unify_client.models.project.resource import Project
 
@@ -86,17 +89,15 @@ class MasteringProject(Project):
         return Dataset.from_json(self.client, resource_json, alias)
 
     def published_clusters_configuration(self):
-        """Retrives published clusters configuration for this project.
+        """Retrieves published clusters configuration for this project.
 
-        :returns: The returned JSON body, as specified in the
-            `Public Docs for Cluster Configurations
-            <https://docs.tamr.com/reference#the-published-clusters-configuration-object>`_.
-        :rtype: dict
+        :returns: The published clusters configuration
+        :rtype: :class:`~tamr_unify_client.models.project.cluster_configuration.PublishedClustersConfiguration`
         """
-        return (
-            self.client.get(self.api_path + "/publishedClustersConfiguration")
-            .successful()
-            .json()
+        alias = self.api_path + "/publishedClustersConfiguration"
+        resource_json = self.client.get(alias).successful().json()
+        return PublishedClustersConfiguration.from_json(
+            self.client, resource_json, alias
         )
 
     def estimate_pairs(self):

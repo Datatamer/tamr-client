@@ -104,6 +104,11 @@ Project
 .. autoclass:: tamr_unify_client.models.project.estimated_pair_counts.EstimatedPairCounts
   :members:
 
+----
+
+.. autoclass:: tamr_unify_client.models.project.cluster_configuration.PublishedClustersConfiguration
+  :members:
+
 Projects
 --------
 

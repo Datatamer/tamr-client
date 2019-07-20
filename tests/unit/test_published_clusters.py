@@ -4,6 +4,9 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
+from tamr_unify_client.models.project.cluster_configuration import (
+    PublishedClustersConfiguration,
+)
 from tamr_unify_client.models.project.resource import Project
 
 
@@ -40,13 +43,20 @@ class PublishedClusterTest(TestCase):
 
     @responses.activate
     def test_published_clusters_configuration(self):
-        config_url = f"http://localhost:9100/api/versioned/v1/projects/1/publishedClustersConfiguration"
+        path = "projects/1/publishedClustersConfiguration"
+        config_url = f"http://localhost:9100/api/versioned/v1/{path}"
         responses.add(responses.GET, config_url, json=self._config_json)
 
-        p = Project(self.unify, self._project_config_json, "projects/1").as_mastering()
+        p = Project(self.unify, self._project_config_json).as_mastering()
         config = p.published_clusters_configuration()
+        created = PublishedClustersConfiguration.from_json(
+            self.unify, self._config_json, path
+        )
 
-        self.assertEqual(config, self._config_json)
+        self.assertEqual(repr(config), repr(created))
+        self.assertEqual(
+            config.versions_time_to_live, self._config_json["versionsTimeToLive"]
+        )
 
     _project_config_json = {
         "id": "unify://unified-data/v1/projects/1",
