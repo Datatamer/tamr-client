@@ -64,6 +64,12 @@ Attributes
 
 .. autoclass:: tamr_unify_client.models.attribute.collection.AttributeCollection
 
+Estimated Pair Counts
+---------------------
+
+.. autoclass:: tamr_unify_client.models.project.estimated_pair_counts.EstimatedPairCounts
+  :members:
+
 Machine Learning Models
 -----------------------
 
