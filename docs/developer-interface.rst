@@ -54,6 +54,8 @@ Attribute
 
 .. autoclass:: tamr_unify_client.models.attribute.resource.Attribute
 
+.. autoclass:: tamr_unify_client.models.attribute.subattribute.SubAttribute
+
 Attribute Type
 --------------
 
