@@ -1,13 +1,64 @@
+from unittest import TestCase
+
 import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
+from tamr_unify_client.models.project.cluster_configuration import (
+    PublishedClustersConfiguration,
+)
+from tamr_unify_client.models.project.resource import Project
 
 
-@responses.activate
-def test_published_clusters():
+class PublishedClusterTest(TestCase):
+    def setUp(self):
+        auth = UsernamePasswordAuth("username", "password")
+        self.unify = Client(auth)
 
-    project_config_json = {
+    @responses.activate
+    def test_published_clusters(self):
+        datasets_json = [self._published_clusters_json]
+        project_id = "1"
+
+        project_url = f"http://localhost:9100/api/versioned/v1/projects/{project_id}"
+        unified_dataset_url = f"http://localhost:9100/api/versioned/v1/projects/{project_id}/unifiedDataset"
+        datasets_url = f"http://localhost:9100/api/versioned/v1/datasets"
+        refresh_url = f"http://localhost:9100/api/versioned/v1/projects/{project_id}/publishedClusters:refresh"
+        operations_url = f"http://localhost:9100/api/versioned/v1/operations/93"
+
+        responses.add(responses.GET, project_url, json=self._project_config_json)
+        responses.add(
+            responses.GET, unified_dataset_url, json=self._unified_dataset_json
+        )
+        responses.add(responses.GET, datasets_url, json=datasets_json)
+        responses.add(responses.POST, refresh_url, json=self._refresh_json)
+        responses.add(responses.GET, operations_url, json=self._operations_json)
+        project = self.unify.projects.by_resource_id(project_id)
+        actual_published_clusters_dataset = project.as_mastering().published_clusters()
+        actual_published_clusters_dataset.refresh()
+        self.assertEqual(
+            actual_published_clusters_dataset.name,
+            self._published_clusters_json["name"],
+        )
+
+    @responses.activate
+    def test_published_clusters_configuration(self):
+        path = "projects/1/publishedClustersConfiguration"
+        config_url = f"http://localhost:9100/api/versioned/v1/{path}"
+        responses.add(responses.GET, config_url, json=self._config_json)
+
+        p = Project(self.unify, self._project_config_json).as_mastering()
+        config = p.published_clusters_configuration()
+        created = PublishedClustersConfiguration.from_json(
+            self.unify, self._config_json, path
+        )
+
+        self.assertEqual(repr(config), repr(created))
+        self.assertEqual(
+            config.versions_time_to_live, self._config_json["versionsTimeToLive"]
+        )
+
+    _project_config_json = {
         "id": "unify://unified-data/v1/projects/1",
         "name": "Project_1",
         "description": "Mastering Project",
@@ -17,7 +68,7 @@ def test_published_clusters():
         "externalId": "32b99cab-e01b-41e7-a29d-509165242c6f",
     }
 
-    unified_dataset_json = {
+    _unified_dataset_json = {
         "id": "unify://unified-data/v1/datasets/8",
         "name": "Project_1_unified_dataset",
         "version": "10",
@@ -25,7 +76,7 @@ def test_published_clusters():
         "externalId": "Project_1_unified_dataset",
     }
 
-    published_clusters_json = {
+    _published_clusters_json = {
         "id": "unify://unified-data/v1/datasets/32",
         "name": "Project_1_unified_dataset_dedup_published_clusters",
         "description": "All the mappings of records to clusters.",
@@ -34,9 +85,7 @@ def test_published_clusters():
         "externalId": "Project_1_unified_dataset_dedup_published_clusters",
     }
 
-    datasets_json = [published_clusters_json]
-
-    refresh_json = {
+    _refresh_json = {
         "id": "93",
         "type": "SPARK",
         "description": "Publish clusters",
@@ -59,7 +108,7 @@ def test_published_clusters():
         "relativeId": "operations/93",
     }
 
-    operations_json = {
+    _operations_json = {
         "id": "93",
         "type": "SPARK",
         "description": "Publish clusters",
@@ -81,23 +130,4 @@ def test_published_clusters():
         "relativeId": "operations/93",
     }
 
-    unify = Client(UsernamePasswordAuth("username", "password"))
-    project_id = "1"
-
-    project_url = f"http://localhost:9100/api/versioned/v1/projects/{project_id}"
-    unified_dataset_url = (
-        f"http://localhost:9100/api/versioned/v1/projects/{project_id}/unifiedDataset"
-    )
-    datasets_url = f"http://localhost:9100/api/versioned/v1/datasets"
-    refresh_url = f"http://localhost:9100/api/versioned/v1/projects/{project_id}/publishedClusters:refresh"
-    operations_url = f"http://localhost:9100/api/versioned/v1/operations/93"
-
-    responses.add(responses.GET, project_url, json=project_config_json)
-    responses.add(responses.GET, unified_dataset_url, json=unified_dataset_json)
-    responses.add(responses.GET, datasets_url, json=datasets_json)
-    responses.add(responses.POST, refresh_url, json=refresh_json)
-    responses.add(responses.GET, operations_url, json=operations_json)
-    project = unify.projects.by_resource_id(project_id)
-    actual_published_clusters_dataset = project.as_mastering().published_clusters()
-    actual_published_clusters_dataset.refresh()
-    assert actual_published_clusters_dataset.name == published_clusters_json["name"]
+    _config_json = {"versionsTimeToLive": "P4D"}

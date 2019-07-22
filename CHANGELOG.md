@@ -2,6 +2,7 @@
   **NEW FEATURES**
   - [#174](https://github.com/Datatamer/unify-client-python/issues/174) Get and create taxonomy categories
   - [#182](https://github.com/Datatamer/unify-client-python/issues/182) Add the ability to refresh estimated pair counts.
+  - [#184](https://github.com/Datatamer/unify-client-python/issues/184) Support for getting published cluster configurations
 
 ## 0.7.0
   **BREAKING CHANGES**
