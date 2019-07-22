@@ -50,9 +50,8 @@ class TestAttribute(TestCase):
         self.assertIsNone(geom.type.inner_type)
         self.assertEqual(3, len(list(geom.type.attributes)))
 
-        point = list(geom.type.attributes)[0]
+        point = geom.type.attributes[0]
         self.assertEqual("point", point.name)
-        self.assertEqual(alias + "/type/attributes/point", point.relative_id)
         self.assertTrue(point.is_nullable)
         self.assertEqual("ARRAY", point.type.base_type)
         self.assertEqual("DOUBLE", point.type.inner_type.base_type)
