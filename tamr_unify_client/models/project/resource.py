@@ -131,6 +131,22 @@ class Project(BaseResource):
         info = AttributeConfigurationCollection(self.client, api_path=alias)
         return info
 
+    def attribute_mapping(self):
+
+    def attribute_mappings(self):
+        """ Project's attribute's mappings.
+        :returns: the mappings of the attributes of a project
+        :rtype :class: `~tamr_unify_client.models.project.attribute_mapping_collection import AttributeMappingCollection`
+        """
+
+        from tamr_unify_client.models.project.attribute_mapping_collection import (
+            AttributeMappingCollection,
+        )
+
+        alias = self.api_path + "/attributeMappings/"
+        info = AttributeMappingCollection(self.client, api_path=alias)
+        return info
+
     def __repr__(self):
         return (
             f"{self.__class__.__module__}."

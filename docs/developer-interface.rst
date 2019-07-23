@@ -137,6 +137,9 @@ Project
 .. autoclass:: tamr_unify_client.models.project.cluster_configuration.PublishedClustersConfiguration
   :members:
 
+.. autoclass:: tamr_unify_client.models.project.attribute_mapping.AttributeMapping
+  :members:
+
 Projects
 --------
 

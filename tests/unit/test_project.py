@@ -92,6 +92,12 @@ class TestProject(TestCase):
         self.assertEqual(
             attribute_configs.api_path, "projects/1/attributeConfigurations"
         )
+        unify = Client(UsernamePasswordAuth("username", "password"))
+        project = unify.projects.by_external_id(self.project_external_id)
+        attribute_config = project.as_mastering().attribute_configurations()
+        self.assertEqual(
+            attribute_config.api_path, "projects/1/attributeConfigurations"
+        )
 
     dataset_external_id = "1"
     datasets_url = f"http://localhost:9100/api/versioned/v1/datasets?filter=externalId=={dataset_external_id}"
