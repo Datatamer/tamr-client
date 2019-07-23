@@ -52,8 +52,7 @@ class Dataset(BaseResource):
         :rtype: :class:`~tamr_unify_client.models.attribute.collection.AttributeCollection`
         """
         alias = self.api_path + "/attributes"
-        resource_json = self.client.get(alias).successful().json()
-        return AttributeCollection.from_json(self.client, resource_json, alias)
+        return AttributeCollection(self.client, alias)
 
     def update_records(self, records):
         """Send a batch of record creations/updates/deletions to this dataset.

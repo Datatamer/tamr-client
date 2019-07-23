@@ -1,14 +1,17 @@
-from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client.models.attribute.subattribute import SubAttribute
 
 
-class AttributeType(BaseResource):
-    @classmethod
-    def from_json(cls, client, data, api_path):
-        return super().from_data(client, data, api_path)
+class AttributeType:
+    """
+    The type of an :class:`~tamr_unify_client.models.attribute.resource.Attribute` or :class:`~tamr_unify_client.models.attribute.subattribute.SubAttribute`.
+    See https://docs.tamr.com/reference#attribute-types
 
-    @property
-    def relative_id(self):
-        return self.api_path
+    :param data: JSON data representing this type
+    :type: :py:class:`dict`
+    """
+
+    def __init__(self, data):
+        self._data = data
 
     @property
     def base_type(self):
@@ -19,27 +22,19 @@ class AttributeType(BaseResource):
     def inner_type(self):
         """:type: :class:`~tamr_unify_client.models.attribute.type.AttributeType`"""
         if "innerType" in self._data:
-            alias = self.api_path + "/type"
-            return AttributeType.from_data(
-                self.client, self._data.get("innerType"), alias
-            )
+            return AttributeType(self._data.get("innerType"))
         else:
             return None
 
     @property
     def attributes(self):
-        """:type: :class:`~tamr_unify_client.models.attribute.collection.AttributeCollection`"""
-        alias = self.api_path + "/attributes"
+        """:type: list[:class:`~tamr_unify_client.models.attribute.subattribute.SubAttribute`]"""
         collection_json = self._data.get("attributes")
-        # Import locally to avoid circular dependency
-        from tamr_unify_client.models.attribute.collection import AttributeCollection
-
-        return AttributeCollection.from_json(self.client, collection_json, alias)
+        return [SubAttribute(attr) for attr in collection_json]
 
     def __repr__(self):
         return (
             f"{self.__class__.__module__}."
             f"{self.__class__.__qualname__}("
-            f"relative_id={self.relative_id!r}, "
             f"base_type={self.base_type!r})"
         )

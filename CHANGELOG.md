@@ -1,4 +1,9 @@
 ## 0.8.0-dev
+  **BREAKING CHANGES**
+  - [#175](https://github.com/Datatamer/unify-client-python/issues/175) `AttributeCollection` no longer has a `from_json` method or a `data` parameter in its constructor
+  - `AttributeType` no longer inherits from `BaseResource` (no API path), removing its `from_json` method and `relative_id` property
+  - The type of `AttributeType`'s `attributes` property is now a `list` of `SubAttribute`s, which are identical to `Attribute`s except they lack an API path
+
   **NEW FEATURES**
   - [#174](https://github.com/Datatamer/unify-client-python/issues/174) Get and create taxonomy categories
   - [#182](https://github.com/Datatamer/unify-client-python/issues/182) Add the ability to refresh estimated pair counts.
