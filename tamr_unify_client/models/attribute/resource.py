@@ -45,7 +45,7 @@ class Attribute(BaseResource):
     def type(self):
         """:type: :class:`~tamr_unify_client.models.attribute.type.AttributeType`"""
         type_json = self._data.get("type")
-        return AttributeType(self.client, type_json)
+        return AttributeType(type_json)
 
     @property
     def is_nullable(self):

@@ -3,14 +3,11 @@ class SubAttribute:
     An attribute which is itself a property of another attribute.
     See https://docs.tamr.com/reference#attribute-types
 
-    :param client: Delegate underlying API calls to this client.
-    :type: :class:`~tamr_unify_client.Client`
     :param data: JSON data representing this attribute
     :type: :py:class:`dict`
     """
 
-    def __init__(self, client, data):
-        self.client = client
+    def __init__(self, data):
         self._data = data
 
     @property
@@ -30,7 +27,7 @@ class SubAttribute:
         from tamr_unify_client.models.attribute.type import AttributeType
 
         type_json = self._data.get("type")
-        return AttributeType(self.client, type_json)
+        return AttributeType(type_json)
 
     @property
     def is_nullable(self):
