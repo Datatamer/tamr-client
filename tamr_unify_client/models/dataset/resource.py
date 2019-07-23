@@ -2,6 +2,7 @@ import json
 
 from tamr_unify_client.models.attribute.collection import AttributeCollection
 from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client.models.dataset.usage import DatasetUsage
 from tamr_unify_client.models.dataset_profile import DatasetProfile
 from tamr_unify_client.models.dataset_status import DatasetStatus
 from tamr_unify_client.models.operation import Operation
@@ -138,6 +139,16 @@ class Dataset(BaseResource):
         return DatasetStatus.from_json(
             self.client, status_json, api_path=self.api_path + "/status"
         )
+
+    def usage(self):
+        """Retrieve this dataset's usage by recipes and downstream datasets.
+
+        :return: The dataset's usage.
+        :rtype: :class:`~tamr_unify_client.models.dataset.usage.DatasetUsage`
+        """
+        alias = self.api_path + "/usage"
+        usage = self.client.get(alias).successful().json()
+        return DatasetUsage.from_json(self.client, usage, alias)
 
     def from_geo_features(self, features, geo_attr=None):
         """Upsert this dataset from a geospatial FeatureCollection or iterable of Features.
