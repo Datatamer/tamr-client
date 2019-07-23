@@ -1,6 +1,7 @@
 from tamr_unify_client.models.binning_model import BinningModel
 from tamr_unify_client.models.dataset.resource import Dataset
 from tamr_unify_client.models.machine_learning_model import MachineLearningModel
+from tamr_unify_client.models.operation import Operation
 from tamr_unify_client.models.project.cluster_configuration import (
     PublishedClustersConfiguration,
 )
@@ -99,6 +100,20 @@ class MasteringProject(Project):
         return PublishedClustersConfiguration.from_json(
             self.client, resource_json, alias
         )
+
+    def refresh_published_cluster_ids(self, **options):
+        """
+        Updates published clusters for this project.
+
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
+                See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
+        :returns: The operation to update published clusters.
+        :rtype: :class:`~tamr_unify_client.models.operation.Operation`
+        """
+        path = self.api_path + "/allPublishedClusterIds:refresh"
+        op_json = self.client.post(path).successful().json()
+        op = Operation.from_json(self.client, op_json)
+        return op.apply_options(**options)
 
     def estimate_pairs(self):
         """Returns pair estimate information for a mastering project

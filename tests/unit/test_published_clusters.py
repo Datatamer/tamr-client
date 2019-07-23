@@ -58,6 +58,17 @@ class PublishedClusterTest(TestCase):
             config.versions_time_to_live, self._config_json["versionsTimeToLive"]
         )
 
+    @responses.activate
+    def test_refresh_ids(self):
+        path = "projects/1/allPublishedClusterIds:refresh"
+        refresh_url = f"http://localhost:9100/api/versioned/v1/{path}"
+        responses.add(responses.POST, refresh_url, json=self._operations_json)
+
+        p = Project(self.unify, self._project_config_json).as_mastering()
+        op = p.refresh_published_cluster_ids()
+        self.assertEqual(op.resource_id, self._operations_json["id"])
+        self.assertTrue(op.succeeded())
+
     _project_config_json = {
         "id": "unify://unified-data/v1/projects/1",
         "name": "Project_1",
