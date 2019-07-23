@@ -115,6 +115,20 @@ class MasteringProject(Project):
         op = Operation.from_json(self.client, op_json)
         return op.apply_options(**options)
 
+    def refresh_published_cluster_stats(self, **options):
+        """
+        Updates published clusters for this project.
+
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
+                See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
+        :returns: The operation to update published clusters.
+        :rtype: :class:`~tamr_unify_client.models.operation.Operation`
+        """
+        path = self.api_path + "/publishedClusterStats:refresh"
+        op_json = self.client.post(path).successful().json()
+        op = Operation.from_json(self.client, op_json)
+        return op.apply_options(**options)
+
     def estimate_pairs(self):
         """Returns pair estimate information for a mastering project
 

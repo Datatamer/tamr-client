@@ -10,6 +10,7 @@
   - [#184](https://github.com/Datatamer/unify-client-python/issues/184) Support for getting published cluster configurations
   - [#201](https://github.com/Datatamer/unify-client-python/issues/201) Support for refreshing published cluster IDs
   - [#181](https://github.com/Datatamer/unify-client-python/issues/181) Support for seeing a dataset's usage
+  - [#202](https://github.com/Datatamer/unify-client-python/issues/202) Support for refreshing published cluster stats
 
 ## 0.7.0
   **BREAKING CHANGES**
