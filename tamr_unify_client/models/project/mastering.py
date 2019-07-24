@@ -101,33 +101,39 @@ class MasteringProject(Project):
             self.client, resource_json, alias
         )
 
-    def refresh_published_cluster_ids(self, **options):
-        """
-        Updates published clusters for this project.
+    def published_cluster_ids(self):
+        """Retrieves published cluster IDs for this project.
 
-        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
-                See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
-        :returns: The operation to update published clusters.
-        :rtype: :class:`~tamr_unify_client.models.operation.Operation`
+        :returns: The published cluster ID dataset.
+        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
         """
-        path = self.api_path + "/allPublishedClusterIds:refresh"
-        op_json = self.client.post(path).successful().json()
-        op = Operation.from_json(self.client, op_json)
-        return op.apply_options(**options)
+        # Replace this workaround with a direct API call once API
+        # is fixed. APIs that need to work are: fetching the dataset and
+        # being able to call refresh on resulting dataset. Until then, we grab
+        # the dataset by constructing its name from the corresponding Unified Dataset's name
+        unified_dataset = self.unified_dataset()
+        name = unified_dataset.name + "_dedup_all_persistent_ids"
+        dataset = self.client.datasets.by_name(name)
 
-    def refresh_published_cluster_stats(self, **options):
-        """
-        Updates published clusters for this project.
+        path = self.api_path + "/allPublishedClusterIds"
+        return Dataset.from_json(self.client, dataset._data, path)
 
-        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
-                See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
-        :returns: The operation to update published clusters.
-        :rtype: :class:`~tamr_unify_client.models.operation.Operation`
+    def published_cluster_stats(self):
+        """Retrieves published cluster stats for this project.
+
+        :returns: The published cluster stats dataset.
+        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
         """
-        path = self.api_path + "/publishedClusterStats:refresh"
-        op_json = self.client.post(path).successful().json()
-        op = Operation.from_json(self.client, op_json)
-        return op.apply_options(**options)
+        # Replace this workaround with a direct API call once API
+        # is fixed. APIs that need to work are: fetching the dataset and
+        # being able to call refresh on resulting dataset. Until then, we grab
+        # the dataset by constructing its name from the corresponding Unified Dataset's name
+        unified_dataset = self.unified_dataset()
+        name = unified_dataset.name + "_dedup_published_cluster_stats"
+        dataset = self.client.datasets.by_name(name)
+
+        path = self.api_path + "/publishedClusterStats"
+        return Dataset.from_json(self.client, dataset._data, path)
 
     def estimate_pairs(self):
         """Returns pair estimate information for a mastering project
