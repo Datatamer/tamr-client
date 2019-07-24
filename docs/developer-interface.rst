@@ -34,13 +34,13 @@ Dataset
 Dataset Profile
 ---------------
 
-.. autoclass:: tamr_unify_client.models.dataset_profile.DatasetProfile
+.. autoclass:: tamr_unify_client.models.dataset.profile.DatasetProfile
   :members:
 
 Dataset Status
 --------------
 
-.. autoclass:: tamr_unify_client.models.dataset_status.DatasetStatus
+.. autoclass:: tamr_unify_client.models.dataset.status.DatasetStatus
   :members:
 
 Dataset Usage

@@ -2,9 +2,9 @@ import simplejson as json
 
 from tamr_unify_client.models.attribute.collection import AttributeCollection
 from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client.models.dataset.profile import DatasetProfile
+from tamr_unify_client.models.dataset.status import DatasetStatus
 from tamr_unify_client.models.dataset.usage import DatasetUsage
-from tamr_unify_client.models.dataset_profile import DatasetProfile
-from tamr_unify_client.models.dataset_status import DatasetStatus
 from tamr_unify_client.models.operation import Operation
 
 
@@ -141,7 +141,7 @@ class Dataset(BaseResource):
 
         :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
         :return: Dataset Profile information.
-        :rtype: :class:`~tamr_unify_client.models.dataset_status.DatasetProfile`
+        :rtype: :class:`~tamr_unify_client.models.dataset.profile.DatasetProfile`
         """
         profile_json = self.client.get(self.api_path + "/profile").successful().json()
         return DatasetProfile.from_json(
@@ -174,11 +174,11 @@ class Dataset(BaseResource):
             for line in response.iter_lines():
                 yield json.loads(line)
 
-    def status(self) -> DatasetStatus:
+    def status(self):
         """Retrieve this dataset's streamability status.
 
         :return: Dataset streamability status.
-        :rtype: :class:`~tamr_unify_client.models.dataset_status.DatasetStatus`
+        :rtype: :class:`~tamr_unify_client.models.dataset.status.DatasetStatus`
         """
         status_json = self.client.get(self.api_path + "/status").successful().json()
         return DatasetStatus.from_json(
