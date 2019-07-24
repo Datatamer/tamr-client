@@ -5,7 +5,7 @@ from tamr_unify_client.models.base_collection import BaseCollection
 
 
 class AttributeConfigurationCollection(BaseCollection):
-    """Collection of :class'~tamr_unify_client.models.attribute_configuration.resource.AttributeConfiguration~'
+    """Collection of :class`~tamr_unify_client.models.attribute_configuration.resource.AttributeConfiguration~`
     :param client: Client for API call delegation.
     :type client: :class:`~tamr_unify_client.Client`
     :param api_path: API path used to access this collection.
