@@ -1,21 +1,104 @@
+from functools import partial
+from unittest import TestCase
+
+from requests.exceptions import HTTPError
 import responses
+import simplejson
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
 
 
-@responses.activate
-def test_dataset_records():
-    dataset_id = "1"
-    dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/{dataset_id}"
-    records_url = f"{dataset_url}/records"
-    responses.add(responses.GET, dataset_url, json={})
-    responses.add(
-        responses.GET, records_url, body='{"attribute1": 1}\n{"attribute1": 2}'
-    )
-    auth = UsernamePasswordAuth("username", "password")
-    unify = Client(auth)
+class TestDatasetRecords(TestCase):
+    def setUp(self):
+        auth = UsernamePasswordAuth("username", "password")
+        self.unify = Client(auth)
 
-    dataset = unify.datasets.by_resource_id(dataset_id)
-    records = list(dataset.records())
-    assert records == [{"attribute1": 1}, {"attribute1": 2}]
+    @responses.activate
+    def test_get(self):
+        records_url = f"{self._dataset_url}/records"
+        responses.add(responses.GET, self._dataset_url, json={})
+        responses.add(
+            responses.GET,
+            records_url,
+            body="\n".join([simplejson.dumps(l) for l in self._records_json]),
+        )
+
+        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+        records = list(dataset.records())
+        self.assertListEqual(records, self._records_json)
+
+    @responses.activate
+    def test_update(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = list(request.body)
+            return 200, {}, simplejson.dumps(self._response_json)
+
+        responses.add(responses.GET, self._dataset_url, json={})
+        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+
+        records_url = f"{self._dataset_url}:updateRecords"
+        updates = TestDatasetRecords.records_to_updates(self._records_json)
+        snoop = {}
+        responses.add_callback(
+            responses.POST, records_url, partial(create_callback, snoop=snoop)
+        )
+
+        response = dataset.update_records(updates)
+        self.assertEqual(response, self._response_json)
+        self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, False))
+
+    @responses.activate
+    def test_nan_update(self):
+        def create_callback(request, snoop, status):
+            snoop["payload"] = list(request.body)
+            return status, {}, simplejson.dumps(self._response_json)
+
+        responses.add(responses.GET, self._dataset_url, json={})
+        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+
+        records_url = f"{self._dataset_url}:updateRecords"
+        updates = TestDatasetRecords.records_to_updates(self._nan_records_json)
+        snoop = {}
+
+        responses.add_callback(
+            responses.POST,
+            records_url,
+            partial(create_callback, snoop=snoop, status=400),
+        )
+        responses.add_callback(
+            responses.POST,
+            records_url,
+            partial(create_callback, snoop=snoop, status=200),
+        )
+
+        self.assertRaises(HTTPError, lambda: dataset.update_records(updates))
+        self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, False))
+
+        response = dataset.update_records(updates, ignore_nan=True)
+        self.assertEqual(response, self._response_json)
+        self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, True))
+
+    @staticmethod
+    def records_to_updates(records):
+        return [
+            {"action": "CREATE", "recordId": str(i), "record": records[i]}
+            for i in range(len(records))
+        ]
+
+    @staticmethod
+    def stringify(updates, ignore_nan):
+        return [
+            simplejson.dumps(u, ignore_nan=ignore_nan).encode("utf-8") for u in updates
+        ]
+
+    _dataset_id = "1"
+    _dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/{_dataset_id}"
+
+    _records_json = [{"attribute1": 1}, {"attribute1": 2}]
+    _nan_records_json = [{"attribute1": float("nan")}, {"attribute1": float("nan")}]
+    _response_json = {
+        "numCommandsProcessed": 2,
+        "allCommandsSucceeded": True,
+        "validationErrors": [],
+    }
