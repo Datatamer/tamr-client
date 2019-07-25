@@ -43,6 +43,17 @@ Dataset Status
 .. autoclass:: tamr_unify_client.models.dataset_status.DatasetStatus
   :members:
 
+Dataset Usage
+-------------
+
+.. autoclass:: tamr_unify_client.models.dataset.usage.DatasetUsage
+  :members:
+
+----
+
+.. autoclass:: tamr_unify_client.models.dataset.use.DatasetUse
+  :members:
+
 Datasets
 --------
 
@@ -99,6 +110,11 @@ Project
 ----
 
 .. autoclass:: tamr_unify_client.models.project.mastering.MasteringProject
+  :members:
+
+----
+
+.. autoclass:: tamr_unify_client.models.project.step.ProjectStep
   :members:
 
 ----
