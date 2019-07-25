@@ -1,4 +1,4 @@
-import json
+import simplejson as json
 
 from tamr_unify_client.models.attribute.collection import AttributeCollection
 from tamr_unify_client.models.base_resource import BaseResource
@@ -55,18 +55,20 @@ class Dataset(BaseResource):
         alias = self.api_path + "/attributes"
         return AttributeCollection(self.client, alias)
 
-    def update_records(self, records):
+    def update_records(self, records, **json_args):
         """Send a batch of record creations/updates/deletions to this dataset.
 
         :param records: Each record should be formatted as specified in the `Public Docs for Dataset updates <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
         :type records: iterable[dict]
+        :param `**json_args`: Arguments to pass to the JSON `dumps` function, as documented `here <https://simplejson.readthedocs.io/en/latest/#simplejson.dumps>`_.
+            Some of these, such as `indent`, may not work with Unify.
         :returns: JSON response body from server.
         :rtype: :py:class:`dict`
         """
 
         def _stringify_updates(updates):
             for update in updates:
-                yield json.dumps(update).encode("utf-8")
+                yield json.dumps(update, **json_args).encode("utf-8")
 
         return (
             self.client.post(
