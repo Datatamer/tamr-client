@@ -78,14 +78,14 @@ Attributes
 .. autoclass:: tamr_unify_client.attribute.collection.AttributeCollection
 
 Attribute Configuration
-----------
+-----------------------
 
-.. autoclass:: tamr_unify_client.models.attribute_configuration.resource.AttributeConfiguration
+.. autoclass:: tamr_unify_client.project.attribute_configuration.resource.AttributeConfiguration
 
 Attribute Configurations
-----------
+------------------------
 
-.. autoclass:: tamr_unify_client.models.attribute_configuration.collection.AttributeConfigurationCollection
+.. autoclass:: tamr_unify_client.project.attribute_configuration.collection.AttributeConfigurationCollection
 
 Estimated Pair Counts
 ---------------------
