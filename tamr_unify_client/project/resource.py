@@ -30,11 +30,7 @@ class Project(BaseResource):
 
     @property
     def type(self):
-        """One of:
-            ``"SCHEMA_MAPPING"``
-            ``"SCHEMA_MAPPING_RECOMMENDATIONS"``
-            ``"CATEGORIZATION"``
-            ``"DEDUP"``
+        """A Unify project type, listed in https://docs.tamr.com/reference#create-a-project.
 
         :type: str
         """
@@ -63,15 +59,13 @@ class Project(BaseResource):
         return Dataset.from_json(self.client, resource_json, alias)
 
     def as_categorization(self):
-        """Convert this project to a :class:`~tamr_unify_client.models.project.categorization.CategorizationProject`
+        """Convert this project to a :class:`~tamr_unify_client.project.categorization.CategorizationProject`
 
         :return: This project.
-        :rtype: :class:`~tamr_unify_client.models.project.categorization.CategorizationProject`
-        :raises TypeError: If the :attr:`~tamr_unify_client.models.project.resource.Project.type` of this project is not ``"CATEGORIZATION"``
+        :rtype: :class:`~tamr_unify_client.project.categorization.CategorizationProject`
+        :raises TypeError: If the :attr:`~tamr_unify_client.project.resource.Project.type` of this project is not ``"CATEGORIZATION"``
         """
-        from tamr_unify_client.models.project.categorization import (
-            CategorizationProject,
-        )
+        from tamr_unify_client.project.categorization import CategorizationProject
 
         if self.type != "CATEGORIZATION":
             raise TypeError(
@@ -80,13 +74,13 @@ class Project(BaseResource):
         return CategorizationProject(self.client, self._data, self.api_path)
 
     def as_mastering(self):
-        """Convert this project to a :class:`~tamr_unify_client.models.project.mastering.MasteringProject`
+        """Convert this project to a :class:`~tamr_unify_client.project.mastering.MasteringProject`
 
         :return: This project.
-        :rtype: :class:`~tamr_unify_client.models.project.mastering.MasteringProject`
-        :raises TypeError: If the :attr:`~tamr_unify_client.models.project.resource.Project.type` of this project is not ``"DEDUP"``
+        :rtype: :class:`~tamr_unify_client.project.mastering.MasteringProject`
+        :raises TypeError: If the :attr:`~tamr_unify_client.project.resource.Project.type` of this project is not ``"DEDUP"``
         """
-        from tamr_unify_client.models.project.mastering import MasteringProject
+        from tamr_unify_client.project.mastering import MasteringProject
 
         if self.type != "DEDUP":
             raise TypeError(

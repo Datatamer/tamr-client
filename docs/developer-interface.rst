@@ -90,7 +90,7 @@ Attribute Configurations
 Estimated Pair Counts
 ---------------------
 
-.. autoclass:: tamr_unify_client.models.project.estimated_pair_counts.EstimatedPairCounts
+.. autoclass:: tamr_unify_client.project.estimated_pair_counts.EstimatedPairCounts
   :members:
 
 Machine Learning Models
@@ -109,38 +109,38 @@ Operations
 Project
 -------
 
-.. autoclass:: tamr_unify_client.models.project.resource.Project
+.. autoclass:: tamr_unify_client.project.resource.Project
   :members:
 
 ----
 
-.. autoclass:: tamr_unify_client.models.project.categorization.CategorizationProject
+.. autoclass:: tamr_unify_client.project.categorization.CategorizationProject
   :members:
 
 ----
 
-.. autoclass:: tamr_unify_client.models.project.mastering.MasteringProject
+.. autoclass:: tamr_unify_client.project.mastering.MasteringProject
   :members:
 
 ----
 
-.. autoclass:: tamr_unify_client.models.project.step.ProjectStep
+.. autoclass:: tamr_unify_client.project.step.ProjectStep
   :members:
 
 ----
 
-.. autoclass:: tamr_unify_client.models.project.estimated_pair_counts.EstimatedPairCounts
+.. autoclass:: tamr_unify_client.project.estimated_pair_counts.EstimatedPairCounts
   :members:
 
 ----
 
-.. autoclass:: tamr_unify_client.models.project.cluster_configuration.PublishedClustersConfiguration
+.. autoclass:: tamr_unify_client.project.cluster_configuration.PublishedClustersConfiguration
   :members:
 
 Projects
 --------
 
-.. autoclass:: tamr_unify_client.models.project.collection.ProjectCollection
+.. autoclass:: tamr_unify_client.project.collection.ProjectCollection
   :members:
 
 Taxonomy

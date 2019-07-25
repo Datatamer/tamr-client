@@ -1,4 +1,4 @@
-from tamr_unify_client.models.project.step import ProjectStep
+from tamr_unify_client.project.step import ProjectStep
 
 
 class DatasetUse:
@@ -30,13 +30,13 @@ class DatasetUse:
 
     @property
     def input_to_project_steps(self):
-        """:type: list[:class:`~tamr_unify_client.models.project.step.ProjectStep`]"""
+        """:type: list[:class:`~tamr_unify_client.project.step.ProjectStep`]"""
         steps = self._data.get("inputToProjectSteps")
         return [ProjectStep(self.client, step) for step in steps]
 
     @property
     def output_from_project_steps(self):
-        """:type: list[:class:`~tamr_unify_client.models.project.step.ProjectStep`]"""
+        """:type: list[:class:`~tamr_unify_client.project.step.ProjectStep`]"""
         steps = self._data.get("outputFromProjectSteps")
         return [ProjectStep(self.client, step) for step in steps]
 

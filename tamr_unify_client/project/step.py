@@ -1,6 +1,6 @@
 class ProjectStep:
-    """ A step of a Unify project. This is not a `BaseResource` because it has no API path
-        and cannot be directly retrieved or modified.
+    """A step of a Unify project. This is not a `BaseResource` because it has no API path
+    and cannot be directly retrieved or modified.
 
     See https://docs.tamr.com/reference#retrieve-downstream-dataset-usage
 
@@ -37,10 +37,10 @@ class ProjectStep:
         return self._data.get("type")
 
     def project(self):
-        """Retrieves the :class:`~tamr_unify_client.models.project.resource.Project` this step is associated with.
+        """Retrieves the :class:`~tamr_unify_client.project.resource.Project` this step is associated with.
 
         :returns: This step's project.
-        :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
+        :rtype: :class:`~tamr_unify_client.project.resource.Project`
         :raises KeyError: If no project with the specified name is found.
         :raises LookupError: If multiple projects with the specified name are found.
         """

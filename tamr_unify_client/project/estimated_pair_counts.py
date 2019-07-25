@@ -55,11 +55,13 @@ class EstimatedPairCounts(BaseResource):
         """Updates the estimated pair counts if needed.
 
         The pair count estimates are updated on the server; you will need to call
-        :func:`~tamr_unify_client.models.project.mastering.MasteringProject.estimate_pairs`
+        :func:`~tamr_unify_client.project.mastering.MasteringProject.estimate_pairs`
         to retrieve the updated estimate.
 
         :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .
             See :func:`~tamr_unify_client.operation.Operation.apply_options` .
+        :returns: The refresh operation.
+        :rtype: :class:`~tamr_unify_client.operation.Operation`
         """
         op_json = self.client.post(self.api_path + ":refresh").successful().json()
         op = Operation.from_json(self.client, op_json)

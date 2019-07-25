@@ -1,9 +1,9 @@
 from tamr_unify_client.base_collection import BaseCollection
-from tamr_unify_client.models.project.resource import Project
+from tamr_unify_client.project.resource import Project
 
 
 class ProjectCollection(BaseCollection):
-    """Collection of :class:`~tamr_unify_client.models.project.resource.Project` s.
+    """Collection of :class:`~tamr_unify_client.project.resource.Project` s.
 
     :param client: Client for API call delegation.
     :type client: :class:`~tamr_unify_client.Client`
@@ -21,7 +21,7 @@ class ProjectCollection(BaseCollection):
         :param resource_id: The resource ID. E.g. ``"1"``
         :type resource_id: str
         :returns: The specified project.
-        :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
+        :rtype: :class:`~tamr_unify_client.project.resource.Project`
         """
         return super().by_resource_id("projects", resource_id)
 
@@ -31,7 +31,7 @@ class ProjectCollection(BaseCollection):
         :param relative_id: The resource ID. E.g. ``"projects/1"``
         :type relative_id: str
         :returns: The specified project.
-        :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
+        :rtype: :class:`~tamr_unify_client.project.resource.Project`
         """
         return super().by_relative_id(Project, relative_id)
 
@@ -41,7 +41,7 @@ class ProjectCollection(BaseCollection):
         :param external_id: The external ID.
         :type external_id: str
         :returns: The specified project, if found.
-        :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
+        :rtype: :class:`~tamr_unify_client.project.resource.Project`
         :raises KeyError: If no project with the specified external_id is found
         :raises LookupError: If multiple projects with the specified external_id are found
         """
@@ -52,7 +52,7 @@ class ProjectCollection(BaseCollection):
         over this collection.
 
         :returns: Stream of projects.
-        :rtype: Python generator yielding :class:`~tamr_unify_client.models.project.resource.Project`
+        :rtype: Python generator yielding :class:`~tamr_unify_client.project.resource.Project`
 
         Usage:
             >>> for project in collection.stream(): # explicit
@@ -69,7 +69,7 @@ class ProjectCollection(BaseCollection):
         :param creation_spec: Project creation specification should be formatted as specified in the `Public Docs for Creating a Project <https://docs.tamr.com/reference#create-a-project>`_.
         :type creation_spec: dict[str, str]
         :returns: The created Project
-        :rtype: :class:`~tamr_unify_client.models.project.resource.Project`
+        :rtype: :class:`~tamr_unify_client.project.resource.Project`
         """
         data = self.client.post(self.api_path, json=creation_spec).successful().json()
         return Project.from_json(self.client, data)

@@ -1,6 +1,6 @@
 from tamr_unify_client.models.machine_learning_model import MachineLearningModel
-from tamr_unify_client.models.project.resource import Project
 from tamr_unify_client.models.taxonomy.resource import Taxonomy
+from tamr_unify_client.project.resource import Project
 
 
 class CategorizationProject(Project):

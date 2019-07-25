@@ -1,11 +1,11 @@
 from tamr_unify_client.dataset.resource import Dataset
 from tamr_unify_client.models.binning_model import BinningModel
 from tamr_unify_client.models.machine_learning_model import MachineLearningModel
-from tamr_unify_client.models.project.cluster_configuration import (
+from tamr_unify_client.project.cluster_configuration import (
     PublishedClustersConfiguration,
 )
-from tamr_unify_client.models.project.estimated_pair_counts import EstimatedPairCounts
-from tamr_unify_client.models.project.resource import Project
+from tamr_unify_client.project.estimated_pair_counts import EstimatedPairCounts
+from tamr_unify_client.project.resource import Project
 
 
 class MasteringProject(Project):
@@ -92,7 +92,7 @@ class MasteringProject(Project):
         """Retrieves published clusters configuration for this project.
 
         :returns: The published clusters configuration
-        :rtype: :class:`~tamr_unify_client.models.project.cluster_configuration.PublishedClustersConfiguration`
+        :rtype: :class:`~tamr_unify_client.project.cluster_configuration.PublishedClustersConfiguration`
         """
         alias = self.api_path + "/publishedClustersConfiguration"
         resource_json = self.client.get(alias).successful().json()
@@ -138,7 +138,7 @@ class MasteringProject(Project):
         """Returns pair estimate information for a mastering project
 
         :return: Pairs Estimate information.
-        :rtype: :class:`~tamr_unify_client.models.project.estimated_pair_counts.EstimatedPairCounts`
+        :rtype: :class:`~tamr_unify_client.project.estimated_pair_counts.EstimatedPairCounts`
         """
         alias = self.api_path + "/estimatedPairCounts"
         estimate_json = self.client.get(alias).successful().json()
@@ -164,8 +164,9 @@ class MasteringProject(Project):
 
     def published_clusters_with_data(self):
         """Project's unified dataset with associated clusters.
+
         :returns: The published clusters with data represented as a dataset
-        :rtype :class `~tamr_unify_client.dataset.resource.Dataset`
+        :rtype: :class:`~tamr_unify_client.dataset.resource.Dataset`
         """
 
         unified_dataset = self.unified_dataset()
