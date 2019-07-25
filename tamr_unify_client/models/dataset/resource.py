@@ -1,7 +1,7 @@
 import simplejson as json
 
+from tamr_unify_client.base_resource import BaseResource
 from tamr_unify_client.models.attribute.collection import AttributeCollection
-from tamr_unify_client.models.base_resource import BaseResource
 from tamr_unify_client.models.dataset.profile import DatasetProfile
 from tamr_unify_client.models.dataset.status import DatasetStatus
 from tamr_unify_client.models.dataset.usage import DatasetUsage

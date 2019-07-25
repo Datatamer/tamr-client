@@ -27,7 +27,7 @@ class BaseCollection(Iterable):
         :param resource_id: The resource ID. E.g. "1"
         :type resource_id: str
         :returns: The specified item.
-        :rtype: The ``resource_class``  for this collection. See :func:`~tamr_unify_client.models.base_collection.BaseCollection.by_relative_id`.
+        :rtype: The ``resource_class``  for this collection. See :func:`~tamr_unify_client.base_collection.BaseCollection.by_relative_id`.
         """
         relative_id = canonical_path + "/" + resource_id
         return self.by_relative_id(relative_id)

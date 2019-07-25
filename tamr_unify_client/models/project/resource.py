@@ -1,7 +1,7 @@
+from tamr_unify_client.base_resource import BaseResource
 from tamr_unify_client.models.attribute_configuration.collection import (
     AttributeConfigurationCollection,
 )
-from tamr_unify_client.models.base_resource import BaseResource
 from tamr_unify_client.models.dataset.collection import DatasetCollection
 from tamr_unify_client.models.dataset.resource import Dataset
 

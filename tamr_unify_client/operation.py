@@ -1,6 +1,6 @@
 from time import sleep, time as now
 
-from tamr_unify_client.models.base_resource import BaseResource
+from tamr_unify_client.base_resource import BaseResource
 
 
 class Operation(BaseResource):

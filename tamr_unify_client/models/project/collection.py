@@ -1,4 +1,4 @@
-from tamr_unify_client.models.base_collection import BaseCollection
+from tamr_unify_client.base_collection import BaseCollection
 from tamr_unify_client.models.project.resource import Project
 
 

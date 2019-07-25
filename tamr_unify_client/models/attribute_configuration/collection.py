@@ -1,7 +1,7 @@
+from tamr_unify_client.base_collection import BaseCollection
 from tamr_unify_client.models.attribute_configuration.resource import (
     AttributeConfiguration,
 )
-from tamr_unify_client.models.base_collection import BaseCollection
 
 
 class AttributeConfigurationCollection(BaseCollection):

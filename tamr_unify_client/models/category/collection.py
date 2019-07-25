@@ -1,6 +1,6 @@
 import json
 
-from tamr_unify_client.models.base_collection import BaseCollection
+from tamr_unify_client.base_collection import BaseCollection
 from tamr_unify_client.models.category.resource import Category
 
 
