@@ -1,5 +1,5 @@
 from tamr_unify_client.base_resource import BaseResource
-from tamr_unify_client.models.category.collection import CategoryCollection
+from tamr_unify_client.category.collection import CategoryCollection
 
 
 class Taxonomy(BaseResource):
@@ -18,7 +18,7 @@ class Taxonomy(BaseResource):
         """Retrieves the categories of this taxonomy.
 
         :returns: A collection of the taxonomy categories.
-        :rtype: :class:`~tamr_unify_client.models.category.collection.CategoryCollection`
+        :rtype: :class:`~tamr_unify_client.category.collection.CategoryCollection`
         """
         alias = self.api_path + "/categories"
         return CategoryCollection(self.client, alias)

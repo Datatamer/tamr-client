@@ -16,13 +16,13 @@ Client
 Category
 --------
 
-.. autoclass:: tamr_unify_client.models.category.resource.Category
+.. autoclass:: tamr_unify_client.category.resource.Category
   :members:
 
 Categories
 ----------
 
-.. autoclass:: tamr_unify_client.models.category.collection.CategoryCollection
+.. autoclass:: tamr_unify_client.category.collection.CategoryCollection
   :members:
 
 Dataset

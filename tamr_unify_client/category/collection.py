@@ -1,11 +1,11 @@
 import json
 
 from tamr_unify_client.base_collection import BaseCollection
-from tamr_unify_client.models.category.resource import Category
+from tamr_unify_client.category.resource import Category
 
 
 class CategoryCollection(BaseCollection):
-    """Collection of :class:`~tamr_unify_client.models.category.resource.Category` s.
+    """Collection of :class:`~tamr_unify_client.category.resource.Category` s.
 
     :param client: Client for API call delegation.
     :type client: :class:`~tamr_unify_client.Client`
@@ -23,7 +23,7 @@ class CategoryCollection(BaseCollection):
         :param resource_id: The resource ID. E.g. ``"1"``
         :type resource_id: str
         :returns: The specified category.
-        :rtype: :class:`~tamr_unify_client.models.category.resource.Category`
+        :rtype: :class:`~tamr_unify_client.category.resource.Category`
         """
         return super().by_resource_id(self.api_path, resource_id)
 
@@ -33,7 +33,7 @@ class CategoryCollection(BaseCollection):
         :param relative_id: The relative ID. E.g. ``"projects/1/categories/1"``
         :type relative_id: str
         :returns: The specified category.
-        :rtype: :class:`~tamr_unify_client.models.category.resource.Category`
+        :rtype: :class:`~tamr_unify_client.category.resource.Category`
         """
         return super().by_relative_id(Category, relative_id)
 
@@ -46,7 +46,7 @@ class CategoryCollection(BaseCollection):
         :param external_id: The external ID.
         :type external_id: str
         :returns: The specified category, if found.
-        :rtype: :class:`~tamr_unify_client.models.category.resource.Category`
+        :rtype: :class:`~tamr_unify_client.category.resource.Category`
         :raises KeyError: If no category with the specified external_id is found
         :raises LookupError: If multiple categories with the specified external_id are found
         """
@@ -57,7 +57,7 @@ class CategoryCollection(BaseCollection):
         over this collection.
 
         :returns: Stream of categories.
-        :rtype: Python generator yielding :class:`~tamr_unify_client.models.category.resource.Category`
+        :rtype: Python generator yielding :class:`~tamr_unify_client.category.resource.Category`
 
         Usage:
             >>> for category in collection.stream(): # explicit
@@ -72,9 +72,9 @@ class CategoryCollection(BaseCollection):
 
         :param creation_spec: Category creation specification, formatted as specified in the
             `Public Docs for Creating a Category <https://docs.tamr.com/reference#create-a-category>`_.
-        :type: dict
+        :type creation_spec: dict
         :return: The newly created category.
-        :rtype: :class:`~tamr_unify_client.models.category.resource.Category`
+        :rtype: :class:`~tamr_unify_client.category.resource.Category`
         """
         resource_json = (
             self.client.post(self.api_path, json=creation_spec).successful().json()
@@ -85,8 +85,9 @@ class CategoryCollection(BaseCollection):
         """Creates new categories in bulk.
 
         :param creation_specs: A collection of creation specifications, as detailed for create.
-        :type: iterable[dict]
+        :type creation_specs: iterable[dict]
         :returns: JSON response from the server
+        :rtype: :py:class:`dict`
         """
         body = "\n".join([json.dumps(s) for s in creation_specs]).encode("utf-8")
         return (
