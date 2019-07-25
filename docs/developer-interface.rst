@@ -63,19 +63,19 @@ Datasets
 Attribute
 ---------
 
-.. autoclass:: tamr_unify_client.models.attribute.resource.Attribute
+.. autoclass:: tamr_unify_client.attribute.resource.Attribute
 
-.. autoclass:: tamr_unify_client.models.attribute.subattribute.SubAttribute
+.. autoclass:: tamr_unify_client.attribute.subattribute.SubAttribute
 
 Attribute Type
 --------------
 
-.. autoclass:: tamr_unify_client.models.attribute.type.AttributeType
+.. autoclass:: tamr_unify_client.attribute.type.AttributeType
 
 Attributes
 ----------
 
-.. autoclass:: tamr_unify_client.models.attribute.collection.AttributeCollection
+.. autoclass:: tamr_unify_client.attribute.collection.AttributeCollection
 
 Attribute Configuration
 ----------

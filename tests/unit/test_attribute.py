@@ -3,8 +3,8 @@ from unittest import TestCase
 import responses
 
 from tamr_unify_client import Client
+from tamr_unify_client.attribute.resource import Attribute
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.attribute.resource import Attribute
 
 
 class TestAttribute(TestCase):

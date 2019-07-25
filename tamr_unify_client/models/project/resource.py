@@ -45,9 +45,9 @@ class Project(BaseResource):
         """Attributes of this project.
 
         :return: Attributes of this project.
-        :rtype: :class:`~tamr_unify_client.models.attribute.collection.AttributeCollection`
+        :rtype: :class:`~tamr_unify_client.attribute.collection.AttributeCollection`
         """
-        from tamr_unify_client.models.attribute.collection import AttributeCollection
+        from tamr_unify_client.attribute.collection import AttributeCollection
 
         alias = self.api_path + "/attributes"
         return AttributeCollection(self.client, alias)

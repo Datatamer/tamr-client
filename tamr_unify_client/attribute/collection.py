@@ -1,9 +1,9 @@
+from tamr_unify_client.attribute.resource import Attribute
 from tamr_unify_client.base_collection import BaseCollection
-from tamr_unify_client.models.attribute.resource import Attribute
 
 
 class AttributeCollection(BaseCollection):
-    """Collection of :class:`~tamr_unify_client.models.attribute.resource.Attribute` s.
+    """Collection of :class:`~tamr_unify_client.attribute.resource.Attribute` s.
 
     :param client: Client for API call delegation.
     :type client: :class:`~tamr_unify_client.Client`
@@ -21,7 +21,7 @@ class AttributeCollection(BaseCollection):
         :param resource_id: The resource ID. E.g. ``"AttributeName"``
         :type resource_id: str
         :returns: The specified attribute.
-        :rtype: :class:`~tamr_unify_client.models.attribute.resource.Attribute`
+        :rtype: :class:`~tamr_unify_client.attribute.resource.Attribute`
         """
         return self.by_name(resource_id)
 
@@ -31,7 +31,7 @@ class AttributeCollection(BaseCollection):
         :param relative_id: The resource ID. E.g. ``"datasets/1/attributes/AttributeName"``
         :type relative_id: str
         :returns: The specified attribute.
-        :rtype: :class:`~tamr_unify_client.models.attribute.resource.Attribute`
+        :rtype: :class:`~tamr_unify_client.attribute.resource.Attribute`
         """
         resource_id = relative_id.split("/")[-1]
         return self.by_resource_id(resource_id)
@@ -45,7 +45,7 @@ class AttributeCollection(BaseCollection):
         :param external_id: The external ID.
         :type external_id: str
         :returns: The specified attribute, if found.
-        :rtype: :class:`~tamr_unify_client.models.attribute.resource.Attribute`
+        :rtype: :class:`~tamr_unify_client.attribute.resource.Attribute`
         :raises KeyError: If no attribute with the specified external_id is found
         :raises LookupError: If multiple attributes with the specified external_id are found
         """
@@ -56,7 +56,7 @@ class AttributeCollection(BaseCollection):
         over this collection.
 
         :returns: Stream of attributes.
-        :rtype: Python generator yielding :class:`~tamr_unify_client.models.attribute.resource.Attribute`
+        :rtype: Python generator yielding :class:`~tamr_unify_client.attribute.resource.Attribute`
 
         Usage:
             >>> for attribute in collection.stream(): # explicit
@@ -75,7 +75,7 @@ class AttributeCollection(BaseCollection):
         :param attribute_name: Name of the desired attribute.
         :type attribute_name: str
         :return: Attribute with matching name in this collection.
-        :rtype: :class:`~tamr_unify_client.models.attribute.resource.Attribute`
+        :rtype: :class:`~tamr_unify_client.attribute.resource.Attribute`
         :raises KeyError: If no attribute with specified name was found.
         """
         for attribute in self:
@@ -90,7 +90,7 @@ class AttributeCollection(BaseCollection):
         :param creation_spec: Attribute creation specification should be formatted as specified in the `Public Docs for adding an Attribute <https://docs.tamr.com/reference#add-attributes>`_.
         :type creation_spec: dict[str, str]
         :returns: The created Attribute
-        :rtype: :class:`~tamr_unify_client.models.attribute.resource.Attribute`
+        :rtype: :class:`~tamr_unify_client.attribute.resource.Attribute`
         """
         data = self.client.post(self.api_path, json=creation_spec).successful().json()
         alias = self.api_path + "/" + creation_spec["name"]

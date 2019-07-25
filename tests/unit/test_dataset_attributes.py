@@ -1,10 +1,7 @@
-import json
-
 import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.attribute.resource import Attribute
 
 auth = UsernamePasswordAuth("username", "password")
 unify = Client(auth)

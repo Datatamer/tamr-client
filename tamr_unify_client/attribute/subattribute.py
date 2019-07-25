@@ -1,10 +1,11 @@
 class SubAttribute:
     """
     An attribute which is itself a property of another attribute.
+
     See https://docs.tamr.com/reference#attribute-types
 
     :param data: JSON data representing this attribute
-    :type: :py:class:`dict`
+    :type data: :py:class:`dict`
     """
 
     def __init__(self, data):
@@ -22,9 +23,9 @@ class SubAttribute:
 
     @property
     def type(self):
-        """:type: :class:`~tamr_unify_client.models.attribute.type.AttributeType`"""
+        """:type: :class:`~tamr_unify_client.attribute.type.AttributeType`"""
         # import locally to avoid circular dependency
-        from tamr_unify_client.models.attribute.type import AttributeType
+        from tamr_unify_client.attribute.type import AttributeType
 
         type_json = self._data.get("type")
         return AttributeType(type_json)

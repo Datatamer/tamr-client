@@ -1,5 +1,5 @@
+from tamr_unify_client.attribute.type import AttributeType
 from tamr_unify_client.base_resource import BaseResource
-from tamr_unify_client.models.attribute.type import AttributeType
 
 
 class Attribute(BaseResource):
@@ -43,7 +43,7 @@ class Attribute(BaseResource):
 
     @property
     def type(self):
-        """:type: :class:`~tamr_unify_client.models.attribute.type.AttributeType`"""
+        """:type: :class:`~tamr_unify_client.attribute.type.AttributeType`"""
         type_json = self._data.get("type")
         return AttributeType(type_json)
 
