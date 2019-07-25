@@ -11,6 +11,7 @@
   - [#201](https://github.com/Datatamer/unify-client-python/issues/201) Support for refreshing published cluster IDs
   - [#112](https://github.com/Datatamer/unify-client-python/issues/112) Support for attribute configurations
   - [#181](https://github.com/Datatamer/unify-client-python/issues/181) Support for seeing a dataset's usage
+  - [#194](https://github.com/Datatamer/unify-client-python/issues/194) Allowing additional JSON parameters to be used for update of records
 
 ## 0.7.0
   **BREAKING CHANGES**
