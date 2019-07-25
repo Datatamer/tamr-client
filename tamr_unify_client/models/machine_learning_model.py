@@ -1,5 +1,5 @@
 from tamr_unify_client.models.base_resource import BaseResource
-from tamr_unify_client.models.operation import Operation
+from tamr_unify_client.operation import Operation
 
 
 class MachineLearningModel(BaseResource):
@@ -12,8 +12,10 @@ class MachineLearningModel(BaseResource):
     def train(self, **options):
         """Learn from verified labels.
 
-        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
-            See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .
+            See :func:`~tamr_unify_client.operation.Operation.apply_options` .
+        :returns: The resultant operation.
+        :rtype: :class:`~tamr_unify_client.operation.Operation`
         """
         op_json = self.client.post(self.api_path + ":refresh").successful().json()
         op = Operation.from_json(self.client, op_json)
@@ -22,8 +24,10 @@ class MachineLearningModel(BaseResource):
     def predict(self, **options):
         """Suggest labels for unverified records.
 
-        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
-            See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .
+            See :func:`~tamr_unify_client.operation.Operation.apply_options` .
+        :returns: The resultant operation.
+        :rtype: :class:`~tamr_unify_client.operation.Operation`
         """
         dependent_dataset = "/".join(self.api_path.split("/")[:-1])
         op_json = self.client.post(dependent_dataset + ":refresh").successful().json()

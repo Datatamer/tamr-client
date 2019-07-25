@@ -1,5 +1,5 @@
 from tamr_unify_client.models.base_resource import BaseResource
-from tamr_unify_client.models.operation import Operation
+from tamr_unify_client.operation import Operation
 
 
 class EstimatedPairCounts(BaseResource):
@@ -58,8 +58,8 @@ class EstimatedPairCounts(BaseResource):
         :func:`~tamr_unify_client.models.project.mastering.MasteringProject.estimate_pairs`
         to retrieve the updated estimate.
 
-        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
-            See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .
+            See :func:`~tamr_unify_client.operation.Operation.apply_options` .
         """
         op_json = self.client.post(self.api_path + ":refresh").successful().json()
         op = Operation.from_json(self.client, op_json)

@@ -31,15 +31,15 @@ class Operation(BaseResource):
         asynchronous mode:
             Immediately return the ``'PENDING'`` operation. It is
             up to the user to coordinate this operation with their code via
-            :func:`~tamr_unify_client.models.operation.Operation.wait` and/or
-            :func:`~tamr_unify_client.models.operation.Operation.poll` .
+            :func:`~tamr_unify_client.operation.Operation.wait` and/or
+            :func:`~tamr_unify_client.operation.Operation.poll` .
 
         :param asynchronous: Whether or not to run in asynchronous mode. Default: ``False``.
         :type asynchronous: bool
         :param ``**options``: When running in synchronous mode, these options are
-            passed to the underlying :func:`~tamr_unify_client.models.operation.Operation.wait` call.
+            passed to the underlying :func:`~tamr_unify_client.operation.Operation.wait` call.
         :return: Operation with options applied.
-        :rtype: :class:`~tamr_unify_client.models.operation.Operation`
+        :rtype: :class:`~tamr_unify_client.operation.Operation`
         """
         if asynchronous:
             return self
@@ -84,11 +84,11 @@ class Operation(BaseResource):
     def poll(self):
         """Poll this operation for server-side updates.
 
-        Does not update the calling :class:`~tamr_unify_client.models.Operation` object.
-        Instead, returns a new :class:`~tamr_unify_client.models.Operation`.
+        Does not update the calling :class:`~tamr_unify_client.operation.Operation` object.
+        Instead, returns a new :class:`~tamr_unify_client.operation.Operation`.
 
         :return: Updated representation of this operation.
-        :rtype: :class:`~tamr_unify_client.models.Operation`
+        :rtype: :class:`~tamr_unify_client.operation.Operation`
         """
         op_json = self.client.get(self.api_path).successful().json()
         return Operation.from_json(self.client, op_json)
@@ -100,7 +100,7 @@ class Operation(BaseResource):
         :param int timeout_seconds: Time (in seconds) to wait for operation to resolve.
         :raises TimeoutError: If operation takes longer than `timeout_seconds` to resolve.
         :return: Resolved operation.
-        :rtype: :class:`~tamr_unify_client.models.Operation`
+        :rtype: :class:`~tamr_unify_client.operation.Operation`
         """
         started = now()
         op = self

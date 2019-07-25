@@ -102,7 +102,7 @@ Machine Learning Models
 Operations
 ----------
 
-.. autoclass:: tamr_unify_client.models.operation.Operation
+.. autoclass:: tamr_unify_client.operation.Operation
   :members:
 
 

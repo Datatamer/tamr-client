@@ -5,7 +5,7 @@ from tamr_unify_client.models.base_resource import BaseResource
 from tamr_unify_client.models.dataset.profile import DatasetProfile
 from tamr_unify_client.models.dataset.status import DatasetStatus
 from tamr_unify_client.models.dataset.usage import DatasetUsage
-from tamr_unify_client.models.operation import Operation
+from tamr_unify_client.operation import Operation
 
 
 class Dataset(BaseResource):
@@ -125,8 +125,8 @@ class Dataset(BaseResource):
 
     def refresh(self, **options):
         """Brings dataset up-to-date if needed, taking whatever actions are required.
-        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
-            See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .
+            See :func:`~tamr_unify_client.operation.Operation.apply_options` .
         """
         op_json = self.client.post(self.api_path + ":refresh").successful().json()
         op = Operation.from_json(self.client, op_json)
@@ -139,7 +139,7 @@ class Dataset(BaseResource):
         If the returned profile information is out-of-date, you can call refresh() on the returned
         object to bring it up-to-date.
 
-        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .
         :return: Dataset Profile information.
         :rtype: :class:`~tamr_unify_client.models.dataset.profile.DatasetProfile`
         """
@@ -154,8 +154,8 @@ class Dataset(BaseResource):
         If a profile already exists, the existing profile will be brought
         up to date.
 
-        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .
-            See :func:`~tamr_unify_client.models.operation.Operation.apply_options` .
+        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .
+            See :func:`~tamr_unify_client.operation.Operation.apply_options` .
         :return: the operation to create the profile.
         """
         op_json = (

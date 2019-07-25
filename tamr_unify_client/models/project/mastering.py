@@ -1,7 +1,6 @@
 from tamr_unify_client.models.binning_model import BinningModel
 from tamr_unify_client.models.dataset.resource import Dataset
 from tamr_unify_client.models.machine_learning_model import MachineLearningModel
-from tamr_unify_client.models.operation import Operation
 from tamr_unify_client.models.project.cluster_configuration import (
     PublishedClustersConfiguration,
 )
