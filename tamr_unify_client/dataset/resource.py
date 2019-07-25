@@ -4,6 +4,7 @@ from tamr_unify_client.attribute.collection import AttributeCollection
 from tamr_unify_client.base_resource import BaseResource
 from tamr_unify_client.dataset.profile import DatasetProfile
 from tamr_unify_client.dataset.status import DatasetStatus
+from tamr_unify_client.dataset.uri import DatasetURI
 from tamr_unify_client.dataset.usage import DatasetUsage
 from tamr_unify_client.operation import Operation
 
@@ -246,6 +247,20 @@ class Dataset(BaseResource):
         self._update_records(
             self._features_to_updates(features, record_id, key_attrs, geo_attr)
         )
+
+    def upstream_datasets(self):
+        """The Dataset's upstream datasets.
+
+        API returns the URIs of the upstream datasets,
+        resulting in a list of DatasetURIs, not actual Datasets.
+
+        :return: A list of the Dataset's upstream datasets.
+        :rtype: list[:class:`~tamr_unify_client.dataset.uri.DatasetURI`]
+        """
+        alias = self.api_path + "/upstreamDatasets"
+        resources = self.client.get(alias).successful().json()
+
+        return [DatasetURI(self.client, uri) for uri in resources]
 
     @property
     def __geo_interface__(self):
