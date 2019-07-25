@@ -17,20 +17,20 @@ class PublishedClusterTest(TestCase):
 
     @responses.activate
     def test_published_clusters(self):
-        datasets_json = [self._published_clusters_json]
         project_id = "1"
-
-        project_url = f"http://localhost:9100/api/versioned/v1/projects/{project_id}"
-        unified_dataset_url = f"http://localhost:9100/api/versioned/v1/projects/{project_id}/unifiedDataset"
-        datasets_url = f"http://localhost:9100/api/versioned/v1/datasets"
-        refresh_url = f"http://localhost:9100/api/versioned/v1/projects/{project_id}/publishedClusters:refresh"
-        operations_url = f"http://localhost:9100/api/versioned/v1/operations/93"
+        project_url = f"{self._base_url}/projects/{project_id}"
+        unified_dataset_url = f"{self._base_url}/projects/{project_id}/unifiedDataset"
+        datasets_url = f"{self._base_url}/datasets"
+        refresh_url = (
+            f"{self._base_url}/projects/{project_id}/publishedClusters:refresh"
+        )
+        operations_url = f"{self._base_url}/operations/93"
 
         responses.add(responses.GET, project_url, json=self._project_config_json)
         responses.add(
             responses.GET, unified_dataset_url, json=self._unified_dataset_json
         )
-        responses.add(responses.GET, datasets_url, json=datasets_json)
+        responses.add(responses.GET, datasets_url, json=self._datasets_json)
         responses.add(responses.POST, refresh_url, json=self._refresh_json)
         responses.add(responses.GET, operations_url, json=self._operations_json)
         project = self.unify.projects.by_resource_id(project_id)
@@ -44,7 +44,7 @@ class PublishedClusterTest(TestCase):
     @responses.activate
     def test_published_clusters_configuration(self):
         path = "projects/1/publishedClustersConfiguration"
-        config_url = f"http://localhost:9100/api/versioned/v1/{path}"
+        config_url = f"{self._base_url}/{path}"
         responses.add(responses.GET, config_url, json=self._config_json)
 
         p = Project(self.unify, self._project_config_json).as_mastering()
@@ -60,14 +60,43 @@ class PublishedClusterTest(TestCase):
 
     @responses.activate
     def test_refresh_ids(self):
-        path = "projects/1/allPublishedClusterIds:refresh"
-        refresh_url = f"http://localhost:9100/api/versioned/v1/{path}"
+        unified_dataset_url = f"{self._base_url}/projects/1/unifiedDataset"
+        datasets_url = f"{self._base_url}/datasets"
+        refresh_url = f"{self._base_url}/projects/1/allPublishedClusterIds:refresh"
+
+        responses.add(
+            responses.GET, unified_dataset_url, json=self._unified_dataset_json
+        )
+        responses.add(responses.GET, datasets_url, json=self._datasets_json)
         responses.add(responses.POST, refresh_url, json=self._operations_json)
 
         p = Project(self.unify, self._project_config_json).as_mastering()
-        op = p.refresh_published_cluster_ids()
+        d = p.published_cluster_ids()
+
+        op = d.refresh()
         self.assertEqual(op.resource_id, self._operations_json["id"])
         self.assertTrue(op.succeeded())
+
+    @responses.activate
+    def test_refresh_stats(self):
+        unified_dataset_url = f"{self._base_url}/projects/1/unifiedDataset"
+        datasets_url = f"{self._base_url}/datasets"
+        refresh_url = f"{self._base_url}/projects/1/publishedClusterStats:refresh"
+
+        responses.add(
+            responses.GET, unified_dataset_url, json=self._unified_dataset_json
+        )
+        responses.add(responses.GET, datasets_url, json=self._datasets_json)
+        responses.add(responses.POST, refresh_url, json=self._operations_json)
+
+        p = Project(self.unify, self._project_config_json).as_mastering()
+        d = p.published_cluster_stats()
+
+        op = d.refresh()
+        self.assertEqual(op.resource_id, self._operations_json["id"])
+        self.assertTrue(op.succeeded())
+
+    _base_url = "http://localhost:9100/api/versioned/v1"
 
     _project_config_json = {
         "id": "unify://unified-data/v1/projects/1",
@@ -95,6 +124,31 @@ class PublishedClusterTest(TestCase):
         "relativeId": "datasets/32",
         "externalId": "Project_1_unified_dataset_dedup_published_clusters",
     }
+
+    _published_stats_json = {
+        "id": "unify://unified-data/v1/datasets/33",
+        "name": "Project_1_unified_dataset_dedup_published_cluster_stats",
+        "description": "Published cluster stats",
+        "version": "253",
+        "relativeId": "datasets/33",
+        "externalId": "Project_1_unified_dataset_dedup_published_cluster_stats",
+    }
+
+    _published_ids_json = {
+        "id": "unify://unified-data/v1/datasets/34",
+        "name": "Project_1_unified_dataset_dedup_all_persistent_ids",
+        "description": "All previously and currently published cluster IDs",
+        "version": "253",
+        "relativeId": "datasets/34",
+        "externalId": "Project_1_unified_dataset_dedup_all_persistent_ids",
+    }
+
+    _datasets_json = [
+        _unified_dataset_json,
+        _published_clusters_json,
+        _published_stats_json,
+        _published_ids_json,
+    ]
 
     _refresh_json = {
         "id": "93",
