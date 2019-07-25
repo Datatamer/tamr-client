@@ -22,7 +22,7 @@ class Operation(BaseResource):
         """Applies operation options to this operation.
 
         **NOTE**: This function **should not** be called directly. Rather, options should be
-        passed in through a higher-level function e.g. :func:`~tamr_unify_client.models.dataset.resource.Dataset.refresh` .
+        passed in through a higher-level function e.g. :func:`~tamr_unify_client.dataset.resource.Dataset.refresh` .
 
         Synchronous mode:
             Automatically waits for operation to resolve before returning the

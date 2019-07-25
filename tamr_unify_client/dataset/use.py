@@ -4,7 +4,7 @@ from tamr_unify_client.models.project.step import ProjectStep
 class DatasetUse:
     """
     The use of a dataset in project steps. This is not a `BaseResource` because it has no API path
-        and cannot be directly retrieved or modified.
+    and cannot be directly retrieved or modified.
 
     See https://docs.tamr.com/reference#retrieve-downstream-dataset-usage
 
@@ -41,10 +41,10 @@ class DatasetUse:
         return [ProjectStep(self.client, step) for step in steps]
 
     def dataset(self):
-        """Retrieves the :class:`~tamr_unify_client.models.dataset.resource.Dataset` this use represents.
+        """Retrieves the :class:`~tamr_unify_client.dataset.resource.Dataset` this use represents.
 
         :return: The dataset being used.
-        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
+        :rtype: :class:`~tamr_unify_client.dataset.resource.Dataset`
         """
         dataset_id = self.dataset_id.split("/")[-1]
         return self.client.datasets.by_resource_id(dataset_id)

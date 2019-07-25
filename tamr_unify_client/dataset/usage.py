@@ -1,5 +1,5 @@
 from tamr_unify_client.base_resource import BaseResource
-from tamr_unify_client.models.dataset.use import DatasetUse
+from tamr_unify_client.dataset.use import DatasetUse
 
 
 class DatasetUsage(BaseResource):
@@ -20,12 +20,12 @@ class DatasetUsage(BaseResource):
 
     @property
     def usage(self):
-        """:type: :class:`~tamr_unify_client.models.dataset.use.DatasetUse`"""
+        """:type: :class:`~tamr_unify_client.dataset.use.DatasetUse`"""
         return DatasetUse(self.client, self._data.get("usage"))
 
     @property
     def dependencies(self):
-        """:type: list[:class:`~tamr_unify_client.models.dataset.use.DatasetUse`]"""
+        """:type: list[:class:`~tamr_unify_client.dataset.use.DatasetUse`]"""
         deps = self._data.get("dependencies")
         return [DatasetUse(self.client, dep) for dep in deps]
 

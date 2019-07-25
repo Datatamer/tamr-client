@@ -2,9 +2,9 @@ import simplejson as json
 
 from tamr_unify_client.attribute.collection import AttributeCollection
 from tamr_unify_client.base_resource import BaseResource
-from tamr_unify_client.models.dataset.profile import DatasetProfile
-from tamr_unify_client.models.dataset.status import DatasetStatus
-from tamr_unify_client.models.dataset.usage import DatasetUsage
+from tamr_unify_client.dataset.profile import DatasetProfile
+from tamr_unify_client.dataset.status import DatasetStatus
+from tamr_unify_client.dataset.usage import DatasetUsage
 from tamr_unify_client.operation import Operation
 
 
@@ -57,8 +57,8 @@ class Dataset(BaseResource):
 
     def _update_records(self, updates, **json_args):
         """Send a batch of record creations/updates/deletions to this dataset.
-        You probably want to use :func:`~tamr_unify_client.models.dataset.resource.Dataset.upsert_records`
-        or :func:`~tamr_unify_client.models.dataset.resource.Dataset.delete_records` instead.
+        You probably want to use :func:`~tamr_unify_client.dataset.resource.Dataset.upsert_records`
+        or :func:`~tamr_unify_client.dataset.resource.Dataset.delete_records` instead.
 
         :param records: Each record should be formatted as specified in the `Public Docs for Dataset updates <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
         :type records: iterable[dict]
@@ -125,8 +125,11 @@ class Dataset(BaseResource):
 
     def refresh(self, **options):
         """Brings dataset up-to-date if needed, taking whatever actions are required.
+
         :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .
             See :func:`~tamr_unify_client.operation.Operation.apply_options` .
+        :returns: The refresh operation.
+        :rtype: :class:`~tamr_unify_client.operation.Operation`
         """
         op_json = self.client.post(self.api_path + ":refresh").successful().json()
         op = Operation.from_json(self.client, op_json)
@@ -139,9 +142,8 @@ class Dataset(BaseResource):
         If the returned profile information is out-of-date, you can call refresh() on the returned
         object to bring it up-to-date.
 
-        :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .
         :return: Dataset Profile information.
-        :rtype: :class:`~tamr_unify_client.models.dataset.profile.DatasetProfile`
+        :rtype: :class:`~tamr_unify_client.dataset.profile.DatasetProfile`
         """
         profile_json = self.client.get(self.api_path + "/profile").successful().json()
         return DatasetProfile.from_json(
@@ -156,7 +158,8 @@ class Dataset(BaseResource):
 
         :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .
             See :func:`~tamr_unify_client.operation.Operation.apply_options` .
-        :return: the operation to create the profile.
+        :return: The operation to create the profile.
+        :rtype: :class:`~tamr_unify_client.operation.Operation`
         """
         op_json = (
             self.client.post(self.api_path + "/profile:refresh").successful().json()
@@ -178,7 +181,7 @@ class Dataset(BaseResource):
         """Retrieve this dataset's streamability status.
 
         :return: Dataset streamability status.
-        :rtype: :class:`~tamr_unify_client.models.dataset.status.DatasetStatus`
+        :rtype: :class:`~tamr_unify_client.dataset.status.DatasetStatus`
         """
         status_json = self.client.get(self.api_path + "/status").successful().json()
         return DatasetStatus.from_json(
@@ -189,7 +192,7 @@ class Dataset(BaseResource):
         """Retrieve this dataset's usage by recipes and downstream datasets.
 
         :return: The dataset's usage.
-        :rtype: :class:`~tamr_unify_client.models.dataset.usage.DatasetUsage`
+        :rtype: :class:`~tamr_unify_client.dataset.usage.DatasetUsage`
         """
         alias = self.api_path + "/usage"
         usage = self.client.get(alias).successful().json()
@@ -239,7 +242,7 @@ class Dataset(BaseResource):
         """Retrieve a representation of this dataset that conforms to the Python Geo Interface.
 
         Note that this materializes all features; for a streaming interface to features,
-        see :method:`~tamr_unify_client.models.dataset.Dataset.__geo_features__()`
+        see :method:`~tamr_unify_client.dataset.Dataset.__geo_features__()`
 
         See https://gist.github.com/sgillies/2217756
 

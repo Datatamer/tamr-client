@@ -1,9 +1,9 @@
 from tamr_unify_client.base_resource import BaseResource
+from tamr_unify_client.dataset.collection import DatasetCollection
+from tamr_unify_client.dataset.resource import Dataset
 from tamr_unify_client.models.attribute_configuration.collection import (
     AttributeConfigurationCollection,
 )
-from tamr_unify_client.models.dataset.collection import DatasetCollection
-from tamr_unify_client.models.dataset.resource import Dataset
 
 
 class Project(BaseResource):
@@ -56,7 +56,7 @@ class Project(BaseResource):
         """Unified dataset for this project.
 
         :return: Unified dataset for this project.
-        :rtype: :class:`~tamr_unify_client.models.dataset.resource.Dataset`
+        :rtype: :class:`~tamr_unify_client.dataset.resource.Dataset`
         """
         alias = self.api_path + "/unifiedDataset"
         resource_json = self.client.get(alias).successful().json()
@@ -102,8 +102,8 @@ class Project(BaseResource):
         They need to be added as input to a project before they can be used
         as part of that project
 
-        :param project: Unify Project
-        :param dataset: Unify Dataset
+        :param dataset: The dataset to associate with the project.
+        :type dataset: :class:`~tamr_unify_client.dataset.resource.Dataset`
         :return: HTTP response from the server
         :rtype: :class:`requests.Response`
         """
@@ -117,7 +117,7 @@ class Project(BaseResource):
         """Retrieve a collection of this project's input datasets.
 
         :return: The project's input datasets.
-        :rtype: :class: `~tamr_unify_client.models.dataset.collection.DatasetCollection`
+        :rtype: :class:`~tamr_unify_client.dataset.collection.DatasetCollection`
         """
         alias = self.api_path + "/inputDatasets"
         return DatasetCollection(self.client, alias)

@@ -28,36 +28,36 @@ Categories
 Dataset
 -------
 
-.. autoclass:: tamr_unify_client.models.dataset.resource.Dataset
+.. autoclass:: tamr_unify_client.dataset.resource.Dataset
   :members:
 
 Dataset Profile
 ---------------
 
-.. autoclass:: tamr_unify_client.models.dataset.profile.DatasetProfile
+.. autoclass:: tamr_unify_client.dataset.profile.DatasetProfile
   :members:
 
 Dataset Status
 --------------
 
-.. autoclass:: tamr_unify_client.models.dataset.status.DatasetStatus
+.. autoclass:: tamr_unify_client.dataset.status.DatasetStatus
   :members:
 
 Dataset Usage
 -------------
 
-.. autoclass:: tamr_unify_client.models.dataset.usage.DatasetUsage
+.. autoclass:: tamr_unify_client.dataset.usage.DatasetUsage
   :members:
 
 ----
 
-.. autoclass:: tamr_unify_client.models.dataset.use.DatasetUse
+.. autoclass:: tamr_unify_client.dataset.use.DatasetUse
   :members:
 
 Datasets
 --------
 
-.. autoclass:: tamr_unify_client.models.dataset.collection.DatasetCollection
+.. autoclass:: tamr_unify_client.dataset.collection.DatasetCollection
   :members:
 
 Attribute

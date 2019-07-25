@@ -69,11 +69,13 @@ class DatasetProfile(BaseResource):
         """Updates the dataset profile if needed.
 
         The dataset profile is updated on the server; you will need to call
-        :func:`~tamr_unify_client.models.dataset.resource.Dataset.profile`
+        :func:`~tamr_unify_client.dataset.resource.Dataset.profile`
         to retrieve the updated profile.
 
         :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .
             See :func:`~tamr_unify_client.operation.Operation.apply_options` .
+        :returns: The refresh operation.
+        :rtype: :class:`~tamr_unify_client.operation.Operation`
         """
         op_json = self.client.post(self.api_path + ":refresh").successful().json()
         op = Operation.from_json(self.client, op_json)

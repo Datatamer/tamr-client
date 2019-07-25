@@ -1,6 +1,6 @@
 from tamr_unify_client import Client
 from tamr_unify_client.auth import TokenAuth, UsernamePasswordAuth
-from tamr_unify_client.models.dataset.status import DatasetStatus
+from tamr_unify_client.dataset.status import DatasetStatus
 
 
 def test_client_repr():
@@ -55,7 +55,7 @@ def test_dataset_status_repr():
         "isStreamable": True,
     }
     status = DatasetStatus.from_json(client, data)
-    full_clz_name = "tamr_unify_client.models.dataset.status.DatasetStatus"
+    full_clz_name = "tamr_unify_client.dataset.status.DatasetStatus"
 
     rstr = f"{status!r}"
 
@@ -68,7 +68,7 @@ def test_dataset_status_repr():
 
 def test_dataset_collection_repr():
     client = Client(UsernamePasswordAuth("username", "password"))
-    full_clz_name = "tamr_unify_client.models.dataset.collection.DatasetCollection"
+    full_clz_name = "tamr_unify_client.dataset.collection.DatasetCollection"
 
     rstr = f"{client.datasets!r}"
 
