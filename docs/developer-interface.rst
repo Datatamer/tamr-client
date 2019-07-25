@@ -146,5 +146,5 @@ Projects
 Taxonomy
 --------
 
-.. autoclass:: tamr_unify_client.models.taxonomy.resource.Taxonomy
+.. autoclass:: tamr_unify_client.taxonomy.resource.Taxonomy
   :members:
