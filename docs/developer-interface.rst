@@ -13,94 +13,136 @@ Client
 .. autoclass:: tamr_unify_client.Client
   :members:
 
+Attribute
+---------
+
+Attribute
+^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.attribute.resource.Attribute
+  :members:
+
+Attribute Collection
+^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.attribute.collection.AttributeCollection
+  :members:
+
+Attribute Type
+^^^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.attribute.type.AttributeType
+  :members:
+
+SubAttribute
+^^^^^^^^^^^^
+.. autoclass:: tamr_unify_client.attribute.subattribute.SubAttribute
+  :members:
+
+Categorization
+--------------
+
+Categorization Project
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.categorization.project.CategorizationProject
+  :members:
+
+Categories
+^^^^^^^^^^
+
 Category
---------
+""""""""
 
 .. autoclass:: tamr_unify_client.categorization.category.resource.Category
   :members:
 
-Categories
-----------
+Category Collection
+"""""""""""""""""""
 
 .. autoclass:: tamr_unify_client.categorization.category.collection.CategoryCollection
+  :members:
+
+Taxonomy
+^^^^^^^^
+
+.. autoclass:: tamr_unify_client.categorization.taxonomy.Taxonomy
   :members:
 
 Dataset
 -------
 
+Dataset
+^^^^^^^
+
 .. autoclass:: tamr_unify_client.dataset.resource.Dataset
   :members:
 
+Dataset Collection
+^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.dataset.collection.DatasetCollection
+  :members:
+
 Dataset Profile
----------------
+^^^^^^^^^^^^^^^
 
 .. autoclass:: tamr_unify_client.dataset.profile.DatasetProfile
   :members:
 
 Dataset Status
---------------
+^^^^^^^^^^^^^^
 
 .. autoclass:: tamr_unify_client.dataset.status.DatasetStatus
   :members:
 
 Dataset Usage
--------------
+^^^^^^^^^^^^^
 
 .. autoclass:: tamr_unify_client.dataset.usage.DatasetUsage
   :members:
 
-----
+Dataset Use
+^^^^^^^^^^^
 
 .. autoclass:: tamr_unify_client.dataset.use.DatasetUse
   :members:
 
-Datasets
---------
-
-.. autoclass:: tamr_unify_client.dataset.collection.DatasetCollection
-  :members:
-
-Attribute
----------
-
-.. autoclass:: tamr_unify_client.attribute.resource.Attribute
-
-.. autoclass:: tamr_unify_client.attribute.subattribute.SubAttribute
-
-Attribute Type
---------------
-
-.. autoclass:: tamr_unify_client.attribute.type.AttributeType
-
-Attributes
-----------
-
-.. autoclass:: tamr_unify_client.attribute.collection.AttributeCollection
-
-Attribute Configuration
------------------------
-
-.. autoclass:: tamr_unify_client.project.attribute_configuration.resource.AttributeConfiguration
-
-Attribute Configurations
-------------------------
-
-.. autoclass:: tamr_unify_client.project.attribute_configuration.collection.AttributeConfigurationCollection
-
-Estimated Pair Counts
----------------------
-
-.. autoclass:: tamr_unify_client.mastering.estimated_pair_counts.EstimatedPairCounts
-  :members:
-
-Machine Learning Models
------------------------
+Machine Learning Model
+----------------------
 
 .. autoclass:: tamr_unify_client.base_model.MachineLearningModel
   :members:
 
-Operations
-----------
+Mastering
+---------
+
+Binning Model
+^^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.mastering.binning_model.BinningModel
+  :members:
+
+Estimated Pair Counts
+^^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.mastering.estimated_pair_counts.EstimatedPairCounts
+  :members:
+
+Mastering Project
+^^^^^^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.mastering.project.MasteringProject
+  :members:
+
+Published Clusters Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.mastering.cluster_configuration.PublishedClustersConfiguration
+  :members:
+
+Operation
+---------
 
 .. autoclass:: tamr_unify_client.operation.Operation
   :members:
@@ -109,42 +151,35 @@ Operations
 Project
 -------
 
+Attribute Configurations
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Attribute Configuration
+"""""""""""""""""""""""
+
+.. autoclass:: tamr_unify_client.project.attribute_configuration.resource.AttributeConfiguration
+  :members:
+
+Attribute Configuration Collection
+""""""""""""""""""""""""""""""""""
+
+.. autoclass:: tamr_unify_client.project.attribute_configuration.collection.AttributeConfigurationCollection
+  :members:
+
+Project
+^^^^^^^
+
 .. autoclass:: tamr_unify_client.project.resource.Project
   :members:
 
-----
-
-.. autoclass:: tamr_unify_client.categorization.project.CategorizationProject
-  :members:
-
-----
-
-.. autoclass:: tamr_unify_client.mastering.project.MasteringProject
-  :members:
-
-----
-
-.. autoclass:: tamr_unify_client.project.step.ProjectStep
-  :members:
-
-----
-
-.. autoclass:: tamr_unify_client.mastering.estimated_pair_counts.EstimatedPairCounts
-  :members:
-
-----
-
-.. autoclass:: tamr_unify_client.mastering.cluster_configuration.PublishedClustersConfiguration
-  :members:
-
-Projects
---------
+Project Collection
+^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: tamr_unify_client.project.collection.ProjectCollection
   :members:
 
-Taxonomy
---------
+Project Step
+^^^^^^^^^^^^
 
-.. autoclass:: tamr_unify_client.categorization.taxonomy.Taxonomy
+.. autoclass:: tamr_unify_client.project.step.ProjectStep
   :members:
