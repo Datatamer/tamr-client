@@ -53,7 +53,7 @@ class TestPairCounts(TestCase):
         estimate = EstimatedPairCounts.from_json(
             self.unify, self._estimate_json, self._api_path
         )
-        generated = estimate.refresh()
+        generated = estimate.refresh(poll_interval_seconds=0)
 
         created = Operation.from_json(self.unify, updated)
         self.assertEqual(repr(generated), repr(created))
