@@ -51,7 +51,7 @@ class TestDatasetProfile(TestCase):
 
         dataset = client.datasets.by_resource_id(dataset_id)
         profile = dataset.profile()
-        op = profile.refresh()
+        op = profile.refresh(poll_interval_seconds=0)
         self.assertTrue(op.succeeded())
 
     @responses.activate

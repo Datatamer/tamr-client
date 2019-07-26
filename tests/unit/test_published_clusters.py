@@ -35,7 +35,7 @@ class PublishedClusterTest(TestCase):
         responses.add(responses.GET, operations_url, json=self._operations_json)
         project = self.unify.projects.by_resource_id(project_id)
         actual_published_clusters_dataset = project.as_mastering().published_clusters()
-        actual_published_clusters_dataset.refresh()
+        actual_published_clusters_dataset.refresh(poll_interval_seconds=0)
         self.assertEqual(
             actual_published_clusters_dataset.name,
             self._published_clusters_json["name"],
@@ -73,7 +73,7 @@ class PublishedClusterTest(TestCase):
         p = Project(self.unify, self._project_config_json).as_mastering()
         d = p.published_cluster_ids()
 
-        op = d.refresh()
+        op = d.refresh(poll_interval_seconds=0)
         self.assertEqual(op.resource_id, self._operations_json["id"])
         self.assertTrue(op.succeeded())
 
@@ -92,7 +92,7 @@ class PublishedClusterTest(TestCase):
         p = Project(self.unify, self._project_config_json).as_mastering()
         d = p.published_cluster_stats()
 
-        op = d.refresh()
+        op = d.refresh(poll_interval_seconds=0)
         self.assertEqual(op.resource_id, self._operations_json["id"])
         self.assertTrue(op.succeeded())
 

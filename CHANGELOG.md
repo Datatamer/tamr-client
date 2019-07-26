@@ -14,6 +14,9 @@
   - [#202](https://github.com/Datatamer/unify-client-python/issues/202) Support for refreshing published cluster stats
   - [#194](https://github.com/Datatamer/unify-client-python/issues/194) Allowing additional JSON parameters to be used for update of records
 
+  **BUG FIXES**
+  - [#212](https://github.com/Datatamer/unify-client-python/issues/212) Sped up slow running tests
+
 ## 0.7.0
   **BREAKING CHANGES**
   - [#156](https://github.com/Datatamer/unify-client-python/issues/156) Fetch Dataset profile, even if out of date.
