@@ -1,4 +1,4 @@
-from tamr_unify_client.models.machine_learning_model import MachineLearningModel
+from tamr_unify_client.base_model import MachineLearningModel
 from tamr_unify_client.project.resource import Project
 from tamr_unify_client.taxonomy.resource import Taxonomy
 
@@ -11,7 +11,7 @@ class CategorizationProject(Project):
         Learns from verified labels and predicts categorization labels for unlabeled records.
 
         :returns: The machine learning model for categorization.
-        :rtype: :class:`~tamr_unify_client.models.machine_learning_model.MachineLearningModel`
+        :rtype: :class:`~tamr_unify_client.base_model.MachineLearningModel`
         """
         alias = self.api_path + "/categorizations/model"
         return MachineLearningModel(self.client, None, alias)

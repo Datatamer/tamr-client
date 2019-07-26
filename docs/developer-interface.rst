@@ -96,7 +96,7 @@ Estimated Pair Counts
 Machine Learning Models
 -----------------------
 
-.. autoclass:: tamr_unify_client.models.machine_learning_model.MachineLearningModel
+.. autoclass:: tamr_unify_client.base_model.MachineLearningModel
   :members:
 
 Operations

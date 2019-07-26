@@ -1,6 +1,6 @@
+from tamr_unify_client.base_model import MachineLearningModel
 from tamr_unify_client.dataset.resource import Dataset
 from tamr_unify_client.models.binning_model import BinningModel
-from tamr_unify_client.models.machine_learning_model import MachineLearningModel
 from tamr_unify_client.project.cluster_configuration import (
     PublishedClustersConfiguration,
 )
@@ -28,12 +28,12 @@ class MasteringProject(Project):
         """Machine learning model for pair-matching for this Mastering project.
         Learns from verified labels and predicts categorization labels for unlabeled pairs.
 
-        Calling :func:`~tamr_unify_client.models.machine_learning_model.MachineLearningModel.predict`
+        Calling :func:`~tamr_unify_client.base_model.MachineLearningModel.predict`
         from this dataset will produce new (unpublished) clusters. These clusters
         are displayed on the "Clusters" page in the Unify UI.
 
         :returns: The machine learning model for pair-matching.
-        :rtype: :class:`~tamr_unify_client.models.machine_learning_model.MachineLearningModel`
+        :rtype: :class:`~tamr_unify_client.base_model.MachineLearningModel`
         """
         alias = self.api_path + "/recordPairsWithPredictions/model"
         return MachineLearningModel(self.client, None, alias)
