@@ -59,13 +59,13 @@ class Project(BaseResource):
         return Dataset.from_json(self.client, resource_json, alias)
 
     def as_categorization(self):
-        """Convert this project to a :class:`~tamr_unify_client.project.categorization.CategorizationProject`
+        """Convert this project to a :class:`~tamr_unify_client.categorization.project.CategorizationProject`
 
         :return: This project.
-        :rtype: :class:`~tamr_unify_client.project.categorization.CategorizationProject`
+        :rtype: :class:`~tamr_unify_client.categorization.project.CategorizationProject`
         :raises TypeError: If the :attr:`~tamr_unify_client.project.resource.Project.type` of this project is not ``"CATEGORIZATION"``
         """
-        from tamr_unify_client.project.categorization import CategorizationProject
+        from tamr_unify_client.categorization.project import CategorizationProject
 
         if self.type != "CATEGORIZATION":
             raise TypeError(

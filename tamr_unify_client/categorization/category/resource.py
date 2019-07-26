@@ -27,7 +27,7 @@ class Category(BaseResource):
         """Gets the parent Category of this one, or None if it is a tier 1 category
 
         :returns: The parent Category or None
-        :rtype: :class:`~tamr_unify_client.category.resource.Category`
+        :rtype: :class:`~tamr_unify_client.categorization.category.resource.Category`
         """
         parent = self._data.get("parent")
         if parent:

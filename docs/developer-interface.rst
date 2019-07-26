@@ -16,13 +16,13 @@ Client
 Category
 --------
 
-.. autoclass:: tamr_unify_client.category.resource.Category
+.. autoclass:: tamr_unify_client.categorization.category.resource.Category
   :members:
 
 Categories
 ----------
 
-.. autoclass:: tamr_unify_client.category.collection.CategoryCollection
+.. autoclass:: tamr_unify_client.categorization.category.collection.CategoryCollection
   :members:
 
 Dataset
@@ -114,7 +114,7 @@ Project
 
 ----
 
-.. autoclass:: tamr_unify_client.project.categorization.CategorizationProject
+.. autoclass:: tamr_unify_client.categorization.project.CategorizationProject
   :members:
 
 ----
@@ -146,5 +146,5 @@ Projects
 Taxonomy
 --------
 
-.. autoclass:: tamr_unify_client.taxonomy.resource.Taxonomy
+.. autoclass:: tamr_unify_client.categorization.taxonomy.Taxonomy
   :members:

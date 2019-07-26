@@ -4,7 +4,7 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.category.resource import Category
+from tamr_unify_client.categorization.category.resource import Category
 
 
 class TestCategory(TestCase):
