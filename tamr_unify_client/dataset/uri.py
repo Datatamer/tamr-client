@@ -1,14 +1,21 @@
 class DatasetURI:
-    """An upstream dataset."""
+    """
+    Indentifier of a dataset.
 
-    def __init__(self, client, _uri):
+    :param client: Queried dataset's client.
+    :type client: :class:`~tamr_unify_client.client.Client`
+    :param uri: Queried dataset's dataset ID.
+    :type uri: :py:class:`str`
+    """
+
+    def __init__(self, client, uri):
         self.client = client
-        self._uri = _uri
+        self._uri = uri
 
     @property
     def resource_id(self):
         """:type: str"""
-        return self.dataset_id.split("/")[-1]
+        return self._uri.split("/")[-1]
 
     @property
     def relative_id(self):
@@ -20,10 +27,17 @@ class DatasetURI:
         """:type: str"""
         return self._uri
 
-    def __repr__(self):
+    def dataset(self):
+        """Fetch the dataset that this identifier points to.
 
+        :return: A Unify dataset.
+        :rtype: :class: `~tamr_unify_client.dataset.resource.Dataset`
+        """
+        return self.client.datasets.by_resource_id(self.resource_id)
+
+    def __repr__(self):
         return (
             f"{self.__class__.__module__}."
             f"{self.__class__.__qualname__}("
-            f"{self.uri}"
+            f"'{self.uri})'"
         )
