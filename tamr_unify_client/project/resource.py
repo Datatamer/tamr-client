@@ -74,13 +74,13 @@ class Project(BaseResource):
         return CategorizationProject(self.client, self._data, self.api_path)
 
     def as_mastering(self):
-        """Convert this project to a :class:`~tamr_unify_client.project.mastering.MasteringProject`
+        """Convert this project to a :class:`~tamr_unify_client.mastering.project.MasteringProject`
 
         :return: This project.
-        :rtype: :class:`~tamr_unify_client.project.mastering.MasteringProject`
+        :rtype: :class:`~tamr_unify_client.mastering.project.MasteringProject`
         :raises TypeError: If the :attr:`~tamr_unify_client.project.resource.Project.type` of this project is not ``"DEDUP"``
         """
-        from tamr_unify_client.project.mastering import MasteringProject
+        from tamr_unify_client.mastering.project import MasteringProject
 
         if self.type != "DEDUP":
             raise TypeError(

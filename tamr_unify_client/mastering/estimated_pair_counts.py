@@ -55,7 +55,7 @@ class EstimatedPairCounts(BaseResource):
         """Updates the estimated pair counts if needed.
 
         The pair count estimates are updated on the server; you will need to call
-        :func:`~tamr_unify_client.project.mastering.MasteringProject.estimate_pairs`
+        :func:`~tamr_unify_client.mastering.project.MasteringProject.estimate_pairs`
         to retrieve the updated estimate.
 
         :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.operation.Operation` .

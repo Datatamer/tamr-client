@@ -4,9 +4,9 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
+from tamr_unify_client.mastering.estimated_pair_counts import EstimatedPairCounts
+from tamr_unify_client.mastering.project import MasteringProject
 from tamr_unify_client.operation import Operation
-from tamr_unify_client.project.estimated_pair_counts import EstimatedPairCounts
-from tamr_unify_client.project.mastering import MasteringProject
 
 
 class TestPairCounts(TestCase):

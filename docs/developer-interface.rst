@@ -90,7 +90,7 @@ Attribute Configurations
 Estimated Pair Counts
 ---------------------
 
-.. autoclass:: tamr_unify_client.project.estimated_pair_counts.EstimatedPairCounts
+.. autoclass:: tamr_unify_client.mastering.estimated_pair_counts.EstimatedPairCounts
   :members:
 
 Machine Learning Models
@@ -119,7 +119,7 @@ Project
 
 ----
 
-.. autoclass:: tamr_unify_client.project.mastering.MasteringProject
+.. autoclass:: tamr_unify_client.mastering.project.MasteringProject
   :members:
 
 ----
@@ -129,12 +129,12 @@ Project
 
 ----
 
-.. autoclass:: tamr_unify_client.project.estimated_pair_counts.EstimatedPairCounts
+.. autoclass:: tamr_unify_client.mastering.estimated_pair_counts.EstimatedPairCounts
   :members:
 
 ----
 
-.. autoclass:: tamr_unify_client.project.cluster_configuration.PublishedClustersConfiguration
+.. autoclass:: tamr_unify_client.mastering.cluster_configuration.PublishedClustersConfiguration
   :members:
 
 Projects
