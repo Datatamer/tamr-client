@@ -80,6 +80,24 @@ class Dataset(BaseResource):
             .json()
         )
 
+    def upsert_records(self, records, primary_key_name, **json_args):
+        """Converts the records into update commands and calls :func:`~tamr_unify_client.models.dataset.resource.Dataset.update_records`
+
+        :param records: The records to update, as dictionaries.
+        :type records: iterable[dict]
+        :param primary_key_name: The name of the primary key for these records, which must be a key in each record dictionary.
+        :type primary_key_name: str
+        :param `**json_args`: Arguments to pass to the JSON `dumps` function, as documented `here <https://simplejson.readthedocs.io/en/latest/#simplejson.dumps>`_.
+            Some of these, such as `indent`, may not work with Unify.
+        :return: JSON response body from the server.
+        :rtype: dict
+        """
+        updates = (
+            {"action": "CREATE", "recordId": record[primary_key_name], "record": record}
+            for record in records
+        )
+        return self.update_records(updates, **json_args)
+
     def refresh(self, **options):
         """Brings dataset up-to-date if needed, taking whatever actions are required.
         :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .

@@ -79,11 +79,31 @@ class TestDatasetRecords(TestCase):
         self.assertEqual(response, self._response_json)
         self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, True))
 
+    @responses.activate
+    def test_upsert(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = list(request.body)
+            return 200, {}, simplejson.dumps(self._response_json)
+
+        responses.add(responses.GET, self._dataset_url, json={})
+        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+
+        records_url = f"{self._dataset_url}:updateRecords"
+        updates = TestDatasetRecords.records_to_updates(self._records_json)
+        snoop = {}
+        responses.add_callback(
+            responses.POST, records_url, partial(create_callback, snoop=snoop)
+        )
+
+        response = dataset.upsert_records(self._records_json, "attribute1")
+        self.assertEqual(response, self._response_json)
+        self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, False))
+
     @staticmethod
     def records_to_updates(records):
         return [
-            {"action": "CREATE", "recordId": str(i), "record": records[i]}
-            for i in range(len(records))
+            {"action": "CREATE", "recordId": i, "record": record}
+            for i, record in enumerate(records, start=1)
         ]
 
     @staticmethod
