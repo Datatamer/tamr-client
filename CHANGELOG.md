@@ -3,6 +3,7 @@
   - [#175](https://github.com/Datatamer/unify-client-python/issues/175) `AttributeCollection` no longer has a `from_json` method or a `data` parameter in its constructor
   - `AttributeType` no longer inherits from `BaseResource` (no API path), removing its `from_json` method and `relative_id` property
   - The type of `AttributeType`'s `attributes` property is now a `list` of `SubAttribute`s, which are identical to `Attribute`s except they lack an API path
+  - The `Dataset` function `update_records` has been renamed `_update_records` as the convenience functions `upsert_records` and `delete_records` now exist.
 
   **NEW FEATURES**
   - [#174](https://github.com/Datatamer/unify-client-python/issues/174) Get and create taxonomy categories
@@ -13,6 +14,8 @@
   - [#181](https://github.com/Datatamer/unify-client-python/issues/181) Support for seeing a dataset's usage
   - [#202](https://github.com/Datatamer/unify-client-python/issues/202) Support for refreshing published cluster stats
   - [#194](https://github.com/Datatamer/unify-client-python/issues/194) Allowing additional JSON parameters to be used for update of records
+  - [#205](https://github.com/Datatamer/unify-client-python/issues/205) Update a dataset's records with records rather than record updates
+  - Delete records from a dataset by providing records rather than record updates
 
   **BUG FIXES**
   - [#212](https://github.com/Datatamer/unify-client-python/issues/212) Sped up slow running tests
