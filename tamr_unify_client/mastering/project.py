@@ -1,3 +1,5 @@
+import json
+
 from tamr_unify_client.base_model import MachineLearningModel
 from tamr_unify_client.dataset.resource import Dataset
 from tamr_unify_client.mastering.binning_model import BinningModel
@@ -5,6 +7,7 @@ from tamr_unify_client.mastering.cluster_configuration import (
     PublishedClustersConfiguration,
 )
 from tamr_unify_client.mastering.estimated_pair_counts import EstimatedPairCounts
+from tamr_unify_client.mastering.published_cluster.resource import PublishedCluster
 from tamr_unify_client.project.resource import Project
 
 
@@ -133,6 +136,23 @@ class MasteringProject(Project):
 
         path = self.api_path + "/publishedClusterStats"
         return Dataset.from_json(self.client, dataset._data, path)
+
+    def published_cluster_versions(self, cluster_ids):
+        """Retrieves version information for the specified published clusters.
+
+        :param cluster_ids: The persistent IDs of the clusters to get version information for.
+        :type cluster_ids: list[str]
+        :return: A stream of the published clusters.
+        :rtype: Python generator yielding :class:`~tamr_unify_client.mastering.published_cluster.resource.PublishedCluster`
+        """
+        stringified_ids = "\n".join(
+            json.dumps(cluster_id) for cluster_id in cluster_ids
+        )
+        url = self.api_path + "/publishedClusterVersions"
+
+        with self.client.post(url, data=stringified_ids, stream=True) as response:
+            for line in response.iter_lines():
+                yield PublishedCluster(json.loads(line))
 
     def estimate_pairs(self):
         """Returns pair estimate information for a mastering project
