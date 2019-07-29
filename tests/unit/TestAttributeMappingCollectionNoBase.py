@@ -8,10 +8,6 @@ from tamr_unify_client.models.project.attributemappingcollectionwithoutbase impo
     AttributeMappingCollectionNoBase,
 )
 
-from tamr_unify_client.models.project.attributemappingwithoutbase import (
-    AttributeMappingNoBase,
-)
-
 
 class TestAttributeMappingCollectionNoBase(TestCase):
     def setUp(self):
@@ -24,18 +20,21 @@ class TestAttributeMappingCollectionNoBase(TestCase):
         responses.add(responses.GET, url, json=self.mappings_json)
         tester = AttributeMappingCollectionNoBase(url)
         by_resource = tester.by_resource_id(3)
-        # print("resource")
+        print("resource")
         print(by_resource)
-        print(by_resource.id(3))
+        print("rel")
+        print(tester.relative_id(by_resource))
 
     @responses.activate
     def test_by_relative_id(self):
         url = "http://localhost:9100/api/versioned/v1/projects/4/attributeMappings"
-        tester = AttributeMappingCollectionNoBase(url)
         responses.add(responses.GET, url, json=self.mappings_json)
+        tester = AttributeMappingCollectionNoBase(url)
         by_relative = tester.by_relative_id("projects/4/attributeMappings/19629-12")
         print("relative")
-        return by_relative
+        print(by_relative)
+        print("relId")
+        print(tester.relative_id(by_relative))
 
     mappings_json = [
         {

@@ -1,66 +1,47 @@
-import requests
-from tamr_unify_client import Client
-from tamr_unify_client.auth import UsernamePasswordAuth
-import json
-
-
 class AttributeMappingNoBase:
     """
        see https://docs.tamr.com/reference#retrieve-projects-mappings
        """
 
-    def __init__(self, map_url):
-        self.map_url = map_url
-        self.all_maps = requests.get(self.map_url).json()
-        self.map_list = []
-        x = 0
-        for mapping in self.all_maps:
-            self.map_list.append(self.all_maps[x])
-            x += 1
-        # length = len(self.all_maps)
-        # for y in range(length):
-        #     #print(self.map_list[y]["unifiedAttributeName"])
-        #     print(self.all_maps[y]["unifiedAttributeName"])
-
-    def id(self, resource_id):
+    def id(self, data):
         """:type: str"""
-        return self.all_maps[resource_id - 1]["id"]
+        return data["id"]
 
-    def relative_id(self, resource_id):
+    def relative_id(self, data):
         """:type: str"""
-        return self.all_maps[resource_id - 1]["relativeId"]
+        return data["relativeId"]
 
-    def input_attribute_id(self, resource_id):
+    def input_attribute_id(self, data):
         """:type: str"""
-        return self.all_maps[resource_id - 1]["inputAttributeId"]
+        return data["inputAttributeId"]
 
-    def relative_input_attribute_id(self, resource_id):
+    def relative_input_attribute_id(self, data):
         """:type: str"""
-        return self.all_maps[resource_id - 1]["relativeInputAttributeId"]
+        return data["relativeInputAttributeId"]
 
-    def input_dataset_name(self, resource_id):
+    def input_dataset_name(self, data):
         """:type: str"""
-        return self.all_maps[resource_id - 1]["inputDatasetName"]
+        return data["inputDatasetName"]
 
-    def input_attribute_name(self, resource_id):
+    def input_attribute_name(self, data):
         """:type: str"""
-        return self.all_maps[resource_id - 1]["inputAttributeName"]
+        return data["inputAttributeName"]
 
-    def unified_attribute_id(self, resource_id):
+    def unified_attribute_id(self, data):
         """:type: str"""
-        return self.all_maps[resource_id - 1]["unifiedAttributeId"]
+        return data["unifiedAttributeId"]
 
-    def relative_unified_attribute_id(self, resource_id):
+    def relative_unified_attribute_id(self, data):
         """:type: str"""
-        return self.all_maps[resource_id - 1]["relativeUnifiedAttributeId"]
+        return data["relativeUnifiedAttributeId"]
 
-    def unified_dataset_name(self, resource_id):
+    def unified_dataset_name(self, data):
         """:type: str"""
-        return self.all_maps[resource_id - 1]["unifiedDatasetName"]
+        return data["unifiedDatasetName"]
 
-    def unified_attribute_name(self, resource_id):
+    def unified_attribute_name(self, data):
         """:type: str"""
-        return self.all_maps[resource_id - 1]["unifiedAttributeName"]
+        return data["unifiedAttributeName"]
 
     # def __repr__(self):
     #     return (
