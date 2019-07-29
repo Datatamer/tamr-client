@@ -98,6 +98,22 @@ class Dataset(BaseResource):
         )
         return self.update_records(updates, **json_args)
 
+    def delete_records(self, records, primary_key_name):
+        """Converts the records into delete commands and calls :func:`~tamr_unify_client.models.dataset.resource.Dataset.update_records`
+
+        :param records: The records to delete, as dictionaries.
+        :type records: iterable[dict]
+        :param primary_key_name: The name of the primary key for these records, which must be a key in each record dictionary.
+        :type primary_key_name: str
+        :return: JSON response body from the server.
+        :rtype: dict
+        """
+        updates = (
+            {"action": "DELETE", "recordId": record[primary_key_name]}
+            for record in records
+        )
+        return self.update_records(updates)
+
     def refresh(self, **options):
         """Brings dataset up-to-date if needed, taking whatever actions are required.
         :param ``**options``: Options passed to underlying :class:`~tamr_unify_client.models.operation.Operation` .

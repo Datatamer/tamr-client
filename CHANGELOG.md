@@ -14,6 +14,7 @@
   - [#202](https://github.com/Datatamer/unify-client-python/issues/202) Support for refreshing published cluster stats
   - [#194](https://github.com/Datatamer/unify-client-python/issues/194) Allowing additional JSON parameters to be used for update of records
   - [#205](https://github.com/Datatamer/unify-client-python/issues/205) Update a dataset's records with records rather than record updates
+  - Delete records from a dataset by providing records rather than record updates
 
   **BUG FIXES**
   - [#212](https://github.com/Datatamer/unify-client-python/issues/212) Sped up slow running tests
