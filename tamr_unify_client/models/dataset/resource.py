@@ -109,10 +109,18 @@ class Dataset(BaseResource):
         :return: JSON response body from the server.
         :rtype: dict
         """
-        updates = (
-            {"action": "DELETE", "recordId": record[primary_key_name]}
-            for record in records
-        )
+        ids = (record[primary_key_name] for record in records)
+        return self.delete_records_by_id(ids)
+
+    def delete_records_by_id(self, record_ids):
+        """Deletes the specified records.
+
+        :param record_ids: The IDs of the records to delete.
+        :type record_ids: iterable
+        :return: JSON response body from the server.
+        :rtype: dict
+        """
+        updates = ({"action": "DELETE", "recordId": rid} for rid in record_ids)
         return self._update_records(updates)
 
     def refresh(self, **options):

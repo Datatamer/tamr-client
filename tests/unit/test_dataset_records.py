@@ -119,6 +119,27 @@ class TestDatasetRecords(TestCase):
         self.assertEqual(response, self._response_json)
         self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(deletes, False))
 
+    @responses.activate
+    def test_delete_ids(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = list(request.body)
+            return 200, {}, simplejson.dumps(self._response_json)
+
+        responses.add(responses.GET, self._dataset_url, json={})
+        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+
+        records_url = f"{self._dataset_url}:updateRecords"
+        deletes = TestDatasetRecords.records_to_deletes(self._records_json)
+        snoop = {}
+        responses.add_callback(
+            responses.POST, records_url, partial(create_callback, snoop=snoop)
+        )
+
+        ids = [r["attribute1"] for r in self._records_json]
+        response = dataset.delete_records_by_id(ids)
+        self.assertEqual(response, self._response_json)
+        self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(deletes, False))
+
     @staticmethod
     def records_to_deletes(records):
         return [
