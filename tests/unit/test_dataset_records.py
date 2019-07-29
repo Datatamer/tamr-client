@@ -44,7 +44,7 @@ class TestDatasetRecords(TestCase):
             responses.POST, records_url, partial(create_callback, snoop=snoop)
         )
 
-        response = dataset.update_records(updates)
+        response = dataset._update_records(updates)
         self.assertEqual(response, self._response_json)
         self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, False))
 
@@ -72,10 +72,10 @@ class TestDatasetRecords(TestCase):
             partial(create_callback, snoop=snoop, status=200),
         )
 
-        self.assertRaises(HTTPError, lambda: dataset.update_records(updates))
+        self.assertRaises(HTTPError, lambda: dataset._update_records(updates))
         self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, False))
 
-        response = dataset.update_records(updates, ignore_nan=True)
+        response = dataset._update_records(updates, ignore_nan=True)
         self.assertEqual(response, self._response_json)
         self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, True))
 

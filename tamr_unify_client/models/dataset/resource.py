@@ -55,8 +55,10 @@ class Dataset(BaseResource):
         alias = self.api_path + "/attributes"
         return AttributeCollection(self.client, alias)
 
-    def update_records(self, records, **json_args):
+    def _update_records(self, updates, **json_args):
         """Send a batch of record creations/updates/deletions to this dataset.
+        You probably want to use :func:`~tamr_unify_client.models.dataset.resource.Dataset.upsert_records`
+        or :func:`~tamr_unify_client.models.dataset.resource.Dataset.delete_records` instead.
 
         :param records: Each record should be formatted as specified in the `Public Docs for Dataset updates <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
         :type records: iterable[dict]
@@ -65,23 +67,22 @@ class Dataset(BaseResource):
         :returns: JSON response body from server.
         :rtype: :py:class:`dict`
         """
-
-        def _stringify_updates(updates):
-            for update in updates:
-                yield json.dumps(update, **json_args).encode("utf-8")
+        stringified_updates = (
+            json.dumps(update, **json_args).encode("utf-8") for update in updates
+        )
 
         return (
             self.client.post(
                 self.api_path + ":updateRecords",
                 headers={"Content-Encoding": "utf-8"},
-                data=_stringify_updates(records),
+                data=stringified_updates,
             )
             .successful()
             .json()
         )
 
     def upsert_records(self, records, primary_key_name, **json_args):
-        """Converts the records into update commands and calls :func:`~tamr_unify_client.models.dataset.resource.Dataset.update_records`
+        """Creates or updates the specified records.
 
         :param records: The records to update, as dictionaries.
         :type records: iterable[dict]
@@ -96,10 +97,10 @@ class Dataset(BaseResource):
             {"action": "CREATE", "recordId": record[primary_key_name], "record": record}
             for record in records
         )
-        return self.update_records(updates, **json_args)
+        return self._update_records(updates, **json_args)
 
     def delete_records(self, records, primary_key_name):
-        """Converts the records into delete commands and calls :func:`~tamr_unify_client.models.dataset.resource.Dataset.update_records`
+        """Deletes the specified records.
 
         :param records: The records to delete, as dictionaries.
         :type records: iterable[dict]
@@ -112,7 +113,7 @@ class Dataset(BaseResource):
             {"action": "DELETE", "recordId": record[primary_key_name]}
             for record in records
         )
-        return self.update_records(updates)
+        return self._update_records(updates)
 
     def refresh(self, **options):
         """Brings dataset up-to-date if needed, taking whatever actions are required.
@@ -221,7 +222,7 @@ class Dataset(BaseResource):
         if geo_attr is None:
             geo_attr = self._geo_attr
 
-        self.update_records(
+        self._update_records(
             self._features_to_updates(features, record_id, key_attrs, geo_attr)
         )
 

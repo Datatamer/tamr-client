@@ -3,6 +3,7 @@
   - [#175](https://github.com/Datatamer/unify-client-python/issues/175) `AttributeCollection` no longer has a `from_json` method or a `data` parameter in its constructor
   - `AttributeType` no longer inherits from `BaseResource` (no API path), removing its `from_json` method and `relative_id` property
   - The type of `AttributeType`'s `attributes` property is now a `list` of `SubAttribute`s, which are identical to `Attribute`s except they lack an API path
+  - The `Dataset` function `update_records` has been renamed `_update_records` as the convenience functions `upsert_records` and `delete_records` now exist.
 
   **NEW FEATURES**
   - [#174](https://github.com/Datatamer/unify-client-python/issues/174) Get and create taxonomy categories
