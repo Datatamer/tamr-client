@@ -3,8 +3,8 @@ from urllib.parse import urljoin
 import requests
 from requests import Response
 
-from tamr_unify_client.models.dataset.collection import DatasetCollection
-from tamr_unify_client.models.project.collection import ProjectCollection
+from tamr_unify_client.dataset.collection import DatasetCollection
+from tamr_unify_client.project.collection import ProjectCollection
 
 # monkey-patch Response.successful
 
@@ -138,7 +138,7 @@ class Client:
         """Collection of all projects on this Unify instance.
 
         :return: Collection of all projects.
-        :rtype: :class:`~tamr_unify_client.models.ProjectCollection`
+        :rtype: :class:`~tamr_unify_client.project.collection.ProjectCollection`
         """
         return self._projects
 
@@ -147,7 +147,7 @@ class Client:
         """Collection of all datasets on this Unify instance.
 
         :return: Collection of all datasets.
-        :rtype: :class:`~tamr_unify_client.models.DatasetCollection`
+        :rtype: :class:`~tamr_unify_client.dataset.collection.DatasetCollection`
         """
         return self._datasets
 

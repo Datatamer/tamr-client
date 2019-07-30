@@ -4,7 +4,7 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.project.resource import Project
+from tamr_unify_client.project.resource import Project
 
 
 class TestProject(TestCase):

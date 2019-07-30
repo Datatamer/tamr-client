@@ -4,10 +4,10 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.dataset.resource import Dataset
-from tamr_unify_client.models.dataset.usage import DatasetUsage
-from tamr_unify_client.models.dataset.use import DatasetUse
-from tamr_unify_client.models.project.step import ProjectStep
+from tamr_unify_client.dataset.resource import Dataset
+from tamr_unify_client.dataset.usage import DatasetUsage
+from tamr_unify_client.dataset.use import DatasetUse
+from tamr_unify_client.project.step import ProjectStep
 
 
 class TestUsage(TestCase):
