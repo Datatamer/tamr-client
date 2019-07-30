@@ -4,6 +4,9 @@ from tamr_unify_client.dataset.resource import Dataset
 from tamr_unify_client.project.attribute_configuration.collection import (
     AttributeConfigurationCollection,
 )
+from tamr_unify_client.project.attribute_mapping.collection import (
+    AttributeMappingCollection,
+)
 
 
 class Project(BaseResource):
@@ -124,6 +127,16 @@ class Project(BaseResource):
         """
         alias = self.api_path + "/attributeConfigurations"
         info = AttributeConfigurationCollection(self.client, api_path=alias)
+        return info
+
+    def attribute_mappings(self):
+        """Project's attribute's mappings.
+
+       :returns: The attribute mappings of a project.
+       :rtype: :class:`~tamr_unify_client.project.attribute_mapping.collection.AttributeMappingCollection`
+       """
+        alias = self.api_path + "/attributeMappings"
+        info = AttributeMappingCollection(self.client, alias)
         return info
 
     def __repr__(self):

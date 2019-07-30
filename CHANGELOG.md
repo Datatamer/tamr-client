@@ -22,6 +22,7 @@
   - [#202](https://github.com/Datatamer/unify-client-python/issues/202) Support for refreshing published cluster stats
   - [#194](https://github.com/Datatamer/unify-client-python/issues/194) Allowing additional JSON parameters to be used for update of records
   - [#205](https://github.com/Datatamer/unify-client-python/issues/205) Update a dataset's records with records rather than record updates
+  - [#111](https://github.com/Datatamer/unify-client-python/issues/111) support for schema mapping attributes
   - Delete records from a dataset by providing records rather than record updates
   - [#183](https://github.com/Datatamer/unify-client-python/issues/183) Retrieve versions of published clusters
 
