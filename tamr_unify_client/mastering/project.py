@@ -3,10 +3,10 @@ import json
 from tamr_unify_client.base_model import MachineLearningModel
 from tamr_unify_client.dataset.resource import Dataset
 from tamr_unify_client.mastering.binning_model import BinningModel
-from tamr_unify_client.mastering.cluster_configuration import (
+from tamr_unify_client.mastering.estimated_pair_counts import EstimatedPairCounts
+from tamr_unify_client.mastering.published_cluster.configuration import (
     PublishedClustersConfiguration,
 )
-from tamr_unify_client.mastering.estimated_pair_counts import EstimatedPairCounts
 from tamr_unify_client.mastering.published_cluster.resource import PublishedCluster
 from tamr_unify_client.project.resource import Project
 
@@ -95,7 +95,7 @@ class MasteringProject(Project):
         """Retrieves published clusters configuration for this project.
 
         :returns: The published clusters configuration
-        :rtype: :class:`~tamr_unify_client.mastering.cluster_configuration.PublishedClustersConfiguration`
+        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfiguration`
         """
         alias = self.api_path + "/publishedClustersConfiguration"
         resource_json = self.client.get(alias).successful().json()

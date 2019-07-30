@@ -4,7 +4,7 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.mastering.cluster_configuration import (
+from tamr_unify_client.mastering.published_cluster.configuration import (
     PublishedClustersConfiguration,
 )
 from tamr_unify_client.project.resource import Project
