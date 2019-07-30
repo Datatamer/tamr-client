@@ -1,5 +1,5 @@
-from tamr_unify_client.models.base_collection import BaseCollection
-from tamr_unify_client.models.project.attribute_mapping import AttributeMapping
+from tamr_unify_client.base_collection import BaseCollection
+from tamr_unify_client.project.attribute_mapping import AttributeMapping
 
 
 class AttributeMappingCollection(BaseCollection):

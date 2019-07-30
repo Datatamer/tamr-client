@@ -132,7 +132,7 @@ class Project(BaseResource):
         :rtype :class: `~tamr_unify_client.models.project.attribute_mapping_collection import AttributeMappingCollection`
         """
 
-        from tamr_unify_client.models.project.attribute_mapping_collection import (
+        from tamr_unify_client.project.attribute_mapping_collection import (
             AttributeMappingCollection,
         )
 

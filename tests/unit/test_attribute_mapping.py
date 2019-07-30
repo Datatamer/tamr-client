@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.project.attribute_mapping import AttributeMapping
+from tamr_unify_client.project.attribute_mapping import AttributeMapping
 
 
 class TestAttributeMapping(TestCase):

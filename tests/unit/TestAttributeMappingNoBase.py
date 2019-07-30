@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import responses
 
-from tamr_unify_client.models.project.attributemappingwithoutbase import (
+from tamr_unify_client.project.attributemappingwithoutbase import (
     AttributeMappingNoBase,
 )
 
