@@ -4,9 +4,9 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.operation import Operation
-from tamr_unify_client.models.project.estimated_pair_counts import EstimatedPairCounts
-from tamr_unify_client.models.project.mastering import MasteringProject
+from tamr_unify_client.mastering.estimated_pair_counts import EstimatedPairCounts
+from tamr_unify_client.mastering.project import MasteringProject
+from tamr_unify_client.operation import Operation
 
 
 class TestPairCounts(TestCase):
@@ -53,7 +53,7 @@ class TestPairCounts(TestCase):
         estimate = EstimatedPairCounts.from_json(
             self.unify, self._estimate_json, self._api_path
         )
-        generated = estimate.refresh()
+        generated = estimate.refresh(poll_interval_seconds=0)
 
         created = Operation.from_json(self.unify, updated)
         self.assertEqual(repr(generated), repr(created))

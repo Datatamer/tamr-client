@@ -6,9 +6,9 @@ import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
-from tamr_unify_client.models.category.collection import CategoryCollection
-from tamr_unify_client.models.category.resource import Category
-from tamr_unify_client.models.taxonomy.resource import Taxonomy
+from tamr_unify_client.categorization.category.collection import CategoryCollection
+from tamr_unify_client.categorization.category.resource import Category
+from tamr_unify_client.categorization.taxonomy import Taxonomy
 
 
 class TestTaxonomy(TestCase):
