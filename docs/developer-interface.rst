@@ -48,8 +48,8 @@ Categorization Project
 .. autoclass:: tamr_unify_client.categorization.project.CategorizationProject
   :members:
 
-Categories
-^^^^^^^^^^
+Category
+^^^^^^^^
 
 Category
 """"""""
@@ -151,8 +151,8 @@ Operation
 Project
 -------
 
-Attribute Configurations
-^^^^^^^^^^^^^^^^^^^^^^^^
+Attribute Configuration
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Attribute Configuration
 """""""""""""""""""""""
