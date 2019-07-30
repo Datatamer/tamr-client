@@ -131,8 +131,6 @@ class Project(BaseResource):
         info = AttributeConfigurationCollection(self.client, api_path=alias)
         return info
 
-    def attribute_mapping(self):
-
     def attribute_mappings(self):
         """ Project's attribute's mappings.
         :returns: the mappings of the attributes of a project
