@@ -96,6 +96,12 @@ Dataset Status
 .. autoclass:: tamr_unify_client.dataset.status.DatasetStatus
   :members:
 
+Dataset URI
+^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.dataset.uri.DatasetURI
+  :members:
+
 Dataset Usage
 ^^^^^^^^^^^^^
 
