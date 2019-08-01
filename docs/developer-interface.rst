@@ -135,10 +135,30 @@ Mastering Project
 .. autoclass:: tamr_unify_client.mastering.project.MasteringProject
   :members:
 
-Published Clusters Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Published Cluster
+^^^^^^^^^^^^^^^^^
 
-.. autoclass:: tamr_unify_client.mastering.cluster_configuration.PublishedClustersConfiguration
+Metric
+""""""
+.. autoclass:: tamr_unify_client.mastering.published_cluster.metric.Metric
+  :members:
+
+
+Published Cluster
+"""""""""""""""""
+.. autoclass:: tamr_unify_client.mastering.published_cluster.resource.PublishedCluster
+  :members:
+
+Published Cluster Configuration
+"""""""""""""""""""""""""""""""
+
+.. autoclass:: tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfiguration
+  :members:
+
+Published Cluster Version
+"""""""""""""""""""""""""
+
+.. autoclass:: tamr_unify_client.mastering.published_cluster.version.PublishedClusterVersion
   :members:
 
 Operation
