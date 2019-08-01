@@ -26,6 +26,7 @@
   - Delete records from a dataset by providing records rather than record updates
   - [#183](https://github.com/Datatamer/unify-client-python/issues/183) Retrieve versions of published clusters
   - [#220](https://github.com/Datatamer/unify-client-python/issues/220) Delete all records from a dataset
+  - [#185](https://github.com/Datatamer/unify-client-python/issues/185) Retrieve versions of published clusters for records
 
   **BUG FIXES**
   - [#212](https://github.com/Datatamer/unify-client-python/issues/212) Sped up slow running tests
