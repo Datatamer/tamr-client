@@ -138,6 +138,9 @@ Editor config
 
 Overview of Resource and Collection interaction
 -----------------------------------------------
+  .. image:: https://github.com/Datatamer/unify-client-python/blob/charlottemoremen-contributorguide/docs/resource:collectionRoute.png?sanitize=true
+
+  .. image:: https://github.com/Datatamer/unify-client-python/blob/charlottemoremen-contributorguide/docs/resource:collectionRequest.png?sanitize=true
   
 Step 1 (red): yourCollection’s by_relative_id returns super.by_relative_id, which comes from baseCollection
 
