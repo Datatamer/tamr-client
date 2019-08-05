@@ -52,6 +52,7 @@ autodoc_member_order = "bysource"
 intersphinx_mapping = {
     "https://docs.python.org/": None,
     "requests": ("http://docs.python-requests.org/en/master/", None),
+    "pandas": ("https://pandas.pydata.org/pandas-docs/stable", None),
 }
 
 # Add any paths that contain templates here, relative to this directory.
