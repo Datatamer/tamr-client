@@ -123,6 +123,16 @@ class Dataset(BaseResource):
         updates = ({"action": "DELETE", "recordId": rid} for rid in record_ids)
         return self._update_records(updates)
 
+    def delete_all_records(self):
+        """Removes all records from the dataset.
+
+        :return: HTTP response from the server
+        :rtype: :class:`requests.Response`
+        """
+        path = self.api_path + "/records"
+        response = self.client.delete(path).successful()
+        return response
+
     def refresh(self, **options):
         """Brings dataset up-to-date if needed, taking whatever actions are required.
 

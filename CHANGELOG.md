@@ -25,6 +25,7 @@
   - [#111](https://github.com/Datatamer/unify-client-python/issues/111) support for schema mapping attributes
   - Delete records from a dataset by providing records rather than record updates
   - [#183](https://github.com/Datatamer/unify-client-python/issues/183) Retrieve versions of published clusters
+  - [#220](https://github.com/Datatamer/unify-client-python/issues/220) Delete all records from a dataset
 
   **BUG FIXES**
   - [#212](https://github.com/Datatamer/unify-client-python/issues/212) Sped up slow running tests

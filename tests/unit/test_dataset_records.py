@@ -140,6 +140,15 @@ class TestDatasetRecords(TestCase):
         self.assertEqual(response, self._response_json)
         self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(deletes, False))
 
+    @responses.activate
+    def test_delete_all(self):
+        responses.add(responses.GET, self._dataset_url, json={})
+        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+
+        responses.add(responses.DELETE, self._dataset_url + "/records", status=204)
+        response = dataset.delete_all_records()
+        self.assertEqual(response.status_code, 204)
+
     @staticmethod
     def records_to_deletes(records):
         return [
