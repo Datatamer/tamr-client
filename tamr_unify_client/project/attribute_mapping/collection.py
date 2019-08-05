@@ -33,7 +33,7 @@ class AttributeMappingCollection:
             split_id = mapping.resource_id
             if resource_id == split_id:
                 return mapping
-            raise LookupError("cannot locate mapping from resource ID")
+        raise LookupError("cannot locate mapping from resource ID")
 
     def by_relative_id(self, relative_id):
         """Retrieve an item in this collection by relative ID.
