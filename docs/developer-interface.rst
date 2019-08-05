@@ -186,6 +186,22 @@ Attribute Configuration Collection
 .. autoclass:: tamr_unify_client.project.attribute_configuration.collection.AttributeConfigurationCollection
   :members:
 
+
+Attribute Mapping
+^^^^^^^^^^^^^^^^^
+
+Attribute Mapping
+"""""""""""""""""
+
+.. autoclass:: tamr_unify_client.project.attribute_mapping.resource.AttributeMapping
+  :members:
+
+Attribute Mapping Collection
+""""""""""""""""""""""""""""
+
+.. autoclass:: tamr_unify_client.project.attribute_mapping.collection.AttributeMappingCollection
+  :members:
+
 Project
 ^^^^^^^
 
