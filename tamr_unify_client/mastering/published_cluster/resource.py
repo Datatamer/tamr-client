@@ -5,10 +5,11 @@ from tamr_unify_client.mastering.published_cluster.version import (
 
 class PublishedCluster:
     """A representation of a published cluster in a mastering project with version information.
+    See https://docs.tamr.com/reference#retrieve-published-clusters-given-cluster-ids.
 
     This is not a `BaseResource` because it does not have its own API endpoint.
 
-    :param data: The JSON entity representing this cluster.
+    :param data: The JSON entity representing this :class:`~tamr_unify_client.mastering.published_cluster.resource.PublishedCluster`.
     """
 
     def __init__(self, data):
