@@ -7,6 +7,7 @@ from tamr_unify_client.mastering.estimated_pair_counts import EstimatedPairCount
 from tamr_unify_client.mastering.published_cluster.configuration import (
     PublishedClustersConfiguration,
 )
+from tamr_unify_client.mastering.published_cluster.record import RecordPublishedCluster
 from tamr_unify_client.mastering.published_cluster.resource import PublishedCluster
 from tamr_unify_client.project.resource import Project
 
@@ -139,20 +140,43 @@ class MasteringProject(Project):
 
     def published_cluster_versions(self, cluster_ids):
         """Retrieves version information for the specified published clusters.
+        See https://docs.tamr.com/reference#retrieve-published-clusters-given-cluster-ids.
 
         :param cluster_ids: The persistent IDs of the clusters to get version information for.
-        :type cluster_ids: list[str]
+        :type cluster_ids: iterable[str]
         :return: A stream of the published clusters.
         :rtype: Python generator yielding :class:`~tamr_unify_client.mastering.published_cluster.resource.PublishedCluster`
         """
-        stringified_ids = "\n".join(
-            json.dumps(cluster_id) for cluster_id in cluster_ids
-        )
-        url = self.api_path + "/publishedClusterVersions"
+        path = self.api_path + "/publishedClusterVersions"
+        return self._cluster_versions(PublishedCluster, cluster_ids, path)
 
-        with self.client.post(url, data=stringified_ids, stream=True) as response:
+    def record_published_cluster_versions(self, record_ids):
+        """Retrieves version information for the published clusters of the given records.
+        See https://docs.tamr.com/reference#retrieve-published-clusters-given-record-ids.
+
+        :param record_ids: The Tamr IDs of the records to get cluster version information for.
+        :type record_ids: iterable[str]
+        :return: A stream of the relevant published clusters.
+        :rtype: Python generator yielding :class:`~tamr_unify_client.mastering.published_cluster.record.RecordPublishedCluster`
+        """
+        path = self.api_path + "/recordPublishedClusterVersions"
+        return self._cluster_versions(RecordPublishedCluster, record_ids, path)
+
+    def _cluster_versions(self, cluster_class, ids, endpoint):
+        """Retrieves version information for published clusters.
+
+        :param cluster_class: The class to create instances of.
+        :param ids: The IDs of the clusters or records to get version information for.
+        :type ids: iterable[str]
+        :param endpoint: The endpoint to call for versions.
+        :type endpoint: str
+        :return: A stream of the published clusters.
+        """
+        string_ids = "\n".join(json.dumps(i) for i in ids)
+
+        with self.client.post(endpoint, data=string_ids, stream=True) as response:
             for line in response.iter_lines():
-                yield PublishedCluster(json.loads(line))
+                yield cluster_class(json.loads(line))
 
     def estimate_pairs(self):
         """Returns pair estimate information for a mastering project

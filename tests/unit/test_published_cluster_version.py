@@ -7,6 +7,10 @@ import responses
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client.mastering.published_cluster.metric import Metric
+from tamr_unify_client.mastering.published_cluster.record import RecordPublishedCluster
+from tamr_unify_client.mastering.published_cluster.record_version import (
+    RecordPublishedClusterVersion,
+)
 from tamr_unify_client.mastering.published_cluster.resource import PublishedCluster
 from tamr_unify_client.mastering.published_cluster.version import (
     PublishedClusterVersion,
@@ -36,6 +40,30 @@ class PublishedClusterTest(TestCase):
 
         metrics = [Metric(m) for m in version_json["metrics"]]
         for actual, expected in zip(version.metrics, metrics):
+            self.assertEqual(actual.__repr__(), expected.__repr__())
+
+    def test_record_cluster_version(self):
+        version_json = self._record_versions_json[0]["versions"][0]
+        version = RecordPublishedClusterVersion(version_json)
+
+        self.assertEqual(version.version, version_json["version"])
+        self.assertEqual(version.timestamp, version_json["timestamp"])
+        self.assertEqual(version.cluster_id, version_json["clusterId"])
+
+    def test_record_cluster(self):
+        record_json = self._record_versions_json[0]
+        record = RecordPublishedCluster(record_json)
+        versions = record.versions
+        expected_versions = [
+            RecordPublishedClusterVersion(v) for v in record_json["versions"]
+        ]
+
+        self.assertEqual(record.entity_id, record_json["entityId"])
+        self.assertEqual(record.origin_entity_id, record_json["originEntityId"])
+        self.assertEqual(record.origin_source_id, record_json["originSourceId"])
+        self.assertEqual(record.source_id, record_json["sourceId"])
+        self.assertEqual(len(versions), len(expected_versions))
+        for actual, expected in zip(versions, expected_versions):
             self.assertEqual(actual.__repr__(), expected.__repr__())
 
     def test_cluster(self):
@@ -69,6 +97,33 @@ class PublishedClusterTest(TestCase):
 
         self.assertEqual(
             snoop["payload"], "\n".join([json.dumps(i) for i in self._cluster_ids])
+        )
+        self.assertEqual(len(clusters), len(expected_clusters))
+        for actual, expected in zip(clusters, expected_clusters):
+            self.assertEqual(actual.__repr__(), expected.__repr__())
+            self.assertEqual(len(actual.versions), len(expected.versions))
+
+    @responses.activate
+    def test_get_record_versions(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = request.body
+            return 200, {}, "\n".join(json.dumps(c) for c in self._record_versions_json)
+
+        p = Project.from_json(self.unify, self._project_json).as_mastering()
+        base_url = "http://localhost:9100/api/versioned/v1"
+        post_url = f"{base_url}/{p.api_path}/recordPublishedClusterVersions"
+        snoop = {}
+        responses.add_callback(
+            responses.POST, post_url, partial(create_callback, snoop=snoop)
+        )
+
+        clusters = list(p.record_published_cluster_versions(self._record_ids))
+        expected_clusters = [
+            RecordPublishedCluster(c) for c in self._record_versions_json
+        ]
+
+        self.assertEqual(
+            snoop["payload"], "\n".join([json.dumps(i) for i in self._record_ids])
         )
         self.assertEqual(len(clusters), len(expected_clusters))
         for actual, expected in zip(clusters, expected_clusters):
@@ -176,6 +231,37 @@ class PublishedClusterTest(TestCase):
                             "originEntityId": "63730",
                         }
                     ],
+                }
+            ],
+        },
+    ]
+
+    _record_ids = ["6084737977926081128", "-4650342988873587155"]
+
+    _record_versions_json = [
+        {
+            "entityId": "-4650342988873587155",
+            "sourceId": "mastering_unified_dataset",
+            "originEntityId": "63730",
+            "originSourceId": "Acme_online.csv",
+            "versions": [
+                {
+                    "version": 323,
+                    "timestamp": "2019-07-17T15:48:40.170Z",
+                    "clusterId": "ca68d64b-755e-32b7-a785-5f9b1f51e420",
+                }
+            ],
+        },
+        {
+            "entityId": "6084737977926081128",
+            "sourceId": "mastering_unified_dataset",
+            "originEntityId": "82049",
+            "originSourceId": "Acme_online.csv",
+            "versions": [
+                {
+                    "version": 323,
+                    "timestamp": "2019-07-17T15:48:40.170Z",
+                    "clusterId": "055908e7-2144-3f46-ba21-4c2e58816228",
                 }
             ],
         },

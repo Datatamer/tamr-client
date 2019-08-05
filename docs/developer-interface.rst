@@ -161,6 +161,18 @@ Published Cluster Version
 .. autoclass:: tamr_unify_client.mastering.published_cluster.version.PublishedClusterVersion
   :members:
 
+Record Published Cluster
+""""""""""""""""""""""""
+
+.. autoclass:: tamr_unify_client.mastering.published_cluster.record.RecordPublishedCluster
+  :members:
+
+Record Published Cluster Version
+""""""""""""""""""""""""""""""""
+
+.. autoclass:: tamr_unify_client.mastering.published_cluster.record_version.RecordPublishedClusterVersion
+  :members:
+
 Operation
 ---------
 
