@@ -1,4 +1,7 @@
 ## 0.9.0-dev
+  **NEW FEATURES**
+  - [#226](https://github.com/Datatamer/unify-client-python/issues/226) Update published cluster configuration
+
   **BUG FIXES**
    - [#235](https://github.com/Datatamer/unify-client-python/issues/235) Making `AttributeCollection` retrieve attributes directly instead of by streaming
 

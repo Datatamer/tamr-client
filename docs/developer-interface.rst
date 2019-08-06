@@ -161,6 +161,12 @@ Published Cluster Configuration
 .. autoclass:: tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfiguration
   :members:
 
+Published Cluster Configuration Builder
+"""""""""""""""""""""""""""""""""""""""
+
+.. autoclass:: tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfigurationBuilder
+  :members:
+
 Published Cluster Version
 """""""""""""""""""""""""
 
