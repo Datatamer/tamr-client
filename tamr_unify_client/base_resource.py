@@ -32,3 +32,12 @@ class BaseResource(AbstractBaseClass):
         if rid is None:
             return None
         return rid.split("/")[-1]
+
+    def delete(self):
+        """Deletes this resource. Some resources do not support deletion, and will raise a 405 error if this is called.
+
+        :return: HTTP response from the server
+        :rtype: :class:`requests.Response`
+        """
+        response = self.client.delete(self.api_path).successful()
+        return response
