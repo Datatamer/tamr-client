@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from requests import HTTPError
 import responses
 
 from tamr_unify_client import Client
@@ -57,6 +58,17 @@ class PublishedClusterTest(TestCase):
         self.assertEqual(
             config.versions_time_to_live, self._config_json["versionsTimeToLive"]
         )
+
+    @responses.activate
+    def test_delete_published_clusters_configuration(self):
+        path = "projects/1/publishedClustersConfiguration"
+        config_url = f"{self._base_url}/{path}"
+        responses.add(responses.GET, config_url, json=self._config_json)
+        responses.add(responses.DELETE, config_url, status=405)
+
+        p = Project(self.unify, self._project_config_json).as_mastering()
+        config = p.published_clusters_configuration()
+        self.assertRaises(HTTPError, config.delete)
 
     @responses.activate
     def test_refresh_ids(self):

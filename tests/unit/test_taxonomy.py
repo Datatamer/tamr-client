@@ -2,6 +2,7 @@ from functools import partial
 import json
 from unittest import TestCase
 
+from requests import HTTPError
 import responses
 
 from tamr_unify_client import Client
@@ -9,6 +10,7 @@ from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client.categorization.category.collection import CategoryCollection
 from tamr_unify_client.categorization.category.resource import Category
 from tamr_unify_client.categorization.taxonomy import Taxonomy
+from tamr_unify_client.project.resource import Project
 
 
 class TestTaxonomy(TestCase):
@@ -97,6 +99,38 @@ class TestTaxonomy(TestCase):
         for line in snoop_dict["payload"].split(b"\n"):
             sent.append(json.loads(line))
         self.assertEqual(sent, creation_specs)
+
+    @responses.activate
+    def test_delete(self):
+        url = "http://localhost:9100/api/versioned/v1/projects/1/taxonomy"
+        responses.add(responses.GET, url, json=self._taxonomy_json)
+        responses.add(responses.DELETE, url, status=204)
+        responses.add(responses.GET, url, status=404)
+
+        project = Project(
+            self.unify, {"type": "CATEGORIZATION"}, "projects/1"
+        ).as_categorization()
+        taxonomy = project.taxonomy()
+        self.assertEqual(taxonomy._data, self._taxonomy_json)
+
+        response = taxonomy.delete()
+        self.assertEqual(response.status_code, 204)
+        self.assertRaises(HTTPError, project.taxonomy)
+
+    @responses.activate
+    def test_delete_category(self):
+        url = "http://localhost:9100/api/versioned/v1/projects/1/taxonomy/categories/1"
+        responses.add(responses.GET, url, json=self._categories_json[0])
+        responses.add(responses.DELETE, url, status=204)
+        responses.add(responses.GET, url, status=404)
+
+        categories = CategoryCollection(self.unify, "projects/1/taxonomy/categories")
+        category = categories.by_resource_id("1")
+        self.assertEqual(category._data, self._categories_json[0])
+
+        response = category.delete()
+        self.assertEqual(response.status_code, 204)
+        self.assertRaises(HTTPError, lambda: categories.by_resource_id("1"))
 
     _taxonomy_json = {
         "id": "unify://unified-data/v1/projects/1/taxonomy",
