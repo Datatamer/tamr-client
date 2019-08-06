@@ -56,6 +56,12 @@ class TestProject(TestCase):
         project = self.unify.projects.by_external_id(self.project_external_id)
         attributes = list(project.attributes)
         self.assertEqual(len(self.project_attributes_json), len(attributes))
+
+        responses.add(
+            responses.GET,
+            self.project_attributes_url + "/id",
+            json=self.project_attributes_json[0],
+        )
         id_attribute = project.attributes.by_name("id")
         self.assertEqual(self.project_attributes_json[0]["name"], id_attribute.name)
 

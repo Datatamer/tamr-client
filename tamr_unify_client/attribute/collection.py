@@ -23,7 +23,7 @@ class AttributeCollection(BaseCollection):
         :returns: The specified attribute.
         :rtype: :class:`~tamr_unify_client.attribute.resource.Attribute`
         """
-        return self.by_name(resource_id)
+        return super().by_resource_id(self.api_path, resource_id)
 
     def by_relative_id(self, relative_id):
         """Retrieve an attribute by relative ID.
@@ -33,8 +33,7 @@ class AttributeCollection(BaseCollection):
         :returns: The specified attribute.
         :rtype: :class:`~tamr_unify_client.attribute.resource.Attribute`
         """
-        resource_id = relative_id.split("/")[-1]
-        return self.by_resource_id(resource_id)
+        return super().by_relative_id(Attribute, relative_id)
 
     def by_external_id(self, external_id):
         """Retrieve an attribute by external ID.
@@ -76,12 +75,8 @@ class AttributeCollection(BaseCollection):
         :type attribute_name: str
         :return: Attribute with matching name in this collection.
         :rtype: :class:`~tamr_unify_client.attribute.resource.Attribute`
-        :raises KeyError: If no attribute with specified name was found.
         """
-        for attribute in self:
-            if attribute.name == attribute_name:
-                return attribute
-        raise KeyError(f"No attribute found with name: {attribute_name}")
+        return super().by_resource_id(self.api_path, attribute_name)
 
     def create(self, creation_spec):
         """

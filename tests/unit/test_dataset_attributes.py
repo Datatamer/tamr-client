@@ -26,7 +26,9 @@ def test_dataset_attributes():
         status=204,
     )
     responses.add(
-        responses.GET, dataset_url + "/attributes", json=[attribute_creation_spec]
+        responses.GET,
+        dataset_url + "/attributes/myAttribute",
+        json=attribute_creation_spec,
     )
 
     dataset = unify.datasets.by_resource_id("1")
