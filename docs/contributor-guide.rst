@@ -136,21 +136,21 @@ Editor config
 - `python-black <https://atom.io/packages/python-black>`_
 - `linter-flake8 <https://atom.io/packages/linter-flake8>`_
 
-Overview of Resource and Collection interaction
+Overview of Resource and Collection interaction (from_json and from_data confusion) 
 -----------------------------------------------
-  .. image:: https://github.com/Datatamer/unify-client-python/blob/charlottemoremen-contributorguide/docs/resource:collectionRoute.png?sanitize=true
+  .. image:: docs/resource:collectionRoute.png
 
-  .. image:: https://github.com/Datatamer/unify-client-python/blob/charlottemoremen-contributorguide/docs/resource:collectionRequest.png?sanitize=true
+  .. image:: docs/resource:collectionRequest.png
   
-Step 1 (red): yourCollection’s by_relative_id returns super.by_relative_id, which comes from baseCollection
+Step 1 (red): `yourCollection`’s `by_relative_id` returns `super.by_relative_id`, which comes from `baseCollection`
 
-Step 1a (black):within by_relative_id, variable resource_json is defined as self.client.get. [etc] client’s .get returns self.request 
+Step 1a (black):within `by_relative_id`, variable `resource_json` is defined as `self.client.get. [etc]` `client`’s `.get` returns `self.request` 
 
-Step 1b (black): client’s .request makes the actual request to the provided URL (this is what is really fetching our data) 
+Step 1b (black): `client`’s `.request` makes the actual request to the provided URL (this is what is really fetching our data) 
 
-Step 2 (orange): baseColleciton’s by_relative_id returns resource_class.from_json, which is the from_json we define in yourResource
+Step 2 (orange): `baseColleciton`’s `by_relative_id` returns `resource_class.from_json`, which is the `from_json` we define in `yourResource`
 
-Step 3 (yellow): yourResource’s from_json returns super.from_data , which comes from baseResource
+Step 3 (yellow): `yourResource`’s `from_json` returns `super.from_data`, which comes from `baseResource`
 
-Step 4 (green): baseResource’s from data returns cls-- aka, one of the parameters we put in when we called from_data-- this parameter was as a yourResource, because in from_json, we clarified that the return type was a yourResource. So when we return cls, we’re returning a yourResource that has been filled with the data we retrieved in client’s def request. 
+Step 4 (green): `baseResource`’s `from_data` returns `cls` -- one of the parameters we put in when we called `from_data` . This parameter was a `yourResource`, because in `from_json`, we clarified that the return type was a `yourResource`. So when we return `cls`, we’re returning a `yourResource` that has been filled with the data we retrieved in `client`’s `request`. 
 
