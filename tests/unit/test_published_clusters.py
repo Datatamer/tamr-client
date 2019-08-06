@@ -1,3 +1,5 @@
+from functools import partial
+import json
 from unittest import TestCase
 
 import responses
@@ -6,6 +8,7 @@ from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client.mastering.published_cluster.configuration import (
     PublishedClustersConfiguration,
+    PublishedClustersConfigurationBuilder,
 )
 from tamr_unify_client.project.resource import Project
 
@@ -96,6 +99,38 @@ class PublishedClusterTest(TestCase):
         self.assertEqual(op.resource_id, self._operations_json["id"])
         self.assertTrue(op.succeeded())
 
+    @responses.activate
+    def test_configuration_builder(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = request.body
+            return 200, {}, json.dumps(self._updated_config_json)
+
+        path = "projects/1/publishedClustersConfiguration"
+        config_url = f"{self._base_url}/{path}"
+        snoop_dict = {}
+        responses.add(responses.GET, config_url, json=self._config_json)
+        responses.add_callback(
+            responses.PUT, config_url, partial(create_callback, snoop=snoop_dict)
+        )
+        project = Project(self.unify, self._project_config_json).as_mastering()
+        config = project.published_clusters_configuration()
+
+        new_config = (
+            PublishedClustersConfigurationBuilder(config)
+            .with_versions_time_to_live(self._updated_config_json["versionsTimeToLive"])
+            .put()
+        )
+        self.assertEqual(
+            new_config.versions_time_to_live,
+            self._updated_config_json["versionsTimeToLive"],
+        )
+
+        self.assertEqual(json.loads(snoop_dict["payload"]), self._updated_config_json)
+
+        self.assertEqual(
+            config.versions_time_to_live, self._config_json["versionsTimeToLive"]
+        )
+
     _base_url = "http://localhost:9100/api/versioned/v1"
 
     _project_config_json = {
@@ -107,6 +142,8 @@ class PublishedClusterTest(TestCase):
         "relativeId": "projects/1",
         "externalId": "32b99cab-e01b-41e7-a29d-509165242c6f",
     }
+
+    _updated_config_json = {"versionsTimeToLive": "P6D"}
 
     _unified_dataset_json = {
         "id": "unify://unified-data/v1/datasets/8",
