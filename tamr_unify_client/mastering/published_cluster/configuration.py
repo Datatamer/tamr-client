@@ -1,3 +1,5 @@
+import copy
+
 from tamr_unify_client.base_resource import BaseResource
 
 
@@ -41,4 +43,47 @@ class PublishedClustersConfiguration(BaseResource):
             f"{self.__class__.__qualname__}("
             f"relative_id={self.relative_id!r}, "
             f"versions_time_to_live={self.versions_time_to_live!r})"
+        )
+
+
+class PublishedClustersConfigurationBuilder:
+    """A builder object to modify an existing published cluster configuration.
+
+    :param cluster_configuration: The cluster configuration to modify.
+    :type cluster_configuration: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfiguration`
+    """
+
+    def __init__(self, cluster_configuration):
+        self._data = copy.deepcopy(cluster_configuration._data)
+        self.client = cluster_configuration.client
+        self.api_path = cluster_configuration.api_path
+
+    def with_versions_time_to_live(self, new_versions_time_to_live):
+        """Modifies the configuration's versions time to live.
+
+        :param new_versions_time_to_live: The new versions time to live.
+        :type new_versions_time_to_live: str
+        :return: The updated builder.
+        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfigurationBuilder`
+        """
+        self._data["versionsTimeToLive"] = new_versions_time_to_live
+        return self
+
+    def put(self):
+        """Uploads the new configuration to Unify.
+
+        :return: The updated published cluster configuration.
+        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfiguration`
+        """
+        new_data = self.client.put(self.api_path, json=self._data).successful().json()
+        return PublishedClustersConfiguration.from_json(
+            self.client, new_data, self.api_path
+        )
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"relative_id={self.api_path!r}, "
+            f"versions_time_to_live={self._data['versionsTimeToLive']})"
         )
