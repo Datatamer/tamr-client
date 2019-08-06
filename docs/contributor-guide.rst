@@ -138,9 +138,9 @@ Editor config
 
 Overview of Resource and Collection interaction (from_json and from_data confusion) 
 -----------------------------------------------
-  .. image:: docs/resource:collectionRoute.png
+![diagram 1](/docs/resource:collectionRoute.png)
 
-  .. image:: docs/resource:collectionRequest.png
+![diagram 2](docs/resource:collectionRequest.png)
   
 Step 1 (red): `yourCollection`’s `by_relative_id` returns `super.by_relative_id`, which comes from `baseCollection`
 
@@ -148,7 +148,7 @@ Step 1a (black):within `by_relative_id`, variable `resource_json` is defined as 
 
 Step 1b (black): `client`’s `.request` makes the actual request to the provided URL (this is what is really fetching our data) 
 
-Step 2 (orange): `baseColleciton`’s `by_relative_id` returns `resource_class.from_json`, which is the `from_json` we define in `yourResource`
+Step 2 (orange): `baseCollection`’s `by_relative_id` returns `resource_class.from_json`, which is the `from_json` we define in `yourResource`
 
 Step 3 (yellow): `yourResource`’s `from_json` returns `super.from_data`, which comes from `baseResource`
 
