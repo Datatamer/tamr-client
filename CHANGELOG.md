@@ -1,6 +1,9 @@
 ## 0.9.0-dev
+  **NEW FEATURES**
+  - [#218](https://github.com/Datatamer/unify-client-python/issues/218) Delete a `BaseResource`
+
   **BUG FIXES**
-   - [#235](https://github.com/Datatamer/unify-client-python/issues/235) Making `AttributeCollection` retrieve attributes directly instead of by streaming
+  - [#235](https://github.com/Datatamer/unify-client-python/issues/235) Making `AttributeCollection` retrieve attributes directly instead of by streaming
 
 ## 0.8.0
   **BREAKING CHANGES**
