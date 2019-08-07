@@ -56,7 +56,7 @@ via the ``by_resource_id`` methods exposed by collections.
 
 E.g. To fetch the project with ID ``'1'``::
 
-  project = unify.projects.by_resoure_id('1')
+  project = unify.projects.by_resource_id('1')
 
 Resource relationships
 ----------------------
