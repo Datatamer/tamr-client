@@ -1,5 +1,3 @@
-## 0.9.0-dev
-
 ## 0.8.0
   **BREAKING CHANGES**
   - [#175](https://github.com/Datatamer/unify-client-python/issues/175) `AttributeCollection` no longer has a `from_json` method or a `data` parameter in its constructor
