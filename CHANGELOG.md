@@ -1,6 +1,7 @@
 ## 0.9.0-dev
   **NEW FEATURES**
   - [#218](https://github.com/Datatamer/unify-client-python/issues/218) Delete a `BaseResource`
+  - [#233](https://github.com/Datatamer/unify-client-python/issues/233) Remove an input dataset from a project
 
   **BUG FIXES**
   - [#235](https://github.com/Datatamer/unify-client-python/issues/235) Making `AttributeCollection` retrieve attributes directly instead of by streaming
