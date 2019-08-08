@@ -24,11 +24,16 @@ On the [Datatamer/unify-client-python](https://github.com/Datatamer/unify-client
 
 Then, create a branch on Github within the [Datatamer/unify-client-python](https://github.com/Datatamer/unify-client-python) repo titled `release-<version>` e.g. `release-0.3.0`.
 
+Create a branch locally with the following commands:
+1. `git fetch Datatamer` (this will pull down the release branch you created on Github)
+2. `git checkout Datatamer/release-0.3.0` (this will get you on the release branch)
+3. `git checkout -b release-0.3.0` (creating a branch for you to make the ensuing edits in step 3)
+
 NOTE: This release branch should *not* contain the version bump changes from Step 1.
 
 # 3. Remove `-dev` suffix on release branch
 
-Create a PR *to the release branch* with the following changes:
+Create a PR *to the release branch* (`Datatamer/release-0.3.0`) *from your release branch* (`my-github-username/release-0.3.0`)with the following changes:
 - `pyproject.toml`: Remove `-dev` suffix from version e.g. `0.3.0-dev` -> `0.3.0`.
 - `CHANGELOG.md`: Remove the `-dev` suffix from the version being released e.g. `# 0.3.0-dev` -> `# 0.3.0`.
 
@@ -43,7 +48,7 @@ Title the release with the release version. Do not include anything else in the 
 - Incorrect: `v0.3.0`
 - Incorrect: `Release 0.3.0`
 
-Select the corresponding release branch in the `Target` branch dropdown.
+**Select the corresponding release branch in the** `Target` **branch dropdown.**
 
 Copy/paste the `CHANGELOG.md` entries for this release into the description for the release (only the entries, not the header since the version number is already encoded as the title for this release).
 
