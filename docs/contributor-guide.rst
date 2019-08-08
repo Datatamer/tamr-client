@@ -135,3 +135,24 @@ Editor config
 
 - `python-black <https://atom.io/packages/python-black>`_
 - `linter-flake8 <https://atom.io/packages/linter-flake8>`_
+
+Overview of Resource and Collection interaction (from_json and from_data confusion)
+-----------------------------------------------------------------------------------
+
+`yourResource` and `yourCollection` are files that inherit from `baseResource` and `baseCollection`. Examples of such files would be `resource.py` and `collection.py` in the `attribute_configuration` folder under `project`.
+
+.. image:: resource:collectionRoute.png
+.. image:: resource:collectionRequest.png
+**Step 1 (red)**: `yourCollection`’s `by_relative_id` returns `super.by_relative_id`, which comes from `baseCollection`
+
+**Step 1a (black)**: within `by_relative_id`, variable `resource_json` is defined as `self.client.get.[etc]`. `Client`’s `.get` returns `self.request`
+
+**Step 1b (black)**: `client`’s `.request` makes a request to the provided URL (this is the method actually fetching the data)
+
+**Step 2 (orange)**: `baseCollection`’s `by_relative_id` returns `resource_class.from_json`, which is the `from_json` defined in `yourResource`
+
+**Step 3 (yellow)**: `yourResource`’s `from_json` returns `super.from_data`, which comes from `baseResource`
+
+**Step 4 (green)**: `baseResource`’s `from_data` returns `cls` , one of the parameters entered for `from_data`.
+`cls` is a `yourResource`, because in `from_json` the return type is specified to be a `yourResource`.
+When `cls` is returned, a `yourResource` that has been filled with the data retrieved in `client`’s `.request` is what comes back.
