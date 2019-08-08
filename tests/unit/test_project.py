@@ -34,6 +34,25 @@ class TestProject(TestCase):
         self.assertEqual(self.dataset_json, input_datasets)
 
     @responses.activate
+    def test_project_remove_input_dataset(self):
+        dataset_id = self.dataset_json[0]["relativeId"]
+
+        responses.add(responses.GET, self.input_datasets_url, json=self.dataset_json)
+        responses.add(
+            responses.DELETE, f"{self.input_datasets_url}?id={dataset_id}", status=204
+        )
+        responses.add(responses.GET, self.input_datasets_url, json=[])
+
+        project = Project(self.unify, self.project_json[0])
+        dataset = next(project.input_datasets().stream())
+
+        response = project.remove_input_dataset(dataset)
+        self.assertEqual(response.status_code, 204)
+
+        input_datasets = project.input_datasets()
+        self.assertEqual(list(input_datasets), [])
+
+    @responses.activate
     def test_project_by_external_id__raises_when_not_found(self):
         responses.add(responses.GET, self.projects_url, json=[])
         with self.assertRaises(KeyError):

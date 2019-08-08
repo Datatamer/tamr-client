@@ -5,8 +5,10 @@ class AttributeMapping:
     (ex: /projects/1/attributeMappings/1), but these types of URLs do not exist for attribute mappings
     """
 
-    def __init__(self, data):
+    def __init__(self, client, data, alias=None):
         self._data = data
+        self.client = client
+        self.api_path = alias or self.relative_id
 
     @property
     def id(self):
@@ -63,6 +65,15 @@ class AttributeMapping:
         """:type: str"""
         spliced = self.relative_id.split("attributeMappings/")[1]
         return spliced
+
+    def delete(self):
+        """deletes a specified attribute mapping.
+
+        :return: :class `requests.response`
+        :rtype: status code
+        """
+        response = self.client.delete(self.api_path).successful()
+        return response
 
     def __repr__(self):
         return (

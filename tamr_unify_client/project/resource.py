@@ -110,6 +110,20 @@ class Project(BaseResource):
         ).successful()
         return response
 
+    def remove_input_dataset(self, dataset):
+        """Remove a dataset from a project.
+
+        :param dataset: The dataset to be removed from this project.
+        :type dataset: :class:`~tamr_unify_client.dataset.resource.Dataset`
+        :return: HTTP response from the server
+        :rtype: :class:`requests.Response`
+        """
+        params = {"id": dataset.relative_id}
+        response = self.client.delete(
+            self.api_path + "/inputDatasets", params=params
+        ).successful()
+        return response
+
     def input_datasets(self):
         """Retrieve a collection of this project's input datasets.
 

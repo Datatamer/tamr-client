@@ -1,11 +1,19 @@
 from unittest import TestCase
 
+import responses
+
+from tamr_unify_client import Client
+from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client.project.attribute_mapping.resource import AttributeMapping
 
 
 class TestAttributeMapping(TestCase):
+    def setUp(self):
+        auth = UsernamePasswordAuth("username", "password")
+        self.unify = Client(auth)
+
     def test_resource(self):
-        test = AttributeMapping(self.mappings_json)
+        test = AttributeMapping(self.unify, self.mappings_json)
 
         expected = self.mappings_json["relativeId"]
         self.assertEqual(expected, test.relative_id)
@@ -36,6 +44,14 @@ class TestAttributeMapping(TestCase):
 
         expected = self.mappings_json["unifiedAttributeName"]
         self.assertEqual(expected, test.unified_attribute_name)
+
+    @responses.activate
+    def test_delete(self):
+        specific_url = "http://localhost:9100/api/versioned/v1/projects/4/attributeMappings/19629-12"
+        responses.add(responses.DELETE, specific_url, status=204)
+        delete_map = AttributeMapping(self.unify, self.mappings_json)
+        final_response = delete_map.delete()
+        self.assertEqual(final_response.status_code, 204)
 
     mappings_json = {
         "id": "unify://unified-data/v1/projects/4/attributeMappings/19629-12",
