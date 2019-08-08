@@ -1,10 +1,12 @@
 from unittest import TestCase
 
+from requests import HTTPError
 import responses
 
 from tamr_unify_client import Client
 from tamr_unify_client.attribute.resource import Attribute
 from tamr_unify_client.auth import UsernamePasswordAuth
+from tamr_unify_client.dataset.resource import Dataset
 
 
 class TestAttribute(TestCase):
@@ -71,6 +73,23 @@ class TestAttribute(TestCase):
         self.assertEqual(2, len(attributes))
         alias = "datasets/1/attributes/RowNum"
         self.assertEqual(alias, attributes[0].relative_id)
+
+    @responses.activate
+    def test_delete_attribute(self):
+        url = f"http://localhost:9100/api/versioned/v1/datasets/1/attributes/RowNum"
+        responses.add(responses.GET, url, json=self._attributes_json[0])
+        responses.add(responses.DELETE, url, status=204)
+        responses.add(responses.GET, url, status=404)
+
+        dataset = Dataset(self.unify, self._dataset_json)
+        attribute = dataset.attributes.by_resource_id("RowNum")
+        self.assertEqual(attribute._data, self._attributes_json[0])
+
+        response = attribute.delete()
+        self.assertEqual(response.status_code, 204)
+        self.assertRaises(
+            HTTPError, lambda: dataset.attributes.by_resource_id("RowNum")
+        )
 
     _dataset_json = {
         "id": "unify://unified-data/v1/datasets/1",
