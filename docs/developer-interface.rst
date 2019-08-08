@@ -83,6 +83,8 @@ Dataset Collection
 
 .. autoclass:: tamr_unify_client.dataset.collection.DatasetCollection
   :members:
+.. autoclass:: tamr_unify_client.dataset.collection.CreationError
+  :members:
 
 Dataset Profile
 ^^^^^^^^^^^^^^^
