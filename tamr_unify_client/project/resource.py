@@ -1,3 +1,5 @@
+import copy
+
 from tamr_unify_client.base_resource import BaseResource
 from tamr_unify_client.dataset.collection import DatasetCollection
 from tamr_unify_client.dataset.resource import Dataset
@@ -160,4 +162,71 @@ class Project(BaseResource):
             f"relative_id={self.relative_id!r}, "
             f"name={self.name!r}, "
             f"type={self.type!r})"
+        )
+
+
+class ProjectBuilder:
+    """A builder object to modify an existing project.
+
+    :param project: The project to modify.
+    :type project: :class:`~tamr_unify_client.project.resource.Project`
+    """
+
+    def __init__(self, project):
+        self._data = copy.deepcopy(project._data)
+        self.client = project.client
+        self.api_path = project.api_path
+
+    def with_name(self, new_name):
+        """Modifies the project's name.
+
+        :param new_name: The updated name.
+        :type new_name: str
+        :return: This project builder.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectBuilder`
+        """
+        self._data["name"] = new_name
+        return self
+
+    def with_description(self, new_description):
+        """Modifies the project's description.
+
+        :param new_description: The updated description.
+        :type new_description: str
+        :return: This project builder.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectBuilder`
+        """
+        self._data["description"] = new_description
+        return self
+
+    def with_external_id(self, new_external_id):
+        """Modifies the project's external ID.
+
+        :param new_external_id: The updated external ID.
+        :type new_external_id: str
+        :return: This project builder.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectBuilder`
+        """
+        self._data["externalId"] = new_external_id
+        return self
+
+    def put(self):
+        """Commits these changes by updating the project in Unify.
+
+        :return: The updated project.
+        :rtype: :class:`~tamr_unify_client.project.resource.Project`
+        """
+        updated_json = (
+            self.client.put(self.api_path, json=self._data).successful().json()
+        )
+        return Project.from_json(self.client, updated_json, self.api_path)
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"relative_id={self._data['relativeId']!r}, "
+            f"name={self._data['name']!r}, "
+            f"external_id={self._data['externalId']!r}, "
+            f"description={self._data['description']!r})"
         )
