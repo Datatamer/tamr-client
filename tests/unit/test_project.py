@@ -1,3 +1,5 @@
+from functools import partial
+import json
 from unittest import TestCase
 
 import responses
@@ -5,6 +7,7 @@ import responses
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client.project.resource import Project
+from tamr_unify_client.project.resource import ProjectBuilder
 
 
 class TestProject(TestCase):
@@ -129,6 +132,40 @@ class TestProject(TestCase):
             attribute_mappings.by_resource_id("19689-14").unified_dataset_name,
             self.mappings_json[0]["unifiedDatasetName"],
         )
+
+    @responses.activate
+    def test_update_project(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = request.body
+            return 200, {}, json.dumps(self._updated_project_json)
+
+        project_url = "http://localhost:9100/api/versioned/v1/projects/1"
+        snoop_dict = {}
+        responses.add_callback(
+            responses.PUT, project_url, partial(create_callback, snoop=snoop_dict)
+        )
+        project = Project(self.unify, self.project_json[0])
+
+        new_project = (
+            ProjectBuilder(project)
+            .with_name(self._updated_project_json["name"])
+            .with_description(self._updated_project_json["description"])
+            .with_external_id(self._updated_project_json["externalId"])
+            .put()
+        )
+        self.assertEqual(new_project.name, self._updated_project_json["name"])
+        self.assertEqual(
+            new_project.description, self._updated_project_json["description"]
+        )
+        self.assertEqual(
+            new_project.external_id, self._updated_project_json["externalId"]
+        )
+
+        self.assertEqual(json.loads(snoop_dict["payload"]), self._updated_project_json)
+
+        self.assertEqual(project.name, self.project_json[0]["name"])
+        self.assertEqual(project.description, self.project_json[0]["description"])
+        self.assertEqual(project.external_id, self.project_json[0]["externalId"])
 
     dataset_external_id = "1"
     datasets_url = f"http://localhost:9100/api/versioned/v1/datasets?filter=externalId=={dataset_external_id}"
@@ -438,3 +475,22 @@ class TestProject(TestCase):
             "unifiedAttributeName": "given_name",
         },
     ]
+    _updated_project_json = {
+        "id": "unify://unified-data/v1/projects/1",
+        "externalId": "new external ID",
+        "name": "Renamed!",
+        "description": "project 1 description is more descriptive",
+        "type": "DEDUP",
+        "unifiedDatasetName": "project 1 unified dataset",
+        "created": {
+            "username": "admin",
+            "time": "2018-09-10T16:06:20.636Z",
+            "version": "project 1 created version",
+        },
+        "lastModified": {
+            "username": "admin",
+            "time": "2018-09-10T16:06:20.851Z",
+            "version": "project 1 modified version",
+        },
+        "relativeId": "projects/1",
+    }
