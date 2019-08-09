@@ -246,6 +246,12 @@ Project
 .. autoclass:: tamr_unify_client.project.resource.Project
   :members:
 
+Project Spec
+^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.project.resource.ProjectSpec
+  :members:
+
 Project Collection
 ^^^^^^^^^^^^^^^^^^
 
