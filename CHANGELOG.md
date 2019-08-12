@@ -9,6 +9,7 @@
   - [#224](https://github.com/Datatamer/unify-client-python/issues/224) Project spec to update a project
   - [#275](https://github.com/Datatamer/unify-client-python/issues/275) Create a category with a category spec
   - [#273](https://github.com/Datatamer/unify-client-python/issues/273) Attribute type spec to allow for attribute creation
+  - [#219](https://github.com/Datatamer/tamr-client/issues/219) Delete a resource from collection.
 
   **BUG FIXES**
   - [#235](https://github.com/Datatamer/unify-client-python/issues/235) Making `AttributeCollection` retrieve attributes directly instead of by streaming
