@@ -104,6 +104,22 @@ class TestAttributeConfigurationCollection(TestCase):
             stream_content.append(char._data)
         self.assertEqual(self.acc_json, stream_content)
 
+    @responses.activate
+    def test_delete_by_resource_id(self):
+        attr_config_url = self._base + "projects/1/attributeConfigurations/20"
+
+        responses.add(responses.GET, self.mastering_project, json=self.project_json)
+        responses.add(responses.DELETE, attr_config_url, status=204)
+
+        attr_config_collection = self.tamr.projects.by_resource_id(
+            "1"
+        ).attribute_configurations()
+        response = attr_config_collection.delete_by_resource_id("20")
+        self.assertEqual(response.status_code, 204)
+
+    _base = "http://localhost:9100/api/versioned/v1/"
+    mastering_project = _base + "projects/1"
+
     create_json = {
         "similarityFunction": "ABSOLUTE_DIFF",
         "enabledForMl": False,
