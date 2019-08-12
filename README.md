@@ -1,5 +1,5 @@
 # Python Client
-Programmatically 💻 interact with Tamr Unify using Python 🐍
+Programmatically 💻 interact with Tamr using Python 🐍
 
 [![Version](https://img.shields.io/pypi/v/tamr-unify-client.svg?style=flat-square)](https://pypi.org/project/tamr-unify-client/)
 [![Documentation Status](https://readthedocs.org/projects/tamr-client/badge/?version=stable&style=flat-square)](https://tamr-client.readthedocs.io/en/stable/?badge=stable)
@@ -11,11 +11,11 @@ Programmatically 💻 interact with Tamr Unify using Python 🐍
 ---
 
 *Quick links:*
-**[Docs](https://tamr-unify-python-client.readthedocs.io/en/stable/)** |
-**[Contributing](https://tamr-unify-python-client.readthedocs.io/en/stable/contributor-guide.html)** |
-**[Code of Conduct](https://github.com/Datatamer/unify-client-python/blob/master/CODE_OF_CONDUCT.md)** |
-**[Change Log](https://github.com/Datatamer/unify-client-python/blob/master/CHANGELOG.md)** |
-**[License](https://github.com/Datatamer/unify-client-python/blob/master/LICENSE)**
+**[Docs](https://tamr-client.readthedocs.io/en/stable/)** |
+**[Contributing](https://tamr-client.readthedocs.io/en/stable/contributor-guide.html)** |
+**[Code of Conduct](https://github.com/Datatamer/tamr-client/blob/master/CODE_OF_CONDUCT.md)** |
+**[Change Log](https://github.com/Datatamer/tamr-client/blob/master/CHANGELOG.md)** |
+**[License](https://github.com/Datatamer/tamr-client/blob/master/LICENSE)**
 
 ---
 
@@ -32,9 +32,9 @@ pip install tamr-unify-client
   - Continuous Categorization
 - 🚀 Kick-off synchronous/asynchronous operations
   - Refresh datasets in your pipeline
-  - Train Tamr Unify's machine learning models
+  - Train Tamr's machine learning models
   - Generate predictions from trained models
-- 🔒 Authenticate with Tamr Unify
+- 🔒 Authenticate with Tamr
 - 📥 Fetch resources (e.g projects) by resource ID (e.g. `"1"`)
 - 📝 Read resource metadata
 - 🔁 Iterate over collections
