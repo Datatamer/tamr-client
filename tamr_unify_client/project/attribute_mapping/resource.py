@@ -69,7 +69,7 @@ class AttributeMapping:
     def delete(self):
         """deletes a specified attribute mapping.
         :return: status code
-        :rtype: :class `Requests.response`
+        :rtype: :class `requests.Response`
         """
         response = self.client.delete(self.api_path).successful()
         return response

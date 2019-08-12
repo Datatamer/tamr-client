@@ -43,11 +43,10 @@ class TestAttributeMappingCollection(TestCase):
         general_url = (
             "http://localhost:9100/api/versioned/v1/projects/4/attributeMappings"
         )
-        responses.add(responses.GET, general_url, json=self.mappings_json)
-        deleteColl = AttributeMappingCollection(self.unify, general_url)
+        delete_collection = AttributeMappingCollection(self.unify, general_url)
         specific_url = general_url + "/19629-12"
         responses.add(responses.DELETE, specific_url, status=204)
-        response = deleteColl.delete_by_resource_id("19629-12")
+        response = delete_collection.delete_by_resource_id("19629-12")
         self.assertEqual(response.status_code, 204)
 
         @responses.activate

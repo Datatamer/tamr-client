@@ -60,8 +60,8 @@ class AttributeMappingCollection:
         """delete an attribute mapping using its Resource ID.
         :param resource_id: the resource ID of the mapping to be deleted.
         :type resource_id: str
-        :returns: :class:`requests.Response`
-        :rtype: HTTP status code
+        :returns: HTTP status code
+        :rtype: :class:`requests.Response`
          """
         url = self.api_path + "/" + resource_id
         deletes = self.client.delete(url).successful()

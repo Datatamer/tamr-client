@@ -1,11 +1,12 @@
 ## 0.9.0-dev
   **BREAKING CHANGES**
-  -`AttributeMapping` now takes in `client`, `data`, and `alias` in the init
+  - `AttributeMapping` now takes in `client`, `data`, and `alias` in the init
 
   **NEW FEATURES**
   - [#218](https://github.com/Datatamer/unify-client-python/issues/218) Delete a `BaseResource`
   - [#233](https://github.com/Datatamer/unify-client-python/issues/233) Remove an input dataset from a project
   - [#221](https://github.com/Datatamer/unify-client-python/issues/221) delete an attribute mapping
+  - [#67](https://github.com/Datatamer/unify-client-python/issues/67) Create a dataset from a pandas `DataFrame`
 
   **BUG FIXES**
   - [#235](https://github.com/Datatamer/unify-client-python/issues/235) Making `AttributeCollection` retrieve attributes directly instead of by streaming
