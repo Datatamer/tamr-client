@@ -39,23 +39,37 @@ class TestAttributeMappingCollection(TestCase):
         )
 
     @responses.activate
-    def test_create(self):
-        def create_callback(request, snoop):
-            snoop["payload"] = request.body
-            return 200, {}, json.dumps(self.mappings_json[0])
+    def test_delete(self):
+        general_url = (
+            "http://localhost:9100/api/versioned/v1/projects/4/attributeMappings"
+        )
+        responses.add(responses.GET, general_url, json=self.mappings_json)
+        deleteColl = AttributeMappingCollection(self.unify, general_url)
+        specific_url = general_url + "/19629-12"
+        responses.add(responses.DELETE, specific_url, status=204)
+        response = deleteColl.delete_by_resource_id("19629-12")
+        self.assertEqual(response.status_code, 204)
 
-        url = "http://localhost:9100/api/versioned/v1/projects/4/attributeMappings"
-        responses.add(responses.GET, url, json=self.mappings_json)
-        snoop_dict = {}
-        responses.add_callback(
-            responses.POST, url, partial(create_callback, snoop=snoop_dict)
-        )
-        map_collection = AttributeMappingCollection(
-            self.unify, "projects/4/attributeMappings"
-        )
-        test = map_collection.create(self.create_json)
-        self.assertEqual(test.input_dataset_name, self.create_json["inputDatasetName"])
-        self.assertEqual(json.loads(snoop_dict["payload"]), self.create_json)
+        @responses.activate
+        def test_create(self):
+            def create_callback(request, snoop):
+                snoop["payload"] = request.body
+                return 200, {}, json.dumps(self.mappings_json[0])
+
+            url = "http://localhost:9100/api/versioned/v1/projects/4/attributeMappings"
+            responses.add(responses.GET, url, json=self.mappings_json)
+            snoop_dict = {}
+            responses.add_callback(
+                responses.POST, url, partial(create_callback, snoop=snoop_dict)
+            )
+            map_collection = AttributeMappingCollection(
+                self.unify, "projects/4/attributeMappings"
+            )
+            test = map_collection.create(self.create_json)
+            self.assertEqual(
+                test.input_dataset_name, self.create_json["inputDatasetName"]
+            )
+            self.assertEqual(json.loads(snoop_dict["payload"]), self.create_json)
 
     create_json = {
         "id": "unify://unified-data/v1/projects/1/attributeMappings/19594-14",
