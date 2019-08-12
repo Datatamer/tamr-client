@@ -1,3 +1,5 @@
+from requests.exceptions import HTTPError
+
 from tamr_unify_client.base_collection import BaseCollection
 from tamr_unify_client.dataset.resource import Dataset
 
@@ -89,4 +91,90 @@ class DatasetCollection(BaseCollection):
         data = self.client.post(self.api_path, json=creation_spec).successful().json()
         return Dataset.from_json(self.client, data)
 
+    def create_from_dataframe(
+        self, df, primary_key_name, dataset_name, ignore_nan=True
+    ):
+        """Creates a dataset in this collection with the given name, creates an attribute for each column in the `df`
+        (with `primary_key_name` as the key attribute), and upserts a record for each row of `df`.
+
+        Each attribute has the default type `ARRAY[STRING]`, besides the key attribute, which will have type `STRING`.
+
+        This function attempts to ensure atomicity, but it is not guaranteed. If an error occurs while creating
+        attributes or records, an attempt will be made to delete the dataset that was created. However, if this
+        request errors, it will not try again.
+
+        :param df: The data to create the dataset with.
+        :type df: :class:`pandas.DataFrame`
+        :param primary_key_name: The name of the primary key of the dataset. Must be a column of `df`.
+        :type primary_key_name: str
+        :param dataset_name: What to name the dataset in Unify. There cannot already be a dataset with this name.
+        :type dataset_name: str
+        :param ignore_nan: Whether to convert `NaN` values to `null` before upserting records to Unify. If `False` and
+            `NaN` is in `df`, this function will fail. Optional, default is `True`.
+        :type ignore_nan: bool
+        :returns: The newly created dataset.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.Dataset`
+        :raises KeyError: If `primary_key_name` is not a column in `df`.
+        :raises CreationError: If a step in creating the dataset fails.
+        """
+        if primary_key_name not in df.columns:
+            raise KeyError(f"{primary_key_name} is not an attribute of the data")
+
+        creation_spec = {"name": dataset_name, "keyAttributeNames": [primary_key_name]}
+        try:
+            dataset = self.create(creation_spec)
+        except HTTPError:
+            raise CreationError("Dataset was not created")
+        # after this point, if a request fails, try to undo the change by deleting this dataset
+
+        attributes = dataset.attributes
+        for col in df.columns:
+            if col == primary_key_name:
+                # this attribute already exists, so don't create it again
+                continue
+
+            attr_spec = {
+                "name": col,
+                "type": {"baseType": "ARRAY", "innerType": {"baseType": "STRING"}},
+            }
+            try:
+                attributes.create(attr_spec)
+            except HTTPError:
+                self._handle_creation_failure(dataset, "An attribute was not created")
+
+        records = df.to_dict(orient="records")
+        try:
+            response = dataset.upsert_records(
+                records, primary_key_name, ignore_nan=ignore_nan
+            )
+        except HTTPError:
+            self._handle_creation_failure(dataset, "Records could not be created")
+
+        if not response["allCommandsSucceeded"]:
+            self._handle_creation_failure(dataset, "Some records had validation errors")
+
+        return dataset
+
+    def _handle_creation_failure(self, dataset, error):
+        """Attempts to make create_from_dataframe atomic by deleting the created dataset in the event of later failure.
+        However, this does not guarantee atomicity: if the request to delete the dataset fails, it will not retry.
+
+        :param dataset: The created dataset to delete.
+        :type dataset: :class:`~tamr_unify_client.dataset.resource.Dataset`
+        :param error: The error that caused the function to fail.
+        :type error: str
+        """
+        try:
+            dataset.delete()
+        except HTTPError:
+            raise CreationError("Created dataset didn't delete after an earlier error")
+        raise CreationError(error)
+
     # super.__repr__ is sufficient
+
+
+class CreationError(Exception):
+    """An error from :func:`~tamr_unify_client.dataset.collection.DatasetCollection.create_from_dataframe`"""
+
+    def __init__(self, error_message):
+        super().__init__(error_message)
