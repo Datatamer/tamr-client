@@ -1,3 +1,5 @@
+from functools import partial
+import json
 from unittest import TestCase
 
 import responses
@@ -63,6 +65,35 @@ class TestAttributeConfigurationCollection(TestCase):
         for char in streamer:
             stream_content.append(char._data)
         self.assertEqual(self.acc_json, stream_content)
+
+    @responses.activate
+    def test_put(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = request.body
+            return 200, {}, json.dumps(self._updated_config_json)
+
+        snoop_dict = {}
+        project_url = "http://localhost:9100/api/versioned/v1/projects/1"
+        config_url = "http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
+
+        responses.add(responses.GET, project_url, json=self.project_json)
+        responses.add(responses.GET, config_url, json=self.acc_json[0])
+        responses.add_callback(
+            responses.PUT, config_url, partial(create_callback, snoop=snoop_dict)
+        )
+
+        attribute_config = (
+            self.unify.projects.by_resource_id("1")
+            .attribute_configurations()
+            .by_resource_id("1")
+        )
+        new_config = attribute_config.with_enabled_for_ml(False).put()
+
+        self.assertEqual(
+            new_config.enabled_for_ml, self._updated_config_json["enabledForMl"]
+        )
+
+        self.assertEqual(json.loads(snoop_dict["payload"]), self._updated_config_json)
 
     create_json = {
         "id": "unify://unified-data/v1/projects/1/attributeConfigurations/35",
@@ -329,3 +360,15 @@ class TestAttributeConfigurationCollection(TestCase):
             "attributeName": "Address2",
         },
     ]
+
+    _updated_config_json = {
+        "id": "unify://unified-data/v1/projects/1/attributeConfigurations/1",
+        "relativeId": "projects/1/attributeConfigurations/1",
+        "relativeAttributeId": "datasets/8/attributes/suburb",
+        "attributeRole": "",
+        "similarityFunction": "COSINE",
+        "enabledForMl": False,
+        "tokenizer": "DEFAULT",
+        "numericFieldResolution": [],
+        "attributeName": "suburb",
+    }
