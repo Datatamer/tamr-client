@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 import simplejson as json
 
 from tamr_unify_client.attribute.collection import AttributeCollection
@@ -262,6 +264,14 @@ class Dataset(BaseResource):
 
         return [DatasetURI(self.client, uri) for uri in resources]
 
+    def spec(self):
+        """Returns this dataset's spec.
+
+        :return: The spec of this dataset.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
+        """
+        return DatasetSpec.of(self)
+
     @property
     def __geo_interface__(self):
         """Retrieve a representation of this dataset that conforms to the Python Geo Interface.
@@ -434,3 +444,88 @@ class Dataset(BaseResource):
             "polygon",
             "multiPolygon",
         }
+
+
+class DatasetSpec:
+    """A representation of the server view of a dataset."""
+
+    def __init__(self, client, data, api_path):
+        self.client = client
+        self._data = data
+        self.api_path = api_path
+
+    @staticmethod
+    def of(resource):
+        """Creates a dataset spec from a dataset.
+
+        :param resource: The existing dataset.
+        :type resource: :class:`~tamr_unify_client.dataset.resource.Dataset`
+        :return: The corresponding dataset spec.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
+        """
+        return DatasetSpec(resource.client, deepcopy(resource._data), resource.api_path)
+
+    def from_data(self, data):
+        """Creates a spec with the same client and API path as this one, but new data.
+
+        :param data: The data for the new spec.
+        :type data: dict
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
+        """
+        return DatasetSpec(self.client, data, self.api_path)
+
+    def to_dict(self):
+        """Returns a version of this spec that conforms to the API representation.
+
+        :returns: The spec's dict.
+        :rtype: dict
+        """
+        return deepcopy(self._data)
+
+    def with_external_id(self, new_external_id):
+        """Creates a new spec with the same properties, updating external ID.
+
+        :param new_external_id: The new external ID.
+        :type new_external_id: str
+        :return: A new spec.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
+        """
+        return self.from_data({**self._data, "externalId": new_external_id})
+
+    def with_description(self, new_description):
+        """Creates a new spec with the same properties, updating description.
+
+        :param new_description: The new description.
+        :type new_description: str
+        :return: A new spec.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
+        """
+        return self.from_data({**self._data, "description": new_description})
+
+    def with_tags(self, new_tags):
+        """Creates a new spec with the same properties, updating tags.
+
+        :param new_tags: The new tags.
+        :type new_tags: list[str]
+        :return: A new spec.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
+        """
+        return self.from_data({**self._data, "tags": new_tags})
+
+    def put(self):
+        """Updates the dataset on the server.
+
+        :return: The modified dataset.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.Dataset`
+        """
+        new_data = self.client.put(self.api_path, json=self._data).successful().json()
+        return Dataset.from_json(self.client, new_data, self.api_path)
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"relative_id={self._data['relativeId']!r}, "
+            f"name={self._data['name']!r})"
+        )
