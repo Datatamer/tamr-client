@@ -1,3 +1,4 @@
+from tamr_unify_client.base_builder import BaseBuilder
 from tamr_unify_client.base_resource import BaseResource
 
 
@@ -72,3 +73,53 @@ class AttributeConfiguration(BaseResource):
             f"numeric_field_resolution={self.numeric_field_resolution!r}, "
             f"attribute_name={self.attribute_name!r})"
         )
+
+    def build(self):
+        return AttributeBuilder(self)
+
+
+class AttributeBuilder(BaseBuilder):
+    def with_relative_id(self, new_relative_id):
+        return AttributeBuilder(self, relative_id=new_relative_id)
+
+    def with_id(self, new_id):
+        return AttributeBuilder(self, id=new_id)
+
+    def with_relative_attribute_id(self, new_relative_attribute_id):
+        return AttributeBuilder(self, relative_attribute_id=new_relative_attribute_id)
+
+    def with_attribute_role(self, new_attribute_role):
+        return AttributeBuilder(self, attribute_role=new_attribute_role)
+
+    def with_similarity_function(self, new_similarity_function):
+        return AttributeBuilder(self, similarity_function=new_similarity_function)
+
+    def with_enabled_for_ml(self, new_enabled_for_ml):
+        return AttributeBuilder(self, enabled_for_ml=new_enabled_for_ml)
+
+    def with_tokenizer(self, new_tokenizer):
+        return AttributeBuilder(self, tokenizer=new_tokenizer)
+
+    def with_numeric_field_resolution(self, new_numeric_field_resolution):
+        return AttributeBuilder(
+            self, numeric_field_resolution=new_numeric_field_resolution
+        )
+
+    def with_attribute_name(self, new_attribute_name):
+        return AttributeBuilder(self, attribute_name=new_attribute_name)
+
+    def _build(self):
+        return {
+            "relative_id": self.relative_id,
+            "id": self.id,
+            "relative_attribute_id": self.relative_attribute_id,
+            "attribute_role": self.attribute_role,
+            "similarity_function": self.similarity_function,
+            "enabled_for_ml": self.enabled_for_ml,
+            "tokenizer": self.tokenizer,
+            "numeric_field_resolution": self.numeric_field_resolution,
+            "attribute_name": self.attribute_name,
+        }
+
+    def put(self):
+        return super().put(AttributeConfiguration)
