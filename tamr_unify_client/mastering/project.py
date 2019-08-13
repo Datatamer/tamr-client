@@ -202,9 +202,9 @@ class MasteringProject(Project):
         # being able to call refresh on resulting dataset. Until then, we grab
         # the dataset by constructing its name from the corresponding Unified Dataset's name
         name = unified_dataset.name + "_dedup_clusters_with_data"
-        return self.client.datasets.by_name(name)
-
-        # super.__repr__ is sufficient
+        dataset = self.client.datasets.by_name(name)
+        dataset.api_path = self.api_path + "/recordClustersWithData"
+        return dataset
 
     def published_clusters_with_data(self):
         """Project's unified dataset with associated clusters.
@@ -215,7 +215,9 @@ class MasteringProject(Project):
 
         unified_dataset = self.unified_dataset()
         name = unified_dataset.name + "_dedup_published_clusters_with_data"
-        return self.client.datasets.by_name(name)
+        dataset = self.client.datasets.by_name(name)
+        dataset.api_path = self.api_path + "/publishedClustersWithData"
+        return dataset
 
     def binning_model(self):
         """
@@ -229,3 +231,5 @@ class MasteringProject(Project):
         # Cannot get this resource and so we hard code
         resource_json = {"relativeId": alias}
         return BinningModel.from_json(self.client, resource_json, alias)
+
+    # super.__repr__ is sufficient
