@@ -5,7 +5,7 @@ Asynchronous Operations
 -----------------------
 
 You can opt-in to an asynchronous interface via the asynchronous keyword argument
-for methods that kick-off Unify operations.
+for methods that kick-off Tamr operations.
 
 E.g.::
 
@@ -68,8 +68,8 @@ We encourage you to use the high-level, object-oriented interface offered by
 the Python Client. If you aren't sure whether you need to send low-level HTTP
 requests, you probably don't.
 
-But sometimes it's useful to directly send HTTP requests to Unify; for example,
-Unify has many APIs that are not covered by the higher-level interface (most of
+But sometimes it's useful to directly send HTTP requests to Tamr; for example,
+Tamr has many APIs that are not covered by the higher-level interface (most of
 which are neither versioned nor supported). You can still call these endpoints
 using the Python Client, but you'll need to work with raw ``Response`` objects.
 

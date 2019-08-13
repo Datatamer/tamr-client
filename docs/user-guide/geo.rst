@@ -26,7 +26,7 @@ There are three layers of information, modeled after GeoJSON; see https://tools.
   - coordinates (doubles; exactly how these are structured depends on the type of the geometry)
 
 Although the Python Geo Interface is non-prescriptive when it comes to the data types of the id and
-properties, Unify has a more restricted set of supported types. See https://docs.tamr.com/reference#attribute-types
+properties, Tamr has a more restricted set of supported types. See https://docs.tamr.com/reference#attribute-types
 
 The :class:`~tamr_unify_client.models.dataset.resource.Dataset` class supports the
 ``__geo_interface__`` property. This will produce one ``FeatureCollection`` for the entire dataset.
@@ -56,7 +56,7 @@ By default the features' geometries will be placed into the first dataset attrib
 type. You can override this by specifying the geometry attribute to use in the ``geo_attr``
 parameter to ``from_geo_features``.
 
-Rules for converting from Unify records to Geospatial Features
+Rules for converting from Tamr records to Geospatial Features
 ------------------------------------------------------------------
 
 The record's primary key will be used as the feature's ``id``. If the primary key is a single
@@ -64,12 +64,12 @@ attribute, then the value of that attribute will be the value of ``id``. If the 
 composed of multiple attributes, then the value of the ``id`` will be an array with the values
 of the key attributes in order.
 
-Unify allows any number of geometry attributes per record; the Python Geo Interface is limited to
-one. When converting Unify records to Python Geo Features, the first geometry attribute in the schema
+Tamr allows any number of geometry attributes per record; the Python Geo Interface is limited to
+one. When converting Tamr records to Python Geo Features, the first geometry attribute in the schema
 will be used as the geometry; all other geometry attributes will appear as properties with no type
 conversion. In the future, additional control over the handling of multiple geometries may be
 provided; the current set of capabilities is intended primarily to support the use case of working
-with FeatureCollections within Unify, and FeatureCollection has only one geometry per feature.
+with FeatureCollections within Tamr, and FeatureCollection has only one geometry per feature.
 
 An attribute is considered to have geometry type if it has type ``RECORD`` and contains an attribute
 named ``point``, ``multiPoint``, ``lineString``, ``multiLineString``, ``polygon``, or
@@ -82,7 +82,7 @@ may be provided.
 All other attributes will be placed in ``properties``, with no type conversion. This includes
 all geometry attributes other than the first.
 
-Rules for converting from Geospatial Features to Unify records
+Rules for converting from Geospatial Features to Tamr records
 --------------------------------------------------------------
 
 The Feature's ``id`` will be converted into the primary key for the record. If the record uses

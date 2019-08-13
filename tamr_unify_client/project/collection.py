@@ -64,7 +64,7 @@ class ProjectCollection(BaseCollection):
 
     def create(self, creation_spec):
         """
-        Create a Project in Unify
+        Create a Project in Tamr
 
         :param creation_spec: Project creation specification should be formatted as specified in the `Public Docs for Creating a Project <https://docs.tamr.com/reference#create-a-project>`_.
         :type creation_spec: dict[str, str]
