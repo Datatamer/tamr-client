@@ -10,7 +10,7 @@ from tamr_unify_client.project.attribute_mapping.collection import (
 
 
 class Project(BaseResource):
-    """A Unify project."""
+    """A Tamr project."""
 
     @classmethod
     def from_json(cls, client, resource_json, api_path=None):
@@ -33,7 +33,7 @@ class Project(BaseResource):
 
     @property
     def type(self):
-        """A Unify project type, listed in https://docs.tamr.com/reference#create-a-project.
+        """A Tamr project type, listed in https://docs.tamr.com/reference#create-a-project.
 
         :type: str
         """
@@ -93,7 +93,7 @@ class Project(BaseResource):
 
     def add_input_dataset(self, dataset):
         """
-        Associate a dataset with a project in Unify.
+        Associate a dataset with a project in Tamr.
 
         By default, datasets are not associated with any projects.
         They need to be added as input to a project before they can be used

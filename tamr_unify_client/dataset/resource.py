@@ -10,7 +10,7 @@ from tamr_unify_client.operation import Operation
 
 
 class Dataset(BaseResource):
-    """A Unify dataset."""
+    """A Tamr dataset."""
 
     @classmethod
     def from_json(cls, client, resource_json, api_path=None):
@@ -64,7 +64,7 @@ class Dataset(BaseResource):
         :param records: Each record should be formatted as specified in the `Public Docs for Dataset updates <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
         :type records: iterable[dict]
         :param `**json_args`: Arguments to pass to the JSON `dumps` function, as documented `here <https://simplejson.readthedocs.io/en/latest/#simplejson.dumps>`_.
-            Some of these, such as `indent`, may not work with Unify.
+            Some of these, such as `indent`, may not work with Tamr.
         :returns: JSON response body from server.
         :rtype: :py:class:`dict`
         """
@@ -90,7 +90,7 @@ class Dataset(BaseResource):
         :param primary_key_name: The name of the primary key for these records, which must be a key in each record dictionary.
         :type primary_key_name: str
         :param `**json_args`: Arguments to pass to the JSON `dumps` function, as documented `here <https://simplejson.readthedocs.io/en/latest/#simplejson.dumps>`_.
-            Some of these, such as `indent`, may not work with Unify.
+            Some of these, such as `indent`, may not work with Tamr.
         :return: JSON response body from the server.
         :rtype: dict
         """
@@ -222,12 +222,12 @@ class Dataset(BaseResource):
 
         See: geopandas.GeoDataFrame.from_features()
 
-        If geo_attr is provided, then the named Unify attribute will be used for the geometry.
+        If geo_attr is provided, then the named Tamr attribute will be used for the geometry.
         If geo_attr is not provided, then the first attribute on the dataset with geometry type
         will be used for the geometry.
 
         :param features: geospatial features
-        :param geo_attr: (optional) name of the Unify attribute to use for the feature's geometry
+        :param geo_attr: (optional) name of the Tamr attribute to use for the feature's geometry
         :type geo_attr: str
         """
         if hasattr(features, "__geo_interface__"):
@@ -283,7 +283,7 @@ class Dataset(BaseResource):
 
         See https://gist.github.com/sgillies/2217756
 
-        :param geo_attr: (optional) name of the Unify attribute to use for the feature's geometry
+        :param geo_attr: (optional) name of the Tamr attribute to use for the feature's geometry
         :type geo_attr: str
         :return: stream of features
         :rtype: Python generator yielding :py:class:`dict[str, object]`
@@ -330,9 +330,9 @@ class Dataset(BaseResource):
 
     @staticmethod
     def _record_to_feature(record, key_value, key_attrs, geo_attr):
-        """Convert a Unify record to a Python Geo Interface Feature
+        """Convert a Tamr record to a Python Geo Interface Feature
 
-        :param record: Unify record
+        :param record: Tamr record
         :param key_value: Function to extract the value of the primary key from the record
         :param key_attrs: Set of attributes that comprise the primary key for the record
         :param geo_attr: The singular attribute to use as the geometry
@@ -364,7 +364,7 @@ class Dataset(BaseResource):
 
     @staticmethod
     def _feature_to_record(feature, key_attrs, geo_attr):
-        """Convert a Python Geo Interface Feature to a Unify record
+        """Convert a Python Geo Interface Feature to a Tamr record
 
         feature can be a dict representing a Geospatial Feature, or a Feature object
         that implements the __geo_interface__ property.

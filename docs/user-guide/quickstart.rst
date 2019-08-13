@@ -25,7 +25,7 @@ Next, create an authentication provider and use that to create an authenticated 
 
   For more, see `User Guide > Secure Credentials <secure-credentials.html>`_ .
 
-By default, the client tries to find the Unify instance on ``localhost``.
+By default, the client tries to find the Tamr instance on ``localhost``.
 To point to a different host, set the host argument when instantiating the Client.
 
 For example, to connect to ``10.20.0.1``::
@@ -68,14 +68,14 @@ E.g. To access the Unified Dataset for a particular project::
 
   ud = project.unified_dataset()
 
-Kick-off Unify Operations
+Kick-off Tamr Operations
 -------------------------
 
-Some methods on Model objects can kick-off long-running Unify operations.
+Some methods on Model objects can kick-off long-running Tamr operations.
 
 Here, kick-off a "Unified Dataset refresh" operation::
 
   operation = project.unified_dataset().refresh()
   assert op.succeeded()
 
-By default, the API Clients expose a synchronous interface for Unify operations.
+By default, the API Clients expose a synchronous interface for Tamr operations.

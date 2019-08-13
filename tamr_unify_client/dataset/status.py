@@ -2,7 +2,7 @@ from tamr_unify_client.base_resource import BaseResource
 
 
 class DatasetStatus(BaseResource):
-    """Streamability status of a Unify dataset."""
+    """Streamability status of a Tamr dataset."""
 
     @classmethod
     def from_json(cls, client, resource_json, api_path=None) -> "DatasetStatus":

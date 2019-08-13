@@ -13,8 +13,8 @@ def _basic_auth_str(username, password):
 
 
 class UsernamePasswordAuth(HTTPBasicAuth):
-    """Provides username/password authentication for Unify.
-    Specifically, sets the `Authorization` HTTP header with Unify's custom `BasicCreds` format.
+    """Provides username/password authentication for Tamr.
+    Specifically, sets the `Authorization` HTTP header with Tamr's custom `BasicCreds` format.
 
     :param str username:
     :param str password:
