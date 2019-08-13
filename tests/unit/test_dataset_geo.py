@@ -14,7 +14,7 @@ from tamr_unify_client.dataset.resource import Dataset
 class TestDatasetGeo(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     def test_record_to_feature(self):
         empty_record = {"id": "1"}
@@ -243,7 +243,7 @@ class TestDatasetGeo(TestCase):
             records_url,
             body="\n".join([json.dumps(rec) for rec in self._records_json]),
         )
-        dataset = self.unify.datasets.by_resource_id("1")
+        dataset = self.tamr.datasets.by_resource_id("1")
         features = [feature for feature in dataset.itergeofeatures()]
         self.assertEqual(6, len(features))
         self.assertSetEqual(
@@ -275,7 +275,7 @@ class TestDatasetGeo(TestCase):
         record = {"id": "point", "geom": {"point": [1, 1]}, "geom2": {"point": [2, 2]}}
         records_url = f"{dataset_url}/records"
         responses.add(responses.GET, records_url, body=json.dumps(record))
-        dataset = self.unify.datasets.by_resource_id("1")
+        dataset = self.tamr.datasets.by_resource_id("1")
 
         # Default is to get the first attribute with geometry type
         feature = next(dataset.itergeofeatures())
@@ -299,7 +299,7 @@ class TestDatasetGeo(TestCase):
             records_url,
             body="\n".join([json.dumps(rec) for rec in self._records_json]),
         )
-        dataset = self.unify.datasets.by_resource_id("1")
+        dataset = self.tamr.datasets.by_resource_id("1")
         fc = dataset.__geo_interface__
         self.assertEqual("FeatureCollection", fc["type"])
         self.assertSetEqual(
@@ -507,7 +507,7 @@ class TestDatasetGeo(TestCase):
             responses.POST, records_url, callback=partial(update_callback, snoop=snoop)
         )
 
-        dataset = self.unify.datasets.by_resource_id("1")
+        dataset = self.tamr.datasets.by_resource_id("1")
         features = [
             {"id": "1", "geometry": {"type": "Point", "coordinates": [0, 0]}},
             {"id": "2", "geometry": {"type": "Point", "coordinates": [1, 1]}},
@@ -563,7 +563,7 @@ class TestDatasetGeo(TestCase):
             responses.POST, records_url, callback=partial(update_callback, snoop=snoop)
         )
 
-        dataset = self.unify.datasets.by_resource_id("1")
+        dataset = self.tamr.datasets.by_resource_id("1")
         features = [{"id": "1", "geometry": {"type": "Point", "coordinates": [0, 0]}}]
 
         # by default, the first attribute with geometry type is used for geometry
@@ -617,7 +617,7 @@ class TestDatasetGeo(TestCase):
             responses.POST, records_url, callback=partial(update_callback, snoop=snoop)
         )
 
-        dataset = self.unify.datasets.by_resource_id("1")
+        dataset = self.tamr.datasets.by_resource_id("1")
         features = [
             {"id": ["1", "a"], "geometry": {"type": "Point", "coordinates": [0, 0]}},
             {"id": ["2", "b"], "geometry": {"type": "Point", "coordinates": [1, 1]}},

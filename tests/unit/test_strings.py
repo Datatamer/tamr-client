@@ -5,10 +5,10 @@ from tamr_unify_client.dataset.status import DatasetStatus
 
 def test_client_repr():
     auth = UsernamePasswordAuth("username", "password")
-    unify = Client(auth)
+    tamr = Client(auth)
     full_clz_name = "tamr_unify_client.client.Client"
 
-    rstr = f"{unify!r}"
+    rstr = f"{tamr!r}"
 
     assert rstr.startswith(f"{full_clz_name}(")
     assert "http" in rstr
@@ -16,8 +16,8 @@ def test_client_repr():
     assert rstr.endswith(")")
 
     # further testing when Client has optional arguments
-    unify = Client(auth, protocol="http", port=1234, base_path="foo/bar")
-    rstr = f"{unify!r}"
+    tamr = Client(auth, protocol="http", port=1234, base_path="foo/bar")
+    rstr = f"{tamr!r}"
 
     assert "'http'" in rstr
     assert "1234" in rstr

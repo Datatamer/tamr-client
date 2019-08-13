@@ -12,11 +12,11 @@ from tamr_unify_client.operation import Operation
 class TestPairCounts(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     @responses.activate
     def test_get(self):
-        p = MasteringProject(self.unify, self._project_json)
+        p = MasteringProject(self.tamr, self._project_json)
         responses.add(
             responses.GET,
             f"{self._url_base}/{self._api_path}",
@@ -25,13 +25,13 @@ class TestPairCounts(TestCase):
         generated = p.estimate_pairs()
 
         created = EstimatedPairCounts.from_json(
-            self.unify, self._estimate_json, self._api_path
+            self.tamr, self._estimate_json, self._api_path
         )
         self.assertEqual(repr(generated), repr(created))
 
     def test_properties(self):
         estimate = EstimatedPairCounts.from_json(
-            self.unify, self._estimate_json, self._api_path
+            self.tamr, self._estimate_json, self._api_path
         )
         self.assertFalse(estimate.is_up_to_date)
         self.assertEqual(estimate.total_estimate, self._estimate_json["totalEstimate"])
@@ -51,11 +51,11 @@ class TestPairCounts(TestCase):
         responses.add(responses.GET, f"{self._url_base}/operations/24", json=updated)
 
         estimate = EstimatedPairCounts.from_json(
-            self.unify, self._estimate_json, self._api_path
+            self.tamr, self._estimate_json, self._api_path
         )
         generated = estimate.refresh(poll_interval_seconds=0)
 
-        created = Operation.from_json(self.unify, updated)
+        created = Operation.from_json(self.tamr, updated)
         self.assertEqual(repr(generated), repr(created))
 
     _url_base = "http://localhost:9100/api/versioned/v1"

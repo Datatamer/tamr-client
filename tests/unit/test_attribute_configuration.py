@@ -16,11 +16,11 @@ from tamr_unify_client.project.attribute_configuration.resource import (
 class TestAttributeConfiguration(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     def test_resource(self):
         alias = "projects/1/attributeConfigurations/26"
-        test = AttributeConfiguration(self.unify, self._ac_json, alias)
+        test = AttributeConfiguration(self.tamr, self._ac_json, alias)
 
         expected = alias
         self.assertEqual(expected, test.relative_id)
@@ -51,8 +51,8 @@ class TestAttributeConfiguration(TestCase):
 
     def test_resource_from_json(self):
         alias = "projects/1/attributeConfigurations/26"
-        expected = AttributeConfiguration(self.unify, self._ac_json, alias)
-        actual = AttributeConfiguration.from_json(self.unify, self._ac_json, alias)
+        expected = AttributeConfiguration(self.tamr, self._ac_json, alias)
+        actual = AttributeConfiguration.from_json(self.tamr, self._ac_json, alias)
         self.assertEqual(repr(expected), repr(actual))
 
     @responses.activate
@@ -66,7 +66,7 @@ class TestAttributeConfiguration(TestCase):
         responses.add(responses.DELETE, url, status=204)
         responses.add(responses.GET, url, status=404)
 
-        collection = AttributeConfigurationCollection(self.unify, alias)
+        collection = AttributeConfigurationCollection(self.tamr, alias)
         config = collection.by_resource_id(attribute_id)
         self.assertEqual(config._data, self._ac_json)
 

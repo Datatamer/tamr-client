@@ -14,7 +14,7 @@ from tamr_unify_client.project.resource import Project
 class PublishedClusterTest(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     @responses.activate
     def test_published_clusters(self):
@@ -34,7 +34,7 @@ class PublishedClusterTest(TestCase):
         responses.add(responses.GET, datasets_url, json=self._datasets_json)
         responses.add(responses.POST, refresh_url, json=self._refresh_json)
         responses.add(responses.GET, operations_url, json=self._operations_json)
-        project = self.unify.projects.by_resource_id(project_id)
+        project = self.tamr.projects.by_resource_id(project_id)
         actual_published_clusters_dataset = project.as_mastering().published_clusters()
         actual_published_clusters_dataset.refresh(poll_interval_seconds=0)
         self.assertEqual(
@@ -48,10 +48,10 @@ class PublishedClusterTest(TestCase):
         config_url = f"{self._base_url}/{path}"
         responses.add(responses.GET, config_url, json=self._config_json)
 
-        p = Project(self.unify, self._project_config_json).as_mastering()
+        p = Project(self.tamr, self._project_config_json).as_mastering()
         config = p.published_clusters_configuration()
         created = PublishedClustersConfiguration.from_json(
-            self.unify, self._config_json, path
+            self.tamr, self._config_json, path
         )
 
         self.assertEqual(repr(config), repr(created))
@@ -66,7 +66,7 @@ class PublishedClusterTest(TestCase):
         responses.add(responses.GET, config_url, json=self._config_json)
         responses.add(responses.DELETE, config_url, status=405)
 
-        p = Project(self.unify, self._project_config_json).as_mastering()
+        p = Project(self.tamr, self._project_config_json).as_mastering()
         config = p.published_clusters_configuration()
         self.assertRaises(HTTPError, config.delete)
 
@@ -82,7 +82,7 @@ class PublishedClusterTest(TestCase):
         responses.add(responses.GET, datasets_url, json=self._datasets_json)
         responses.add(responses.POST, refresh_url, json=self._operations_json)
 
-        p = Project(self.unify, self._project_config_json).as_mastering()
+        p = Project(self.tamr, self._project_config_json).as_mastering()
         d = p.published_cluster_ids()
 
         op = d.refresh(poll_interval_seconds=0)
@@ -101,7 +101,7 @@ class PublishedClusterTest(TestCase):
         responses.add(responses.GET, datasets_url, json=self._datasets_json)
         responses.add(responses.POST, refresh_url, json=self._operations_json)
 
-        p = Project(self.unify, self._project_config_json).as_mastering()
+        p = Project(self.tamr, self._project_config_json).as_mastering()
         d = p.published_cluster_stats()
 
         op = d.refresh(poll_interval_seconds=0)

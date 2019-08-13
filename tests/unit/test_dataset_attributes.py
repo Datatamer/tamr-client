@@ -4,7 +4,7 @@ from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
 
 auth = UsernamePasswordAuth("username", "password")
-unify = Client(auth)
+tamr = Client(auth)
 
 
 @responses.activate
@@ -31,7 +31,7 @@ def test_dataset_attributes():
         json=attribute_creation_spec,
     )
 
-    dataset = unify.datasets.by_resource_id("1")
+    dataset = tamr.datasets.by_resource_id("1")
     create = dataset.attributes.create(attribute_creation_spec)
     created = dataset.attributes.by_name("myAttribute")
 

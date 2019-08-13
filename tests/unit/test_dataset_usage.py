@@ -13,31 +13,31 @@ from tamr_unify_client.project.step import ProjectStep
 class TestUsage(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     @responses.activate
     def test_get_usage(self):
         responses.add(
             responses.GET, f"{self._base_url}/datasets/1/usage", json=self._usage_json
         )
-        u = Dataset(self.unify, self._dataset_json).usage()
+        u = Dataset(self.tamr, self._dataset_json).usage()
         self.assertEqual(u._data, self._usage_json)
 
     def test_usage(self):
         alias = "datasets/1/usage"
-        u = DatasetUsage(self.unify, self._usage_json, alias)
+        u = DatasetUsage(self.tamr, self._usage_json, alias)
         self.assertEqual(u.usage._data, self._usage_json["usage"])
         self.assertEqual(u.relative_id, alias)
 
         udeps = u.dependencies
-        deps = [DatasetUse(self.unify, dep) for dep in self._usage_json["dependencies"]]
+        deps = [DatasetUse(self.tamr, dep) for dep in self._usage_json["dependencies"]]
         for i in range(len(deps)):
             self.assertEqual(deps[i].dataset_id, udeps[i].dataset_id)
 
     @responses.activate
     def test_use(self):
         usage_json = self._usage_json["usage"]
-        u = DatasetUse(self.unify, usage_json)
+        u = DatasetUse(self.tamr, usage_json)
 
         responses.add(
             responses.GET, f"{self._base_url}/datasets/1", json=self._dataset_json
@@ -48,7 +48,7 @@ class TestUsage(TestCase):
 
         self.assertEqual(u.output_from_project_steps, [])
         inputs = u.input_to_project_steps
-        step = ProjectStep(self.unify, usage_json["inputToProjectSteps"][0])
+        step = ProjectStep(self.tamr, usage_json["inputToProjectSteps"][0])
         self.assertEqual(len(inputs), 1)
         self.assertEqual(repr(inputs[0]), repr(step))
 
@@ -58,7 +58,7 @@ class TestUsage(TestCase):
     @responses.activate
     def test_project_step(self):
         step_json = self._usage_json["usage"]["inputToProjectSteps"][0]
-        step = ProjectStep(self.unify, step_json)
+        step = ProjectStep(self.tamr, step_json)
 
         self.assertEqual(step.project_step_id, step_json["projectStepId"])
         self.assertEqual(step.project_step_name, step_json["projectStepName"])

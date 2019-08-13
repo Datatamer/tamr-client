@@ -17,45 +17,45 @@ Each test runs a request to the server, and produces the correct final url.
 @responses.activate
 def test_base_path_no_trailing_slash():
     bad_base_path = "/api/versioned/v1"
-    unify = Client(auth, base_path=bad_base_path)
+    tamr = Client(auth, base_path=bad_base_path)
     full_url = "http://localhost:9100/api/versioned/v1/datasets/1"
     responses.add(responses.GET, full_url, status=200)
-    unify.get("datasets/1")
+    tamr.get("datasets/1")
 
 
 @responses.activate
 def test_base_path_no_leading_slash():
     bad_base_path = "api/versioned/v1/"
-    unify = Client(auth, base_path=bad_base_path)
+    tamr = Client(auth, base_path=bad_base_path)
     full_url = "http://localhost:9100/api/versioned/v1/datasets/1"
     responses.add(responses.GET, full_url, status=200)
-    unify.get("datasets/1")
+    tamr.get("datasets/1")
 
 
 @responses.activate
 def test_base_path_no_slash():
     bad_base_path = "api/versioned/v1"
-    unify = Client(auth, base_path=bad_base_path)
+    tamr = Client(auth, base_path=bad_base_path)
     full_url = "http://localhost:9100/api/versioned/v1/datasets/1"
     responses.add(responses.GET, full_url, status=200)
-    unify.get("datasets/1")
+    tamr.get("datasets/1")
 
 
 @responses.activate
 def test_base_path_default_slash():
     standard_base_path = "/api/versioned/v1/"
-    unify = Client(auth, base_path=standard_base_path)
+    tamr = Client(auth, base_path=standard_base_path)
     full_url = "http://localhost:9100/api/versioned/v1/datasets/1"
     responses.add(responses.GET, full_url, status=200)
-    unify.get("datasets/1")
+    tamr.get("datasets/1")
 
 
 @responses.activate
 def test_base_path_no_base_path():
-    unify = Client(auth)
+    tamr = Client(auth)
     full_url = "http://localhost:9100/api/versioned/v1/datasets/2"
     responses.add(responses.GET, full_url, status=400)
-    unify.get("datasets/2")
+    tamr.get("datasets/2")
 
 
 @responses.activate

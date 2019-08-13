@@ -56,7 +56,7 @@ def test_record_clusters_with_data():
 
     datasets_json = [rcwd_json]
 
-    unify = Client(UsernamePasswordAuth("username", "password"))
+    tamr = Client(UsernamePasswordAuth("username", "password"))
 
     project_id = "1"
 
@@ -72,7 +72,7 @@ def test_record_clusters_with_data():
     responses.add(responses.GET, datasets_url, json=datasets_json)
     responses.add(responses.POST, refresh_url, json=refresh_json)
 
-    project = unify.projects.by_resource_id(project_id)
+    project = tamr.projects.by_resource_id(project_id)
     actual_rcwd_dataset = project.as_mastering().record_clusters_with_data()
     assert actual_rcwd_dataset.name == rcwd_json["name"]
 
