@@ -147,7 +147,7 @@ class TestProject(TestCase):
         project = Project(self.unify, self.project_json[0])
 
         new_project = (
-            ProjectBuilder(project)
+            project.builder()
             .with_name(self._updated_project_json["name"])
             .with_description(self._updated_project_json["description"])
             .with_external_id(self._updated_project_json["externalId"])
