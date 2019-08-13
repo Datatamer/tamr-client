@@ -78,6 +78,12 @@ Dataset
 .. autoclass:: tamr_unify_client.dataset.resource.Dataset
   :members:
 
+Dataset Spec
+^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.dataset.resource.DatasetSpec
+  :members:
+
 Dataset Collection
 ^^^^^^^^^^^^^^^^^^
 
@@ -198,6 +204,12 @@ Attribute Configuration
 """""""""""""""""""""""
 
 .. autoclass:: tamr_unify_client.project.attribute_configuration.resource.AttributeConfiguration
+  :members:
+
+Attribute Configuration Spec
+""""""""""""""""""""""""""""
+
+.. autoclass:: tamr_unify_client.project.attribute_configuration.resource.AttributeConfigurationSpec
   :members:
 
 Attribute Configuration Collection
