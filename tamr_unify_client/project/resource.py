@@ -104,9 +104,9 @@ class Project(BaseResource):
         :return: HTTP response from the server
         :rtype: :class:`requests.Response`
         """
-        dataset_id = dataset.relative_id.split("/")[-1]
+        params = {"id": dataset.relative_id}
         response = self.client.post(
-            self.api_path + "/inputDatasets" + f"?id={dataset_id}"
+            self.api_path + "/inputDatasets", params=params
         ).successful()
         return response
 
