@@ -155,6 +155,14 @@ class Project(BaseResource):
         info = AttributeMappingCollection(self.client, alias)
         return info
 
+    def builder(self):
+        """Returns a builder instance to modify this project.
+
+        :return: A builder with the same data as this project.
+        :rtype: :class:`~tamr_unify_client.attribute.resource.ProjectBuilder`
+        """
+        return ProjectBuilder(self)
+
     def __repr__(self):
         return (
             f"{self.__class__.__module__}."
