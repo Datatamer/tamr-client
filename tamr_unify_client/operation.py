@@ -4,8 +4,8 @@ from tamr_unify_client.base_resource import BaseResource
 
 
 class Operation(BaseResource):
-    """A long-running operation performed by Unify.
-    Operations appear on the "Jobs" page of the Unify UI.
+    """A long-running operation performed by Tamr.
+    Operations appear on the "Jobs" page of the Tamr UI.
 
     By design, client-side operations represent server-side operations *at a
     particular point in time* (namely, when the operation was fetched from the

@@ -3,7 +3,7 @@ from tamr_unify_client.operation import Operation
 
 
 class MachineLearningModel(BaseResource):
-    """A Unify Machine Learning model."""
+    """A Tamr Machine Learning model."""
 
     @classmethod
     def from_json(cls, client, resource_json, api_path=None):

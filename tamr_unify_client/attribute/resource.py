@@ -4,7 +4,7 @@ from tamr_unify_client.base_resource import BaseResource
 
 class Attribute(BaseResource):
     """
-    A Unify Attribute.
+    A Tamr Attribute.
 
     See https://docs.tamr.com/reference#attribute-types
     """
