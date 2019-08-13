@@ -1,3 +1,5 @@
+import copy
+
 from tamr_unify_client.base_resource import BaseResource
 
 
@@ -57,6 +59,41 @@ class AttributeConfiguration(BaseResource):
     def attribute_name(self):
         """:type: str"""
         return self._data.get("attributeName")
+
+    def with_enabled_for_ml(self, toggle):
+        """
+        Toggles the attribute configuration's enabledForMl field.
+
+        :param toggle: The new value for attribute configuration's enabledForMl field.
+        :type toggle: bool
+        :return: Updated attribute configuration.
+        :rtype: :class: `~tamr_unify_client.project.attribute_configuration.resource.AttributeConfiguration`
+        """
+        new_attr_config = AttributeConfiguration(self.client, self._data, self.api_path)
+        new_attr_config.__dict__ = copy.deepcopy(self.__dict__)
+        new_attr_config.__dict__["_data"]["enabledForMl"] = toggle
+        return new_attr_config
+
+    def _build(self):
+        """
+        Creates the new data for attribute configuration.
+
+        :return: Data for the attribute configuration.
+        :rtype: JSON
+        """
+        return self._data
+
+    def put(self):
+        """
+        Modifies attribute configuration fields with updates requested.
+
+        :return: Modified attribute configuration.
+        :rtype: :class:`~tamr_unify_client.project.attribute_configuration.resource.AttributeConfiguration`
+        """
+        new_data = (
+            self.client.put(self.api_path, json=self._build()).successful().json()
+        )
+        return AttributeConfiguration(self.client, new_data, self.api_path)
 
     def __repr__(self):
         return (
