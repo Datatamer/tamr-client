@@ -13,16 +13,16 @@ Example
   import os
 
   # grab credentials from environment variables
-  username = os.environ['UNIFY_USERNAME']
-  password = os.environ['UNIFY_PASSWORD']
+  username = os.environ['TAMR_USERNAME']
+  password = os.environ['TAMR_PASSWORD']
   auth = UsernamePasswordAuth(username, password)
 
-  host = 'localhost' # replace with your Tamr Unify host
-  unify = Client(auth, host=host)
+  host = 'localhost' # replace with your Tamr host
+  tamr = Client(auth, host=host)
 
-  # programmatically interace with Tamr Unify!
+  # programmatically interace with Tamr!
   # e.g. refresh your project's Unified Dataset
-  project = unify.projects.by_resource_id('3')
+  project = tamr.projects.by_resource_id('3')
   ud = project.unified_dataset()
   op = ud.refresh()
   assert op.succeeded()

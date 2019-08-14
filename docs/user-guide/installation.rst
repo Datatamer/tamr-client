@@ -33,8 +33,8 @@ Latest (unstable)
 
 To install the bleeding edge::
 
-  git clone https://github.com/Datatamer/unify-client-python
-  cd unify-client-python
+  git clone https://github.com/Datatamer/tamr-client
+  cd tamr-client
   pip install .
 
 Offline installs

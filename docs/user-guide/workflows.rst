@@ -10,15 +10,15 @@ Continuous Categorization
   from tamr_unify_client.auth import UsernamePasswordAuth
   import os
 
-  username = os.environ['UNIFY_USERNAME']
-  password = os.environ['UNIFY_PASSWORD']
+  username = os.environ['TAMR_USERNAME']
+  password = os.environ['TAMR_PASSWORD']
   auth = UsernamePasswordAuth(username, password)
 
   host = 'localhost' # replace with your host
-  unify = Client(auth)
+  tamr = Client(auth)
 
   project_id = "1" # replace with your project ID
-  project = unify.projects.by_resource_id(project_id)
+  project = tamr.projects.by_resource_id(project_id)
   project = project.as_categorization()
 
   unified_dataset = project.unified_dataset()
@@ -41,15 +41,15 @@ Continuous Mastering
   from tamr_unify_client.auth import UsernamePasswordAuth
   import os
 
-  username = os.environ['UNIFY_USERNAME']
-  password = os.environ['UNIFY_PASSWORD']
+  username = os.environ['TAMR_USERNAME']
+  password = os.environ['TAMR_PASSWORD']
   auth = UsernamePasswordAuth(username, password)
 
   host = 'localhost' # replace with your host
-  unify = Client(auth)
+  tamr = Client(auth)
 
   project_id = "1" # replace with your project ID
-  project = unify.projects.by_resource_id(project_id)
+  project = tamr.projects.by_resource_id(project_id)
   project = project.as_mastering()
 
   unified_dataset = project.unified_dataset()

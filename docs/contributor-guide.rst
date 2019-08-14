@@ -4,14 +4,14 @@ Contributor Guide
 Code of Conduct
 ---------------
 
-See `CODE_OF_CONDUCT.md <https://github.com/Datatamer/unify-client-python/blob/master/CODE_OF_CONDUCT.md>`_
+See `CODE_OF_CONDUCT.md <https://github.com/Datatamer/tamr-client/blob/master/CODE_OF_CONDUCT.md>`_
 
 .. _bug-reports-feature-requests:
 
 🐛 Bug Reports / 🙋 Feature Requests
 ------------------------------------
 
-Please leave bug reports and feature requests as `Github issues <https://github.com/Datatamer/unify-client-python/issues/new/choose>`_ .
+Please leave bug reports and feature requests as `Github issues <https://github.com/Datatamer/tamr-client/issues/new/choose>`_ .
 
 ----
 
@@ -26,7 +26,7 @@ should be avoided as much as possible.
 
 For larger, new features:
 
-  `Open an RFC issue <https://github.com/Datatamer/unify-client-python/issues/new/choose>`_ .
+  `Open an RFC issue <https://github.com/Datatamer/tamr-client/issues/new/choose>`_ .
   Discuss the feature with project maintainers to be sure that your change fits with the project
   vision and that you won't be wasting effort going in the wrong direction.
 
@@ -35,7 +35,7 @@ For larger, new features:
 Contributions / PRs should follow the
 `Forking Workflow <https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow>`_ :
 
-  1. Fork it: https://github.com/[your-github-username]/unify-client-python/fork
+  1. Fork it: https://github.com/[your-github-username]/tamr-client/fork
   2. Create your feature branch::
 
       git checkout -b my-new-feature
@@ -69,8 +69,8 @@ see the `official documentation <https://poetry.eustace.io/>`_ .
 
   2. Clone your fork and ``cd`` into the project::
 
-      git clone https://github.com/<your-github-username>/unify-client-python
-      cd unify-client-python
+      git clone https://github.com/<your-github-username>/tamr-client
+      cd tamr-client
 
   3. Use ``pyenv`` to install a compatible Python version (``3.6`` or newer; e.g. ``3.7.3``)::
 

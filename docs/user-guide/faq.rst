@@ -47,7 +47,7 @@ API docs to see if the feature you want is even possible.
 
 **2.** If this feature already exists, you can try it out!
 
-E.g. ``unify.datasets.by_name(some_dataset_name)``
+E.g. ``tamr.datasets.by_name(some_dataset_name)``
 
   **2.a** It works! 🎉
 

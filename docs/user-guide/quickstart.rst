@@ -13,11 +13,11 @@ Next, create an authentication provider and use that to create an authenticated 
 
   import os
 
-  username = os.environ['UNIFY_USERNAME']
-  password = os.environ['UNIFY_PASSWORD']
+  username = os.environ['TAMR_USERNAME']
+  password = os.environ['TAMR_PASSWORD']
 
   auth = UsernamePasswordAuth(username, password)
-  unify = Client(auth)
+  tamr = Client(auth)
 
 .. warning::
   For security, it's best to read your credentials in from environment variables
@@ -30,7 +30,7 @@ To point to a different host, set the host argument when instantiating the Clien
 
 For example, to connect to ``10.20.0.1``::
 
-  unify = Client(auth, host='10.20.0.1')
+  tamr = Client(auth, host='10.20.0.1')
 
 Top-level collections
 ---------------------
@@ -42,10 +42,10 @@ with simple ``for``-loops.
 
 E.g.::
 
-  for project in unify.projects:
+  for project in tamr.projects:
     print(project.name)
 
-  for dataset in unify.datasets:
+  for dataset in tamr.datasets:
     print(dataset.name)
 
 Fetch a specific resource
@@ -56,7 +56,7 @@ via the ``by_resource_id`` methods exposed by collections.
 
 E.g. To fetch the project with ID ``'1'``::
 
-  project = unify.projects.by_resource_id('1')
+  project = tamr.projects.by_resource_id('1')
 
 Resource relationships
 ----------------------
