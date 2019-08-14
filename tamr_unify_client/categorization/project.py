@@ -4,7 +4,7 @@ from tamr_unify_client.project.resource import Project
 
 
 class CategorizationProject(Project):
-    """A Categorization project in Unify."""
+    """A Categorization project in Tamr."""
 
     def model(self):
         """Machine learning model for this Categorization project.

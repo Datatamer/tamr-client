@@ -81,7 +81,7 @@ class DatasetCollection(BaseCollection):
 
     def create(self, creation_spec):
         """
-        Create a Dataset in Unify
+        Create a Dataset in Tamr
 
         :param creation_spec: Dataset creation specification should be formatted as specified in the `Public Docs for Creating a Dataset <https://docs.tamr.com/reference#create-a-dataset>`_.
         :type creation_spec: dict[str, str]
@@ -107,9 +107,9 @@ class DatasetCollection(BaseCollection):
         :type df: :class:`pandas.DataFrame`
         :param primary_key_name: The name of the primary key of the dataset. Must be a column of `df`.
         :type primary_key_name: str
-        :param dataset_name: What to name the dataset in Unify. There cannot already be a dataset with this name.
+        :param dataset_name: What to name the dataset in Tamr. There cannot already be a dataset with this name.
         :type dataset_name: str
-        :param ignore_nan: Whether to convert `NaN` values to `null` before upserting records to Unify. If `False` and
+        :param ignore_nan: Whether to convert `NaN` values to `null` before upserting records to Tamr. If `False` and
             `NaN` is in `df`, this function will fail. Optional, default is `True`.
         :type ignore_nan: bool
         :returns: The newly created dataset.

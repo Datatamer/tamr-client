@@ -24,17 +24,17 @@ Response.successful = successful
 
 
 class Client:
-    """Python Client for Unify API. Each client is specific to a specific origin
+    """Python Client for Tamr API. Each client is specific to a specific origin
     (protocol, host, port).
 
-    :param auth: Unify-compatible Authentication provider.
+    :param auth: Tamr-compatible Authentication provider.
         **Recommended**: use one of the classes described in :ref:`authentication`
     :type auth: :class:`requests.auth.AuthBase`
-    :param host: Host address of remote Unify instance (e.g. `10.0.10.0`). Default: `'localhost'`
+    :param host: Host address of remote Tamr instance (e.g. `10.0.10.0`). Default: `'localhost'`
     :type host: str
     :param protocol: Either `'http'` or `'https'`. Default: `'http'`
     :type protocol: str
-    :param port: Unify instance main port. Default: `9100`
+    :param port: Tamr instance main port. Default: `9100`
     :type port: int
     :param base_path: Base API path. Requests made by this client will be relative to this path. Default: `'api/versioned/v1/'`
     :type base_path: str
@@ -135,7 +135,7 @@ class Client:
 
     @property
     def projects(self):
-        """Collection of all projects on this Unify instance.
+        """Collection of all projects on this Tamr instance.
 
         :return: Collection of all projects.
         :rtype: :class:`~tamr_unify_client.project.collection.ProjectCollection`
@@ -144,7 +144,7 @@ class Client:
 
     @property
     def datasets(self):
-        """Collection of all datasets on this Unify instance.
+        """Collection of all datasets on this Tamr instance.
 
         :return: Collection of all datasets.
         :rtype: :class:`~tamr_unify_client.dataset.collection.DatasetCollection`

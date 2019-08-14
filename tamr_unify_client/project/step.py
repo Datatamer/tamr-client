@@ -1,5 +1,5 @@
 class ProjectStep:
-    """A step of a Unify project. This is not a `BaseResource` because it has no API path
+    """A step of a Tamr project. This is not a `BaseResource` because it has no API path
     and cannot be directly retrieved or modified.
 
     See https://docs.tamr.com/reference#retrieve-downstream-dataset-usage
@@ -31,7 +31,7 @@ class ProjectStep:
 
     @property
     def type(self):
-        """A Unify project type, listed in https://docs.tamr.com/reference#create-a-project.
+        """A Tamr project type, listed in https://docs.tamr.com/reference#create-a-project.
 
         :type: str"""
         return self._data.get("type")

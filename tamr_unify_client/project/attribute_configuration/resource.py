@@ -2,7 +2,7 @@ from tamr_unify_client.base_resource import BaseResource
 
 
 class AttributeConfiguration(BaseResource):
-    """The configurations of Unify Attributes.
+    """The configurations of Tamr Attributes.
 
    See https://docs.tamr.com/reference#the-attribute-configuration-object
    """

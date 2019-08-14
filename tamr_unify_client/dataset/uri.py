@@ -30,7 +30,7 @@ class DatasetURI:
     def dataset(self):
         """Fetch the dataset that this identifier points to.
 
-        :return: A Unify dataset.
+        :return: A Tamr dataset.
         :rtype: :class: `~tamr_unify_client.dataset.resource.Dataset`
         """
         return self.client.datasets.by_resource_id(self.resource_id)

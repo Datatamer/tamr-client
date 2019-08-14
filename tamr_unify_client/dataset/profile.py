@@ -3,7 +3,7 @@ from tamr_unify_client.operation import Operation
 
 
 class DatasetProfile(BaseResource):
-    """Profile info of a Unify dataset."""
+    """Profile info of a Tamr dataset."""
 
     @classmethod
     def from_json(cls, client, resource_json, api_path=None) -> "DatasetProfile":
