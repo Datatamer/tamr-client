@@ -13,7 +13,7 @@ def test_http_error():
     endpoint = f"http://localhost:9100/api/versioned/v1/projects/1"
     responses.add(responses.GET, endpoint, status=401)
     auth = UsernamePasswordAuth("nonexistent-username", "invalid-password")
-    unify = Client(auth)
+    tamr = Client(auth)
     with raises(HTTPError) as e:
-        unify.projects.by_resource_id("1")
+        tamr.projects.by_resource_id("1")
     assert f"401 Client Error: Unauthorized for url: {endpoint}" in str(e)

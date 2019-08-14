@@ -14,13 +14,13 @@ from tamr_unify_client.project.attribute_mapping.collection import (
 class TestAttributeMappingCollection(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     @responses.activate
     def test_by_resource_id(self):
         url = "http://localhost:9100/api/versioned/v1/projects/4/attributeMappings"
         responses.add(responses.GET, url, json=self.mappings_json)
-        tester = AttributeMappingCollection(self.unify, url)
+        tester = AttributeMappingCollection(self.tamr, url)
         by_resource = tester.by_resource_id("19629-12")
         self.assertEqual(
             by_resource.unified_attribute_name,
@@ -31,7 +31,7 @@ class TestAttributeMappingCollection(TestCase):
     def test_by_relative_id(self):
         url = "http://localhost:9100/api/versioned/v1/projects/4/attributeMappings"
         responses.add(responses.GET, url, json=self.mappings_json)
-        tester = AttributeMappingCollection(self.unify, url)
+        tester = AttributeMappingCollection(self.tamr, url)
         by_relative = tester.by_relative_id("projects/4/attributeMappings/19629-12")
         self.assertEqual(
             by_relative.unified_attribute_name,
@@ -51,7 +51,7 @@ class TestAttributeMappingCollection(TestCase):
             responses.POST, url, partial(create_callback, snoop=snoop_dict)
         )
         map_collection = AttributeMappingCollection(
-            self.unify, "projects/4/attributeMappings"
+            self.tamr, "projects/4/attributeMappings"
         )
         test = map_collection.create(self.create_json)
         self.assertEqual(test.input_dataset_name, self.create_json["inputDatasetName"])

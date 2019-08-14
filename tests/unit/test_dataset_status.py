@@ -20,8 +20,8 @@ def test_dataset_status():
     responses.add(responses.GET, dataset_url, json={})
     responses.add(responses.GET, status_url, json=status_json)
     auth = UsernamePasswordAuth("username", "password")
-    unify = Client(auth)
+    tamr = Client(auth)
 
-    dataset = unify.datasets.by_resource_id(dataset_id)
+    dataset = tamr.datasets.by_resource_id(dataset_id)
     status = dataset.status()
     assert status._data == status_json

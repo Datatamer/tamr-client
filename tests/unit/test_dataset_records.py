@@ -12,7 +12,7 @@ from tamr_unify_client.auth import UsernamePasswordAuth
 class TestDatasetRecords(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     @responses.activate
     def test_get(self):
@@ -24,7 +24,7 @@ class TestDatasetRecords(TestCase):
             body="\n".join([simplejson.dumps(l) for l in self._records_json]),
         )
 
-        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+        dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
         records = list(dataset.records())
         self.assertListEqual(records, self._records_json)
 
@@ -35,7 +35,7 @@ class TestDatasetRecords(TestCase):
             return 200, {}, simplejson.dumps(self._response_json)
 
         responses.add(responses.GET, self._dataset_url, json={})
-        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+        dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
 
         records_url = f"{self._dataset_url}:updateRecords"
         updates = TestDatasetRecords.records_to_updates(self._records_json)
@@ -55,7 +55,7 @@ class TestDatasetRecords(TestCase):
             return status, {}, simplejson.dumps(self._response_json)
 
         responses.add(responses.GET, self._dataset_url, json={})
-        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+        dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
 
         records_url = f"{self._dataset_url}:updateRecords"
         updates = TestDatasetRecords.records_to_updates(self._nan_records_json)
@@ -86,7 +86,7 @@ class TestDatasetRecords(TestCase):
             return 200, {}, simplejson.dumps(self._response_json)
 
         responses.add(responses.GET, self._dataset_url, json={})
-        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+        dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
 
         records_url = f"{self._dataset_url}:updateRecords"
         updates = TestDatasetRecords.records_to_updates(self._records_json)
@@ -106,7 +106,7 @@ class TestDatasetRecords(TestCase):
             return 200, {}, simplejson.dumps(self._response_json)
 
         responses.add(responses.GET, self._dataset_url, json={})
-        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+        dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
 
         records_url = f"{self._dataset_url}:updateRecords"
         deletes = TestDatasetRecords.records_to_deletes(self._records_json)
@@ -126,7 +126,7 @@ class TestDatasetRecords(TestCase):
             return 200, {}, simplejson.dumps(self._response_json)
 
         responses.add(responses.GET, self._dataset_url, json={})
-        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+        dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
 
         records_url = f"{self._dataset_url}:updateRecords"
         deletes = TestDatasetRecords.records_to_deletes(self._records_json)
@@ -143,7 +143,7 @@ class TestDatasetRecords(TestCase):
     @responses.activate
     def test_delete_all(self):
         responses.add(responses.GET, self._dataset_url, json={})
-        dataset = self.unify.datasets.by_resource_id(self._dataset_id)
+        dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
 
         responses.add(responses.DELETE, self._dataset_url + "/records", status=204)
         response = dataset.delete_all_records()

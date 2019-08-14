@@ -9,7 +9,7 @@ from tamr_unify_client.auth import UsernamePasswordAuth
 class TestCategorization(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     @responses.activate
     def test_taxonomy(self):
@@ -18,7 +18,7 @@ class TestCategorization(TestCase):
         responses.add(responses.GET, project_url, json=self._project_json)
         responses.add(responses.POST, taxonomy_url, json=self._taxonomy_json)
 
-        project = self.unify.projects.by_resource_id("1").as_categorization()
+        project = self.tamr.projects.by_resource_id("1").as_categorization()
         creation_spec = {"name": "Test Taxonomy"}
         u = project.create_taxonomy(creation_spec)
 

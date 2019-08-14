@@ -55,7 +55,7 @@ def test_published_clusters_with_data():
 
     datasets_json = [pcwd_json]
 
-    unify = Client(UsernamePasswordAuth("username", "password"))
+    tamr = Client(UsernamePasswordAuth("username", "password"))
 
     project_id = "1"
 
@@ -71,7 +71,7 @@ def test_published_clusters_with_data():
     responses.add(responses.GET, datasets_url, json=datasets_json)
     responses.add(responses.POST, refresh_url, json=refresh_json)
 
-    project = unify.projects.by_resource_id(project_id)
+    project = tamr.projects.by_resource_id(project_id)
     actual_pcwd_dataset = project.as_mastering().published_clusters_with_data()
     assert actual_pcwd_dataset.name == pcwd_json["name"]
 

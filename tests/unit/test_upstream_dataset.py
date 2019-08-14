@@ -54,7 +54,7 @@ def test_upstream_dataset():
         "resourceId": "8",
     }
 
-    unify = Client(UsernamePasswordAuth("username", "password"))
+    tamr = Client(UsernamePasswordAuth("username", "password"))
 
     url_prefix = "http://localhost:9100/api/versioned/v1/"
     dataset_url = url_prefix + "datasets/12"
@@ -65,7 +65,7 @@ def test_upstream_dataset():
     responses.add(responses.GET, upstream_url, json=upstream_json)
     responses.add(responses.GET, upstream_ds_url, json=upstream_ds_json)
 
-    project_ds = unify.datasets.by_relative_id("datasets/12")
+    project_ds = tamr.datasets.by_relative_id("datasets/12")
     actual_upstream_ds = project_ds.upstream_datasets()
     uri_dataset = actual_upstream_ds[0].dataset()
 

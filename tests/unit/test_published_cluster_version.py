@@ -21,7 +21,7 @@ from tamr_unify_client.project.resource import Project
 class PublishedClusterTest(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     def test_metric(self):
         metric_json = {"metricName": "recordCount", "metricValue": "1"}
@@ -85,7 +85,7 @@ class PublishedClusterTest(TestCase):
             snoop["payload"] = request.body
             return 200, {}, "\n".join(json.dumps(c) for c in self._versions_json)
 
-        p = Project.from_json(self.unify, self._project_json).as_mastering()
+        p = Project.from_json(self.tamr, self._project_json).as_mastering()
         post_url = f"http://localhost:9100/api/versioned/v1/{p.api_path}/publishedClusterVersions"
         snoop = {}
         responses.add_callback(
@@ -109,7 +109,7 @@ class PublishedClusterTest(TestCase):
             snoop["payload"] = request.body
             return 200, {}, "\n".join(json.dumps(c) for c in self._record_versions_json)
 
-        p = Project.from_json(self.unify, self._project_json).as_mastering()
+        p = Project.from_json(self.tamr, self._project_json).as_mastering()
         base_url = "http://localhost:9100/api/versioned/v1"
         post_url = f"{base_url}/{p.api_path}/recordPublishedClusterVersions"
         snoop = {}

@@ -10,11 +10,11 @@ from tamr_unify_client.categorization.category.resource import Category
 class TestCategory(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     def test_resource(self):
         alias = "projects/1/taxonomy/categories/1"
-        row_num = Category(self.unify, self._categories_json[0], alias)
+        row_num = Category(self.tamr, self._categories_json[0], alias)
 
         expected = alias
         self.assertEqual(expected, row_num.relative_id)
@@ -27,14 +27,14 @@ class TestCategory(TestCase):
 
     def test_resource_from_json(self):
         alias = "projects/1/taxonomy/categories/1"
-        expected = Category(self.unify, self._categories_json[0], alias)
-        actual = Category.from_json(self.unify, self._categories_json[0], alias)
+        expected = Category(self.tamr, self._categories_json[0], alias)
+        actual = Category.from_json(self.tamr, self._categories_json[0], alias)
         self.assertEqual(repr(expected), repr(actual))
 
     @responses.activate
     def test_path(self):
         t2 = Category(
-            self.unify, self._categories_json[1], "projects/1/taxonomy/categories/2"
+            self.tamr, self._categories_json[1], "projects/1/taxonomy/categories/2"
         )
 
         parent_url = (

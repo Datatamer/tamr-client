@@ -16,7 +16,7 @@ from tamr_unify_client.project.resource import Project
 class TestTaxonomy(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     @responses.activate
     def test_categories(self):
@@ -25,12 +25,12 @@ class TestTaxonomy(TestCase):
         )
         responses.add(responses.GET, cat_url, json=self._categories_json)
 
-        t = Taxonomy(self.unify, self._taxonomy_json)
+        t = Taxonomy(self.tamr, self._taxonomy_json)
         c = list(t.categories())
 
         cats = [
-            Category(self.unify, self._categories_json[0]),
-            Category(self.unify, self._categories_json[1]),
+            Category(self.tamr, self._categories_json[0]),
+            Category(self.tamr, self._categories_json[1]),
         ]
         self.assertEqual(repr(c), repr(cats))
 
@@ -41,7 +41,7 @@ class TestTaxonomy(TestCase):
         )
         responses.add(responses.GET, cat_url, json=self._categories_json[0])
 
-        c = CategoryCollection(self.unify, "projects/1/taxonomy/categories")
+        c = CategoryCollection(self.tamr, "projects/1/taxonomy/categories")
         r = c.by_relative_id("projects/1/taxonomy/categories/1")
         self.assertEqual(r._data, self._categories_json[0])
         r = c.by_resource_id("1")
@@ -56,7 +56,7 @@ class TestTaxonomy(TestCase):
         responses.add(responses.POST, post_url, json=self._categories_json[0])
 
         alias = "projects/1/taxonomy/categories"
-        coll = CategoryCollection(self.unify, alias)
+        coll = CategoryCollection(self.tamr, alias)
 
         creation_spec = {
             "name": self._categories_json[0]["name"],
@@ -80,7 +80,7 @@ class TestTaxonomy(TestCase):
         )
 
         alias = "projects/1/taxonomy/categories"
-        coll = CategoryCollection(self.unify, alias)
+        coll = CategoryCollection(self.tamr, alias)
 
         creation_specs = [
             {
@@ -108,7 +108,7 @@ class TestTaxonomy(TestCase):
         responses.add(responses.GET, url, status=404)
 
         project = Project(
-            self.unify, {"type": "CATEGORIZATION"}, "projects/1"
+            self.tamr, {"type": "CATEGORIZATION"}, "projects/1"
         ).as_categorization()
         taxonomy = project.taxonomy()
         self.assertEqual(taxonomy._data, self._taxonomy_json)
@@ -124,7 +124,7 @@ class TestTaxonomy(TestCase):
         responses.add(responses.DELETE, url, status=204)
         responses.add(responses.GET, url, status=404)
 
-        categories = CategoryCollection(self.unify, "projects/1/taxonomy/categories")
+        categories = CategoryCollection(self.tamr, "projects/1/taxonomy/categories")
         category = categories.by_resource_id("1")
         self.assertEqual(category._data, self._categories_json[0])
 

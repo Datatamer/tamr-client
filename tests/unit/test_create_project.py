@@ -6,7 +6,7 @@ from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
 
 auth = UsernamePasswordAuth("username", "password")
-unify = Client(auth)
+tamr = Client(auth)
 
 
 @responses.activate
@@ -26,6 +26,6 @@ def test_create_project():
     responses.add(responses.POST, projects_url, json=creation_spec, status=204)
     responses.add(responses.GET, project_url, json=creation_spec)
 
-    u = unify.projects.create(creation_spec)
-    p = unify.projects.by_resource_id("1")
+    u = tamr.projects.create(creation_spec)
+    p = tamr.projects.by_resource_id("1")
     assert print(p) == print(u)

@@ -38,15 +38,15 @@ datasets_url = f"http://localhost:9100/api/versioned/v1/datasets?filter=external
 def test_dataset_by_external_id__raises_when_not_found():
     responses.add(responses.GET, datasets_url, json=[])
     auth = UsernamePasswordAuth("username", "password")
-    unify = Client(auth)
+    tamr = Client(auth)
     with pytest.raises(KeyError):
-        unify.datasets.by_external_id(dataset_external_id)
+        tamr.datasets.by_external_id(dataset_external_id)
 
 
 @responses.activate
 def test_dataset_by_external_id_succeeds():
     responses.add(responses.GET, datasets_url, json=dataset_json)
     auth = UsernamePasswordAuth("username", "password")
-    unify = Client(auth)
-    actual_dataset = unify.datasets.by_external_id(dataset_external_id)
+    tamr = Client(auth)
+    actual_dataset = tamr.datasets.by_external_id(dataset_external_id)
     assert actual_dataset._data == dataset_json[0]

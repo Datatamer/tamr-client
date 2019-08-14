@@ -12,11 +12,11 @@ from tamr_unify_client.dataset.resource import Dataset
 class TestAttribute(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     def test_resource(self):
         alias = "datasets/1/attributes/RowNum"
-        row_num = Attribute(self.unify, self._attributes_json[0], alias)
+        row_num = Attribute(self.tamr, self._attributes_json[0], alias)
 
         expected = alias
         self.assertEqual(expected, row_num.relative_id)
@@ -32,13 +32,13 @@ class TestAttribute(TestCase):
 
     def test_resource_from_json(self):
         alias = "datasets/1/attributes/RowNum"
-        expected = Attribute(self.unify, self._attributes_json[0], alias)
-        actual = Attribute.from_json(self.unify, self._attributes_json[0], alias)
+        expected = Attribute(self.tamr, self._attributes_json[0], alias)
+        actual = Attribute.from_json(self.tamr, self._attributes_json[0], alias)
         self.assertEqual(repr(expected), repr(actual))
 
     def test_simple_type(self):
         alias = "datasets/1/attributes/RowNum"
-        row_num = Attribute(self.unify, self._attributes_json[0], alias)
+        row_num = Attribute(self.tamr, self._attributes_json[0], alias)
         row_num_type = row_num.type
         expected = self._attributes_json[0]["type"]["baseType"]
         self.assertEqual(expected, row_num_type.base_type)
@@ -47,7 +47,7 @@ class TestAttribute(TestCase):
 
     def test_complex_type(self):
         alias = "datasets/1/attributes/geom"
-        geom = Attribute(self.unify, self._attributes_json[1], alias)
+        geom = Attribute(self.tamr, self._attributes_json[1], alias)
         self.assertEqual("RECORD", geom.type.base_type)
         self.assertIsNone(geom.type.inner_type)
         self.assertEqual(3, len(list(geom.type.attributes)))
@@ -65,7 +65,7 @@ class TestAttribute(TestCase):
         attributes_url = f"http://localhost:9100/api/versioned/v1/datasets/1/attributes"
         responses.add(responses.GET, dataset_url, json=self._dataset_json)
         responses.add(responses.GET, attributes_url, json=self._attributes_json)
-        dataset = self.unify.datasets.by_resource_id("1")
+        dataset = self.tamr.datasets.by_resource_id("1")
         self.assertSequenceEqual(
             self._dataset_json["keyAttributeNames"], dataset.key_attribute_names
         )
@@ -81,7 +81,7 @@ class TestAttribute(TestCase):
         responses.add(responses.DELETE, url, status=204)
         responses.add(responses.GET, url, status=404)
 
-        dataset = Dataset(self.unify, self._dataset_json)
+        dataset = Dataset(self.tamr, self._dataset_json)
         attribute = dataset.attributes.by_resource_id("RowNum")
         self.assertEqual(attribute._data, self._attributes_json[0])
 

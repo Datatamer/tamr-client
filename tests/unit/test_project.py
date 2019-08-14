@@ -10,7 +10,7 @@ from tamr_unify_client.project.resource import Project
 class TestProject(TestCase):
     def setUp(self):
         auth = UsernamePasswordAuth("username", "password")
-        self.unify = Client(auth)
+        self.tamr = Client(auth)
 
     @responses.activate
     def test_project_add_input_dataset(self):
@@ -26,8 +26,8 @@ class TestProject(TestCase):
             responses.GET, self.input_datasets_url, json=self.get_input_datasets_json
         )
 
-        dataset = self.unify.datasets.by_external_id(self.dataset_external_id)
-        project = self.unify.projects.by_external_id(self.project_external_id)
+        dataset = self.tamr.datasets.by_external_id(self.dataset_external_id)
+        project = self.tamr.projects.by_external_id(self.project_external_id)
         project.add_input_dataset(dataset)
         alias = project.api_path + "/inputDatasets"
         input_datasets = project.client.get(alias).successful().json()
@@ -43,7 +43,7 @@ class TestProject(TestCase):
         )
         responses.add(responses.GET, self.input_datasets_url, json=[])
 
-        project = Project(self.unify, self.project_json[0])
+        project = Project(self.tamr, self.project_json[0])
         dataset = next(project.input_datasets().stream())
 
         response = project.remove_input_dataset(dataset)
@@ -56,12 +56,12 @@ class TestProject(TestCase):
     def test_project_by_external_id__raises_when_not_found(self):
         responses.add(responses.GET, self.projects_url, json=[])
         with self.assertRaises(KeyError):
-            self.unify.projects.by_external_id(self.project_external_id)
+            self.tamr.projects.by_external_id(self.project_external_id)
 
     @responses.activate
     def test_project_by_external_id_succeeds(self):
         responses.add(responses.GET, self.projects_url, json=self.project_json)
-        actual_project = self.unify.projects.by_external_id(self.project_external_id)
+        actual_project = self.tamr.projects.by_external_id(self.project_external_id)
         self.assertEqual(self.project_json[0], actual_project._data)
 
     @responses.activate
@@ -72,7 +72,7 @@ class TestProject(TestCase):
             self.project_attributes_url,
             json=self.project_attributes_json,
         )
-        project = self.unify.projects.by_external_id(self.project_external_id)
+        project = self.tamr.projects.by_external_id(self.project_external_id)
         attributes = list(project.attributes)
         self.assertEqual(len(self.project_attributes_json), len(attributes))
 
@@ -98,21 +98,21 @@ class TestProject(TestCase):
             json=self.project_attributes_json[0],
             status=204,
         )
-        project = self.unify.projects.by_external_id(self.project_external_id)
+        project = self.tamr.projects.by_external_id(self.project_external_id)
         # project.attributes.create MUST make a POST request to self.project_attributes_url
         # If it posts to some other URL, responses will raise an exception;
         # If it does not post to any URL, responses will also raise an exception.
         project.attributes.create(self.project_attributes_json[0])
 
     def test_project_get_input_datasets(self):
-        p = Project(self.unify, self.project_json[0])
+        p = Project(self.tamr, self.project_json[0])
         datasets = p.input_datasets()
         self.assertEqual(datasets.api_path, "projects/1/inputDatasets")
 
     @responses.activate
     def test_return_attribute_collection(self):
         responses.add(responses.GET, self.projects_url, json=self.project_json)
-        project = self.unify.projects.by_external_id(self.project_external_id)
+        project = self.tamr.projects.by_external_id(self.project_external_id)
         attribute_configs = project.attribute_configurations()
         self.assertEqual(
             attribute_configs.api_path, "projects/1/attributeConfigurations"
@@ -123,7 +123,7 @@ class TestProject(TestCase):
         responses.add(responses.GET, self.projects_url, json=self.project_json)
         map_url = "http://localhost:9100/api/versioned/v1/projects/1/attributeMappings"
         responses.add(responses.GET, map_url, json=self.mappings_json)
-        project = self.unify.projects.by_external_id(self.project_external_id)
+        project = self.tamr.projects.by_external_id(self.project_external_id)
         attribute_mappings = project.attribute_mappings()
         self.assertEqual(
             attribute_mappings.by_resource_id("19689-14").unified_dataset_name,

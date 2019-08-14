@@ -45,9 +45,9 @@ def test_binning_model_records():
         body="\n".join(json.dumps(body) for body in records_body),
     )
 
-    unify = Client(UsernamePasswordAuth("username", "password"))
+    tamr = Client(UsernamePasswordAuth("username", "password"))
 
-    project = unify.projects.by_resource_id("1").as_mastering()
+    project = tamr.projects.by_resource_id("1").as_mastering()
     binning_model = project.binning_model()
 
     binning_model_records = list(binning_model.records())
@@ -147,9 +147,9 @@ def test_binning_model_update_records():
         callback=partial(update_callback, snoop=snoop_dict),
     )
 
-    unify = Client(UsernamePasswordAuth("username", "password"))
+    tamr = Client(UsernamePasswordAuth("username", "password"))
 
-    project = unify.projects.by_resource_id("1").as_mastering()
+    project = tamr.projects.by_resource_id("1").as_mastering()
     binning_model = project.binning_model()
 
     updates = [
