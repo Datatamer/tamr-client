@@ -17,8 +17,8 @@ You can use ``os.environ`` to read in your credentials from environment variable
 
   from tamr_unify_client.auth import UsernamePasswordAuth
 
-  username = os.environ['UNIFY_USERNAME'] # replace with your username environment variable name
-  password = os.environ['UNIFY_PASSWORD'] # replace with your password environment variable name
+  username = os.environ['TAMR_USERNAME'] # replace with your username environment variable name
+  password = os.environ['TAMR_PASSWORD'] # replace with your password environment variable name
 
   auth = UsernamePasswordAuth(username, password)
 
@@ -26,7 +26,7 @@ You can use ``os.environ`` to read in your credentials from environment variable
 You can pass in the environment variables from the terminal by including them
 before your command::
 
-  UNIFY_USERNAME="my Unify username" UNIFY_PASSWORD="my Unify password" python my_script.py
+  TAMR_USERNAME="my Tamr username" TAMR_PASSWORD="my Tamr password" python my_script.py
 
 You can also create an ``.sh`` file to store your environment variables and
 simply ``source`` that file before running your script.
@@ -39,8 +39,8 @@ You can also store your credentials in a secure credentials file::
 
   # credentials.yaml
   ---
-  username: "my unify username"
-  password: "my unify password"
+  username: "my tamr username"
+  password: "my tamr password"
 
 Then ``pip install pyyaml`` read the credentials in your Python code::
 

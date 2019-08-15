@@ -24,11 +24,11 @@ You can set up HTTP-API-call logging on any client via
 standard `Python logging mechanisms <https://docs.python.org/3/library/logging.html>`_ ::
 
   from tamr_unify_client import Client
-  from unify_api_v1.auth import UsernamePasswordAuth
+  from tamr_unify_client import UsernamePasswordAuth
   import logging
 
   auth = UsernamePasswordAuth("username", "password")
-  unify = Client(auth)
+  tamr = Client(auth)
 
   # Reload the `logging` library since other libraries (like `requests`) already
   # configure logging differently. See: https://stackoverflow.com/a/53553516/1490091
@@ -38,7 +38,7 @@ standard `Python logging mechanisms <https://docs.python.org/3/library/logging.h
   logging.basicConfig(
     level=logging.INFO, format="%(message)s", filename=log_path, filemode="w"
   )
-  unify.logger = logging.getLogger(name)
+  tamr.logger = logging.getLogger(name)
 
 By default, when logging is set up, the client will log ``{method} {url} :
 {response_status}`` for each API call.
@@ -56,8 +56,8 @@ You can customize this by passing in a value for ``log_entry``::
     "json": response.json(),
   })
 
-  # after configuring `unify.logger`
-  unify.log_entry = log_entry
+  # after configuring `tamr.logger`
+  tamr.log_entry = log_entry
 
 .. _custom-http-requests-and-unversioned-api-access:
 
@@ -81,11 +81,11 @@ The client exposes a ``request`` method with the same interface as
 
   # import Python Client library and configure your client
 
-  unify = Client(auth)
-  # do stuff with the `unify` client
+  tamr = Client(auth)
+  # do stuff with the `tamr` client
 
   # now I NEED to send a request to a specific endpoint
-  response = unify.request('GET', 'relative/path/to/resource')
+  response = tamr.request('GET', 'relative/path/to/resource')
 
 This will send a request relative to the base_path registered with the client.
 If you provide an absolute path to the resource, the base_path will be ignored
@@ -93,16 +93,16 @@ when composing the request::
 
   # import Python Client library and configure your client
 
-  unify = Client(auth)
+  tamr = Client(auth)
 
   # request a resource outside the configured base_path
-  response = unify.request('GET', '/absolute/path/to/resource')
+  response = tamr.request('GET', '/absolute/path/to/resource')
 
 You can also use the ``get``, ``post``, ``put``, ``delete`` convenience
 methods::
 
   # e.g. `get` convenience method
-  response = unify.get('relative/path/to/resource')
+  response = tamr.get('relative/path/to/resource')
 
 Custom Host / Port / Base API path
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -114,8 +114,8 @@ Then just call ``request`` as described above::
 
   # import Python Client library and configure your client
 
-  unify = api.Client(auth)
-  # do stuff with the `unify` client
+  tamr = api.Client(auth)
+  # do stuff with the `tamr` client
 
   # now I NEED to send requests to a different host/port/base API path etc..
   # NOTE: in this example, we reuse `auth` from the first client, but we could
@@ -141,8 +141,8 @@ Authentication provider directly to the ``requests`` library::
   import os
   import requests
 
-  username = os.environ['UNIFY_USERNAME']
-  password =  os.environ['UNIFY_PASSWORD']
+  username = os.environ['TAMR_USERNAME']
+  password =  os.environ['TAMR_PASSWORD']
   auth = UsernamePasswordAuth(username, password)
 
   response = requests.request('GET', 'some/specific/endpoint', auth=auth)
