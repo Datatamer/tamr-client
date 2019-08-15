@@ -192,6 +192,15 @@ class ProjectSpec:
         """
         return ProjectSpec(resource.client, deepcopy(resource._data), resource.api_path)
 
+    @staticmethod
+    def new():
+        """Creates a blank spec that could be used to construct a new project.
+
+        :return: The empty spec.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectSpec`
+        """
+        return ProjectSpec(None, {}, None)
+
     def from_data(self, data):
         """Creates a spec with the same client and API path as this one, but new data.
 
@@ -277,8 +286,5 @@ class ProjectSpec:
         return (
             f"{self.__class__.__module__}."
             f"{self.__class__.__qualname__}("
-            f"relative_id={self._data['relativeId']!r}, "
-            f"name={self._data['name']!r}, "
-            f"external_id={self._data['externalId']!r}, "
-            f"description={self._data['description']!r})"
+            f"dict={self._data})"
         )
