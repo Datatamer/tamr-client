@@ -1,3 +1,5 @@
+from functools import partial
+import json
 from unittest import TestCase
 
 import responses
@@ -7,6 +9,10 @@ from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client.project.attribute_configuration.collection import (
     AttributeConfigurationCollection,
 )
+from tamr_unify_client.project.attribute_configuration.resource import (
+    AttributeConfigurationSpec,
+)
+from tamr_unify_client.project.resource import Project
 
 
 class TestAttributeConfigurationCollection(TestCase):
@@ -37,20 +43,54 @@ class TestAttributeConfigurationCollection(TestCase):
 
     @responses.activate
     def test_create(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = json.loads(request.body)
+            return 204, {}, json.dumps(self.created_json)
+
         url = (
             f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
         )
         project_url = f"http://localhost:9100/api/versioned/v1/projects/1"
         responses.add(responses.GET, project_url, json=self.project_json)
-        responses.add(responses.POST, url, json=self.create_json, status=204)
-        responses.add(responses.GET, url, json=self.create_json)
+        snoop_dict = {}
+        responses.add_callback(
+            responses.POST, url, partial(create_callback, snoop=snoop_dict)
+        )
+        responses.add(responses.GET, url, json=self.created_json)
 
         attributeconfig = self.tamr.projects.by_resource_id(
             "1"
         ).attribute_configurations()
         create = attributeconfig.create(self.create_json)
 
-        self.assertEqual(create.relative_id, self.create_json["relativeId"])
+        self.assertEqual(create.relative_id, self.created_json["relativeId"])
+        self.assertEqual(snoop_dict["payload"], self.create_json)
+
+    @responses.activate
+    def test_create_from_spec(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = json.loads(request.body)
+            return 204, {}, json.dumps(self.created_json)
+
+        url = (
+            f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
+        )
+        snoop_dict = {}
+        responses.add_callback(
+            responses.POST, url, partial(create_callback, snoop=snoop_dict)
+        )
+
+        configs = Project(self.tamr, self.project_json).attribute_configurations()
+        spec = (
+            AttributeConfigurationSpec.new()
+            .with_attribute_name(self.create_json["attributeName"])
+            .with_enabled_for_ml(self.create_json["enabledForMl"])
+            .with_similarity_function(self.create_json["similarityFunction"])
+        )
+        create = configs.create(spec.to_dict())
+
+        self.assertEqual(create.relative_id, self.created_json["relativeId"])
+        self.assertEqual(snoop_dict["payload"], self.create_json)
 
     @responses.activate
     def test_stream(self):
@@ -65,15 +105,19 @@ class TestAttributeConfigurationCollection(TestCase):
         self.assertEqual(self.acc_json, stream_content)
 
     create_json = {
+        "similarityFunction": "ABSOLUTE_DIFF",
+        "enabledForMl": False,
+        "attributeName": "Tester",
+    }
+
+    created_json = {
+        **create_json,
+        "attributeRole": "",
+        "tokenizer": "",
+        "numericFieldResolution": [],
         "id": "unify://unified-data/v1/projects/1/attributeConfigurations/35",
         "relativeId": "projects/1/attributeConfigurations/35",
         "relativeAttributeId": "datasets/79/attributes/Tester",
-        "attributeRole": "",
-        "similarityFunction": "ABSOLUTE_DIFF",
-        "enabledForMl": False,
-        "tokenizer": "",
-        "numericFieldResolution": [],
-        "attributeName": "Tester",
     }
 
     project_json = {
