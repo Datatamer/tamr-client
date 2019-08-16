@@ -102,6 +102,18 @@ class BaseCollection(Iterable):
 
         return items[0]
 
+    def delete_by_resource_id(self, resource_id):
+        """Deletes a resource from this collection by resource_id.
+
+        :param resource_id: the resource_id of the resource that will be deleted.
+        :type: str
+        :return: HTTP response from the server.
+        :rtype: :class: `requests.Response`
+        """
+        path = f"{self.api_path}/{resource_id}"
+        response = self.client.delete(path).successful()
+        return response
+
     def __repr__(self):
         return (
             f"{self.__class__.__module__}."
