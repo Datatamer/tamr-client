@@ -8,6 +8,7 @@
 
   **BUG FIXES**
   - [#235](https://github.com/Datatamer/unify-client-python/issues/235) Making `AttributeCollection` retrieve attributes directly instead of by streaming
+  - [#234](https://github.com/Datatamer/tamr-client/issues/234) Project's `resource`'s `add_input_dataset` now uses params instead of constructing resource ID manually
   - [#256](https://github.com/Datatamer/unify-client-python/issues/256) Record and published clusters refresh did not use the correct endpoint
 
 ## 0.8.0
