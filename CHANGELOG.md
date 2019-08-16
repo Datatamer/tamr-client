@@ -6,6 +6,7 @@
   - [#222](https://github.com/Datatamer/unify-client-python/issues/222) Dataset spec to update an existing dataset
   - [#225](https://github.com/Datatamer/unify-client-python/issues/225) Attribute configuration spec to update an existing attribute configuration
   - [#223](https://github.com/Datatamer/unify-client-python/issues/223) Update an attribute with an attribute spec
+  - [#224](https://github.com/Datatamer/unify-client-python/issues/224) Project spec to update a project
 
   **BUG FIXES**
   - [#235](https://github.com/Datatamer/unify-client-python/issues/235) Making `AttributeCollection` retrieve attributes directly instead of by streaming

@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from tamr_unify_client.base_resource import BaseResource
 from tamr_unify_client.dataset.collection import DatasetCollection
 from tamr_unify_client.dataset.resource import Dataset
@@ -153,6 +155,14 @@ class Project(BaseResource):
         info = AttributeMappingCollection(self.client, alias)
         return info
 
+    def spec(self):
+        """Returns this project's spec.
+
+        :return: The spec for the project.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectSpec`
+        """
+        return ProjectSpec.of(self)
+
     def __repr__(self):
         return (
             f"{self.__class__.__module__}."
@@ -160,4 +170,121 @@ class Project(BaseResource):
             f"relative_id={self.relative_id!r}, "
             f"name={self.name!r}, "
             f"type={self.type!r})"
+        )
+
+
+class ProjectSpec:
+    """A representation of the server view of a project."""
+
+    def __init__(self, client, data, api_path):
+        self.client = client
+        self._data = data
+        self.api_path = api_path
+
+    @staticmethod
+    def of(resource):
+        """Creates a project spec from a project.
+
+        :param resource: The existing project.
+        :type resource: :class:`~tamr_unify_client.project.resource.Project`
+        :return: The corresponding project spec.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectSpec`
+        """
+        return ProjectSpec(resource.client, deepcopy(resource._data), resource.api_path)
+
+    @staticmethod
+    def new():
+        """Creates a blank spec that could be used to construct a new project.
+
+        :return: The empty spec.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectSpec`
+        """
+        return ProjectSpec(None, {}, None)
+
+    def from_data(self, data):
+        """Creates a spec with the same client and API path as this one, but new data.
+
+        :param data: The data for the new spec.
+        :type data: dict
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectSpec`
+        """
+        return ProjectSpec(self.client, data, self.api_path)
+
+    def to_dict(self):
+        """Returns a version of this spec that conforms to the API representation.
+
+        :returns: The spec's dict.
+        :rtype: dict
+        """
+        return deepcopy(self._data)
+
+    def with_name(self, new_name):
+        """Creates a new spec with the same properties, updating name.
+
+        :param new_name: The new name.
+        :type new_name: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectSpec`
+        """
+        return self.from_data({**self._data, "name": new_name})
+
+    def with_description(self, new_description):
+        """Creates a new spec with the same properties, updating description.
+
+        :param new_description: The new description.
+        :type new_description: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectSpec`
+        """
+        return self.from_data({**self._data, "description": new_description})
+
+    def with_type(self, new_type):
+        """Creates a new spec with the same properties, updating type.
+
+        :param new_type: The new type.
+        :type new_type: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectSpec`
+        """
+        return self.from_data({**self._data, "type": new_type})
+
+    def with_external_id(self, new_external_id):
+        """Creates a new spec with the same properties, updating external ID.
+
+        :param new_external_id: The new external ID.
+        :type new_external_id: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectSpec`
+        """
+        return self.from_data({**self._data, "externalId": new_external_id})
+
+    def with_unified_dataset_name(self, new_unified_dataset_name):
+        """Creates a new spec with the same properties, updating unified dataset name.
+
+        :param new_unified_dataset_name: The new unified dataset name.
+        :type new_unified_dataset_name: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.resource.ProjectSpec`
+        """
+        return self.from_data(
+            {**self._data, "unifiedDatasetName": new_unified_dataset_name}
+        )
+
+    def put(self):
+        """Commits these changes by updating the project in Tamr.
+
+        :return: The updated project.
+        :rtype: :class:`~tamr_unify_client.project.resource.Project`
+        """
+        updated_json = (
+            self.client.put(self.api_path, json=self._data).successful().json()
+        )
+        return Project.from_json(self.client, updated_json, self.api_path)
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"dict={self._data})"
         )
