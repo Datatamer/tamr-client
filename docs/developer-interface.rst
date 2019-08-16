@@ -22,6 +22,12 @@ Attribute
 .. autoclass:: tamr_unify_client.attribute.resource.Attribute
   :members:
 
+Attribute Spec
+^^^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.attribute.resource.AttributeSpec
+  :members:
+
 Attribute Collection
 ^^^^^^^^^^^^^^^^^^^^
 

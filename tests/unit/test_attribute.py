@@ -1,3 +1,5 @@
+from functools import partial
+import json
 from unittest import TestCase
 
 from requests import HTTPError
@@ -91,6 +93,41 @@ class TestAttribute(TestCase):
             HTTPError, lambda: dataset.attributes.by_resource_id("RowNum")
         )
 
+    @responses.activate
+    def test_update_attribute(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = request.body
+            return 200, {}, json.dumps(self._updated_attribute_json)
+
+        relative_id = "dataset/1/attributes/RowNum"
+        attribute_url = f"http://localhost:9100/api/versioned/v1/{relative_id}"
+        snoop_dict = {}
+        responses.add_callback(
+            responses.PUT, attribute_url, partial(create_callback, snoop=snoop_dict)
+        )
+        attribute = Attribute(self.tamr, self._attributes_json[0], relative_id)
+
+        temp_spec = attribute.spec()
+        new_attribute = temp_spec.with_description(
+            self._updated_attribute_json["description"]
+        ).put()
+        self.assertEqual(new_attribute.name, self._updated_attribute_json["name"])
+        self.assertEqual(
+            new_attribute.description, self._updated_attribute_json["description"]
+        )
+
+        self.assertEqual(
+            json.loads(snoop_dict["payload"]), self._updated_attribute_json
+        )
+
+        self.assertEqual(attribute.name, self._attributes_json[0]["name"])
+        self.assertEqual(attribute.description, self._attributes_json[0]["description"])
+
+        # checking that intermediate didn't change
+        self.assertEqual(
+            temp_spec.to_dict()["description"], self._attributes_json[0]["description"]
+        )
+
     _dataset_json = {
         "id": "unify://unified-data/v1/datasets/1",
         "externalId": "number 1",
@@ -173,3 +210,10 @@ class TestAttribute(TestCase):
             "isNullable": False,
         },
     ]
+
+    _updated_attribute_json = {
+        "name": "RowNum",
+        "description": "Synthetic row number updated",
+        "type": {"baseType": "STRING", "attributes": []},
+        "isNullable": False,
+    }
