@@ -63,6 +63,12 @@ Category
 .. autoclass:: tamr_unify_client.categorization.category.resource.Category
   :members:
 
+Category Spec
+"""""""""""""
+
+.. autoclass:: tamr_unify_client.categorization.category.resource.CategorySpec
+  :members:
+
 Category Collection
 """""""""""""""""""
 

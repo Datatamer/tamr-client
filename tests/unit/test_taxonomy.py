@@ -8,7 +8,7 @@ import responses
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client.categorization.category.collection import CategoryCollection
-from tamr_unify_client.categorization.category.resource import Category
+from tamr_unify_client.categorization.category.resource import Category, CategorySpec
 from tamr_unify_client.categorization.taxonomy import Taxonomy
 from tamr_unify_client.project.resource import Project
 
@@ -64,6 +64,36 @@ class TestTaxonomy(TestCase):
         }
         c = coll.create(creation_spec)
         self.assertEqual(alias + "/1", c.relative_id)
+
+    @responses.activate
+    def test_create_from_spec(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = json.loads(request.body)
+            return 201, {}, json.dumps(self._categories_json[0])
+
+        post_url = (
+            "http://localhost:9100/api/versioned/v1/projects/1/taxonomy/categories"
+        )
+        snoop_dict = {}
+        responses.add_callback(
+            responses.POST, post_url, partial(create_callback, snoop=snoop_dict)
+        )
+
+        alias = "projects/1/taxonomy/categories"
+        coll = CategoryCollection(self.tamr, alias)
+
+        json_spec = {
+            "name": self._categories_json[0]["name"],
+            "path": self._categories_json[0]["path"],
+        }
+        spec = (
+            CategorySpec.new()
+            .with_name(self._categories_json[0]["name"])
+            .with_path(self._categories_json[0]["path"])
+        )
+        coll.create(spec.to_dict())
+
+        self.assertEqual(snoop_dict["payload"], json_spec)
 
     @responses.activate
     def test_bulk_create(self):
