@@ -41,12 +41,12 @@ class Dataset(BaseResource):
     @property
     def tags(self):
         """:type: list[str]"""
-        return self._data.get("tags")
+        return self._data.get("tags")[:]
 
     @property
     def key_attribute_names(self):
         """:type: list[str]"""
-        return self._data.get("keyAttributeNames")
+        return self._data.get("keyAttributeNames")[:]
 
     @property
     def attributes(self):
@@ -465,6 +465,15 @@ class DatasetSpec:
         """
         return DatasetSpec(resource.client, deepcopy(resource._data), resource.api_path)
 
+    @staticmethod
+    def new():
+        """Creates a blank spec that could be used to construct a new dataset.
+
+        :return: The empty spec.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
+        """
+        return DatasetSpec(None, {}, None)
+
     def from_data(self, data):
         """Creates a spec with the same client and API path as this one, but new data.
 
@@ -482,6 +491,16 @@ class DatasetSpec:
         :rtype: dict
         """
         return deepcopy(self._data)
+
+    def with_name(self, new_name):
+        """Creates a new spec with the same properties, updating name.
+
+        :param new_name: The new name.
+        :type new_name: str
+        :return: A new spec.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
+        """
+        return self.from_data({**self._data, "name": new_name})
 
     def with_external_id(self, new_external_id):
         """Creates a new spec with the same properties, updating external ID.
@@ -502,6 +521,18 @@ class DatasetSpec:
         :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
         """
         return self.from_data({**self._data, "description": new_description})
+
+    def with_key_attribute_names(self, new_key_attribute_names):
+        """Creates a new spec with the same properties, updating key attribute names.
+
+       :param new_key_attribute_names: The new key attribute names.
+       :type new_key_attribute_names: list[str]
+       :return: A new spec.
+       :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
+       """
+        return self.from_data(
+            {**self._data, "keyAttributeNames": new_key_attribute_names}
+        )
 
     def with_tags(self, new_tags):
         """Creates a new spec with the same properties, updating tags.
@@ -526,6 +557,5 @@ class DatasetSpec:
         return (
             f"{self.__class__.__module__}."
             f"{self.__class__.__qualname__}("
-            f"relative_id={self._data['relativeId']!r}, "
-            f"name={self._data['name']!r})"
+            f"dict={self._data})"
         )

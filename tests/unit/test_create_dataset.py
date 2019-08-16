@@ -8,7 +8,7 @@ import responses
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client.dataset.collection import CreationError
-
+from tamr_unify_client.dataset.resource import DatasetSpec
 
 auth = UsernamePasswordAuth("username", "password")
 tamr = Client(auth)
@@ -16,19 +16,18 @@ tamr = Client(auth)
 
 @responses.activate
 def test_create_dataset():
-    creation_spec = {
-        "id": "unify://unified-data/v1/datasets/1",
-        "name": "dataset",
-        "keyAttributeNames": ["F1"],
-        "description": "So much data in here!",
-        "externalId": "Dataset created with pubapi",
-    }
+    def create_callback(request, snoop):
+        snoop["payload"] = json.loads(request.body)
+        return 201, {}, json.dumps(_dataset_json)
 
     dataset_url = _datasets_url + "/1"
-    responses.add(responses.POST, _datasets_url, json=creation_spec, status=201)
-    responses.add(responses.GET, dataset_url, json=creation_spec)
+    snoop_dict = {}
+    responses.add_callback(
+        responses.POST, _datasets_url, partial(create_callback, snoop=snoop_dict)
+    )
+    responses.add(responses.GET, dataset_url, json=_dataset_json)
 
-    u = tamr.datasets.create(creation_spec)
+    u = tamr.datasets.create(_creation_spec)
     p = tamr.datasets.by_resource_id("1")
 
     assert u.name == p.name
@@ -139,6 +138,37 @@ def test_dataset_deletion_failure():
         tamr.datasets.create_from_dataframe(_dataframe, "attribute1", "Dataset")
 
 
+@responses.activate
+def test_create_from_spec():
+    def create_callback(request, snoop):
+        snoop["payload"] = json.loads(request.body)
+        return 201, {}, json.dumps(_dataset_json)
+
+    snoop_dict = {}
+    responses.add_callback(
+        responses.POST, _datasets_url, partial(create_callback, snoop=snoop_dict)
+    )
+
+    spec = (
+        DatasetSpec.new()
+        .with_name(_creation_spec["name"])
+        .with_key_attribute_names(_creation_spec["keyAttributeNames"])
+        .with_description(_creation_spec["description"])
+        .with_external_id(_creation_spec["externalId"])
+    )
+    d = tamr.datasets.create(spec.to_dict())
+
+    assert snoop_dict["payload"] == _creation_spec
+    assert d.relative_id == _dataset_json["relativeId"]
+
+
+_creation_spec = {
+    "name": "Dataset",
+    "keyAttributeNames": ["F1"],
+    "description": "So much data in here!",
+    "externalId": "Dataset created with pubapi",
+}
+
 _datasets_url = f"http://localhost:9100/api/versioned/v1/datasets"
 _dataset_url = _datasets_url + "/1"
 _attribute_url = _dataset_url + "/attributes"
@@ -163,11 +193,9 @@ _records_failure_json = {
 }
 
 _dataset_json = {
+    **_creation_spec,
     "id": "unify://unified-data/v1/datasets/1",
-    "name": "Dataset",
-    "description": "",
     "version": "1",
-    "keyAttributeNames": ["attribute1"],
     "tags": [],
     "created": {
         "username": "admin",
@@ -181,7 +209,6 @@ _dataset_json = {
     },
     "relativeId": "datasets/1",
     "upstreamDatasetIds": [],
-    "externalId": "Dataset",
 }
 
 _attribute_json = {
