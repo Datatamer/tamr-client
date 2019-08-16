@@ -19,7 +19,7 @@ class AttributeMappingCollection:
         """
         all_maps = self.client.get(self.api_path).successful().json()
         for mapping in all_maps:
-            yield AttributeMapping(mapping)
+            yield AttributeMapping(self.client, mapping)
 
     def by_resource_id(self, resource_id):
         """Retrieve an item in this collection by resource ID.
@@ -54,4 +54,15 @@ class AttributeMappingCollection:
         :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMapping`
         """
         data = self.client.post(self.api_path, json=creation_spec).successful().json()
-        return AttributeMapping(data)
+        return AttributeMapping(self.client, data)
+
+    def delete_by_resource_id(self, resource_id):
+        """delete an attribute mapping using its Resource ID.
+        :param resource_id: the resource ID of the mapping to be deleted.
+        :type resource_id: str
+        :returns: HTTP status code
+        :rtype: :class:`requests.Response`
+         """
+        path = self.api_path + "/" + resource_id
+        response = self.client.delete(path).successful()
+        return response
