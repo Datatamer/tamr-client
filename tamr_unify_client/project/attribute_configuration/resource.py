@@ -105,6 +105,15 @@ class AttributeConfigurationSpec:
             resource.client, deepcopy(resource._data), resource.api_path
         )
 
+    @staticmethod
+    def new():
+        """Creates a blank spec that could be used to construct a new attribute configuration.
+
+        :return: The empty spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_configuration.resource.AttributeConfigurationSpec`
+        """
+        return AttributeConfigurationSpec(None, {}, None)
+
     def from_data(self, data):
         """Creates a spec with the same client and API path as this one, but new data.
 
@@ -177,6 +186,16 @@ class AttributeConfigurationSpec:
             {**self._data, "numericFieldResolution": new_numeric_field_resolution}
         )
 
+    def with_attribute_name(self, new_attribute_name):
+        """Creates a new spec with the same properties, updating new attribute name.
+
+        :param new_attribute_name: The new attribute name.
+        :type new_attribute_name: str
+        :return: A new spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_configuration.resource.AttributeConfigurationSpec`
+        """
+        return self.from_data({**self._data, "attributeName": new_attribute_name})
+
     def put(self):
         """Updates the attribute configuration on the server.
 
@@ -190,13 +209,5 @@ class AttributeConfigurationSpec:
         return (
             f"{self.__class__.__module__}."
             f"{self.__class__.__qualname__}("
-            f"relative_id={self._data['relativeId']!r}, "
-            f"id={self._data['id']!r}, "
-            f"relative_attribute_id={self._data['relativeAttributeId']!r}, "
-            f"attribute_role={self._data['attributeRole']!r}, "
-            f"similarity_function={self._data['similarityFunction']!r}, "
-            f"enabled_for_ml={self._data['enabledForMl']!r}, "
-            f"tokenizer={self._data['tokenizer']!r}, "
-            f"numeric_field_resolution={self._data['numericFieldResolution']!r}, "
-            f"attribute_name={self._data['attributeName']!r})"
+            f"dict={self._data})"
         )
