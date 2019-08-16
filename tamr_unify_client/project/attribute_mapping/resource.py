@@ -79,3 +79,64 @@ class AttributeMapping:
             f"unified_dataset_name={self.unified_dataset_name!r}, "
             f"unified_attribute_name={self.unified_attribute_name!r})"
         )
+
+
+class AttributeMappingSpec:
+    def __init__(self, client, data, api_path):
+        self.client = client
+        self._data = data
+        self.api_path = api_path
+
+    def from_data(self, data):
+        return AttributeMappingSpec(self.client, data, self.api_path)
+
+    def with_input_attribute_id(self, new_input_attribute_id):
+        """:type: str"""
+        return self.from_data(
+            {**self._data, "inputAttributeId": new_input_attribute_id}
+        )
+
+    def with_relative_input_attribute_id(self, new_relative_input_attribute_id):
+        """:type: str"""
+        return self.from_data(
+            {**self._data, "relativeInputAttributeId": new_relative_input_attribute_id}
+        )
+
+    def with_input_dataset_name(self, new_input_dataset_name):
+        """:type: str"""
+        return self.from_data(
+            {**self._data, "inputDatasetName": new_input_dataset_name}
+        )
+
+    def with_input_attribute_name(self, new_input_attribute_name):
+        """:type: str"""
+        return self.from_data(
+            {**self._data, "inputAttributeName": new_input_attribute_name}
+        )
+
+    def with_unified_attribute_id(self, new_unified_attribute_id):
+        """:type: str"""
+        return self.from_data(
+            {**self._data, "unifiedAttributeId": new_unified_attribute_id}
+        )
+
+    def with_relative_unified_attribute_id(self, new_relative_unified_attribute_id):
+        """:type: str"""
+        return self.from_data(
+            {
+                **self._data,
+                "relativeUnifiedAttributeId": new_relative_unified_attribute_id,
+            }
+        )
+
+    def with_unified_dataset_name(self, new_unified_dataset_name):
+        """:type: str"""
+        return self.from_data(
+            {**self._data, "unifiedDatasetName": new_unified_dataset_name}
+        )
+
+    def with_unified_attribute_name(self, new_unified_attribute_name):
+        """:type: str"""
+        return self.from_data(
+            {**self._data, "unifiedAttributeName": new_unified_attribute_name}
+        )
