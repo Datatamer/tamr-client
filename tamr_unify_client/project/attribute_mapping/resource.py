@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 class AttributeMapping:
     """see https://docs.tamr.com/reference#retrieve-projects-mappings
     AttributeMapping and AttributeMappingCollection do not inherit from BaseResource and BaseCollection.
@@ -64,6 +67,14 @@ class AttributeMapping:
         spliced = self.relative_id.split("attributeMappings/")[1]
         return spliced
 
+    def spec(self):
+        """Returns a spec representation of this attribute mapping.
+
+        :return: The attribute mapping spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
+        """
+        return AttributeMappingSpec.of(self)
+
     def __repr__(self):
         return (
             f"{self.__class__.__module__}."
@@ -82,47 +93,108 @@ class AttributeMapping:
 
 
 class AttributeMappingSpec:
-    def __init__(self, client, data, api_path):
-        self.client = client
-        self._data = data
-        self.api_path = api_path
+    """A representation of the server view of an attribute mapping"""
 
-    def from_data(self, data):
-        return AttributeMappingSpec(self.client, data, self.api_path)
+    def __init__(self, data):
+        self._data = data
+
+    @staticmethod
+    def of(resource):
+        """Creates an attribute mapping spec from a attribute mapping.
+
+        :param resource: The existing attribute mapping.
+        :type resource: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMapping`
+        :return: The corresponding attribute mapping spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
+        """
+        return AttributeMappingSpec(deepcopy(resource._data))
+
+    @staticmethod
+    def new():
+        """Creates a blank spec that could be used to construct a new attribute mapping.
+
+        :return: The empty spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
+        """
+        return AttributeMappingSpec({})
+
+    def to_dict(self):
+        """Returns a version of this spec that conforms to the API representation.
+
+        :returns: The spec's dict.
+        :rtype: dict
+        """
+        return deepcopy(self._data)
 
     def with_input_attribute_id(self, new_input_attribute_id):
-        """:type: str"""
-        return self.from_data(
+        """Creates a new spec with the same properties, updating the input attribute id.
+
+        :param new_input_attribute_id: The new input attribute id.
+        :type new_input_attribute_id: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
+        """
+        return AttributeMappingSpec(
             {**self._data, "inputAttributeId": new_input_attribute_id}
         )
 
     def with_relative_input_attribute_id(self, new_relative_input_attribute_id):
-        """:type: str"""
-        return self.from_data(
+        """Creates a new spec with the same properties, updating the relative input attribute id.
+
+        :param new_relative_input_attribute_id: The new relative input attribute Id.
+        :type new_relative_input_attribute_id: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
+        """
+        return AttributeMappingSpec(
             {**self._data, "relativeInputAttributeId": new_relative_input_attribute_id}
         )
 
     def with_input_dataset_name(self, new_input_dataset_name):
-        """:type: str"""
-        return self.from_data(
+        """Creates a new spec with the same properties, updating the input dataset name.
+
+        :param new_input_dataset_name: The new input dataset name.
+        :type new_input_dataset_name: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
+        """
+        return AttributeMappingSpec(
             {**self._data, "inputDatasetName": new_input_dataset_name}
         )
 
     def with_input_attribute_name(self, new_input_attribute_name):
-        """:type: str"""
-        return self.from_data(
+        """Creates a new spec with the same properties, updating the input attribute name.
+
+        :param new_input_attribute_name: The new input attribute name.
+        :type new_input_attribute_name: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
+        """
+        return AttributeMappingSpec(
             {**self._data, "inputAttributeName": new_input_attribute_name}
         )
 
     def with_unified_attribute_id(self, new_unified_attribute_id):
-        """:type: str"""
-        return self.from_data(
+        """Creates a new spec with the same properties, updating the unified attribute id.
+
+        :param new_unified_attribute_id: The new unified attribute id.
+        :type new_unified_attribute_id: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
+        """
+        return AttributeMappingSpec(
             {**self._data, "unifiedAttributeId": new_unified_attribute_id}
         )
 
     def with_relative_unified_attribute_id(self, new_relative_unified_attribute_id):
-        """:type: str"""
-        return self.from_data(
+        """Creates a new spec with the same properties, updating the relative unified attribute id.
+
+        :param new_relative_unified_attribute_id: The new relative unified attribute id.
+        :type new_relative_unified_attribute_id: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
+        """
+        return AttributeMappingSpec(
             {
                 **self._data,
                 "relativeUnifiedAttributeId": new_relative_unified_attribute_id,
@@ -130,13 +202,32 @@ class AttributeMappingSpec:
         )
 
     def with_unified_dataset_name(self, new_unified_dataset_name):
-        """:type: str"""
-        return self.from_data(
+        """Creates a new spec with the same properties, updating the unified dataset name.
+
+        :param new_unified_dataset_name: The new unified dataset name.
+        :type new_unified_dataset_name: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
+        """
+        return AttributeMappingSpec(
             {**self._data, "unifiedDatasetName": new_unified_dataset_name}
         )
 
     def with_unified_attribute_name(self, new_unified_attribute_name):
-        """:type: str"""
-        return self.from_data(
+        """Creates a new spec with the same properties, updating the unified attribute name.
+
+        :param new_unified_attribute_name: The new unified attribute name.
+        :type new_unified_attribute_name: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
+        """
+        return AttributeMappingSpec(
             {**self._data, "unifiedAttributeName": new_unified_attribute_name}
+        )
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"dict={self._data})"
         )
