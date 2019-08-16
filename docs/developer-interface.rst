@@ -40,6 +40,12 @@ Attribute Type
 .. autoclass:: tamr_unify_client.attribute.type.AttributeType
   :members:
 
+Attribute Type Spec
+^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: tamr_unify_client.attribute.type.AttributeTypeSpec
+  :members:
+
 SubAttribute
 ^^^^^^^^^^^^
 .. autoclass:: tamr_unify_client.attribute.subattribute.SubAttribute

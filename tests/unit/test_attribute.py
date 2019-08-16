@@ -6,7 +6,9 @@ from requests import HTTPError
 import responses
 
 from tamr_unify_client import Client
-from tamr_unify_client.attribute.resource import Attribute
+from tamr_unify_client.attribute.collection import AttributeCollection
+from tamr_unify_client.attribute.resource import Attribute, AttributeSpec
+from tamr_unify_client.attribute.type import AttributeTypeSpec
 from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client.dataset.resource import Dataset
 
@@ -127,6 +129,65 @@ class TestAttribute(TestCase):
         self.assertEqual(
             temp_spec.to_dict()["description"], self._attributes_json[0]["description"]
         )
+
+    @responses.activate
+    def test_create_from_spec(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = json.loads(request.body)
+            return 201, {}, json.dumps(spec_json)
+
+        spec_json = {
+            "name": "attr",
+            "isNullable": False,
+            "type": {
+                "baseType": "RECORD",
+                "attributes": [
+                    {
+                        "name": str(i),
+                        "isNullable": True,
+                        "type": {
+                            "baseType": "ARRAY",
+                            "innerType": {"baseType": "STRING"},
+                        },
+                    }
+                    for i in range(4)
+                ],
+            },
+        }
+
+        inner_spec = (
+            AttributeSpec.new()
+            .with_type(
+                AttributeTypeSpec.new()
+                .with_base_type("ARRAY")
+                .with_inner_type(AttributeTypeSpec.new().with_base_type("STRING"))
+            )
+            .with_is_nullable(True)
+        )
+        attr_specs = [inner_spec.with_name(str(i)) for i in range(4)]
+        outer_spec = (
+            AttributeTypeSpec.new().with_base_type("RECORD").with_attributes(attr_specs)
+        )
+        spec = (
+            AttributeSpec.new()
+            .with_name("attr")
+            .with_is_nullable(False)
+            .with_type(outer_spec)
+        )
+
+        snoop_dict = {}
+        rel_path = "projects/1/attributes"
+        base_path = "http://localhost:9100/api/versioned/v1"
+        responses.add_callback(
+            responses.POST,
+            f"{base_path}/{rel_path}",
+            partial(create_callback, snoop=snoop_dict),
+        )
+
+        collection = AttributeCollection(self.tamr, rel_path)
+        collection.create(spec.to_dict())
+
+        self.assertEqual(snoop_dict["payload"], spec_json)
 
     _dataset_json = {
         "id": "unify://unified-data/v1/datasets/1",
