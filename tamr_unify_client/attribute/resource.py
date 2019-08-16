@@ -92,6 +92,15 @@ class AttributeSpec:
             resource.client, deepcopy(resource._data), resource.api_path
         )
 
+    @staticmethod
+    def new():
+        """Creates a blank spec that could be used to construct a new attribute.
+
+        :return: The empty spec.
+        :rtype: :class:`~tamr_unify_client.attribute.resource.AttributeSpec`
+        """
+        return AttributeSpec(None, {}, None)
+
     def from_data(self, data):
         """Creates a spec with the same client and API path as this one, but new data.
 
@@ -110,6 +119,16 @@ class AttributeSpec:
         """
         return deepcopy(self._data)
 
+    def with_name(self, new_name):
+        """Creates a new spec with the same properties, updating name.
+
+        :param new_name: The new name.
+        :type new_name: str
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.attribute.resource.AttributeSpec`
+        """
+        return self.from_data({**self._data, "name": new_name})
+
     def with_description(self, new_description):
         """Creates a new spec with the same properties, updating description.
 
@@ -119,6 +138,27 @@ class AttributeSpec:
         :rtype: :class:`~tamr_unify_client.attribute.resource.AttributeSpec`
         """
         return self.from_data({**self._data, "description": new_description})
+
+    def with_type(self, new_type):
+        """Creates a new spec with the same properties, updating type.
+
+        :param new_type: The spec of the new type.
+        :type new_type: :class:`~tamr_unify_client.attribute.type.AttributeTypeSpec`
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.attribute.resource.AttributeSpec`
+        """
+        type_spec = new_type.to_dict()
+        return self.from_data({**self._data, "type": type_spec})
+
+    def with_is_nullable(self, new_is_nullable):
+        """Creates a new spec with the same properties, updating is nullable.
+
+        :param new_is_nullable: The new is nullable.
+        :type new_is_nullable: bool
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.attribute.resource.AttributeSpec`
+        """
+        return self.from_data({**self._data, "isNullable": new_is_nullable})
 
     def put(self):
         """Commits the changes and updates the attribute in Tamr.
@@ -135,7 +175,5 @@ class AttributeSpec:
         return (
             f"{self.__class__.__module__}."
             f"{self.__class__.__qualname__}("
-            f"relative_id={self.api_path!r}, "
-            f"name={self._data['name']!r}, "
-            f"description={self._data['description']!r})"
+            f"dict={self._data!r})"
         )
