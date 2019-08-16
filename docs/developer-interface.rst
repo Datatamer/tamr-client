@@ -246,6 +246,12 @@ Attribute Mapping
 .. autoclass:: tamr_unify_client.project.attribute_mapping.resource.AttributeMapping
   :members:
 
+Attribute Mapping Spec
+""""""""""""""""""""""
+
+.. autoclass:: tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec
+  :members:
+
 Attribute Mapping Collection
 """"""""""""""""""""""""""""
 

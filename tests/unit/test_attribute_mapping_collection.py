@@ -9,6 +9,7 @@ from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client.project.attribute_mapping.collection import (
     AttributeMappingCollection,
 )
+from tamr_unify_client.project.attribute_mapping.resource import AttributeMappingSpec
 
 
 class TestAttributeMappingCollection(TestCase):
@@ -57,17 +58,54 @@ class TestAttributeMappingCollection(TestCase):
         self.assertEqual(test.input_dataset_name, self.create_json["inputDatasetName"])
         self.assertEqual(json.loads(snoop_dict["payload"]), self.create_json)
 
+    @responses.activate
+    def test_create_from_spec(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = json.loads(request.body)
+            return 200, {}, json.dumps(self.mappings_json[0])
+
+        url = "http://localhost:9100/api/versioned/v1/projects/4/attributeMappings"
+        responses.add(responses.GET, url, json=self.mappings_json)
+        snoop_dict = {}
+        responses.add_callback(
+            responses.POST, url, partial(create_callback, snoop=snoop_dict)
+        )
+
+        map_collection = AttributeMappingCollection(
+            self.tamr, "projects/4/attributeMappings"
+        )
+        spec = (
+            AttributeMappingSpec.new()
+            .with_relative_input_attribute_id(
+                self.create_json["relativeInputAttributeId"]
+            )
+            .with_input_dataset_name(self.create_json["inputDatasetName"])
+            .with_input_attribute_name(self.create_json["inputAttributeName"])
+            .with_relative_unified_attribute_id(
+                self.create_json["relativeUnifiedAttributeId"]
+            )
+            .with_unified_dataset_name(self.create_json["unifiedDatasetName"])
+            .with_unified_attribute_name(self.create_json["unifiedAttributeName"])
+        )
+        map_collection.create(spec.to_dict())
+
+        self.assertEqual(snoop_dict["payload"], self.create_json)
+
     create_json = {
-        "id": "unify://unified-data/v1/projects/1/attributeMappings/19594-14",
-        "relativeId": "projects/1/attributeMappings/19594-14",
-        "inputAttributeId": "unify://unified-data/v1/datasets/6/attributes/suburb",
         "relativeInputAttributeId": "datasets/6/attributes/suburb",
         "inputDatasetName": "febrl_sample_2k.csv",
         "inputAttributeName": "suburb",
-        "unifiedAttributeId": "unify://unified-data/v1/datasets/8/attributes/suburb",
         "relativeUnifiedAttributeId": "datasets/8/attributes/suburb",
         "unifiedDatasetName": "Project_1_unified_dataset",
         "unifiedAttributeName": "suburb",
+    }
+
+    created_json = {
+        **create_json,
+        "id": "unify://unified-data/v1/projects/1/attributeMappings/19594-14",
+        "relativeId": "projects/1/attributeMappings/19594-14",
+        "inputAttributeId": "unify://unified-data/v1/datasets/6/attributes/suburb",
+        "unifiedAttributeId": "unify://unified-data/v1/datasets/8/attributes/suburb",
     }
 
     mappings_json = [
