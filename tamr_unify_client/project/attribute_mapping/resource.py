@@ -81,9 +81,10 @@ class AttributeMapping:
         return AttributeMappingSpec.of(self)
 
     def delete(self):
-        """delete this attribute mapping.
+        """Delete this attribute mapping.
+
         :return: HTTP response from the server
-        :rtype: :class `requests.Response`
+        :rtype: :class:`requests.Response`
         """
         response = self.client.delete(self.api_path).successful()
         return response
