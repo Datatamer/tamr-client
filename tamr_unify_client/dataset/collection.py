@@ -79,6 +79,22 @@ class DatasetCollection(BaseCollection):
                 return dataset
         raise KeyError(f"No dataset found with name: {dataset_name}")
 
+    def delete_by_resource_id(self, resource_id, cascade=False):
+        """Deletes a dataset from this collection by resource_id. Optionally deletes all derived datasets as well.
+
+        :param resource_id: The resource id of the dataset in this collection to delete.
+        :type resource_id: str
+        :param cascade: Whether to delete all datasets derived from the deleted one. Optional, default is `False`.
+            Do not use this option unless you are certain you need it as it can have unindended consequences.
+        :type cascade: bool
+        :return: HTTP response from the server.
+        :rtype: :class:`requests.Response`
+        """
+        params = {"cascade": cascade}
+        path = f"{self.api_path}/{resource_id}"
+        response = self.client.delete(path, params=params).successful()
+        return response
+
     def create(self, creation_spec):
         """
         Create a Dataset in Tamr

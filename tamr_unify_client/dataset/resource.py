@@ -272,6 +272,19 @@ class Dataset(BaseResource):
         """
         return DatasetSpec.of(self)
 
+    def delete(self, cascade=False):
+        """Deletes this dataset, optionally deleting all derived datasets as well.
+
+        :param cascade: Whether to delete all datasets derived from this one. Optional, default is `False`.
+            Do not use this option unless you are certain you need it as it can have unindended consequences.
+        :type cascade: bool
+        :return: HTTP response from the server
+        :rtype: :class:`requests.Response`
+        """
+        params = {"cascade": cascade}
+        response = self.client.delete(self.api_path, params=params).successful()
+        return response
+
     @property
     def __geo_interface__(self):
         """Retrieve a representation of this dataset that conforms to the Python Geo Interface.
