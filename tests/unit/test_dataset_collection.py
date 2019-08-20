@@ -22,4 +22,14 @@ def test_delete_by_resource_id(client):
     assert response.status_code == 204
 
 
+@responses.activate
+def test_delete_by_resource_id_cascade(client):
+    ds_url = url_prefix + "datasets/115?cascade=True"
+
+    responses.add(responses.DELETE, ds_url, status=204)
+
+    response = client.datasets.delete_by_resource_id("115", cascade=True)
+    assert response.status_code == 204
+
+
 url_prefix = "http://localhost:9100/api/versioned/v1/"
