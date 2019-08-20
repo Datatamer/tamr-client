@@ -1,4 +1,7 @@
 ## 0.9.0-dev
+  **BREAKING CHANGES**
+  - `AttributeMapping.__init__()` now takes arguments `client` and `data` (used to take only `data`).
+
   **NEW FEATURES**
   - [#218](https://github.com/Datatamer/unify-client-python/issues/218) Delete a `BaseResource`
   - [#233](https://github.com/Datatamer/unify-client-python/issues/233) Remove an input dataset from a project
@@ -13,6 +16,7 @@
   - [#277](https://github.com/Datatamer/unify-client-python/issues/277) Attribute mapping spec
   - [#226](https://github.com/Datatamer/tamr-client/issues/226) Update published cluster configurations with put
   - [#246](https://github.com/Datatamer/tamr-client/issues/246) Cascading dataset delete
+  - [#221](https://github.com/Datatamer/unify-client-python/issues/221) delete an attribute mapping
 
   **BUG FIXES**
   - [#235](https://github.com/Datatamer/unify-client-python/issues/235) Making `AttributeCollection` retrieve attributes directly instead of by streaming

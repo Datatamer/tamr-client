@@ -8,8 +8,13 @@ class AttributeMapping:
     (ex: /projects/1/attributeMappings/1), but these types of URLs do not exist for attribute mappings
     """
 
-    def __init__(self, data):
+    def __init__(self, client, data):
         self._data = data
+        self.client = client
+        # AttributeMapping cannot be aliased, and Project cannot be aliased,
+        # so AttributeMapping only ever has one address, which is both
+        # its relative_id and its api_path.
+        self.api_path = self.relative_id
 
     @property
     def id(self):
@@ -74,6 +79,14 @@ class AttributeMapping:
         :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMappingSpec`
         """
         return AttributeMappingSpec.of(self)
+
+    def delete(self):
+        """delete this attribute mapping.
+        :return: HTTP response from the server
+        :rtype: :class `requests.Response`
+        """
+        response = self.client.delete(self.api_path).successful()
+        return response
 
     def __repr__(self):
         return (
