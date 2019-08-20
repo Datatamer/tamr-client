@@ -38,11 +38,12 @@ class PublishedClustersConfiguration(BaseResource):
         return self._data.get("versionsTimeToLive")
 
     def spec(self):
-        """Returns a spec representation of this published cluster
+        """Returns a spec representation of this published cluster configuration.
 
-        :return: the published cluster spec
-        :rtype: :class`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClusterConfigurationSpec"""
-        return PublishedClusterConfigurationSpec.of(self)
+        :return: The published cluster configuration spec.
+        :rtype: :class`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfigurationSpec`
+        """
+        return PublishedClustersConfigurationSpec.of(self)
 
     def __repr__(self):
         return (
@@ -53,8 +54,8 @@ class PublishedClustersConfiguration(BaseResource):
         )
 
 
-class PublishedClusterConfigurationSpec:
-    """A representation of the server view of a published cluster."""
+class PublishedClustersConfigurationSpec:
+    """A representation of the server view of published clusters configuration."""
 
     def __init__(self, client, data, api_path):
         self.client = client
@@ -63,14 +64,14 @@ class PublishedClusterConfigurationSpec:
 
     @staticmethod
     def of(resource):
-        """Creates an published cluster spec from published cluster.
+        """Creates an published cluster configuration spec from published cluster configuration.
 
-        :param resource: The existing published cluster.
-        :type resource: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClusterConfiguration`
-        :return: The corresponding published cluster spec.
-        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClusterConfigurationSpec`
+        :param resource: The existing published cluster configuration.
+        :type resource: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfiguration`
+        :return: The corresponding published cluster configuration spec.
+        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfigurationSpec`
         """
-        return PublishedClusterConfigurationSpec(
+        return PublishedClustersConfigurationSpec(
             resource.client, deepcopy(resource._data), resource.api_path
         )
 
@@ -80,9 +81,9 @@ class PublishedClusterConfigurationSpec:
         :param data: The data for the new spec.
         :type data: dict
         :return: The new spec.
-        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClusterConfigurationSpec`
+        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfigurationSpec`
         """
-        return PublishedClusterConfigurationSpec(self.client, data, self.api_path)
+        return PublishedClustersConfigurationSpec(self.client, data, self.api_path)
 
     def to_dict(self):
         """Returns a version of this spec that conforms to the API representation.
@@ -98,8 +99,28 @@ class PublishedClusterConfigurationSpec:
         :param new_versions_time_to_live: The new versions time to live.
         :type new_versions_time_to_live: str
         :return: A new spec.
-        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClusterConfigurationSpec`
+        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfigurationSpec`
         """
         return self.from_data(
             {**self._data, "versionsTimeToLive": new_versions_time_to_live}
+        )
+
+    def put(self):
+        """Commits these changes by updating the configuration in Tamr.
+
+        :return: The updated configuration.
+        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClustersConfiguration`
+        """
+        updated_json = (
+            self.client.put(self.api_path, json=self._data).successful().json()
+        )
+        return PublishedClustersConfiguration.from_json(
+            self.client, updated_json, self.api_path
+        )
+
+    def __repr__(self):
+        return (
+            f"{self.__class__.__module__}."
+            f"{self.__class__.__qualname__}("
+            f"dict={self._data})"
         )
