@@ -1,13 +1,13 @@
 import pytest
 import responses
 
+from tamr_unify_client import Client
+from tamr_unify_client.auth import UsernamePasswordAuth
 from tamr_unify_client.project.attribute_mapping.resource import AttributeMapping
 
 
 @pytest.fixture
 def client():
-    from tamr_unify_client import Client
-    from tamr_unify_client.auth import UsernamePasswordAuth
 
     return Client(UsernamePasswordAuth("username", "password"))
 

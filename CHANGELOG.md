@@ -1,6 +1,6 @@
 ## 0.9.0-dev
   **BREAKING CHANGES**
-  - `AttributeMapping.__init__()` now takes arguments `client`, `data`, and `alias` (used to take only `data`).
+  - `AttributeMapping.__init__()` now takes arguments `client` and `data` (used to take only `data`).
 
   **NEW FEATURES**
   - [#218](https://github.com/Datatamer/unify-client-python/issues/218) Delete a `BaseResource`

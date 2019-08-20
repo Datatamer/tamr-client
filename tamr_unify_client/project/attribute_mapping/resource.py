@@ -8,10 +8,13 @@ class AttributeMapping:
     (ex: /projects/1/attributeMappings/1), but these types of URLs do not exist for attribute mappings
     """
 
-    def __init__(self, client, data, alias=None):
+    def __init__(self, client, data):
         self._data = data
         self.client = client
-        self.api_path = alias or self.relative_id
+        # AttributeMapping cannot be aliased, and Project cannot be aliased,
+        # so AttributeMapping only ever has one address, which is both
+        # its relative_id and its api_path.
+        self.api_path = self.relative_id
 
     @property
     def id(self):
