@@ -1,3 +1,5 @@
+from functools import partial
+import json
 from unittest import TestCase
 
 from requests import HTTPError
@@ -69,6 +71,22 @@ class PublishedClusterTest(TestCase):
         p = Project(self.tamr, self._project_config_json).as_mastering()
         config = p.published_clusters_configuration()
         self.assertRaises(HTTPError, config.delete)
+
+    @responses.activate
+    def test_update_published_clusters_configuration(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = request.body
+            return 200, {}, json.dumps(self.update_info)
+
+        url = "http://localhost/api/versioned/v1/projects/1/publishedClustersConfiguration"
+        snoop_dict = {}
+        responses.add(responses.GET, url, self._config_json)
+        responses.add_callback(
+            responses.PUT, url, partial(create_callback, snoop=snoop_dict)
+        )
+        clusters = PublishedClustersConfiguration(self.tamr, self._config_json)
+        new_cluster = clusters.spec().with_versions_time_to_live(self.update_info)
+        self.assertEqual(new_cluster._data, {"versionsTimeToLive": "PT100H"})
 
     @responses.activate
     def test_refresh_ids(self):
@@ -208,3 +226,5 @@ class PublishedClusterTest(TestCase):
     }
 
     _config_json = {"versionsTimeToLive": "P4D"}
+
+    update_info = "PT100H"

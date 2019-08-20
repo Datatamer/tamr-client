@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from tamr_unify_client.base_resource import BaseResource
 
 
@@ -35,10 +37,69 @@ class PublishedClustersConfiguration(BaseResource):
         """:type: str"""
         return self._data.get("versionsTimeToLive")
 
+    def spec(self):
+        """Returns a spec representation of this published cluster
+
+        :return: the published cluster spec
+        :rtype: :class`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClusterConfigurationSpec"""
+        return PublishedClusterConfigurationSpec.of(self)
+
     def __repr__(self):
         return (
             f"{self.__class__.__module__}."
             f"{self.__class__.__qualname__}("
             f"relative_id={self.relative_id!r}, "
             f"versions_time_to_live={self.versions_time_to_live!r})"
+        )
+
+
+class PublishedClusterConfigurationSpec:
+    """A representation of the server view of a published cluster."""
+
+    def __init__(self, client, data, api_path):
+        self.client = client
+        self._data = data
+        self.api_path = api_path
+
+    @staticmethod
+    def of(resource):
+        """Creates an published cluster spec from published cluster.
+
+        :param resource: The existing published cluster.
+        :type resource: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClusterConfiguration`
+        :return: The corresponding published cluster spec.
+        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClusterConfigurationSpec`
+        """
+        return PublishedClusterConfigurationSpec(
+            resource.client, deepcopy(resource._data), resource.api_path
+        )
+
+    def from_data(self, data):
+        """Creates a spec with new data.
+
+        :param data: The data for the new spec.
+        :type data: dict
+        :return: The new spec.
+        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClusterConfigurationSpec`
+        """
+        return PublishedClusterConfigurationSpec(self.client, data, self.api_path)
+
+    def to_dict(self):
+        """Returns a version of this spec that conforms to the API representation.
+
+        :returns: The spec's dict.
+        :rtype: dict
+        """
+        return deepcopy(self._data)
+
+    def with_versions_time_to_live(self, new_versions_time_to_live):
+        """Creates a new spec with the same properties, updating versions time to live.
+
+        :param new_versions_time_to_live: The new versions time to live.
+        :type new_versions_time_to_live: str
+        :return: A new spec.
+        :rtype: :class:`~tamr_unify_client.mastering.published_cluster.configuration.PublishedClusterConfigurationSpec`
+        """
+        return self.from_data(
+            {**self._data, "versionsTimeToLive": new_versions_time_to_live}
         )
