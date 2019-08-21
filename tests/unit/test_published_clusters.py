@@ -76,16 +76,17 @@ class PublishedClusterTest(TestCase):
     def test_update_published_clusters_configuration(self):
         def create_callback(request, snoop):
             snoop["payload"] = request.body
-            return 200, {}, json.dumps(self.update_info)
+            return 200, {}, json.dumps({"versionsTimeToLive": self.update_info})
 
-        url = "http://localhost/api/versioned/v1/projects/1/publishedClustersConfiguration"
+        path = "projects/1/publishedClustersConfiguration"
+        url = f"http://localhost:9100/api/versioned/v1/{path}"
         snoop_dict = {}
-        responses.add(responses.GET, url, self._config_json)
         responses.add_callback(
             responses.PUT, url, partial(create_callback, snoop=snoop_dict)
         )
-        clusters = PublishedClustersConfiguration(self.tamr, self._config_json)
-        new_cluster = clusters.spec().with_versions_time_to_live(self.update_info)
+
+        clusters = PublishedClustersConfiguration(self.tamr, self._config_json, path)
+        new_cluster = clusters.spec().with_versions_time_to_live(self.update_info).put()
         self.assertEqual(new_cluster._data, {"versionsTimeToLive": "PT100H"})
 
     @responses.activate
