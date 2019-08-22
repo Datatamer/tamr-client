@@ -143,6 +143,7 @@ Overview of Resource and Collection interaction (from_json and from_data confusi
 
 .. image:: resource:collectionRoute.png
 .. image:: resource:collectionRequest.png
+
 **Step 1 (red)**: `yourCollection`’s `by_relative_id` returns `super.by_relative_id`, which comes from `baseCollection`
 
 **Step 1a (black)**: within `by_relative_id`, variable `resource_json` is defined as `self.client.get.[etc]`. `Client`’s `.get` returns `self.request`
