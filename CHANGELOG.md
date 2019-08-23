@@ -1,4 +1,6 @@
-## 0.9.0-dev
+## 0.10.0-dev
+
+## 0.9.0
   **BREAKING CHANGES**
   - `AttributeMapping.__init__()` now takes arguments `client` and `data` (used to take only `data`).
 
