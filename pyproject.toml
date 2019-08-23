@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "tamr-unify-client"
 version = "0.9.0-dev"
-description = "Python Client for the Tamr Unify API"
+description = "Python Client for the Tamr API"
 license = "Apache-2.0"
 authors = ["Pedro Cattori <pedro.cattori@tamr.com>"]
 readme = "README.md"
-homepage = "https://tamr-unify-python-client.readthedocs.io/en/stable/"
-repository = "https://github.com/Datatamer/unify-client-python"
-keywords = ["tamr", "unify"]
+homepage = "https://tamr-client.readthedocs.io/en/stable/"
+repository = "https://github.com/Datatamer/tamr-client"
+keywords = ["tamr"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
