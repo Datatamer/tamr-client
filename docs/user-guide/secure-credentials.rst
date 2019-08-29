@@ -48,9 +48,10 @@ Then ``pip install pyyaml`` read the credentials in your Python code::
   from tamr_unify_client.auth import UsernamePasswordAuth
   import yaml
 
-  creds = yaml.load("path/to/credentials.yaml") # replace with your credentials.yaml path
+  with open("path/to/credentials.yaml") as f: # replace with your credentials.yaml path
+    creds = yaml.safe_load(f) 
 
-  auth = UsernamePasswordAuth(creds.username, creds.password)
+  auth = UsernamePasswordAuth(creds['username'], creds['password'])
 
 As in this example, we recommend you use YAML as your format since YAML has
 support for comments and is more human-readable than JSON.
