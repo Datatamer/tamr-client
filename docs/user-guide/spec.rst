@@ -35,6 +35,7 @@ For instance, to create a project::
         .with_type("DEDUP")
         .with_description("Mastering Project")
         .with_unified_dataset_name("Project_unified_dataset")
+        .with_external_id("tamrProject1")
     )
     project = tamr.projects.create(spec.to_dict())
 
