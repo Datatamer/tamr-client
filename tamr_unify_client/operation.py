@@ -18,6 +18,48 @@ class Operation(BaseResource):
     def from_json(cls, client, resource_json, api_path=None):
         return super().from_data(client, resource_json, api_path)
 
+    @classmethod
+    def from_response(cls, client, response):
+        """
+        Handle idiosyncrasies in constructing Operations from Tamr responses.
+        When a Tamr API call would start an operation, but all results that would be
+        produced by that operation are already up-to-date, Tamr returns `HTTP 204 No Content`
+
+        To make it easy for client code to handle these API responses without checking
+        the response code, this method will either construct an Operation, or a
+        dummy `NoOp` operation representing the 204 Success response.
+
+        :param client: Delegate underlying API calls to this client.
+        :type client: :class:`~tamr_unify_client.Client`
+        :param response: HTTP Response from the request that started the operation.
+        :type response: :class:`requests.Response`
+        :return: Operation
+        :rtype: :class:`~tamr_unify_client.operation.Operation`
+        """
+        if response.status_code == 204:
+            # Operation was successful, but the response contains no content.
+            # Create a dummy operation to represent this.
+            _never = "0000-00-00T00:00:00.000Z"
+            _description = """Tamr returned HTTP 204 for this operation, indicating that all
+                results that would be produced by the operation are already up-to-date."""
+            resource_json = {
+                "id": "-1",
+                "type": "NOOP",
+                "description": _description,
+                "status": {
+                    "state": "SUCCEEDED",
+                    "startTime": _never,
+                    "endTime": _never,
+                    "message": "",
+                },
+                "created": {"username": "", "time": _never, "version": "-1"},
+                "lastModified": {"username": "", "time": _never, "version": "-1"},
+                "relativeId": "operations/-1",
+            }
+        else:
+            resource_json = response.json()
+        return Operation.from_json(client, resource_json)
+
     def apply_options(self, asynchronous=False, **options):
         """Applies operation options to this operation.
 

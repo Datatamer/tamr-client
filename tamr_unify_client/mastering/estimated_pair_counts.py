@@ -63,8 +63,8 @@ class EstimatedPairCounts(BaseResource):
         :returns: The refresh operation.
         :rtype: :class:`~tamr_unify_client.operation.Operation`
         """
-        op_json = self.client.post(self.api_path + ":refresh").successful().json()
-        op = Operation.from_json(self.client, op_json)
+        response = self.client.post(self.api_path + ":refresh").successful()
+        op = Operation.from_response(self.client, response)
         return op.apply_options(**options)
 
     def __repr__(self) -> str:
