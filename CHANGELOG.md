@@ -1,4 +1,6 @@
 ## 0.10.0-dev
+  **BUG FIXES**
+  - [#293](https://github.com/Datatamer/tamr-client/issues/293) Better handling for HTTP 204 on already up-to-date operations
 
 ## 0.9.0
   **BREAKING CHANGES**
