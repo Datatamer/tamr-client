@@ -20,9 +20,9 @@ Ensure CI tests pass for your PR and merge your changes into `master`.
 
 # 2. Cut a release branch
 
-On the [Datatamer/unify-client-python](https://github.com/Datatamer/unify-client-python) Github repo, click on [Commits](https://github.com/Datatamer/unify-client-python/commits/master). Navigate to the commit just before the version bump commit from Step 1. Click the `<>` icon to browse the repo at that commit.
+On the [Datatamer/tamr-client](https://github.com/Datatamer/tamr-client) Github repo, click on [Commits](https://github.com/Datatamer/tamr-client/commits/master). Navigate to the commit just before the version bump commit from Step 1. Click the `<>` icon to browse the repo at that commit.
 
-Then, create a branch on Github within the [Datatamer/unify-client-python](https://github.com/Datatamer/unify-client-python) repo titled `release-<version>` e.g. `release-0.3.0`.
+Then, create a branch on Github within the [Datatamer/tamr-client](https://github.com/Datatamer/tamr-client) repo titled `release-<version>` e.g. `release-0.3.0`.
 
 Create a branch locally with the following commands:
 1. `git fetch Datatamer` (this will pull down the release branch you created on Github)
@@ -41,7 +41,7 @@ Ensure CI tests pass for your PR and merge your changes into the release branch 
 
 # 4. Create a Github release
 
-On the [Datatamer/unify-client-python](https://github.com/Datatamer/unify-client-python) Github repo, click on [Releases](https://github.com/Datatamer/unify-client-python/releases). Click "Draft a new release".
+On the [Datatamer/tamr-client](https://github.com/Datatamer/tamr-client) Github repo, click on [Releases](https://github.com/Datatamer/tamr-client/releases). Click "Draft a new release".
 
 Title the release with the release version. Do not include anything else in the release title e.g.
 - Correct: `0.3.0`
@@ -52,13 +52,13 @@ Title the release with the release version. Do not include anything else in the 
 
 Copy/paste the `CHANGELOG.md` entries for this release into the description for the release (only the entries, not the header since the version number is already encoded as the title for this release).
 
-Create the release. This should also implicitly create a tag for the release under [Tags](https://github.com/Datatamer/unify-client-python/tags).
+Create the release. This should also implicitly create a tag for the release under [Tags](https://github.com/Datatamer/tamr-client/tags).
 
 # 5. Check on published artifacts
 
 We use Travis CI as our Continuous Integration (CI) solution.
 
-CI is wired to ["deploy"](https://github.com/Datatamer/unify-client-python/blob/master/.travis.yml#L14) (a.k.a. publish) releases to PyPI for any tags that look like a semantic version number e.g. `0.3.0`. So CI should handle publishing for you.
+CI is wired to ["deploy"](https://github.com/Datatamer/tamr-client/blob/master/.travis.yml#L14) (a.k.a. publish) releases to PyPI for any tags that look like a semantic version number e.g. `0.3.0`. So CI should handle publishing for you.
 
 Check that CI tests passed.
 Check that CI successfully published the release version to [PyPI](https://pypi.org/project/tamr-unify-client/#history).

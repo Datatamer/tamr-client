@@ -30,6 +30,6 @@ Search open/closed issues before submitting since someone might have asked the s
 | Software          | Version(s) |
 | ----------------- | ---------- |
 | tamr-unify-client |
-| Tamr Unify server |
+| Tamr server       |
 | Python            |
 | Operating System  |

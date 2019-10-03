@@ -86,7 +86,7 @@ Modifying a resource
 Certain resources can also be modified using specs.
 
 After getting a spec corresponding to a resource and modifying some properties,
-the updated resource can be committed to Unify with the ``put`` function::
+the updated resource can be committed to Tamr with the ``put`` function::
 
     updated_dataset = (
         dataset.spec()
