@@ -51,7 +51,7 @@ autodoc_default_flags = ["inherited-members", "members"]
 autodoc_member_order = "bysource"
 intersphinx_mapping = {
     "https://docs.python.org/": None,
-    "requests": ("http://docs.python-requests.org/en/master/", None),
+    "requests": ("https://requests.kennethreitz.org/en/master/", None),
     "pandas": ("https://pandas.pydata.org/pandas-docs/stable", None),
 }
 
