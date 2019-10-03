@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "Tamr - Python Client"
-copyright = "2018, Tamr"
+copyright = "2019, Tamr"
 author = "Tamr"
 
 
