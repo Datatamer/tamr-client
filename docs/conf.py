@@ -15,6 +15,8 @@
 import os
 import sys
 
+import recommonmark
+from recommonmark.transform import AutoStructify
 import toml
 
 sys.path.insert(0, os.path.abspath(".."))
@@ -46,7 +48,12 @@ release = version
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.napoleon", "sphinx.ext.intersphinx", "sphinx.ext.viewcode"]
+extensions = [
+    "recommonmark",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.viewcode",
+]
 autodoc_default_flags = ["inherited-members", "members"]
 autodoc_member_order = "bysource"
 intersphinx_mapping = {
@@ -62,7 +69,6 @@ templates_path = ["_templates"]
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = ".rst"
 
 # The master toctree document.
 master_doc = "index"
@@ -195,3 +201,15 @@ epub_title = project
 
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ["search.html"]
+
+
+def setup(app):
+    """
+    https://recommonmark.readthedocs.io/en/latest/auto_structify.html#configuring-autostructify
+    """
+    app.add_config_value(
+        "recommonmark_config",
+        {"enable_auto_toc_tree": True, "auto_toc_maxdepth": 2},
+        True,
+    )
+    app.add_transform(AutoStructify)
