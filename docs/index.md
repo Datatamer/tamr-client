@@ -17,7 +17,7 @@ auth = UsernamePasswordAuth(username, password)
 host = 'localhost' # replace with your Tamr host
 tamr = Client(auth, host=host)
 
-# programmatically interace with Tamr!
+# programmatically interact with Tamr!
 # e.g. refresh your project's Unified Dataset
 project = tamr.projects.by_resource_id('3')
 ud = project.unified_dataset()
