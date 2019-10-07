@@ -7,9 +7,9 @@ You can opt-in to an asynchronous interface via the asynchronous keyword argumen
 E.g.:
 
 ```python
-operation = project.unified_dataset().refresh(asynchronous=True)
-# do asynchronous stuff while operation is running
-operation.wait() # hangs until operation finishes
+op = project.unified_dataset().refresh(asynchronous=True)
+# do asynchronous stuff here while operation is running
+op = op.wait() # hangs until operation finishes
 assert op.succeeded()
 ```
 
