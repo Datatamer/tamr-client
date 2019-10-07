@@ -1,7 +1,7 @@
-Tamr Unify - Python Client
+Tamr - Python Client
 ==========================
 
-Version: |release| | `View on Github <https://github.com/Datatamer/unify-client-python>`_
+Version: |release| | `View on Github <https://github.com/Datatamer/tamr-client>`_
 
 Example
 -------

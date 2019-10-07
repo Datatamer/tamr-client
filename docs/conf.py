@@ -22,8 +22,8 @@ sys.path.insert(0, os.path.abspath(".."))
 
 # -- Project information -----------------------------------------------------
 
-project = "Tamr Unify Python Client"
-copyright = "2018, Tamr"
+project = "Tamr - Python Client"
+copyright = "2019, Tamr"
 author = "Tamr"
 
 
@@ -46,12 +46,12 @@ release = version
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc", "sphinx.ext.intersphinx", "sphinx.ext.viewcode"]
+extensions = ["sphinx.ext.napoleon", "sphinx.ext.intersphinx", "sphinx.ext.viewcode"]
 autodoc_default_flags = ["inherited-members", "members"]
 autodoc_member_order = "bysource"
 intersphinx_mapping = {
     "https://docs.python.org/": None,
-    "requests": ("http://docs.python-requests.org/en/master/", None),
+    "requests": ("https://requests.kennethreitz.org/en/master/", None),
     "pandas": ("https://pandas.pydata.org/pandas-docs/stable", None),
 }
 
@@ -118,7 +118,7 @@ html_sidebars = {"**": ["localtoc.html", "relations.html", "searchbox.html"]}
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "TamrUnifyPythonClientdoc"
+htmlhelp_basename = "TamrPythonClientdoc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -144,8 +144,8 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "TamrUnifyPythonClient.tex",
-        "Tamr Unify Python Client Documentation",
+        "TamrPythonClient.tex",
+        "Tamr - Python Client Documentation",
         "Tamr",
         "manual",
     )
@@ -157,13 +157,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (
-        master_doc,
-        "tamrunifypythonclient",
-        "Tamr Unify Python Client Documentation",
-        [author],
-        1,
-    )
+    (master_doc, "tamrpythonclient", "Tamr - Python Client Documentation", [author], 1)
 ]
 
 
@@ -175,10 +169,10 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "TamrUnifyPythonClient",
-        "Tamr Unify Python Client Documentation",
+        "TamrPythonClient",
+        "Tamr - Python Client Documentation",
         author,
-        "TamrUnifyPythonClient",
+        "TamrPythonClient",
         "One line description of project.",
         "Miscellaneous",
     )
