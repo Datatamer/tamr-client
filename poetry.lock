@@ -90,6 +90,17 @@ version = "0.4.1"
 
 [[package]]
 category = "dev"
+description = "Python parser for the CommonMark Markdown spec"
+name = "commonmark"
+optional = false
+python-versions = "*"
+version = "0.9.0"
+
+[package.dependencies]
+future = "*"
+
+[[package]]
+category = "dev"
 description = "Docutils -- Python Documentation Utilities"
 name = "docutils"
 optional = false
@@ -129,6 +140,14 @@ version = "0.18.1"
 [package.dependencies]
 pycodestyle = "*"
 setuptools = "*"
+
+[[package]]
+category = "dev"
+description = "Clean single-source support for Python 3 and 2"
+name = "future"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+version = "0.17.1"
 
 [[package]]
 category = "main"
@@ -320,6 +339,19 @@ python-versions = "*"
 version = "2019.1"
 
 [[package]]
+category = "dev"
+description = "A docutils-compatibility bridge to CommonMark, enabling you to write CommonMark inside of Docutils & Sphinx projects."
+name = "recommonmark"
+optional = false
+python-versions = "*"
+version = "0.6.0"
+
+[package.dependencies]
+commonmark = ">=0.8.1"
+docutils = ">=0.11"
+sphinx = ">=1.3.1"
+
+[[package]]
 category = "main"
 description = "Python HTTP for Humans."
 name = "requests"
@@ -488,7 +520,7 @@ python-versions = ">=2.7"
 version = "0.5.1"
 
 [metadata]
-content-hash = "dfe6fe8cf933d15d1f203b1e457ec5110eeecff55a0c02394390ef2d693b235f"
+content-hash = "7a311971be9bbe16602c09c6661d291a6b1d9ac9d6397203cfc42e6e2b5897c6"
 python-versions = "^3.6"
 
 [metadata.hashes]
@@ -502,10 +534,12 @@ certifi = ["59b7658e26ca9c7339e00f8f4636cdfe59d34fa37b9b04f6f9e9926b3cece1a5", "
 chardet = ["84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae", "fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"]
 click = ["2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13", "5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7"]
 colorama = ["05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d", "f8ac84de7840f5b9c4e3347b3c1eaa50f7e49c2b07596221daec5edaabbd7c48"]
+commonmark = ["14c3df31e8c9c463377e287b2a1eefaa6019ab97b22dad36e2f32be59d61d68d", "867fc5db078ede373ab811e16b6789e9d033b15ccd7296f370ca52d1ee792ce0"]
 docutils = ["02aec4bd92ab067f6ff27a38a38a41173bf01bed8f89157768c1573f53e474a6", "51e64ef2ebfb29cae1faa133b3710143496eca21c530f3f71424d77687764274", "7a4bd47eaf6596e1295ecb11361139febe29b084a87bf005bf899f9a42edc3c6"]
 entrypoints = ["589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19", "c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451"]
 flake8 = ["859996073f341f2670741b51ec1e67a01da142831aa1fdc6242dbf88dffbe661", "a796a115208f5c03b18f332f7c11729812c8c3ded6c46319c59b53efd3819da8"]
 flake8-import-order = ["90a80e46886259b9c396b578d75c749801a41ee969a235e163cfe1be7afd2543", "a28dc39545ea4606c1ac3c24e9d05c849c6e5444a50fb7e9cdd430fc94de6e92"]
+future = ["67045236dcfd6816dc439556d009594abf643e5eb48992e36beac09c2ca659b8"]
 idna = ["c357b3f628cf53ae2c4c05627ecc484553142ca23264e593d327bcde5e9c3407", "ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"]
 imagesize = ["3f349de3eb99145973fefb7dbe38554414e5c30abd0c8e4b970a7c9d09f3a1d8", "f3832918bc3c66617f92e35f5d70729187676313caa60c187eb0f28b8fe5e3b5"]
 importlib-metadata = ["a9f185022cfa69e9ca5f7eabfd5a58b689894cb78a11e3c8c89398a8ccbb8e7f", "df1403cd3aebeb2b1dcd3515ca062eecb5bd3ea7611f18cba81130c68707e879"]
@@ -525,6 +559,7 @@ pyparsing = ["1873c03321fc118f4e9746baf201ff990ceb915f433f23b395f5580d1840cb2a",
 pytest = ["6032845e68a17a96e8da3088037f899b56357769a724122056265ca2ea1890ee", "bea27a646a3d74cbbcf8d3d4a06b2dfc336baf3dc2cc85cf70ad0157e73e8322"]
 python-dateutil = ["7e6584c74aeed623791615e26efd690f29817a27c73085b78e4bad02493df2fb", "c89805f6f4d64db21ed966fda138f8a5ed7a4fdbc1a8ee329ce1b74e3c74da9e"]
 pytz = ["303879e36b721603cc54604edcac9d20401bdbe31e1e4fdee5b9f98d5d31dfda", "d747dd3d23d77ef44c6a3526e274af6efeb0a6f1afd5a69ba4d5be4098c8e141"]
+recommonmark = ["29cd4faeb6c5268c633634f2d69aef9431e0f4d347f90659fd0aab20e541efeb", "2ec4207a574289355d5b6ae4ae4abb29043346ca12cdd5f07d374dc5987d2852"]
 requests = ["11e007a8a2aa0323f5a921e9e6a2d7e4e67d9877e85773fba9ba6419025cbeb4", "9cf5292fcd0f598c671cfc1e0d7d1a7f13bb8085e9a590f48c010551dc6c4b31"]
 responses = ["502d9c0c8008439cfcdef7e251f507fcfdd503b56e8c0c87c3c3e3393953f790", "97193c0183d63fba8cd3a041c75464e4b09ea0aff6328800d1546598567dde0b"]
 simplejson = ["067a7177ddfa32e1483ba5169ebea1bc2ea27f224853211ca669325648ca5642", "2b8cb601d9ba0381499db719ccc9dfbb2fbd16013f5ff096b1a68a4775576a04", "2c139daf167b96f21542248f8e0a06596c9b9a7a41c162cc5c9ee9f3833c93cd", "2fc546e6af49fb45b93bbe878dea4c48edc34083729c0abd09981fe55bdf7f91", "354fa32b02885e6dae925f1b5bbf842c333c1e11ea5453ddd67309dc31fdb40a", "37e685986cf6f8144607f90340cff72d36acf654f3653a6c47b84c5c38d00df7", "3af610ee72efbe644e19d5eaad575c73fb83026192114e5f6719f4901097fce2", "3b919fc9cf508f13b929a9b274c40786036b31ad28657819b3b9ba44ba651f50", "3dd289368bbd064974d9a5961101f080e939cbe051e6689a193c99fb6e9ac89b", "491de7acc423e871a814500eb2dcea8aa66c4a4b1b4825d18f756cdf58e370cb", "495511fe5f10ccf4e3ed4fc0c48318f533654db6c47ecbc970b4ed215c791968", "65b41a5cda006cfa7c66eabbcf96aa704a6be2a5856095b9e2fd8c293bad2b46", "6c3258ffff58712818a233b9737fe4be943d306c40cf63d14ddc82ba563f483a", "75e3f0b12c28945c08f54350d91e624f8dd580ab74fd4f1bbea54bc6b0165610", "79b129fe65fdf3765440f7a73edaffc89ae9e7885d4e2adafe6aa37913a00fbb", "b1f329139ba647a9548aa05fb95d046b4a677643070dc2afc05fa2e975d09ca5", "c206f47cbf9f32b573c9885f0ec813d2622976cf5effcf7e472344bc2e020ac1", "d8e238f20bcf70063ee8691d4a72162bcec1f4c38f83c93e6851e72ad545dabb", "ee9625fc8ee164902dfbb0ff932b26df112da9f871c32f0f9c1bcf20c350fe2a", "fb2530b53c28f0d4d84990e945c2ebb470edb469d63e389bf02ff409012fe7c5", "feadb95170e45f439455354904768608e356c5b174ca30b3d11b0e3f24b5c0df"]
