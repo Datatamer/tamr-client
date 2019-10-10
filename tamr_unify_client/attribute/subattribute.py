@@ -27,10 +27,15 @@ class SubAttribute:
     description: Optional[str] = None
 
     @staticmethod
-    def from_json(d: SubAttributeJson) -> "SubAttribute":
-        _json = deepcopy(d)
+    def from_json(data: SubAttributeJson) -> "SubAttribute":
+        """Create a SubAttribute from JSON data.
 
-        dc = deepcopy(d)
+        Args:
+            data: JSON data received from Tamr server.
+        """
+        _json = deepcopy(data)
+
+        dc = deepcopy(data)
         dc["is_nullable"] = dc.pop("isNullable")
 
         type_json = dc.pop("type")
