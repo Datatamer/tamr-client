@@ -6,6 +6,7 @@ from tamr_unify_client.attribute.type import AttributeType
 
 SubAttributeJson = Dict[str, Any]
 
+
 @dataclass(frozen=True)
 class SubAttribute:
     """An attribute which is itself a property of another attribute.
@@ -18,6 +19,7 @@ class SubAttribute:
         type: See https://docs.tamr.com/reference#attribute-types
         is_nullable: If this sub-attribute can be null
     """
+
     name: str
     type: AttributeType
     is_nullable: bool
@@ -25,13 +27,13 @@ class SubAttribute:
     description: Optional[str] = None
 
     @staticmethod
-    def from_json(d: SubAttributeJson) -> 'SubAttribute':
+    def from_json(d: SubAttributeJson) -> "SubAttribute":
         _json = deepcopy(d)
 
         dc = deepcopy(d)
-        dc['is_nullable'] = dc.pop('isNullable')
+        dc["is_nullable"] = dc.pop("isNullable")
 
-        type_json = dc.pop('type')
+        type_json = dc.pop("type")
         # TODO implement AttributeType.from_json and use that instead
         type = AttributeType(type_json)
 

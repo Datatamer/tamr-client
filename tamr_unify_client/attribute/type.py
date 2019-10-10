@@ -31,6 +31,7 @@ class AttributeType:
     def attributes(self):
         """:type: list[:class:`~tamr_unify_client.attribute.subattribute.SubAttribute`]"""
         from tamr_unify_client.attribute.subattribute import SubAttribute
+
         collection_json = self._data.get("attributes")
         return [SubAttribute.from_json(attr) for attr in collection_json]
 
