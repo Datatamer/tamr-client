@@ -1,43 +1,38 @@
+from copy import deepcopy
+from dataclasses import dataclass, field
+from typing import Any, Dict, Optional
+
+from tamr_unify_client.attribute.type import AttributeType
+
+SubAttributeJson = Dict[str, Any]
+
+@dataclass(frozen=True)
 class SubAttribute:
-    """
-    An attribute which is itself a property of another attribute.
+    """An attribute which is itself a property of another attribute.
 
     See https://docs.tamr.com/reference#attribute-types
 
-    :param data: JSON data representing this attribute
-    :type data: :py:class:`dict`
+    Args:
+        name: Name of sub-attribute
+        description: Description of sub-attribute
+        type: See https://docs.tamr.com/reference#attribute-types
+        is_nullable: If this sub-attribute can be null
     """
+    name: str
+    type: AttributeType
+    is_nullable: bool
+    _json: SubAttributeJson = field(repr=False)
+    description: Optional[str] = None
 
-    def __init__(self, data):
-        self._data = data
+    @staticmethod
+    def from_json(d: SubAttributeJson) -> 'SubAttribute':
+        _json = deepcopy(d)
 
-    @property
-    def name(self):
-        """:type: str"""
-        return self._data.get("name")
+        dc = deepcopy(d)
+        dc['is_nullable'] = dc.pop('isNullable')
 
-    @property
-    def description(self):
-        """:type: str"""
-        return self._data.get("description")
+        type_json = dc.pop('type')
+        # TODO implement AttributeType.from_json and use that instead
+        type = AttributeType(type_json)
 
-    @property
-    def type(self):
-        """:type: :class:`~tamr_unify_client.attribute.type.AttributeType`"""
-        # import locally to avoid circular dependency
-        from tamr_unify_client.attribute.type import AttributeType
-
-        type_json = self._data.get("type")
-        return AttributeType(type_json)
-
-    @property
-    def is_nullable(self):
-        """:type: bool"""
-        return self._data.get("isNullable")
-
-    def __repr__(self):
-        return (
-            f"{self.__class__.__module__}."
-            f"{self.__class__.__qualname__}("
-            f"name={self.name!r})"
-        )
+        return SubAttribute(**dc, type=type, _json=_json)

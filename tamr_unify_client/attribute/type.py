@@ -1,7 +1,5 @@
 from copy import deepcopy
 
-from tamr_unify_client.attribute.subattribute import SubAttribute
-
 
 class AttributeType:
     """
@@ -32,8 +30,9 @@ class AttributeType:
     @property
     def attributes(self):
         """:type: list[:class:`~tamr_unify_client.attribute.subattribute.SubAttribute`]"""
+        from tamr_unify_client.attribute.subattribute import SubAttribute
         collection_json = self._data.get("attributes")
-        return [SubAttribute(attr) for attr in collection_json]
+        return [SubAttribute.from_json(attr) for attr in collection_json]
 
     def spec(self):
         """Returns a spec representation of this attribute type.
