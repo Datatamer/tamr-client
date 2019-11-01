@@ -1,6 +1,6 @@
 # TODO(pcattori) Delete this file once RTD fully supports poetry
-recommonmark
-Sphinx
-sphinx_rtd_theme
-toml
+recommonmark==0.6.0
+Sphinx==2.1.0
+sphinx_rtd_theme==0.4.3
+toml==0.10.0
 .
