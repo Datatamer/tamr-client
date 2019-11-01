@@ -51,6 +51,7 @@ release = version
 extensions = [
     "recommonmark",
     "sphinx.ext.napoleon",
+    "sphinx_autodoc_typehints",
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
 ]
