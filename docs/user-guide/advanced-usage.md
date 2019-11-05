@@ -60,7 +60,7 @@ tamr.log_entry = log_entry
 ```
 
 
-## Custom HTTP requests and Unversioned API Access
+## Raw HTTP requests and Unversioned API Access
 
 We encourage you to use the high-level, object-oriented interface offered by the Python Client. If you aren't sure whether you need to send low-level HTTP requests, you probably don't.
 
