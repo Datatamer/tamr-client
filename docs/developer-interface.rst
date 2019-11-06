@@ -13,8 +13,8 @@ Client
 .. autoclass:: tamr_unify_client.Client
   :members:
 
-Attribute
----------
+Attributes
+----------
 
 Attribute
 ^^^^^^^^^
@@ -60,8 +60,8 @@ Categorization Project
 .. autoclass:: tamr_unify_client.categorization.project.CategorizationProject
   :members:
 
-Category
-^^^^^^^^
+Categories
+^^^^^^^^^^
 
 Category
 """"""""
@@ -87,8 +87,8 @@ Taxonomy
 .. autoclass:: tamr_unify_client.categorization.taxonomy.Taxonomy
   :members:
 
-Dataset
--------
+Datasets
+--------
 
 Dataset
 ^^^^^^^
@@ -167,8 +167,8 @@ Mastering Project
 .. autoclass:: tamr_unify_client.mastering.project.MasteringProject
   :members:
 
-Published Cluster
-^^^^^^^^^^^^^^^^^
+Published Clusters
+^^^^^^^^^^^^^^^^^^
 
 Metric
 """"""
@@ -212,11 +212,11 @@ Operation
   :members:
 
 
-Project
--------
+Projects
+--------
 
-Attribute Configuration
-^^^^^^^^^^^^^^^^^^^^^^^
+Attribute Configurations
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Attribute Configuration
 """""""""""""""""""""""
@@ -237,8 +237,8 @@ Attribute Configuration Collection
   :members:
 
 
-Attribute Mapping
-^^^^^^^^^^^^^^^^^
+Attribute Mappings
+^^^^^^^^^^^^^^^^^^
 
 Attribute Mapping
 """""""""""""""""

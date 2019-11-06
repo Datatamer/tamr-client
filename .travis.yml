@@ -10,6 +10,7 @@ script:
 - poetry run black --check .
 - poetry run flake8 .
 - poetry run pytest tests
+- cd docs && poetry run sphinx-build -b html . _build -W
 before_deploy:
 - poetry build
 - poetry config http-basic.pypi $PYPI_USERNAME $PYPI_PASSWORD
