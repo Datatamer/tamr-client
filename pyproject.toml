@@ -31,7 +31,7 @@ Sphinx = "^2.1"
 responses = "^0.10.6"
 flake8-import-order = "^0.18.1"
 pytest = "^4.6"
-black = {version = "^19.3b0",allows-prereleases = true}
+black = {version = "^19.3b0",allow-prereleases = true}
 flake8 = "^3.7"
 toml = "^0.10.0"
 sphinx_rtd_theme = "^0.4.3"
