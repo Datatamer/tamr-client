@@ -25,6 +25,7 @@ python = "^3.6"
 requests = "^2.22"
 simplejson = "^3.16"
 dataclasses = "^0.6.0"
+pandas = "^0.25.3"
 
 [tool.poetry.dev-dependencies]
 Sphinx = "^2.1"
@@ -35,7 +36,6 @@ black = {version = "^19.3b0",allow-prereleases = true}
 flake8 = "^3.7"
 toml = "^0.10.0"
 sphinx_rtd_theme = "^0.4.3"
-pandas = "^0.25.0"
 recommonmark = "^0.6.0"
 sphinx-autodoc-typehints = "^1.8"
 
