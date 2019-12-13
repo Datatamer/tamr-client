@@ -1,26 +1,31 @@
 from urllib.parse import urljoin
 
 import requests
-from requests import Response
+import requests.exceptions
 
 from tamr_unify_client.dataset.collection import DatasetCollection
 from tamr_unify_client.project.collection import ProjectCollection
 
-# monkey-patch Response.successful
 
-
-def successful(self):
+def successful(response: requests.Response) -> requests.Response:
     """Checks that this response did not encounter an HTTP error (i.e. status code indicates success: 2xx, 3xx).
 
-    :raises :class:`requests.exceptions.HTTPError`: If an HTTP error is encountered.
-    :return: The calling response (i.e. ``self``).
-    :rtype: :class:`requests.Response`
+    Returns:
+        requests.Response: The response being checked.
+
+    Raises:
+        requests.exceptions.HTTPError: If an HTTP error is encountered (i.e. status code is 4xx or 5xx).
     """
-    self.raise_for_status()
-    return self
+    try:
+        response.raise_for_status()
+        return response
+    except requests.exceptions.HTTPError as e:
+        msg = str(e) + f"\nResponse body:\n{response.text}"
+        raise requests.exceptions.HTTPError(msg, response=response)
 
 
-Response.successful = successful
+# monkey-patch requests.Response.successful
+requests.Response.successful = successful
 
 
 class Client:
