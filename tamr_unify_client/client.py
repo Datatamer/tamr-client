@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 def successful(response: requests.Response) -> requests.Response:
-    """Checks that this response did not encounter an HTTP error.
+    """Ensure response does not contain an HTTP error.
 
     HTTP error codes match 4xx or 5xx.
 
