@@ -38,11 +38,6 @@ def successful(response: requests.Response) -> requests.Response:
 requests.Response.successful = successful
 
 
-def _default_response_message(response: requests.Response) -> str:
-    req = response.request
-    return f"{req.method} {response.url} : {response.status_code}"
-
-
 class Client:
     """Python Client for Tamr API.
 
@@ -91,8 +86,6 @@ class Client:
         if not self.base_path.endswith("/"):
             self.base_path = self.base_path + "/"
 
-        self.response_message = _default_response_message
-
     @property
     def origin(self):
         """HTTP origin i.e. ``<protocol>://<host>[:<port>]``.
@@ -115,7 +108,10 @@ class Client:
         """
         url = urljoin(self.origin + self.base_path, endpoint)
         response = self.session.request(method, url, auth=self.auth, **kwargs)
-        logger.info(self.response_message(response))
+
+        logger.info(
+            f"{response.request.method} {response.url} : {response.status_code}"
+        )
         return response
 
     def get(self, endpoint, **kwargs):
