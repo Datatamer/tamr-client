@@ -87,24 +87,25 @@ class Client:
             self.base_path = self.base_path + "/"
 
     @property
-    def origin(self):
+    def origin(self) -> str:
         """HTTP origin i.e. ``<protocol>://<host>[:<port>]``.
-        For additional information, see `MDN web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin>`_ .
 
-        :type: str
+        For additional information, see `MDN web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin>`_ .
         """
         return f"{self.protocol}://{self.host}:{self.port}"
 
-    def request(self, method, endpoint, **kwargs):
-        """Sends an authenticated request to the server. The URL for the request
-        will be ``"<origin>/<base_path>/<endpoint>"``.
+    def request(self, method: str, endpoint: str, **kwargs) -> requests.Response:
+        """Sends a request to Tamr.
 
-        :param method: The HTTP method for the request to be sent.
-        :type method: str
-        :param endpoint: API endpoint to call (relative to the Base API path for this client).
-        :type endpoint: str
-        :return: HTTP response
-        :rtype: :class:`requests.Response`
+        The URL for the request will be ``<origin>/<base_path>/<endpoint>``.
+        The request is authenticated via :attr:`Client.auth`.
+
+        Args:
+            method: The HTTP method to use (e.g. `'GET'` or `'POST'`)
+            endpoint: API endpoint to call (relative to the Base API path for this client).
+
+        Returns:
+            HTTP response from the Tamr server
         """
         url = urljoin(self.origin + self.base_path, endpoint)
         response = self.session.request(method, url, auth=self.auth, **kwargs)
@@ -135,20 +136,20 @@ class Client:
         return self.request("DELETE", endpoint, **kwargs)
 
     @property
-    def projects(self):
+    def projects(self) -> ProjectCollection:
         """Collection of all projects on this Tamr instance.
 
-        :return: Collection of all projects.
-        :rtype: :class:`~tamr_unify_client.project.collection.ProjectCollection`
+        Returns:
+            Collection of all projects.
         """
         return self._projects
 
     @property
-    def datasets(self):
+    def datasets(self) -> DatasetCollection:
         """Collection of all datasets on this Tamr instance.
 
-        :return: Collection of all datasets.
-        :rtype: :class:`~tamr_unify_client.dataset.collection.DatasetCollection`
+        Returns:
+            Collection of all datasets.
         """
         return self._datasets
 
