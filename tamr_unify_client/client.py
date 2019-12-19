@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 def successful(response: requests.Response) -> requests.Response:
     """Ensure response does not contain an HTTP error.
 
-    HTTP error codes match 4xx or 5xx.
+    Delegates to :func:`requests.Response.raise_for_status`
 
     Returns:
         The response being checked.
