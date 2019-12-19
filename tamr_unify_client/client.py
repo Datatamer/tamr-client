@@ -26,7 +26,10 @@ def successful(response: requests.Response) -> requests.Response:
     try:
         response.raise_for_status()
     except requests.exceptions.HTTPError as e:
-        logger.error(f"HTTP error code response body: {e.response.text}")
+        r = e.response
+        logger.error(
+            f"Encountered HTTP error code {r.status_code}. Response body: {r.text}"
+        )
         raise e
     return response
 
