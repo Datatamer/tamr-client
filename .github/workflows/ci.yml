@@ -1,0 +1,24 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  Lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python_version: ['3.6', '3.7', '3.8']
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Python
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: ${{ matrix.python_version }}
+    - name: Install Poetry
+      uses: dschep/install-poetry-action@v1.2
+    - name: Install dependencies
+      run: poetry install
+    - name: Lint
+      run: poetry run flake8 .
+    - name: Format
+      run: poetry run black --check .
