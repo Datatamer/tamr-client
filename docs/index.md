@@ -33,6 +33,7 @@ assert op.succeeded()
   * [Secure credentials](user-guide/secure-credentials)
   * [Workflows](user-guide/workflows)
   * [Create and update resources](user-guide/spec)
+  * [Logging](user-guide/logging)
   * [Geospatial data](user-guide/geo)
   * [Advanced usage](user-guide/advanced-usage)
 

@@ -13,53 +13,6 @@ op = op.wait() # hangs until operation finishes
 assert op.succeeded()
 ```
 
-## Logging API calls
-
-It can be useful (e.g. for debugging) to log the API calls made on your behalf by the Python Client.
-
-You can set up HTTP-API-call logging on any client via
-standard [Python logging mechanisms](https://docs.python.org/3/library/logging.html):
-
-```python
-from tamr_unify_client import Client
-from tamr_unify_client import UsernamePasswordAuth
-import logging
-
-auth = UsernamePasswordAuth("username", "password")
-tamr = Client(auth)
-
-# Reload the `logging` library since other libraries (like `requests`) already
-# configure logging differently. See: https://stackoverflow.com/a/53553516/1490091
-import imp
-imp.reload(logging)
-
-logging.basicConfig(
-  level=logging.INFO, format="%(message)s", filename=log_path, filemode="w"
-)
-tamr.logger = logging.getLogger(name)
-```
-
-By default, when logging is set up, the client will log `{method} {url} : {response_status}` for each API call.
-
-You can customize this by passing in a value for `log_entry`:
-
-```python
-def log_entry(method, url, response):
-# custom logging function
-# use the method, url, and response to construct the logged `str`
-# e.g. for logging out machine-readable JSON:
-import json
-return json.dumps({
-  "request": f"{method} {url}",
-  "status": response.status_code,
-  "json": response.json(),
-})
-
-# after configuring `tamr.logger`
-tamr.log_entry = log_entry
-```
-
-
 ## Raw HTTP requests and Unversioned API Access
 
 We encourage you to use the high-level, object-oriented interface offered by the Python Client. If you aren't sure whether you need to send low-level HTTP requests, you probably don't.

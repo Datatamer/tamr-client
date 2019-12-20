@@ -1,62 +1,74 @@
+import logging
+from typing import Optional
 from urllib.parse import urljoin
 
 import requests
-from requests import Response
+import requests.auth
+import requests.exceptions
 
 from tamr_unify_client.dataset.collection import DatasetCollection
 from tamr_unify_client.project.collection import ProjectCollection
 
-# monkey-patch Response.successful
+logger = logging.getLogger(__name__)
 
 
-def successful(self):
-    """Checks that this response did not encounter an HTTP error (i.e. status code indicates success: 2xx, 3xx).
+def successful(response: requests.Response) -> requests.Response:
+    """Ensure response does not contain an HTTP error.
 
-    :raises :class:`requests.exceptions.HTTPError`: If an HTTP error is encountered.
-    :return: The calling response (i.e. ``self``).
-    :rtype: :class:`requests.Response`
+    Delegates to :func:`requests.Response.raise_for_status`
+
+    Returns:
+        The response being checked.
+
+    Raises:
+        requests.exceptions.HTTPError: If an HTTP error is encountered.
     """
-    self.raise_for_status()
-    return self
+    try:
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        r = e.response
+        logger.error(
+            f"Encountered HTTP error code {r.status_code}. Response body: {r.text}"
+        )
+        raise e
+    return response
 
 
-Response.successful = successful
+# monkey-patch requests.Response.successful
+requests.Response.successful = successful
 
 
 class Client:
-    """Python Client for Tamr API. Each client is specific to a specific origin
-    (protocol, host, port).
+    """Python Client for Tamr API.
 
-    :param auth: Tamr-compatible Authentication provider.
-        **Recommended**: use one of the classes described in :ref:`authentication`
-    :type auth: :class:`requests.auth.AuthBase`
-    :param host: Host address of remote Tamr instance (e.g. `10.0.10.0`). Default: `'localhost'`
-    :type host: str
-    :param protocol: Either `'http'` or `'https'`. Default: `'http'`
-    :type protocol: str
-    :param port: Tamr instance main port. Default: `9100`
-    :type port: int
-    :param base_path: Base API path. Requests made by this client will be relative to this path. Default: `'api/versioned/v1/'`
-    :type base_path: str
-    :param session: Session to use for API calls. Default: A new default `requests.Session()`.
-    :type session: requests.Session
+    Each client is specific to a specific origin (protocol, host, port).
 
-    Usage:
-        >>> import tamr_unify_client as api
+    Args:
+        auth: Tamr-compatible Authentication provider.
+
+            **Recommended**: use one of the classes described in :ref:`authentication`
+        host: Host address of remote Tamr instance (e.g. ``'10.0.10.0'``)
+        protocol: Either ``'http'`` or ``'https'``
+        port: Tamr instance main port
+        base_path: Base API path. Requests made by this client will be relative to this path.
+        session: Session to use for API calls. If none is provided, will use a new :class:`requests.Session`.
+
+    Example:
+        >>> from tamr_unify_client import Client
         >>> from tamr_unify_client.auth import UsernamePasswordAuth
         >>> auth = UsernamePasswordAuth('my username', 'my password')
-        >>> local = api.Client(auth) # on http://localhost:9100
-        >>> remote = api.Client(auth, protocol='https', host='10.0.10.0') # on https://10.0.10.0:9100
+        >>> tamr_local = Client(auth) # on http://localhost:9100
+        >>> tamr_remote = Client(auth, protocol='https', host='10.0.10.0') # on https://10.0.10.0:9100
     """
 
     def __init__(
         self,
-        auth,
-        host="localhost",
-        protocol="http",
-        port=9100,
-        base_path="/api/versioned/v1/",
-        session=None,
+        auth: requests.auth.AuthBase,
+        host: str = "localhost",
+        protocol: str = "http",
+        port: int = 9100,
+        base_path: str = "/api/versioned/v1/",
+        session: Optional[requests.Session] = None,
     ):
         self.auth = auth
         self.host = host
@@ -68,49 +80,39 @@ class Client:
         self._projects = ProjectCollection(self)
         self._datasets = DatasetCollection(self)
 
-        # logging
-        self.logger = None
-        # https://docs.python.org/3/howto/logging-cookbook.html#implementing-structured-logging
-
         if not self.base_path.startswith("/"):
             self.base_path = "/" + self.base_path
 
         if not self.base_path.endswith("/"):
             self.base_path = self.base_path + "/"
 
-        def default_log_entry(method, url, response):
-            return f"{method} {url} : {response.status_code}"
-
-        self.log_entry = None
-
     @property
-    def origin(self):
+    def origin(self) -> str:
         """HTTP origin i.e. ``<protocol>://<host>[:<port>]``.
-        For additional information, see `MDN web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin>`_ .
 
-        :type: str
+        For additional information, see `MDN web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin>`_ .
         """
         return f"{self.protocol}://{self.host}:{self.port}"
 
-    def request(self, method, endpoint, **kwargs):
-        """Sends an authenticated request to the server. The URL for the request
-        will be ``"<origin>/<base_path>/<endpoint>"``.
+    def request(self, method: str, endpoint: str, **kwargs) -> requests.Response:
+        """Sends a request to Tamr.
 
-        :param method: The HTTP method for the request to be sent.
-        :type method: str
-        :param endpoint: API endpoint to call (relative to the Base API path for this client).
-        :type endpoint: str
-        :return: HTTP response
-        :rtype: :class:`requests.Response`
+        The URL for the request will be ``<origin>/<base_path>/<endpoint>``.
+        The request is authenticated via :attr:`Client.auth`.
+
+        Args:
+            method: The HTTP method to use (e.g. `'GET'` or `'POST'`)
+            endpoint: API endpoint to call (relative to the Base API path for this client).
+
+        Returns:
+            HTTP response from the Tamr server
         """
         url = urljoin(self.origin + self.base_path, endpoint)
         response = self.session.request(method, url, auth=self.auth, **kwargs)
 
-        # logging
-        if self.logger:
-            log_message = self.log_entry(method, url, response)
-            self.logger.info(log_message)
-
+        logger.info(
+            f"{response.request.method} {response.url} : {response.status_code}"
+        )
         return response
 
     def get(self, endpoint, **kwargs):
@@ -134,20 +136,20 @@ class Client:
         return self.request("DELETE", endpoint, **kwargs)
 
     @property
-    def projects(self):
+    def projects(self) -> ProjectCollection:
         """Collection of all projects on this Tamr instance.
 
-        :return: Collection of all projects.
-        :rtype: :class:`~tamr_unify_client.project.collection.ProjectCollection`
+        Returns:
+            Collection of all projects.
         """
         return self._projects
 
     @property
-    def datasets(self):
+    def datasets(self) -> DatasetCollection:
         """Collection of all datasets on this Tamr instance.
 
-        :return: Collection of all datasets.
-        :rtype: :class:`~tamr_unify_client.dataset.collection.DatasetCollection`
+        Returns:
+            Collection of all datasets.
         """
         return self._datasets
 
