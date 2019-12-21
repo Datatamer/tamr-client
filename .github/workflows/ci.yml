@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - release-*
+  pull_request:
+    branches:
+      - master
+      - release-*
+
+jobs:
+  Lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Python
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 3.6
+    - name: Install Poetry
+      uses: dschep/install-poetry-action@v1.2
+    - name: Install dependencies
+      run: poetry install
+    - name: Run flake8
+      run: poetry run flake8 .
+    - name: Run black
+      run: poetry run black --check .
