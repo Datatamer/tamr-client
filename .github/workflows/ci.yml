@@ -27,3 +27,21 @@ jobs:
       run: poetry run flake8 .
     - name: Run black
       run: poetry run black --check .
+
+  Test:
+    strategy:
+      matrix:
+        python_version: ['3.6', '3.7', '3.8']
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Python
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: ${{ matrix.python_version }}
+    - name: Install Poetry
+      uses: dschep/install-poetry-action@v1.2
+    - name: Install dependencies
+      run: poetry install
+    - name: Run pytest
+      run: poetry run pytest
