@@ -45,3 +45,18 @@ jobs:
       run: poetry install
     - name: Run pytest
       run: poetry run pytest
+
+  Docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Python
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 3.6
+    - name: Install Poetry
+      uses: dschep/install-poetry-action@v1.2
+    - name: Install dependencies
+      run: poetry install
+    - name: Build docs
+      run: poetry run sphinx-build -b html docs docs/_build -W
