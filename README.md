@@ -35,12 +35,8 @@ pip install tamr-unify-client
   - Train Tamr's machine learning models
   - Generate predictions from trained models
 - 🔒 Authenticate with Tamr
-- 📥 Fetch resources (e.g projects) by resource ID (e.g. `"1"`)
-- 📝 Read resource metadata
-- 🔁 Iterate over collections
-- ⚠️ Advanced
-  - Logging for API requests/responses
-  - Call custom/arbitrary API endpoints
+
+For more see the [official docs](https://tamr-client.readthedocs.io/en/stable/).
 
 ## Maintainers
 
