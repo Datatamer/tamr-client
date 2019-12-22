@@ -56,11 +56,8 @@ Create the release. This should also implicitly create a tag for the release und
 
 # 5. Check on published artifacts
 
-We use Travis CI as our Continuous Integration (CI) solution.
+CI is wired to [publish releases to PyPI for any published Github releases](https://github.com/Datatamer/tamr-client/blob/master/.github/workflows/release.yml).
 
-CI is wired to ["deploy"](https://github.com/Datatamer/tamr-client/blob/master/.travis.yml#L14) (a.k.a. publish) releases to PyPI for any tags that look like a semantic version number e.g. `0.3.0`. So CI should handle publishing for you.
-
-Check that CI tests passed.
 Check that CI successfully published the release version to [PyPI](https://pypi.org/project/tamr-unify-client/#history).
 
 On the `master` branch, add release date for this release in the `CHANGELOG.md`.
