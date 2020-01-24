@@ -1,11 +1,6 @@
 Contributor Guide
 =================
 
-Code of Conduct
----------------
-
-See `CODE_OF_CONDUCT.md <https://github.com/Datatamer/tamr-client/blob/master/CODE_OF_CONDUCT.md>`_
-
 .. _bug-reports-feature-requests:
 
 🐛 Bug Reports / 🙋 Feature Requests
