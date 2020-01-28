@@ -76,6 +76,7 @@ class Client:
         self.port = port
         self.base_path = base_path
         self.session = session or requests.Session()
+        self.session.auth = auth
 
         self._projects = ProjectCollection(self)
         self._datasets = DatasetCollection(self)
@@ -108,7 +109,7 @@ class Client:
             HTTP response from the Tamr server
         """
         url = urljoin(self.origin + self.base_path, endpoint)
-        response = self.session.request(method, url, auth=self.auth, **kwargs)
+        response = self.session.request(method, url, **kwargs)
 
         logger.info(
             f"{response.request.method} {response.url} : {response.status_code}"
