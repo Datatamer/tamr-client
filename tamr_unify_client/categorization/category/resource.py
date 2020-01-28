@@ -23,7 +23,7 @@ class Category(BaseResource):
     @property
     def path(self):
         """:type: list[str]"""
-        return self._data.get("path")[:]
+        return self._data.get("path")[:]  # type: ignore
 
     def parent(self):
         """Gets the parent Category of this one, or None if it is a tier 1 category

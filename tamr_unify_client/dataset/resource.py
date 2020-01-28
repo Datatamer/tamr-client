@@ -42,12 +42,12 @@ class Dataset(BaseResource):
     @property
     def tags(self):
         """:type: list[str]"""
-        return self._data.get("tags")[:]
+        return self._data.get("tags")[:]  # type: ignore
 
     @property
     def key_attribute_names(self):
         """:type: list[str]"""
-        return self._data.get("keyAttributeNames")[:]
+        return self._data.get("keyAttributeNames")[:]  # type: ignore
 
     @property
     def attributes(self):

@@ -15,7 +15,7 @@ class DatasetProfile(BaseResource):
 
         :type: str
         """
-        return self._data.get("datasetName")
+        return self._data.get("datasetName")  # type: ignore
 
     @property
     def relative_dataset_id(self) -> str:
@@ -23,7 +23,7 @@ class DatasetProfile(BaseResource):
 
         :type: str
         """
-        return self._data.get("relativeDatasetId")
+        return self._data.get("relativeDatasetId")  # type: ignore
 
     @property
     def is_up_to_date(self) -> bool:
@@ -31,7 +31,7 @@ class DatasetProfile(BaseResource):
 
         :type: bool
         """
-        return self._data.get("isUpToDate")
+        return self._data.get("isUpToDate")  # type: ignore
 
     @property
     def profiled_data_version(self) -> str:
@@ -39,7 +39,7 @@ class DatasetProfile(BaseResource):
 
         :type: str
         """
-        return self._data.get("profiledDataVersion")
+        return self._data.get("profiledDataVersion")  # type: ignore
 
     @property
     def profiled_at(self) -> dict:
@@ -47,7 +47,7 @@ class DatasetProfile(BaseResource):
 
         :type: dict
         """
-        return self._data.get("profiledAt")
+        return self._data.get("profiledAt")  # type: ignore
 
     @property
     def simple_metrics(self) -> list:
@@ -55,7 +55,7 @@ class DatasetProfile(BaseResource):
 
         :type: list
         """
-        return self._data.get("simpleMetrics")
+        return self._data.get("simpleMetrics")  # type: ignore
 
     @property
     def attribute_profiles(self) -> list:
@@ -63,7 +63,7 @@ class DatasetProfile(BaseResource):
 
         :type: list
         """
-        return self._data.get("attributeProfiles")
+        return self._data.get("attributeProfiles")  # type: ignore
 
     def refresh(self, **options):
         """Updates the dataset profile if needed.

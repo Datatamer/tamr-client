@@ -15,7 +15,7 @@ class EstimatedPairCounts(BaseResource):
 
         :rtype: bool
         """
-        return self._data.get("isUpToDate")
+        return self._data.get("isUpToDate")  # type: ignore
 
     @property
     def total_estimate(self) -> dict:
@@ -29,7 +29,7 @@ class EstimatedPairCounts(BaseResource):
             }
         :rtype: dict[str, str]
         """
-        return self._data.get("totalEstimate")
+        return self._data.get("totalEstimate")  # type: ignore
 
     @property
     def clause_estimates(self) -> dict:
@@ -49,7 +49,7 @@ class EstimatedPairCounts(BaseResource):
             }
         :rtype: dict[str, dict[str, str]]
         """
-        return self._data.get("clauseEstimates")
+        return self._data.get("clauseEstimates")  # type: ignore
 
     def refresh(self, **options):
         """Updates the estimated pair counts if needed.
