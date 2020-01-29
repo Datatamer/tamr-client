@@ -64,7 +64,7 @@ class Client:
 
     @property
     def origin(self) -> str:
-        """HTTP origin i.e. ``<protocol>://<host>[:<port>]``.
+        """HTTP origin i.e. :code:`<protocol>://<host>[:<port>]`.
 
         For additional information, see `MDN web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin>`_ .
         """
