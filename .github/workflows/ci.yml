@@ -24,14 +24,14 @@ jobs:
     - name: Install dependencies
       run: poetry install
     - name: Run flake8
-      run: poetry run flake8 .
+      run: poetry run invoke lint
     - name: Run black
-      run: poetry run black --check .
+      run: poetry run invoke format
 
   Test:
     strategy:
       matrix:
-        python_version: ['3.6', '3.7', '3.8']
+        python_version: [3.6, 3.7, 3.8]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -44,7 +44,7 @@ jobs:
     - name: Install dependencies
       run: poetry install
     - name: Run pytest
-      run: poetry run pytest
+      run: poetry run invoke test
 
   Docs:
     runs-on: ubuntu-latest
@@ -59,4 +59,4 @@ jobs:
     - name: Install dependencies
       run: poetry install
     - name: Build docs
-      run: poetry run sphinx-build -b html docs docs/_build -W
+      run: poetry run invoke docs

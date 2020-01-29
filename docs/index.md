@@ -41,6 +41,6 @@ assert op.succeeded()
 
   * [Contributor guide](contributor-guide)
 
-## Developer Interface
+## Reference
 
-  * [Developer interface](developer-interface)
+  * [Reference](reference)
