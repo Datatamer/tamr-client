@@ -7,8 +7,9 @@ def lint(c):
 
 
 @task
-def format(c):
-    c.run("poetry run black --check .", echo=True, pty=True)
+def format(c, fix=False):
+    check = "" if fix else "--check"
+    c.run(f"poetry run black {check} .", echo=True, pty=True)
 
 
 @task
