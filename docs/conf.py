@@ -61,7 +61,7 @@ autodoc_member_order = "bysource"
 autosectionlabel_prefix_document = True
 intersphinx_mapping = {
     "https://docs.python.org/": None,
-    "requests": ("https://requests.kennethreitz.org/en/master/", None),
+    "requests": ("https://requests.readthedocs.io/en/master/", None),
     "pandas": ("https://pandas.pydata.org/pandas-docs/stable", None),
 }
 
