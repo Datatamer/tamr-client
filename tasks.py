@@ -19,7 +19,12 @@ def typecheck(c, warn=True):
     repo = Path(".")
     tc = repo / "tamr_unify_client"
     tests = repo / "tests"
-    pkgs = [tc / "attributes", tests / "attributes", tc / "datasets"]
+    pkgs = [
+        tc / "attributes",
+        tests / "attributes",
+        tc / "datasets",
+        tests / "datasets",
+    ]
     for pkg in pkgs:
         pyfiles = " ".join(str(pyfile) for pyfile in pkg.glob("**/*.py"))
         c.run(f"poetry run mypy {pyfiles}", echo=True, pty=True, warn=warn)
