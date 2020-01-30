@@ -1,10 +1,10 @@
 import os
 
 import responses
-from tests.mock_api.utils import mock_api
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
+from tests.mock_api.utils import mock_api
 
 
 basedir = os.path.dirname(__file__)

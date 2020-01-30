@@ -10,4 +10,4 @@ exclude = build,.venv,*.egg-info
 
 # flake8-import-order plugin
 import-order-style = google
-application-import-names = tamr_unify_client
+application-import-names = tamr_unify_client, tests
