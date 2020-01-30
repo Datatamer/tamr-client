@@ -10,11 +10,10 @@
   * [Operations](reference/operation)
   * [Projects](reference/project)
 
-## Beta
+## BETA
 
-  Features in this section are in beta and should not be relied on for production workflows.
-
-  **WARN**: Do not expect to receive official support for features below.
+  **WARNING**: Do not rely on BETA features in production workflows.
+  Tamr will not offer support for BETA features.
 
   * [Attributes](reference/beta/attributes)
   * [Datasets](reference/beta/datasets)
