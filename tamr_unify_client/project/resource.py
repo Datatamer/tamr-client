@@ -93,6 +93,21 @@ class Project(BaseResource):
             )
         return MasteringProject(self.client, self._data, self.api_path)
 
+    def as_schema_mapping(self):
+        """Convert this project to a :class:`~tamr_unify_client.schema_mapping.project.SchemaMappingProject`
+
+        :return: This project.
+        :rtype: :class:`~tamr_unify_client.schema_mapping.project.SchemaMappingProject`
+        :raises TypeError: If the :attr:`~tamr_unify_client.project.resource.Project.type` of this project is not ``"SCHEMA_MAPPING_RECOMMENDATIONS"``
+        """
+        from tamr_unify_client.schema_mapping.project import SchemaMappingProject
+
+        if self.type != "SCHEMA_MAPPING_RECOMMENDATIONS":
+            raise TypeError(
+                f"Cannot convert project to schema mapping project. Project type: {self.type}"
+            )
+        return SchemaMappingProject(self.client, self._data, self.api_path)
+
     def add_input_dataset(self, dataset):
         """
         Associate a dataset with a project in Tamr.
