@@ -1,10 +1,8 @@
-Installation
-============
+# Installation
 
 ``tamr-unify-client`` is compatible with Python 3.6 or newer.
 
-Stable releases
----------------
+## Stable releases
 Installation is as simple as:
 
 ``pip install tamr-unify-client``
@@ -23,8 +21,7 @@ You can create a virtual environment with Python 3 via:
 
   For more, see [The Hitchhiker's Guide to Python](https://docs.python-guide.org/dev/virtualenvs/).
 
-Latest (unstable)
------------------
+## Latest (unstable)
 Note:
 
 This project uses the new ``pyproject.toml`` file, not a ``setup.py`` file, so make sure you have the latest version of ``pip`` installed: ``pip install -U pip``.
@@ -36,8 +33,7 @@ cd tamr-client
 pip install .
 ```
 
-Offline installs
-----------------
+## Offline installs
 
 First, download ``tamr-unify-client`` and its dependencies on a machine with online access to PyPI:
 

@@ -1,8 +1,5 @@
-Quickstart
-==========
-
-Client configuration
---------------------
+# Quickstart
+## Client configuration
 
 Start by importing the Python Client and authentication provider:
 ```
@@ -31,8 +28,7 @@ For example, to connect to ``10.20.0.1``:
 ```
 tamr = Client(auth, host='10.20.0.1')
 ```
-Top-level collections
----------------------
+## Top-level collections
 The Python Client exposes 2 top-level collections: Projects and Datasets.
 
 You can access these collections through the client and loop over their members
@@ -46,26 +42,21 @@ for project in tamr.projects:
 for dataset in tamr.datasets:
     print(dataset.name)
 ```
-Fetch a specific resource
--------------------------
+## Fetch a specific resource
 If you know the identifier for a specific resource, you can ask for it directly via the ``by_resource_id`` methods exposed by collections.
 
 E.g. To fetch the project with ID ``'1'``:
 ```
 project = tamr.projects.by_resource_id('1')
 ```
-Resource relationships
-----------------------
-
+## Resource relationships
 Related resources (like a project and its unified dataset) can be accessed through specific methods.
 
 E.g. To access the Unified Dataset for a particular project:
 ```
 ud = project.unified_dataset()
 ```
-Kick-off Tamr Operations
--------------------------
-
+## Kick-off Tamr Operations
 Some methods on Model objects can kick-off long-running Tamr operations.
 
 Here, kick-off a "Unified Dataset refresh" operation:
