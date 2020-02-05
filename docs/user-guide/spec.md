@@ -1,7 +1,5 @@
-Creating and Modifying Resources
-================================
-Creating resources
-------------------
+# Creating and Modifying Resources
+## Creating resources
 Resources, such as projects, dataset, and attribute configurations, can be created through their respective collections. Each ``create`` function takes in a dictionary that conforms to the
 [Tamr Public Docs](https://docs.tamr.com/reference) for creating that resource type:
 ```
@@ -13,8 +11,7 @@ spec = {
 }
 project = tamr.projects.create(spec)
 ```
-Using specs
------------
+## Using specs
 These dictionaries can also be created using spec classes.
 
 Each ``Resource`` has a corresponding ``ResourceSpec`` which can be used to build an instance of that resource by specifying the value for each property.
@@ -51,8 +48,7 @@ for name in project_names:
 
 projects = [tamr.projects.create(spec.to_dict()) for spec in specs]
 ```
-Creating a dataset
-------------------
+## Creating a dataset
 Datasets can be created as described above, but the dataset's schema and records must then be handled separately.
 
 To combine all of these steps into one, ``DatasetCollection`` has a convenience function ``create_from_dataframe`` that takes a [Pandas DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html).
@@ -66,8 +62,7 @@ dataset = tamr.datasets.create_from_dataframe(df, "primary key name", "My Data")
 This will create a dataset called "My Data" with the specified primary key, an attribute
 for each column of the ``DataFrame``, and the ``DataFrame``'s rows as records.
 
-Modifying a resource
---------------------
+## Modifying a resource
 Certain resources can also be modified using specs.
 
 After getting a spec corresponding to a resource and modifying some properties,

@@ -1,8 +1,5 @@
-Geospatial Data
-===============
-What geospatial data is supported?
-----------------------------------
-
+# Geospatial Data
+## What geospatial data is supported?
 In general, the Python Geo Interface is supported; see https://gist.github.com/sgillies/2217756
 
 There are three layers of information, modeled after GeoJSON; see https://tools.ietf.org/html/rfc7946
@@ -44,8 +41,8 @@ By default the features' geometries will be placed into the first dataset attrib
 type. You can override this by specifying the geometry attribute to use in the ``geo_attr``
 parameter to ``from_geo_features``.
 
-Rules for converting from Tamr records to Geospatial Features
-------------------------------------------------------------------
+## Rules for converting from Tamr records to Geospatial Features
+
 
 The record's primary key will be used as the feature's ``id``. If the primary key is a single attribute, then the value of that attribute will be the value of ``id``. If the primary key is composed of multiple attributes, then the value of the ``id`` will be an array with the values of the key attributes in order.
 
@@ -57,9 +54,7 @@ If an attribute named ``bbox`` is available, it will be used as ``bbox``. No con
 
 All other attributes will be placed in ``properties``, with no type conversion. This includes all geometry attributes other than the first.
 
-Rules for converting from Geospatial Features to Tamr records
---------------------------------------------------------------
-
+## Rules for converting from Geospatial Features to Tamr records
 The Feature's ``id`` will be converted into the primary key for the record. If the record uses a simple key, no value translation will be done. If the record uses a composite key, then the value of the Feature's ``id`` must be an array of values, one per attribute in the key.
 
 If the Feature contains keys in ``properties`` that conflict with the record keys, ``bbox``, or geometry, those keys are ignored (omitted).
@@ -68,9 +63,7 @@ If the Feature contains a ``bbox``, it is copied to the record's ``bbox``.
 
 All other keys in the Feature's ``properties`` are propagated to the same-name attribute on the record, with no type conversion.
 
-Streaming data access
----------------------
-
+## Streaming data access
 The ``Dataset`` method ``itergeofeatures()`` returns a generator that allows you to stream the records in the dataset as Geospatial features:
 ```
 my_dataset = client.datasets.by_name("my_dataset")

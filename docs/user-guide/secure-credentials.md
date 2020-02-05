@@ -1,11 +1,8 @@
-Secure Credentials
-==================
-
+# Secure Credentials
 This section discusses ways to pass credentials securely to
 `:class:~tamr_unify_client.auth.UsernamePasswordAuth`. Specifically, you **should not** hardcode your password(s) in your source code. Instead, you should use environment variables or secure files to store your credentials and simple Python code to read your credentials.
 
-Environment variables
----------------------
+## Environment variables
 You can use ``os.environ`` to read in your credentials from environment variables:
 ```
 # my_script.py
@@ -27,8 +24,7 @@ You can also create an ``.sh`` file to store your environment variables and
 simply ``source`` that file before running your script.
 
 
-Config files
-------------
+## Config files
 You can also store your credentials in a secure credentials file:
 ```
 # credentials.yaml

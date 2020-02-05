@@ -1,7 +1,5 @@
-Workflows
-=========
-Continuous Categorization
--------------------------
+# Workflows
+## Continuous Categorization
 ```
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
@@ -29,8 +27,7 @@ assert op.succeeded()
 op = model.predict()
 assert op.succeeded()
 ```
-Continuous Mastering
---------------------
+## Continuous Mastering
 ```
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
