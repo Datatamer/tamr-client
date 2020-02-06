@@ -8,21 +8,6 @@ Since `invoke` will be running inside of a `poetry` environment, we recommend ad
 alias pri='poetry run invoke'
 ```
 
-## Tests
-
-To run all tests:
-
-```sh  
-pri test # with alias
-poetry run invoke test # without alias
-```
-
-To run specific tests, see [these pytest docs](https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests) and run `pytest` explicitly:
-
-```sh
-poetry run pytest tests/unit/test_attribute.py
-```
-
 ## Linting & Formatting
 
 To run linter:
@@ -45,6 +30,31 @@ Run the formatter with the `--fix` flag to autofix formatting:
 pri format --fix # with alias
 poetry run invoke format --fix # without alias
 ```
+
+## Typechecks
+
+To run typechecks:
+
+```sh
+pri typecheck # with alias
+poetry run invoke typecheck # without alias
+```
+
+## Tests
+
+To run all tests:
+
+```sh  
+pri test # with alias
+poetry run invoke test # without alias
+```
+
+To run specific tests, see [these pytest docs](https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests) and run `pytest` explicitly:
+
+```sh
+poetry run pytest tests/unit/test_attribute.py
+```
+
 
 ## Docs
 

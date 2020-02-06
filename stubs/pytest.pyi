@@ -1,0 +1,3 @@
+from typing import Any
+
+def raises(expected_exception: Any): ...

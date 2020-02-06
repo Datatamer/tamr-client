@@ -15,7 +15,6 @@
 import os
 import sys
 
-import recommonmark
 from recommonmark.transform import AutoStructify
 import toml
 

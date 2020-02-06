@@ -1,4 +1,30 @@
 ## 0.11.0-dev
+  **NEW FEATURES**
+  - BETA: New attributes package!
+    - `tc.attribute` module
+      - `tc.Attribute` class
+      - functions: `from_resource_id`, `to_json`, `create`, `update`, `delete`
+    - `tc.attribute_type` module
+      - `tc.AttributeType` for type annotations
+      - Primitive Types: `BOOLEAN`, `DOUBLE`, `INT`, `LONG`, `STRING`
+      - Complex Types: `Array`, `Map`, `Record`
+      - Type aliases: `DEFAULT`, `GEOSPATIAL`
+      - functions: `from_json`, `to_json`
+    - `tc.subattribute` module
+      - `tc.SubAttribute` class
+      - functions: `from_json`, `to_json`
+  - BETA: New datasets package!
+    - `tc.dataset` module
+      - functions: `_attributes`
+  - BETA: New supporting modules!
+    - `tc.auth` module
+      - `tc.UsernamePasswordAuth` class
+    - `tc.session` function
+    - `tc.url` module
+      - `tc.URL` class
+
+  **BUG FIXES**
+  - Links from our docs to the `requests` docs were outdated. Links have been updated to point to the new `requests` docs URL.
 
 ## 0.10.0
   **BREAKING CHANGES**
