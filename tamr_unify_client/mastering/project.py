@@ -232,4 +232,40 @@ class MasteringProject(Project):
         resource_json = {"relativeId": alias}
         return BinningModel.from_json(self.client, resource_json, alias)
 
+    def run(self,
+            refresh_unified_dataset=True, refresh_pairs=True, train_pairs_model=True,
+            predict_pairs_model=True, cluster_records=True, publish_clusters=True
+            ):
+        """Executes all steps of this project. Ending early if a step fails.
+
+        :param refresh_unified_dataset: Whether refresh should be called on the unified dataset
+        :type refresh_unified_dataset: bool
+        :param refresh_pairs: Whether refresh should be called on the pairs dataset
+        :type refresh_pairs: bool
+        :param train_pairs_model: Whether train should be called on the pair matching model
+        :type train_pairs_model: bool
+        :param predict_pairs_model: Whether predict should be called on the pair matching model
+        :type predict_pairs_model: bool
+        :param cluster_records: Whether refresh should be called on the record clusters dataset
+        :type cluster_records: bool
+        :param publish_clusters: Whether refresh should be called on the published record clusters dataset
+        :type publish_clusters: bool
+        :return: Responses from the operations that were run
+        :rtype: List :class:`~tamr_unify_client.operation.Operation`
+        """
+
+        # This list consists of a user defined boolean for whether a task should be done
+        # and the function to execute that task
+        possible_tasks = [
+            (refresh_unified_dataset, self.unified_dataset().refresh),
+            (refresh_pairs, self.pairs().refresh),
+            (train_pairs_model, self.pair_matching_model().train),
+            (predict_pairs_model, self.pair_matching_model().predict),
+            (cluster_records, self.record_clusters().refresh),
+            (publish_clusters, self.published_clusters().refresh)
+        ]
+
+        wanted_tasks = [task for should_do, task in possible_tasks if should_do]
+        return self._run_subtasks(wanted_tasks)
+
     # super.__repr__ is sufficient

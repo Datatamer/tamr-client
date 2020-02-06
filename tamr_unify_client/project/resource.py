@@ -178,6 +178,31 @@ class Project(BaseResource):
         """
         return ProjectSpec.of(self)
 
+    @staticmethod
+    def _run_subtasks(wanted_tasks):
+        """Executes a series of tasks and returns when any task fails or after all succeed
+
+        :param possible_tasks: Tasks to be execute in order
+        :type possible_tasks: List of functions
+        :return:
+        """
+        completed_operations = []
+        for task in wanted_tasks:
+            completed_operations.append(task())
+            if not completed_operations[-1].succeeded():
+                return completed_operations
+
+        return completed_operations
+
+    def run(self):
+        """Executes all steps of a project
+
+        :return: The operations submitted to execute the project
+        :rtype: :class: List `~tamr_unify_client.operation.Operation`
+        """
+        raise NotImplementedError("Run is not available in base project resource. "
+                                  "Convert to a specific project type in order to use run.")
+
     def __repr__(self):
         return (
             f"{self.__class__.__module__}."
