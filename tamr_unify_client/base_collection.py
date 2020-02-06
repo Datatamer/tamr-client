@@ -30,7 +30,7 @@ class BaseCollection(Iterable):
         :rtype: The ``resource_class``  for this collection. See :func:`~tamr_unify_client.base_collection.BaseCollection.by_relative_id`.
         """
         relative_id = canonical_path + "/" + resource_id
-        return self.by_relative_id(relative_id)  # type: ignore
+        return self.by_relative_id(relative_id)
 
     @abstractmethod
     def by_relative_id(self, resource_class, relative_id):
@@ -68,7 +68,7 @@ class BaseCollection(Iterable):
             yield resource_class.from_json(self.client, resource_json)
 
     def __iter__(self):
-        return self.stream()  # type: ignore
+        return self.stream()
 
     @abstractmethod
     def by_external_id(self, resource_class, external_id):

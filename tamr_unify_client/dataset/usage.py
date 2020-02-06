@@ -27,7 +27,7 @@ class DatasetUsage(BaseResource):
     def dependencies(self):
         """:type: list[:class:`~tamr_unify_client.dataset.use.DatasetUse`]"""
         deps = self._data.get("dependencies")
-        return [DatasetUse(self.client, dep) for dep in deps]  # type: ignore
+        return [DatasetUse(self.client, dep) for dep in deps]
 
     def __repr__(self):
         return (

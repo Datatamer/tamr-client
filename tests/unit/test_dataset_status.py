@@ -1,5 +1,3 @@
-import json
-
 import responses
 
 from tamr_unify_client import Client

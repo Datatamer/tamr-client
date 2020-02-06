@@ -17,7 +17,7 @@ def format(c, fix=False):
 @task
 def typecheck(c, warn=True):
     repo = Path(".")
-    tc = repo / "tamr_unify_client"
+    tc = repo / "tamr_client"
     tests = repo / "tests"
     pkgs = [
         tc / "attributes",

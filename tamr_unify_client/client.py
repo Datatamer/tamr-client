@@ -8,9 +8,11 @@ import requests.exceptions
 
 from tamr_unify_client.dataset.collection import DatasetCollection
 from tamr_unify_client.project.collection import ProjectCollection
-import tamr_unify_client.response  # monkey-patch requests.Response.successful
+import tamr_unify_client.response as response
 
 logger = logging.getLogger(__name__)
+
+response._monkey_patch()
 
 
 class Client:

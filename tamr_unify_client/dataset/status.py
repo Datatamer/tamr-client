@@ -14,7 +14,7 @@ class DatasetStatus(BaseResource):
 
         :type: str
         """
-        return self._data.get("datasetName")  # type: ignore
+        return self._data.get("datasetName")
 
     @property
     def relative_dataset_id(self) -> str:
@@ -22,7 +22,7 @@ class DatasetStatus(BaseResource):
 
         :type: str
         """
-        return self._data.get("relativeDatasetId")  # type: ignore
+        return self._data.get("relativeDatasetId")
 
     @property
     def is_streamable(self) -> bool:
@@ -30,7 +30,7 @@ class DatasetStatus(BaseResource):
 
         :type: bool
         """
-        return self._data.get("isStreamable")  # type: ignore
+        return self._data.get("isStreamable")
 
     def __repr__(self) -> str:
         return (

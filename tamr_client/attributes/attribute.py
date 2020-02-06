@@ -4,9 +4,46 @@ from typing import Optional
 
 from requests import Session
 
-import tamr_unify_client as tc
-from tamr_unify_client.dataset.resource import Dataset
-from tamr_unify_client.JsonDict import JsonDict
+import tamr_client as tc
+from tamr_client.json_dict import JsonDict
+
+_RESERVED_NAMES = frozenset(
+    [
+        # See javasrc/procurify/ui/app/scripts/constants/ElasticConstants.js
+        "origin_source_name",
+        "tamr_id",
+        "origin_entity_id",
+        # See javasrc/procurify/ui/app/scripts/constants/PipelineConstants.js
+        "clusterId",
+        "originSourceId",
+        "originEntityId",
+        "sourceId",
+        "entityId",
+        "suggestedClusterId",
+        "verificationType",
+        "verifiedClusterId",
+    ]
+)
+
+
+class AttributeNotFound(Exception):
+    """Raised when referencing (e.g. updating or deleting) an attribute
+    that does not exist on the server.
+    """
+
+    pass
+
+
+class AttributeExists(Exception):
+    """Raised when trying to create an attribute that already exists on the server"""
+
+    pass
+
+
+class ReservedAttributeName(Exception):
+    """Raised when attempting to create an attribute with a reserved name"""
+
+    pass
 
 
 @dataclass(frozen=True)
@@ -24,13 +61,13 @@ class Attribute:
 
     url: tc.URL
     name: str
-    type: tc.attribute_type.AttributeType
+    type: tc.AttributeType
     is_nullable: bool
     _json: JsonDict = field(compare=False, repr=False)
     description: Optional[str] = None
 
 
-def from_resource_id(session: Session, dataset: Dataset, id: str) -> Attribute:
+def from_resource_id(session: Session, dataset: tc.Dataset, id: str) -> Attribute:
     """Get attribute by resource ID
 
     Fetches attribute from Tamr server
@@ -40,9 +77,11 @@ def from_resource_id(session: Session, dataset: Dataset, id: str) -> Attribute:
         id: Attribute ID
 
     Raises:
-        requests.HTTPError: If an HTTP error is encountered.
+        AttributeNotFound: If no attribute could be found at the specified URL.
+            Corresponds to a 404 HTTP error.
+        requests.HTTPError: If any other HTTP error is encountered.
     """
-    url = replace(dataset.url, path=dataset.url.path + f"/{id}")
+    url = replace(dataset.url, path=dataset.url.path + f"/attributes/{id}")
     return _from_url(session, url)
 
 
@@ -55,9 +94,13 @@ def _from_url(session: Session, url: tc.URL) -> Attribute:
         url: Attribute URL
 
     Raises:
-        requests.HTTPError: If an HTTP error is encountered.
+        AttributeNotFound: If no attribute could be found at the specified URL.
+            Corresponds to a 404 HTTP error.
+        requests.HTTPError: If any other HTTP error is encountered.
     """
     r = session.get(str(url))
+    if r.status_code == 404:
+        raise AttributeNotFound(str(url))
     data = tc.response.successful(r).json()
     return _from_json(url, data)
 
@@ -101,11 +144,11 @@ def to_json(attr: Attribute) -> JsonDict:
 
 def create(
     session: Session,
-    dataset: Dataset,
+    dataset: tc.dataset.Dataset,
     *,
     name: str,
-    type: tc.attribute_type.AttributeType,
     is_nullable: bool,
+    type: tc.attribute_type.AttributeType = tc.attribute_type_alias.DEFAULT,
     description: Optional[str] = None,
 ) -> Attribute:
     """Create an attribute
@@ -118,14 +161,44 @@ def create(
         type: Attribute type for the new attribute
         is_nullable: Determines if the new attribute can contain NULL values
         description: Description of the new attribute
+        force: If `True`, skips reserved attribute name check
 
     Returns:
         The newly created attribute
 
     Raises:
-        requests.HTTPError: If an HTTP error is encountered.
+        ReservedAttributeName: If attribute name is reserved.
+        AttributeExists: If an attribute already exists at the specified URL.
+            Corresponds to a 409 HTTP error.
+        requests.HTTPError: If any other HTTP error is encountered.
+    """
+    if name in _RESERVED_NAMES:
+        raise ReservedAttributeName(name)
+
+    return _create(
+        session,
+        dataset,
+        name=name,
+        is_nullable=is_nullable,
+        type=type,
+        description=description,
+    )
+
+
+def _create(
+    session: Session,
+    dataset: tc.dataset.Dataset,
+    *,
+    name: str,
+    is_nullable: bool,
+    type: tc.attribute_type.AttributeType = tc.attribute_type_alias.DEFAULT,
+    description: Optional[str] = None,
+) -> Attribute:
+    """Same as `tc.attribute.create`, but does not check for reserved attribute
+    names.
     """
     attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
+    url = replace(attrs_url, path=attrs_url.path + f"/{name}")
 
     body = {
         "name": name,
@@ -136,9 +209,10 @@ def create(
         body["description"] = description
 
     r = session.post(str(attrs_url), json=body)
+    if r.status_code == 409:
+        raise AttributeExists(str(url))
     data = tc.response.successful(r).json()
-    name = data["name"]
-    url = replace(attrs_url, path=attrs_url.path + f"/{name}")
+
     return _from_json(url, data)
 
 
@@ -157,10 +231,14 @@ def update(
         The newly updated attribute
 
     Raises:
-        requests.HTTPError: If an HTTP error is encountered.
+        AttributeNotFound: If no attribute could be found at the specified URL.
+            Corresponds to a 404 HTTP error.
+        requests.HTTPError: If any other HTTP error is encountered.
     """
     updates = {"description": description}
     r = session.put(str(attribute.url), json=updates)
+    if r.status_code == 404:
+        raise AttributeNotFound(str(attribute.url))
     data = tc.response.successful(r).json()
     return _from_json(attribute.url, data)
 
@@ -174,7 +252,11 @@ def delete(session: Session, attribute: Attribute):
         attribute: Existing attribute to delete
 
     Raises:
-        requests.HTTPError: If an HTTP error is encountered.
+        AttributeNotFound: If no attribute could be found at the specified URL.
+            Corresponds to a 404 HTTP error.
+        requests.HTTPError: If any other HTTP error is encountered.
     """
     r = session.delete(str(attribute.url))
+    if r.status_code == 404:
+        raise AttributeNotFound(str(attribute.url))
     tc.response.successful(r)

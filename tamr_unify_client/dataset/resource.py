@@ -9,7 +9,6 @@ from tamr_unify_client.dataset.status import DatasetStatus
 from tamr_unify_client.dataset.uri import DatasetURI
 from tamr_unify_client.dataset.usage import DatasetUsage
 from tamr_unify_client.operation import Operation
-from tamr_unify_client.url import URL
 
 
 class Dataset(BaseResource):
@@ -42,12 +41,12 @@ class Dataset(BaseResource):
     @property
     def tags(self):
         """:type: list[str]"""
-        return self._data.get("tags")[:]  # type: ignore
+        return self._data.get("tags")[:]
 
     @property
     def key_attribute_names(self):
         """:type: list[str]"""
-        return self._data.get("keyAttributeNames")[:]  # type: ignore
+        return self._data.get("keyAttributeNames")[:]
 
     @property
     def attributes(self):
@@ -58,20 +57,6 @@ class Dataset(BaseResource):
         """
         alias = self.api_path + "/attributes"
         return AttributeCollection(self.client, alias)
-
-    @property
-    def url(self) -> URL:
-        """URL for this dataset
-
-        Note: URL will be the alias used to retrieve this dataset
-        (e.g. ``https://localhost:9100/api/versioned/v1/projects/1/unifiedDataset``)
-        which might not be the same as the canonical URL (e.g. ``https://localhost:9100/api/versioned/v1/datasets/3``)
-
-        Returns:
-            URL used to retrieve this dataset
-        """
-        c = self.client
-        return URL(protocol=c.protocol, host=c.host, port=c.port, path=self.api_path)
 
     def _update_records(self, updates, **json_args):
         """Send a batch of record creations/updates/deletions to this dataset.

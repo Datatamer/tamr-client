@@ -1,13 +1,18 @@
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from typing import Tuple
 
 from requests import Session
 
-import tamr_unify_client as tc
-from tamr_unify_client.dataset.resource import Dataset
+import tamr_client as tc
 
 
-def _attributes(session: Session, dataset: Dataset) -> Tuple[tc.Attribute, ...]:
+@dataclass(frozen=True)
+class Dataset:
+    url: tc.URL
+    key_attribute_names: Tuple[str, ...]
+
+
+def attributes(session: Session, dataset: Dataset) -> Tuple["tc.Attribute", ...]:
     """Get attributes for this dataset
 
     Args:
