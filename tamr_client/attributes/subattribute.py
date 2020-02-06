@@ -1,9 +1,9 @@
 from copy import deepcopy
-from dataclasses import dataclass, field
-from typing import Any, Dict, Optional
+from dataclasses import dataclass
+from typing import Optional
 
-import tamr_unify_client as tc
-from tamr_unify_client.JsonDict import JsonDict
+import tamr_client as tc
+from tamr_client.json_dict import JsonDict
 
 
 @dataclass(frozen=True)
@@ -20,7 +20,7 @@ class SubAttribute:
     """
 
     name: str
-    type: tc.AttributeType
+    type: "tc.AttributeType"
     is_nullable: bool
     description: Optional[str] = None
 

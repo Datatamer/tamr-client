@@ -42,4 +42,4 @@ class SubAttribute:
         # TODO implement AttributeType.from_json and use that instead
         type = AttributeType(type_json)
 
-        return SubAttribute(**dc, type=type, _json=_json)  # type: ignore
+        return SubAttribute(**dc, type=type, _json=_json)

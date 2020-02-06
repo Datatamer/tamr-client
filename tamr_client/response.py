@@ -25,7 +25,3 @@ def successful(response: requests.Response) -> requests.Response:
         )
         raise e
     return response
-
-
-def _monkey_patch():
-    requests.Response.successful = successful

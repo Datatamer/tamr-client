@@ -1,12 +1,9 @@
-import json
-from pathlib import Path
-
-import tamr_unify_client as tc
-from tests.utils import data_dir, load_json
+import tamr_client as tc
+import tests.utils
 
 
 def test_from_json():
-    geom_json = load_json(data_dir / "attributes.json")[1]
+    geom_json = tests.utils.load_json("attributes.json")[1]
     geom_type = tc.attribute_type.from_json(geom_json["type"])
     assert isinstance(geom_type, tc.attribute_type.Record)
 
@@ -36,7 +33,7 @@ def test_from_json():
 
 
 def test_json():
-    attrs_json = load_json(data_dir / "attributes.json")
+    attrs_json = tests.utils.load_json("attributes.json")
     for attr_json in attrs_json:
         attr_type_json = attr_json["type"]
         attr_type = tc.attribute_type.from_json(attr_type_json)

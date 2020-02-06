@@ -1,9 +1,12 @@
+"""
+See https://docs.tamr.com/reference#attribute-types
+"""
 from dataclasses import dataclass
 import logging
-from typing import ClassVar, Tuple, Type, Union
+from typing import ClassVar, Tuple, Union
 
-import tamr_unify_client as tc
-from tamr_unify_client.JsonDict import JsonDict
+import tamr_client as tc
+from tamr_client.json_dict import JsonDict
 
 logger = logging.getLogger(__name__)
 
@@ -13,36 +16,26 @@ logger = logging.getLogger(__name__)
 
 @dataclass(frozen=True)
 class Boolean:
-    """See https://docs.tamr.com/reference#attribute-types"""
-
     _tag: ClassVar[str] = "BOOLEAN"
 
 
 @dataclass(frozen=True)
 class Double:
-    """See https://docs.tamr.com/reference#attribute-types"""
-
     _tag: ClassVar[str] = "DOUBLE"
 
 
 @dataclass(frozen=True)
 class Int:
-    """See https://docs.tamr.com/reference#attribute-types"""
-
     _tag: ClassVar[str] = "INT"
 
 
 @dataclass(frozen=True)
 class Long:
-    """See https://docs.tamr.com/reference#attribute-types"""
-
     _tag: ClassVar[str] = "LONG"
 
 
 @dataclass(frozen=True)
 class String:
-    """See https://docs.tamr.com/reference#attribute-types"""
-
     _tag: ClassVar[str] = "STRING"
 
 
@@ -79,7 +72,7 @@ class Record:
     # NOTE(pcattori) sphinx_autodoc_typehints cannot handle recursive reference
     # docstring written manually
     _tag: ClassVar[str] = "RECORD"
-    attributes: Tuple["tc.SubAttribute", ...]
+    attributes: Tuple[tc.SubAttribute, ...]
 
 
 ComplexType = Union[Array, Map, Record]
@@ -101,15 +94,15 @@ def from_json(data: JsonDict) -> AttributeType:
         logger.error(f"JSON data: {repr(data)}")
         raise ValueError("Missing required field 'baseType'.")
     if base_type == Boolean._tag:
-        return Boolean()
+        return BOOLEAN
     elif base_type == Double._tag:
-        return Double()
+        return DOUBLE
     elif base_type == Int._tag:
-        return Int()
+        return INT
     elif base_type == Long._tag:
-        return Long()
+        return LONG
     elif base_type == String._tag:
-        return String()
+        return STRING
     elif base_type == Array._tag:
         inner_type = data.get("innerType")
         if inner_type is None:
@@ -158,3 +151,12 @@ def to_json(attr_type: AttributeType) -> JsonDict:
         }
     else:
         raise TypeError(attr_type)
+
+
+# Singletons
+
+BOOLEAN = Boolean()
+DOUBLE = Double()
+INT = Int()
+LONG = Long()
+STRING = String()
