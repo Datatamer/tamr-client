@@ -232,11 +232,11 @@ class MasteringProject(Project):
         resource_json = {"relativeId": alias}
         return BinningModel.from_json(self.client, resource_json, alias)
 
-    def run(self,
+    def run(self, *,
             refresh_unified_dataset=True, refresh_pairs=True, train_pairs_model=True,
             predict_pairs_model=True, cluster_records=True, publish_clusters=True
             ):
-        """Executes all steps of this project. Ending early if a step fails.
+        """Executes all steps of this project.
 
         :param refresh_unified_dataset: Whether refresh should be called on the unified dataset
         :type refresh_unified_dataset: bool
@@ -254,18 +254,44 @@ class MasteringProject(Project):
         :rtype: List :class:`~tamr_unify_client.operation.Operation`
         """
 
-        # This list consists of a user defined boolean for whether a task should be done
-        # and the function to execute that task
-        possible_tasks = [
-            (refresh_unified_dataset, self.unified_dataset().refresh),
-            (refresh_pairs, self.pairs().refresh),
-            (train_pairs_model, self.pair_matching_model().train),
-            (predict_pairs_model, self.pair_matching_model().predict),
-            (cluster_records, self.record_clusters().refresh),
-            (publish_clusters, self.published_clusters().refresh)
-        ]
+        completed_operations = []
+        if refresh_unified_dataset:
+            op = self.unified_dataset().refresh()
+            if not op.succeeded():
+                raise RuntimeError(f"Operation failed: {op}. Completed operations: {completed_operations}")
+            else:
+                completed_operations.append(op)
+        if refresh_pairs:
+            op = self.pairs().refresh()
+            if not op.succeeded():
+                raise RuntimeError(f"Operation failed: {op}. Completed operations: {completed_operations}")
+            else:
+                completed_operations.append(op)
+        if train_pairs_model:
+            op = self.pair_matching_model().train()
+            if not op.succeeded():
+                raise RuntimeError(f"Operation failed: {op}. Completed operations: {completed_operations}")
+            else:
+                completed_operations.append(op)
+        if predict_pairs_model:
+            op = self.pair_matching_model().predict()
+            if not op.succeeded():
+                raise RuntimeError(f"Operation failed: {op}. Completed operations: {completed_operations}")
+            else:
+                completed_operations.append(op)
+        if cluster_records:
+            op = self.record_clusters().refresh()
+            if not op.succeeded():
+                raise RuntimeError(f"Operation failed: {op}. Completed operations: {completed_operations}")
+            else:
+                completed_operations.append(op)
+        if publish_clusters:
+            op = self.published_clusters().refresh()
+            if not op.succeeded():
+                raise RuntimeError(f"Operation failed: {op}. Completed operations: {completed_operations}")
+            else:
+                completed_operations.append(op)
 
-        wanted_tasks = [task for should_do, task in possible_tasks if should_do]
-        return self._run_subtasks(wanted_tasks)
+        return completed_operations
 
     # super.__repr__ is sufficient

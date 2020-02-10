@@ -42,8 +42,8 @@ class CategorizationProject(Project):
         resource_json = self.client.get(alias).successful().json()
         return Taxonomy.from_json(self.client, resource_json, alias)
 
-    def run(self, refresh_unified_dataset=True, train_model=True, predict_model=True):
-        """Executes all steps of this project. Ending early if a step fails.
+    def run(self, *, refresh_unified_dataset=True, train_model=True, predict_model=True):
+        """Executes all steps of this project.
 
         :param refresh_unified_dataset: Whether refresh should be called on the unified dataset
         :type refresh_unified_dataset: bool
@@ -55,15 +55,26 @@ class CategorizationProject(Project):
         :rtype: List :class:`~tamr_unify_client.operation.Operation`
         """
 
-        # This list consists of a user defined boolean for whether a task should be done
-        # and the function to execute that task
-        possible_tasks = [
-            (refresh_unified_dataset, self.unified_dataset().refresh),
-            (train_model, self.model().train),
-            (predict_model, self.model().predict)
-        ]
+        completed_operations = []
+        if refresh_unified_dataset:
+            op = self.unified_dataset().refresh()
+            if not op.succeeded():
+                raise RuntimeError(f"Operation failed: {op}. Completed operations: {completed_operations}")
+            else:
+                completed_operations.append(op)
+        if train_model:
+            op = self.model().train()
+            if not op.succeeded():
+                raise RuntimeError(f"Operation failed: {op}. Completed operations: {completed_operations}")
+            else:
+                completed_operations.append(op)
+        if predict_model:
+            op = self.model().predict()
+            if not op.succeeded():
+                raise RuntimeError(f"Operation failed: {op}. Completed operations: {completed_operations}")
+            else:
+                completed_operations.append(op)
 
-        wanted_tasks = [task for should_do, task in possible_tasks if should_do]
-        return self._run_subtasks(wanted_tasks)
+        return completed_operations
 
     # super.__repr__ is sufficient
