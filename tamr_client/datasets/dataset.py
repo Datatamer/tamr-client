@@ -1,8 +1,6 @@
 from dataclasses import dataclass, replace
 from typing import Tuple
 
-from requests import Session
-
 import tamr_client as tc
 
 
@@ -12,7 +10,7 @@ class Dataset:
     key_attribute_names: Tuple[str, ...]
 
 
-def attributes(session: Session, dataset: Dataset) -> Tuple["tc.Attribute", ...]:
+def attributes(session: tc.Session, dataset: Dataset) -> Tuple["tc.Attribute", ...]:
     """Get attributes for this dataset
 
     Args:

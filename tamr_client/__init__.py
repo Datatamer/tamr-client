@@ -8,7 +8,8 @@ import tamr_client.url as url
 
 import tamr_client.response as response
 from tamr_client.auth import UsernamePasswordAuth
-from tamr_client.session import session
+from tamr_client.session import Session
+import tamr_client.session as session
 
 # datasets
 from tamr_client.datasets.dataset import Dataset
