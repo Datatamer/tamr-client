@@ -6,7 +6,7 @@ import logging
 from typing import ClassVar, Tuple, Union
 
 import tamr_client as tc
-from tamr_client.json_dict import JsonDict
+from tamr_client.types import JsonDict
 
 logger = logging.getLogger(__name__)
 
