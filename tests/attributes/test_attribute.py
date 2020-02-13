@@ -63,8 +63,7 @@ def test_create():
 
 @responses.activate
 def test_update():
-    auth = tc.UsernamePasswordAuth("admin", "dt")
-    s = tc.session(auth)
+    s = utils.session()
 
     url = tc.URL(path="datasets/1/attributes/RowNum")
     attr_json = utils.load_json("attributes.json")[0]
@@ -81,8 +80,7 @@ def test_update():
 
 @responses.activate
 def test_delete():
-    auth = tc.UsernamePasswordAuth("admin", "dt")
-    s = tc.session(auth)
+    s = utils.session()
 
     url = tc.URL(path="datasets/1/attributes/RowNum")
     attr_json = utils.load_json("attributes.json")[0]

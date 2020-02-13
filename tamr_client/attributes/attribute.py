@@ -2,10 +2,8 @@ from copy import deepcopy
 from dataclasses import dataclass, field, replace
 from typing import Optional
 
-from requests import Session
-
 import tamr_client as tc
-from tamr_client.json_dict import JsonDict
+from tamr_client.types import JsonDict
 
 _RESERVED_NAMES = frozenset(
     [
@@ -67,7 +65,7 @@ class Attribute:
     description: Optional[str] = None
 
 
-def from_resource_id(session: Session, dataset: tc.Dataset, id: str) -> Attribute:
+def from_resource_id(session: tc.Session, dataset: tc.Dataset, id: str) -> Attribute:
     """Get attribute by resource ID
 
     Fetches attribute from Tamr server
@@ -85,7 +83,7 @@ def from_resource_id(session: Session, dataset: tc.Dataset, id: str) -> Attribut
     return _from_url(session, url)
 
 
-def _from_url(session: Session, url: tc.URL) -> Attribute:
+def _from_url(session: tc.Session, url: tc.URL) -> Attribute:
     """Get attribute by URL
 
     Fetches attribute from Tamr server
@@ -143,7 +141,7 @@ def to_json(attr: Attribute) -> JsonDict:
 
 
 def create(
-    session: Session,
+    session: tc.Session,
     dataset: tc.dataset.Dataset,
     *,
     name: str,
@@ -186,7 +184,7 @@ def create(
 
 
 def _create(
-    session: Session,
+    session: tc.Session,
     dataset: tc.dataset.Dataset,
     *,
     name: str,
@@ -217,7 +215,7 @@ def _create(
 
 
 def update(
-    session: Session, attribute: Attribute, *, description: Optional[str] = None
+    session: tc.Session, attribute: Attribute, *, description: Optional[str] = None
 ) -> Attribute:
     """Update an existing attribute
 
@@ -243,7 +241,7 @@ def update(
     return _from_json(attribute.url, data)
 
 
-def delete(session: Session, attribute: Attribute):
+def delete(session: tc.Session, attribute: Attribute):
     """Deletes an existing attribute
 
     Sends a deletion request to the Tamr server

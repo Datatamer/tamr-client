@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 import tamr_client as tc
-from tamr_client.json_dict import JsonDict
+from tamr_client.types import JsonDict
 
 
 @dataclass(frozen=True)

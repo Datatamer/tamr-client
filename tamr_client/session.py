@@ -1,7 +1,9 @@
 import requests
 
+Session = requests.Session
 
-def session(auth: requests.auth.HTTPBasicAuth, **kwargs) -> requests.Session:
+
+def from_auth(auth: requests.auth.HTTPBasicAuth, **kwargs) -> Session:
     """Create a new authenticated session
 
     Args:
