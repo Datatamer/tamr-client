@@ -20,6 +20,11 @@ classifiers = [
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8"
 ]
+packages = [
+    { include = "tamr_client" },
+    { include = "tamr_unify_client" },
+]
+include = ["tamr_client/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
