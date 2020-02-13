@@ -14,7 +14,7 @@ def load_json(path: Union[str, Path]):
 
 def session():
     auth = tc.UsernamePasswordAuth("username", "password")
-    s = tc.session(auth)
+    s = tc.session.from_auth(auth)
     return s
 
 
