@@ -20,6 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8"
 ]
+include = ["tamr_client/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
