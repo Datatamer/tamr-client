@@ -1,3 +1,6 @@
+"""
+See https://docs.tamr.com/reference/attribute-types
+"""
 from copy import deepcopy
 from dataclasses import dataclass, field, replace
 from typing import Optional
