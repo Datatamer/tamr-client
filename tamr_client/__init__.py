@@ -3,16 +3,25 @@
 import logging
 
 # utilities
+import tamr_client.response as response
+
+# instance
+from tamr_client.instance import Instance
+import tamr_client.instance as instance
+
+# url
 from tamr_client.url import URL
 import tamr_client.url as url
 
-import tamr_client.response as response
+# auth
 from tamr_client.auth import UsernamePasswordAuth
+
+# session
 from tamr_client.session import Session
 import tamr_client.session as session
 
 # datasets
-from tamr_client.datasets.dataset import Dataset
+from tamr_client.datasets.dataset import Dataset, DatasetNotFound
 import tamr_client.datasets.dataset as dataset
 
 # attributes
@@ -24,10 +33,12 @@ import tamr_client.attributes.attribute_type as attribute_type
 
 import tamr_client.attributes.type_alias as attribute_type_alias
 
-from tamr_client.attributes.attribute import Attribute
-from tamr_client.attributes.attribute import ReservedAttributeName
-from tamr_client.attributes.attribute import AttributeExists
-from tamr_client.attributes.attribute import AttributeNotFound
+from tamr_client.attributes.attribute import (
+    Attribute,
+    ReservedAttributeName,
+    AttributeExists,
+    AttributeNotFound,
+)
 import tamr_client.attributes.attribute as attribute
 
 # https://docs.python-guide.org/writing/logging/#logging-in-a-library
