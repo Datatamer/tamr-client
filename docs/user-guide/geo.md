@@ -1,8 +1,8 @@
 # Geospatial Data
 ## What geospatial data is supported?
-In general, the Python Geo Interface is supported; see https://gist.github.com/sgillies/2217756
+In general, the Python Geo Interface is supported; see <https://gist.github.com/sgillies/2217756>.
 
-There are three layers of information, modeled after GeoJSON; see https://tools.ietf.org/html/rfc7946
+There are three layers of information, modeled after GeoJSON (see <https://tools.ietf.org/html/rfc7946>):
 
 * The outermost layer is a FeatureCollection
 * Within a FeatureCollection are Features, each of which represents one "thing", like a building or a river. Each feature has:
@@ -15,9 +15,9 @@ There are three layers of information, modeled after GeoJSON; see https://tools.
   * type (one of "Point", "MultiPoint", "LineString", "MultiLineString", "Polygon", "MultiPolygon"; required)
   * coordinates (doubles; exactly how these are structured depends on the type of the geometry)
 
-Although the Python Geo Interface is non-prescriptive when it comes to the data types of the id and properties, Tamr has a more restricted set of supported types. See https://docs.tamr.com/reference#attribute-types
+Although the Python Geo Interface is non-prescriptive when it comes to the data types of the id and properties, Tamr has a more restricted set of supported types. See <https://docs.tamr.com/reference#attribute-types>.
 
-The `:class:~tamr_unify_client.models.dataset.resource.Dataset` class supports the `__geo_interface__` property. This will produce one `FeatureCollection` for the entire dataset.
+The `Dataset` class supports the `__geo_interface__` property. This will produce one `FeatureCollection` for the entire dataset.
 
 There is a companion iterator `itergeofeatures()` that returns a generator that allows you to
 stream the records in the dataset as Geospatial features.
