@@ -2,6 +2,8 @@ from pathlib import Path
 
 from invoke import task
 
+beta = "TAMR_CLIENT_BETA=1"
+
 
 @task
 def lint(c):
@@ -32,9 +34,13 @@ def typecheck(c, warn=True):
 
 @task
 def test(c):
-    c.run("poetry run pytest", echo=True, pty=True)
+    c.run(f"{beta} poetry run pytest", echo=True, pty=True)
 
 
 @task
 def docs(c):
-    c.run("poetry run sphinx-build -b html docs docs/_build -W", echo=True, pty=True)
+    c.run(
+        f"{beta} poetry run sphinx-build -b html docs docs/_build -W",
+        echo=True,
+        pty=True,
+    )
