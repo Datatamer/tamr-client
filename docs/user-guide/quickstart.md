@@ -18,12 +18,10 @@ auth = UsernamePasswordAuth(username, password)
 tamr = Client(auth)
 ```
 
-Warning:
+``` warning:: For security, it's best to read your credentials in from environment variables or secure files instead of hardcoding them directly into your code.
 
-For security, it's best to read your credentials in from environment variables or secure files instead of hardcoding them directly into your code.
-
-For more, see [User Guide > Secure Credentials](secure-credentials).
-
+    For more, see `User Guide > Secure Credentials <secure-credentials.html>`_.
+```
 By default, the client tries to find the Tamr instance on `localhost`. To point to a different host, set the host argument when instantiating the Client.
 
 For example, to connect to `10.20.0.1`:

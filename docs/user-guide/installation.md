@@ -8,23 +8,22 @@ Installation is as simple as:
 `pip install tamr-unify-client`
 
 Or:
+
 `poetry add tamr-unify-client`
 
-Note:
+``` note::
+    If you don't use `poetry <https://poetry.eustace.io/>`_, we recommend you use a virtual environment for your project and install the Python Client into that virtual environment.
 
-If you don't use [poetry](https://poetry.eustace.io/), we recommend you use a virtual environment for your project and install the Python Client into that virtual environment.
+    You can create a virtual environment with Python 3 via:
 
-You can create a virtual environment with Python 3 via:
+    ``python3 -m venv my-venv``
 
-`python3 -m venv my-venv`
-
-For more, see [The Hitchhiker's Guide to Python](https://docs.python-guide.org/dev/virtualenvs/).
-
+    For more, see `The Hitchhiker's Guide to Python <https://docs.python-guide.org/dev/virtualenvs/>`_.
+```
 ## Latest (unstable)
-Note:
-
-This project uses the new `pyproject.toml` file, not a `setup.py` file, so make sure you have the latest version of `pip` installed: `pip install -U pip`.
-
+``` note::
+    This project uses the new ``pyproject.toml`` file, not a ``setup.py`` file, so make sure you have the latest version of ``pip`` installed: ```pip install -U pip``.
+```
 To install the bleeding edge:
 ```bash
 git clone https://github.com/Datatamer/tamr-client
