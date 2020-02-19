@@ -1,8 +1,5 @@
-Datasets
-========
-
 Dataset
--------
+=======
 
 .. autoclass:: tamr_client.Dataset
 
@@ -10,7 +7,7 @@ Dataset
 .. autofunction:: tamr_client.dataset.attributes
 
 Exceptions
-^^^^^^^^^^
+----------
 
 .. autoclass:: tamr_client.DatasetNotFound
   :no-inherited-members:
