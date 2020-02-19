@@ -149,7 +149,7 @@ def create(
     *,
     name: str,
     is_nullable: bool,
-    type: tc.attribute_type.AttributeType = tc.attribute_type_alias.DEFAULT,
+    type: tc.attribute_type.AttributeType = tc.attributes.type_alias.DEFAULT,
     description: Optional[str] = None,
 ) -> Attribute:
     """Create an attribute
@@ -192,7 +192,7 @@ def _create(
     *,
     name: str,
     is_nullable: bool,
-    type: tc.attribute_type.AttributeType = tc.attribute_type_alias.DEFAULT,
+    type: tc.attribute_type.AttributeType = tc.attributes.type_alias.DEFAULT,
     description: Optional[str] = None,
 ) -> Attribute:
     """Same as `tc.attribute.create`, but does not check for reserved attribute

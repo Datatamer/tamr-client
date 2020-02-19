@@ -31,7 +31,7 @@ import tamr_client.attributes.subattribute as subattribute
 from tamr_client.attributes.attribute_type import AttributeType
 import tamr_client.attributes.attribute_type as attribute_type
 
-import tamr_client.attributes.type_alias as attribute_type_alias
+import tamr_client.attributes.type_alias
 
 from tamr_client.attributes.attribute import (
     Attribute,

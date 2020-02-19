@@ -34,5 +34,5 @@ See https://docs.tamr.com/reference#attribute-types
 Type aliases
 ------------
 
-.. autodata:: tamr_client.attribute_type_alias.DEFAULT
-.. autodata:: tamr_client.attribute_type_alias.GEOSPATIAL
+.. autodata:: tamr_client.attributes.type_alias.DEFAULT
+.. autodata:: tamr_client.attributes.type_alias.GEOSPATIAL
