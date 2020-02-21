@@ -86,7 +86,7 @@ class Dataset(BaseResource):
         )
 
     def upsert_from_dataframe(
-        self, df: pandas.DataFrame, primary_key_name: str, ignore_nan: bool = True
+        self, df: pandas.DataFrame, *, primary_key_name: str, ignore_nan: bool = True
     ) -> dict:
         """Upserts a record for each row of `df` with attributes for each column in `df`.
 
