@@ -116,7 +116,9 @@ class TestDatasetRecords(TestCase):
             responses.POST, records_url, partial(create_callback, snoop=snoop)
         )
 
-        response = dataset.upsert_from_dataframe(self._dataframe, "attribute1")
+        response = dataset.upsert_from_dataframe(
+            self._dataframe, primary_key_name="attribute1"
+        )
         self.assertEqual(response, self._response_json)
         self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, False))
 
