@@ -1,5 +1,6 @@
 from copy import deepcopy
 
+import pandas
 import simplejson as json
 
 from tamr_unify_client.attribute.collection import AttributeCollection
@@ -84,18 +85,22 @@ class Dataset(BaseResource):
             .json()
         )
 
-    def upsert_from_dataframe(self, df, primary_key_name, ignore_nan=True):
+    def upsert_from_dataframe(
+        self, df: pandas.DataFrame, primary_key_name: str, ignore_nan: bool = True
+    ) -> dict:
         """Upserts a record for each row of `df` with attributes for each column in `df`.
 
-        :param df: The data to upsert records from.
-        :type df: :class:`pandas.DataFrame`
-        :param primary_key_name: The name of the primary key of the dataset.  Must be a column of `df`.
-        :type primary_key_name: str
-        :param ignore_nan: Whether to convert `NaN` values to `null` before upserting records to Tamr. If `False` and `NaN` is in `df`, this function will fail. Optional, default is `True`.
-        :type ignore_nan: bool
-        :returns: JSON response body from the server.
-        :rtype: dict
-        :raises KeyError: If `primary_key_name` is not a column in `df`.
+        Args:
+            df (pandas.DataFrame): The data to upsert records from.
+            primary_key_name (str): The name of the primary key of the dataset.  Must be a column of `df`.
+            ignore_nan (bool): Whether to convert `NaN` values to `null` before upserting records to Tamr. If `False` and `NaN` is in `df`, this function will fail. Optional, default is `True`.
+
+        Returns:
+            dict: JSON response body from the server.
+
+        Raises:
+            KeyError: If `primary_key_name` is not a column in `df`.
+
         """
         if primary_key_name not in df.columns:
             raise KeyError(f"{primary_key_name} is not an attribute of the data")
