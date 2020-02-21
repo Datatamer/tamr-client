@@ -84,6 +84,25 @@ class Dataset(BaseResource):
             .json()
         )
 
+    def upsert_from_dataframe(self, df, primary_key_name, ignore_nan=True):
+        """Upserts a record for each row of `df` with attributes for each column in `df`.
+
+        :param df: The data to upsert records from.
+        :type df: :class:`pandas.DataFrame`
+        :param primary_key_name: The name of the primary key of the dataset.  Must be a column of `df`.
+        :type primary_key_name: str
+        :param ignore_nan: Whether to convert `NaN` values to `null` before upserting records to Tamr. If `False` and `NaN` is in `df`, this function will fail. Optional, default is `True`.
+        :type ignore_nan: bool
+        :returns: JSON response body from the server.
+        :rtype: dict
+        :raises KeyError: If `primary_key_name` is not a column in `df`.
+        """
+        if primary_key_name not in df.columns:
+            raise KeyError(f"{primary_key_name} is not an attribute of the data")
+
+        records = df.to_dict(orient="records")
+        return self.upsert_records(records, primary_key_name, ignore_nan=ignore_nan)
+
     def upsert_records(self, records, primary_key_name, **json_args):
         """Creates or updates the specified records.
 
