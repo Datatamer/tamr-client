@@ -7,17 +7,17 @@
 import os
 import sys
 
-beta_flag_name = "TAMR_CLIENT_BETA"
-beta_flag_value = "1"
-beta_flag = os.environ.get(beta_flag_name)
+beta_flag = "TAMR_CLIENT_BETA"
+beta_enabled = "1"
+beta = os.environ.get(beta_flag)
 
-if beta_flag != beta_flag_value:
+if beta != beta_enabled:
     msg = (
-        f"ERROR: 'tamr_client' package is in BETA, but you do not have the '{beta_flag_name}' environment variable set to '1'."
+        f"ERROR: 'tamr_client' package is in BETA, but you do not have the '{beta_flag}' environment variable set to '1'."
         "\n\nHINT: Use 'tamr_unify_client' package instead for non-BETA features"
-        f"\nHINT: Set environment variable '{beta_flag_name}=1' to opt-in to BETA features."
+        f"\nHINT: Set environment variable '{beta_flag}=1' to opt-in to BETA features."
         "\n\nWARNING: Do not rely on BETA features in production workflows."
-        "\nTamr will not offer support for BETA features."
+        " Support from Tamr may be limited."
     )
     print(msg)
     sys.exit(1)
