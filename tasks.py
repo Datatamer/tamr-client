@@ -2,6 +2,8 @@ from pathlib import Path
 
 from invoke import task
 
+beta = "TAMR_CLIENT_BETA=1"
+
 
 @task
 def lint(c):
@@ -20,21 +22,25 @@ def typecheck(c, warn=True):
     tc = repo / "tamr_client"
     tests = repo / "tests"
     pkgs = [
+        tc,
         tc / "attributes",
         tests / "attributes",
         tc / "datasets",
         tests / "datasets",
     ]
     for pkg in pkgs:
-        pyfiles = " ".join(str(pyfile) for pyfile in pkg.glob("**/*.py"))
-        c.run(f"poetry run mypy {pyfiles}", echo=True, pty=True, warn=warn)
+        c.run(f"poetry run mypy {str(pkg)}", echo=True, pty=True, warn=warn)
 
 
 @task
 def test(c):
-    c.run("poetry run pytest", echo=True, pty=True)
+    c.run(f"{beta} poetry run pytest", echo=True, pty=True)
 
 
 @task
 def docs(c):
-    c.run("poetry run sphinx-build -b html docs docs/_build -W", echo=True, pty=True)
+    c.run(
+        f"{beta} poetry run sphinx-build -b html docs docs/_build -W",
+        echo=True,
+        pty=True,
+    )

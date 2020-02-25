@@ -18,7 +18,11 @@ def session():
     return s
 
 
+def instance():
+    return tc.Instance()
+
+
 def dataset():
     url = tc.URL(path="datasets/1")
-    dataset = tc.Dataset(url, key_attribute_names=("primary_key",))
+    dataset = tc.Dataset(url, name="dataset.csv", key_attribute_names=("primary_key",))
     return dataset

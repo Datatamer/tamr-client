@@ -1,9 +1,9 @@
 import tamr_client as tc
 from tamr_client.attributes.attribute_type import Array, DOUBLE, Record, STRING
 
-DEFAULT = Array(STRING)
+DEFAULT: Array = Array(STRING)
 
-GEOSPATIAL = Record(
+GEOSPATIAL: Record = Record(
     attributes=(
         tc.SubAttribute(name="point", is_nullable=True, type=Array(DOUBLE)),
         tc.SubAttribute(name="multiPoint", is_nullable=True, type=Array(Array(DOUBLE))),
