@@ -1,7 +1,7 @@
 # BETA
 
   **WARNING**: Do not rely on BETA features in production workflows.
-  Tamr will not offer support for BETA features.
+  Support from Tamr may be limited.
 
 ## Reference
 
