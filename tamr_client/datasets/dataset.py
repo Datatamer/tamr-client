@@ -31,7 +31,9 @@ class Dataset:
     url: tc.URL
     name: str
     key_attribute_names: Tuple[str, ...]
+    version: str
     description: Optional[str] = None
+     
 
 
 def from_resource_id(session: tc.Session, instance: tc.Instance, id: str) -> Dataset:
@@ -85,6 +87,7 @@ def _from_json(url: tc.URL, data: JsonDict) -> Dataset:
         name=cp["name"],
         description=cp.get("description"),
         key_attribute_names=tuple(cp["keyAttributeNames"]),
+        version = cp.get("version"),
     )
 
 
