@@ -87,7 +87,7 @@ def _from_json(url: tc.URL, data: JsonDict) -> Dataset:
         name=cp["name"],
         description=cp.get("description"),
         key_attribute_names=tuple(cp["keyAttributeNames"]),
-        version = cp.get("version"),
+        version = cp["version"],
     )
 
 
