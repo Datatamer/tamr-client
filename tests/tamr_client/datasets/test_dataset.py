@@ -2,7 +2,7 @@ import pytest
 import responses
 
 import tamr_client as tc
-import tests.utils as utils
+import tests.tamr_client.utils as utils
 
 
 @responses.activate
