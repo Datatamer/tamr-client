@@ -3,7 +3,7 @@
   - BETA: New attributes package!
     - `tc.attribute` module
       - `tc.Attribute` type
-      - functions: `from_resource_id`, `to_json`, `create`, `update`, `delete`
+      - functions: `from_resource_id`, `from_dataset_all`, `to_json`, `create`, `update`, `delete`
     - `tc.attribute_type` module
       - `tc.AttributeType` for type annotations
       - Primitive Types: `BOOLEAN`, `DOUBLE`, `INT`, `LONG`, `STRING`
@@ -18,7 +18,7 @@
   - BETA: New datasets package!
     - `tc.dataset` module
       - `tc.Dataset` type
-      - functions: `from_resource_id`, `attributes`
+      - functions: `from_resource_id`
   - BETA: New `tc.instance` module!
     - `tc.Instance` type
     - functions: `tc.instance.from_auth`
