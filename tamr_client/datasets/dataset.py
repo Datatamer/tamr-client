@@ -2,7 +2,7 @@
 See https://docs.tamr.com/reference/dataset-models
 """
 from copy import deepcopy
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 from typing import Optional, Tuple
 
 import tamr_client as tc
@@ -86,28 +86,3 @@ def _from_json(url: tc.URL, data: JsonDict) -> Dataset:
         description=cp.get("description"),
         key_attribute_names=tuple(cp["keyAttributeNames"]),
     )
-
-
-def attributes(session: tc.Session, dataset: Dataset) -> Tuple["tc.Attribute", ...]:
-    """Get attributes for this dataset
-
-    Args:
-        dataset: Dataset containing the desired attributes
-
-    Returns:
-        The attributes for the specified dataset
-
-    Raises:
-        requests.HTTPError: If an HTTP error is encountered.
-    """
-    attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
-    r = session.get(str(attrs_url))
-    attrs_json = tc.response.successful(r).json()
-
-    attrs = []
-    for attr_json in attrs_json:
-        id = attr_json["name"]
-        attr_url = replace(attrs_url, path=attrs_url.path + f"/{id}")
-        attr = tc.attribute._from_json(attr_url, attr_json)
-        attrs.append(attr)
-    return tuple(attrs)
