@@ -30,6 +30,8 @@
       - functions: `tc.session.from_auth`
     - `tc.url` module
       - `tc.URL` type
+    - `tc.response` module
+      - functions: `successful`, `ndjson`
 
   **BUG FIXES**
   - Links from our docs to the `requests` docs were outdated. Links have been updated to point to the new `requests` docs URL.
