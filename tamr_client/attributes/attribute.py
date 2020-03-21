@@ -124,7 +124,7 @@ def _from_json(url: tc.URL, data: JsonDict) -> Attribute:
     )
 
 
-def from_dataset_all(session: tc.Session, dataset: tc.Dataset) -> Tuple[Attribute]:
+def from_dataset_all(session: tc.Session, dataset: tc.Dataset) -> Tuple[Attribute, ...]:
     """Get all attributes from a dataset
 
     Args:
