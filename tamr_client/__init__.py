@@ -56,3 +56,6 @@ from tamr_client.attributes.attribute import (
     AttributeNotFound,
 )
 import tamr_client.attributes.attribute as attribute
+
+# records
+import tamr_client.datasets.record as record
