@@ -10,6 +10,7 @@ PUT: str
 def add(
     method: Optional[str] = None,
     url: Optional[str] = None,
+    body: Optional[str] = None,
     status: Optional[int] = None,
     json: Optional[JsonDict] = None,
 ): ...
