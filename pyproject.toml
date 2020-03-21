@@ -45,7 +45,7 @@ sphinx-autodoc-typehints = "^1.8"
 pandas = "^0.25.3"
 pytest = "^5.3.2"
 invoke = "^1.4.0"
-mypy = "^0.761"
+mypy = "^0.770"
 
 [build-system]
 requires = ["poetry>=1.0"]
