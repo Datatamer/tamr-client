@@ -59,8 +59,8 @@ This makes it easy to create a Tamr dataset from a CSV:
 ```python
 import pandas as pd
 
-df = pd.read_csv("my_data.csv")
-dataset = tamr.datasets.create_from_dataframe(df, "primary key name", "My Data")
+df = pd.read_csv("my_data.csv", dtype=str)      # string is the recommended data type
+dataset = tamr.datasets.create_from_dataframe(df, primary_key_name="primary key name", dataset_name="My Data")
 ```
 
 This will create a dataset called "My Data" with the specified primary key, an attribute

@@ -35,6 +35,7 @@
 
   **BUG FIXES**
   - Links from our docs to the `requests` docs were outdated. Links have been updated to point to the new `requests` docs URL.
+  - [#323](https://github.com/Datatamer/tamr-client/issues/323) Documentation for setting `dtype=str` before calling `client.datasets.create_from_dataframe`
 
 ## 0.10.0
   **BREAKING CHANGES**
