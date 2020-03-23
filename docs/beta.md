@@ -9,4 +9,5 @@
   * [Auth](beta/auth)
   * [Dataset](beta/datasets)
   * [Instance](beta/instance)
+  * [Response](beta/response)
   * [Session](beta/session)

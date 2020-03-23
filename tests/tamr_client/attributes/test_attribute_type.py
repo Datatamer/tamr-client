@@ -1,9 +1,9 @@
 import tamr_client as tc
-import tests.utils
+import tests.tamr_client.utils as utils
 
 
 def test_from_json():
-    geom_json = tests.utils.load_json("attributes.json")[1]
+    geom_json = utils.load_json("attributes.json")[1]
     geom_type = tc.attribute_type.from_json(geom_json["type"])
     assert isinstance(geom_type, tc.attribute_type.Record)
 
@@ -33,7 +33,7 @@ def test_from_json():
 
 
 def test_json():
-    attrs_json = tests.utils.load_json("attributes.json")
+    attrs_json = utils.load_json("attributes.json")
     for attr_json in attrs_json:
         attr_type_json = attr_json["type"]
         attr_type = tc.attribute_type.from_json(attr_type_json)

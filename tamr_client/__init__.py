@@ -1,32 +1,22 @@
 # flake8: noqa
 
+# BETA check
 ############
-# BETA start
-############
 
-import os
-import sys
+import tamr_client.beta as beta
 
-beta_flag = "TAMR_CLIENT_BETA"
-beta_enabled = "1"
-beta = os.environ.get(beta_flag)
+beta._check()
 
-if beta != beta_enabled:
-    msg = (
-        f"ERROR: 'tamr_client' package is in BETA, but you do not have the '{beta_flag}' environment variable set to '1'."
-        "\n\nHINT: Use 'tamr_unify_client' package instead for non-BETA features"
-        f"\nHINT: Set environment variable '{beta_flag}=1' to opt-in to BETA features."
-        "\n\nWARNING: Do not rely on BETA features in production workflows."
-        " Support from Tamr may be limited."
-    )
-    print(msg)
-    sys.exit(1)
-
-##########
-# BETA end
-##########
+# Logging
+#########
 
 import logging
+
+# https://docs.python-guide.org/writing/logging/#logging-in-a-library
+logging.getLogger(__name__).addHandler(logging.NullHandler())
+
+# Import shortcuts
+##################
 
 # utilities
 import tamr_client.response as response
@@ -66,6 +56,3 @@ from tamr_client.attributes.attribute import (
     AttributeNotFound,
 )
 import tamr_client.attributes.attribute as attribute
-
-# https://docs.python-guide.org/writing/logging/#logging-in-a-library
-logging.getLogger(__name__).addHandler(logging.NullHandler())

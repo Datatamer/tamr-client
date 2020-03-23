@@ -4,7 +4,7 @@ import pytest
 import responses
 
 import tamr_client as tc
-import tests.utils as utils
+import tests.tamr_client.utils as utils
 
 
 def test_from_json():
@@ -121,6 +121,26 @@ def test_create_reserved_attribute_name():
 
     with pytest.raises(tc.ReservedAttributeName):
         tc.attribute.create(s, dataset, name="clusterId", is_nullable=False)
+
+
+@responses.activate
+def test_from_dataset_all():
+    s = utils.session()
+    dataset = utils.dataset()
+
+    attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
+    attrs_json = utils.load_json("attributes.json")
+    responses.add(responses.GET, str(attrs_url), json=attrs_json, status=204)
+
+    attrs = tc.attribute.from_dataset_all(s, dataset)
+
+    row_num = attrs[0]
+    assert row_num.name == "RowNum"
+    assert isinstance(row_num.type, tc.attribute_type.String)
+
+    geom = attrs[1]
+    assert geom.name == "geom"
+    assert isinstance(geom.type, tc.attribute_type.Record)
 
 
 @responses.activate

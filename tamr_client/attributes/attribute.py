@@ -3,7 +3,7 @@ See https://docs.tamr.com/reference/attribute-types
 """
 from copy import deepcopy
 from dataclasses import dataclass, field, replace
-from typing import Optional
+from typing import Optional, Tuple
 
 import tamr_client as tc
 from tamr_client.types import JsonDict
@@ -122,6 +122,31 @@ def _from_json(url: tc.URL, data: JsonDict) -> Attribute:
         type=tc.attribute_type.from_json(cp["type"]),
         _json=cp,
     )
+
+
+def from_dataset_all(session: tc.Session, dataset: tc.Dataset) -> Tuple[Attribute, ...]:
+    """Get all attributes from a dataset
+
+    Args:
+        dataset: Dataset containing the desired attributes
+
+    Returns:
+        The attributes for the specified dataset
+
+    Raises:
+        requests.HTTPError: If an HTTP error is encountered.
+    """
+    attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
+    r = session.get(str(attrs_url))
+    attrs_json = tc.response.successful(r).json()
+
+    attrs = []
+    for attr_json in attrs_json:
+        id = attr_json["name"]
+        attr_url = replace(attrs_url, path=attrs_url.path + f"/{id}")
+        attr = _from_json(attr_url, attr_json)
+        attrs.append(attr)
+    return tuple(attrs)
 
 
 def to_json(attr: Attribute) -> JsonDict:
