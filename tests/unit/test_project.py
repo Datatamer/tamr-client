@@ -67,15 +67,15 @@ class TestProject(TestCase):
         self.assertEqual(self.project_json[0], actual_project._data)
 
     @responses.activate
-    def test_project_by_name__raises_when_not_found():
+    def test_project_by_name__raises_when_not_found(self):
         responses.add(responses.GET, self.project_list_url, json=[])
         auth = UsernamePasswordAuth("username", "password")
         tamr = Client(auth)
-        with pytest.raises(KeyError):
+        with self.assertRaises(KeyError):
             tamr.projects.by_name(self.project_name)
 
     @responses.activate
-    def test_dataset_by_name_succeeds():
+    def test_dataset_by_name_succeeds(self):
         responses.add(responses.GET, self.project_list_url, json=self.project_json)
         auth = UsernamePasswordAuth("username", "password")
         tamr = Client(auth)
