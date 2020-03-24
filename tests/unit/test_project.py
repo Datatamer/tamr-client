@@ -68,7 +68,7 @@ class TestProject(TestCase):
 
     @responses.activate
     def test_project_by_name__raises_when_not_found():
-        responses.add(responses.GET, projects_list_url, json=[])
+        responses.add(responses.GET, project_list_url, json=[])
         auth = UsernamePasswordAuth("username", "password")
         tamr = Client(auth)
         with pytest.raises(KeyError):
@@ -76,7 +76,7 @@ class TestProject(TestCase):
 
     @responses.activate
     def test_dataset_by_name_succeeds():
-        responses.add(responses.GET, projects_list_url, json=project_json)
+        responses.add(responses.GET, project_list_url, json=project_json)
         auth = UsernamePasswordAuth("username", "password")
         tamr = Client(auth)
         actual_project = tamr.projects.by_name(project_name)
