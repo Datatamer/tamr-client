@@ -62,6 +62,21 @@ class ProjectCollection(BaseCollection):
         """
         return super().stream(Project)
 
+    def by_name(self, project_name: str) -> Project:
+        """Get project by name
+
+        Fetches a specific project in this collection by exact-match on name.
+
+        Args:
+            project_name: Name of the desired project.
+        Raises:
+            KeyError: If no project with specified name was found.
+        """
+        for project in self:
+            if project.name == project_name:
+                return project
+        raise KeyError(f"No project found with name: {project_name}")
+
     def create(self, creation_spec):
         """
         Create a Project in Tamr
