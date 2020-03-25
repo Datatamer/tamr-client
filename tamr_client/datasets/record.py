@@ -2,7 +2,7 @@
 See https://docs.tamr.com/reference/record
 """
 import json
-from typing import Dict, Iterable
+from typing import Dict, Iterable, Union
 
 import tamr_client as tc
 from tamr_client.types import JsonDict
@@ -15,7 +15,7 @@ class PrimaryKeyNotFound(Exception):
 
 
 def _update(
-    session: tc.Session, dataset: tc.Dataset, updates: Iterable[Dict], **json_args
+    session: tc.Session, dataset: tc.Dataset, updates: Iterable[Dict]
 ) -> JsonDict:
     """Send a batch of record creations/updates/deletions to this dataset.
     You probably want to use :func:`~tamr_client.dataset.upsert_records`
@@ -24,8 +24,6 @@ def _update(
     Args:
         dataset: Dataset containing records to be updated
         updates: Each update should be formatted as specified in the `Public Docs for Dataset updates <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
-        `**json_args`: Arguments to pass to the JSON `dumps` function, as documented `here <https://simplejson.readthedocs.io/en/latest/#simplejson.dumps>`_.
-            Some of these, such as `indent`, may not work with Tamr.
 
     Returns:
         JSON response body from server
@@ -33,7 +31,7 @@ def _update(
     Raises:
         requests.HTTPError: If an HTTP error is encountered
     """
-    stringified_updates = (json.dumps(update, **json_args) for update in updates)
+    stringified_updates = (json.dumps(update) for update in updates)
     r = session.post(
         str(dataset.url) + ":updateRecords",
         headers={"Content-Encoding": "utf-8"},
@@ -48,7 +46,6 @@ def upsert(
     records: Iterable[Dict],
     *,
     primary_key_name: str,
-    **json_args,
 ) -> JsonDict:
     """Create or update the specified records.
 
@@ -56,16 +53,14 @@ def upsert(
         dataset: Dataset to receive record updates
         records: The records to update, as dictionaries
         primary_key_name: The primary key for these records, which must be a key in each record dictionary
-        `**json_args`: Arguments to pass to the JSON `dumps` function, as documented `here <https://simplejson.readthedocs.io/en/latest/#simplejson.dumps>`_.
-            Some of these, such as `indent`, may not work with Tamr.
 
     Returns:
         JSON response body from server
 
     Raises:
         requests.HTTPError: If an HTTP error is encountered
-        KeyError: If primary_key_name does not match dataset primary key
-        KeyError: If primary_key_name not in a record dictionary
+        PrimaryKeyNotFound: If primary_key_name does not match dataset primary key
+        PrimaryKeyNotFound: If primary_key_name not in a record dictionary
     """
     if primary_key_name not in dataset.key_attribute_names:
         raise PrimaryKeyNotFound(
@@ -75,11 +70,11 @@ def upsert(
         {"action": "CREATE", "recordId": record[primary_key_name], "record": record}
         for record in records
     )
-    return _update(session, dataset, updates, **json_args)
+    return _update(session, dataset, updates)
 
 
-def delete_by_id(
-    session: tc.Session, dataset: tc.Dataset, record_ids: Iterable[Dict]
+def _delete_by_id(
+    session: tc.Session, dataset: tc.Dataset, record_ids: Iterable[Union[str, int]]
 ) -> JsonDict:
     """Deletes the specified records.
 
@@ -110,20 +105,18 @@ def delete(
         dataset: Dateset from which to delete records
         records: The records to update, as dictionaries
         primary_key_name: The primary key for these records, which must be a key in each record dictionary
-        `**json_args`: Arguments to pass to the JSON `dumps` function, as documented `here <https://simplejson.readthedocs.io/en/latest/#simplejson.dumps>`_.
-            Some of these, such as `indent`, may not work with Tamr.
 
     Returns:
         JSON response body from server
 
     Raises:
         requests.HTTPError: If an HTTP error is encountered
-        KeyError: If primary_key_name does not match dataset primary key
-        KeyError: If primary_key_name not in a record dictionary
+        PrimaryKeyNotFound: If primary_key_name does not match dataset primary key
+        PrimaryKeyNotFound: If primary_key_name not in a record dictionary
     """
     if primary_key_name not in dataset.key_attribute_names:
         raise PrimaryKeyNotFound(
             f"Primary key: {primary_key_name} is not in dataset key attribute names: {dataset.key_attribute_names}"
         )
     ids = (record[primary_key_name] for record in records)
-    return delete_by_id(session, dataset, ids)
+    return _delete_by_id(session, dataset, ids)
