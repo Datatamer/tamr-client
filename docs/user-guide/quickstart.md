@@ -58,7 +58,7 @@ E.g. To fetch the project with name `'Number 1'`:
 project = tamr.projects.by_name('Number 1')
 ```
 ``` note::
-    If working with projects over multiple instances, consider using ``by_external_id``.
+    If working with projects over across Tamr instances for migrations or promotions, use external IDs ( via ``by_external_id``) instead of name (via ``by_name``).
 ```
 
 ## Resource relationships
