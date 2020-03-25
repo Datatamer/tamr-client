@@ -57,6 +57,9 @@ E.g. To fetch the project with name `'Number 1'`:
 ```python
 project = tamr.projects.by_name('Number 1')
 ```
+``` note::
+    If working with projects over multiple instances, consider using ``by_external_id``.
+```
 
 ## Resource relationships
 Related resources (like a project and its unified dataset) can be accessed through specific methods.
