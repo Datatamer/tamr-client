@@ -75,7 +75,7 @@ class TestProject(TestCase):
             tamr.projects.by_name(self.project_name)
 
     @responses.activate
-    def test_dataset_by_name_succeeds(self):
+    def test_dataset_by_name(self):
         responses.add(responses.GET, self.project_list_url, json=self.project_json)
         auth = UsernamePasswordAuth("username", "password")
         tamr = Client(auth)
