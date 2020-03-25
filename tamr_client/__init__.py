@@ -59,3 +59,6 @@ import tamr_client.attributes.attribute as attribute
 
 # records
 import tamr_client.datasets.record as record
+
+# dataframe
+import tamr_client.datasets.dataframe as dataframe
