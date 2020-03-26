@@ -18,7 +18,7 @@ def test_update():
     updates = _records_to_updates(_records_json)
     snoop: Dict = {}
     responses.add_callback(
-        responses.POST, str(url), partial(capture_payload, snoop=snoop, status=200)
+        responses.POST, str(url), partial(_capture_payload, snoop=snoop, status=200)
     )
 
     response = tc.record._update(s, dataset, updates)
@@ -35,7 +35,7 @@ def test_upsert():
     updates = _records_to_updates(_records_json)
     snoop: Dict = {}
     responses.add_callback(
-        responses.POST, str(url), partial(capture_payload, snoop=snoop, status=200)
+        responses.POST, str(url), partial(_capture_payload, snoop=snoop, status=200)
     )
 
     response = tc.record.upsert(
@@ -65,7 +65,7 @@ def test_delete_by_ids():
     deletes = _records_to_deletes(_records_json)
     snoop: Dict = {}
     responses.add_callback(
-        responses.POST, str(url), partial(capture_payload, snoop=snoop, status=200)
+        responses.POST, str(url), partial(_capture_payload, snoop=snoop, status=200)
     )
 
     ids = (r["primary_key"] for r in _records_json)
@@ -84,7 +84,7 @@ def test_delete():
     deletes = _records_to_deletes(_records_json)
     snoop: Dict = {}
     responses.add_callback(
-        responses.POST, str(url), partial(capture_payload, snoop=snoop, status=200)
+        responses.POST, str(url), partial(_capture_payload, snoop=snoop, status=200)
     )
 
     response = tc.record.delete(
@@ -105,7 +105,11 @@ def test_delete_primary_key_not_found():
         )
 
 
-def capture_payload(request, snoop, status):
+def _capture_payload(request, snoop, status):
+    """Capture request body within `snoop` so we can inspect that the request body is constructed correctly (e.g. for streaming requests).
+
+    See https://github.com/getsentry/responses#dynamic-responses
+    """
     snoop["payload"] = list(request.body)
     return status, {}, json.dumps(_response_json)
 
