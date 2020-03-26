@@ -30,7 +30,9 @@ def upsert(
         raise tc.PrimaryKeyNotFound(
             f"Primary key: {primary_key_name} is not in DataFrame column names: {df.columns}"
         )
-    records = json.loads(df.to_json(orient="records"))
+    # serialize records via to_json to handle `np.nan` values
+    serialized_records = (x[1].to_json() for x in df.iterrows())
+    records = (json.loads(x) for x in serialized_records)
     return tc.datasets.record.upsert(
         session, dataset, records, primary_key_name=primary_key_name
     )
