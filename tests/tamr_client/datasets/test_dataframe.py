@@ -24,9 +24,7 @@ def test_upsert():
 
     df = pd.DataFrame(_records_json)
 
-    response = tc.datasets.dataframe.upsert(
-        s, dataset, df, primary_key_name="primary_key"
-    )
+    response = tc.dataframe.upsert(s, dataset, df, primary_key_name="primary_key")
     assert response == _response_json
     assert snoop["payload"] == stringify(updates)
 
@@ -38,10 +36,8 @@ def test_upsert_primary_key_not_found():
 
     df = pd.DataFrame(_records_json)
 
-    with pytest.raises(tc.datasets.record.PrimaryKeyNotFound):
-        tc.datasets.dataframe.upsert(
-            s, dataset, df, primary_key_name="wrong_primary_key"
-        )
+    with pytest.raises(tc.record.PrimaryKeyNotFound):
+        tc.dataframe.upsert(s, dataset, df, primary_key_name="wrong_primary_key")
 
 
 def create_callback(request, snoop, status):
