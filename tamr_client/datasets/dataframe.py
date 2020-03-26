@@ -7,13 +7,11 @@ import json
 import pandas as pd
 
 import tamr_client as tc
-from tamr_client.datasets.dataset import Dataset
-from tamr_client.datasets.record import PrimaryKeyNotFound
 from tamr_client.types import JsonDict
 
 
 def upsert(
-    session: tc.Session, dataset: Dataset, df: pd.DataFrame, *, primary_key_name: str
+    session: tc.Session, dataset: tc.Dataset, df: pd.DataFrame, *, primary_key_name: str
 ) -> JsonDict:
     """Upserts a record for each row of `df` with attributes for each column in `df`.
     Args:
@@ -29,7 +27,7 @@ def upsert(
         PrimaryKeyNotFound: If `primary_key_name` is not a column in `df`.
     """
     if primary_key_name not in df.columns:
-        raise PrimaryKeyNotFound(
+        raise tc.PrimaryKeyNotFound(
             f"Primary key: {primary_key_name} is not in DataFrame column names: {df.columns}"
         )
     records = json.loads(df.to_json(orient="records"))

@@ -58,6 +58,7 @@ from tamr_client.attributes.attribute import (
 import tamr_client.attributes.attribute as attribute
 
 # records
+from tamr_client.datasets.record import PrimaryKeyNotFound
 import tamr_client.datasets.record as record
 
 # dataframe

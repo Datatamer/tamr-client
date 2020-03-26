@@ -1,5 +1,7 @@
 """
 See https://docs.tamr.com/reference/record
+"The recommended approach for interacting with records is to use the upsert and delete functions for all use cases they
+can handle. For more advanced use cases, the underlying _update function can be used directly."
 """
 import json
 from typing import Dict, Iterable, Union
