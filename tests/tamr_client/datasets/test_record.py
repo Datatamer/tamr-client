@@ -18,7 +18,7 @@ def test_update():
     updates = records_to_updates(_records_json)
     snoop: Dict = {}
     responses.add_callback(
-        responses.POST, url.__str__(), partial(create_callback, snoop=snoop, status=200)
+        responses.POST, str(url), partial(create_callback, snoop=snoop, status=200)
     )
 
     response = tc.record._update(s, dataset, updates)
