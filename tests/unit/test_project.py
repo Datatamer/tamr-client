@@ -67,6 +67,22 @@ class TestProject(TestCase):
         self.assertEqual(self.project_json[0], actual_project._data)
 
     @responses.activate
+    def test_project_by_name__raises_when_not_found(self):
+        responses.add(responses.GET, self.project_list_url, json=[])
+        auth = UsernamePasswordAuth("username", "password")
+        tamr = Client(auth)
+        with self.assertRaises(KeyError):
+            tamr.projects.by_name(self.project_name)
+
+    @responses.activate
+    def test_project_by_name(self):
+        responses.add(responses.GET, self.project_list_url, json=self.project_json)
+        auth = UsernamePasswordAuth("username", "password")
+        tamr = Client(auth)
+        actual_project = tamr.projects.by_name(self.project_name)
+        assert actual_project._data == self.project_json[0]
+
+    @responses.activate
     def test_project_attributes_get(self):
         responses.add(responses.GET, self.projects_url, json=self.project_json)
         responses.add(
@@ -216,8 +232,10 @@ class TestProject(TestCase):
             "relativeId": "projects/1",
         }
     ]
+    project_name = "project 1 name"
     project_external_id = "project 1 external ID"
     projects_url = f"http://localhost:9100/api/versioned/v1/projects?filter=externalId=={project_external_id}"
+    project_list_url = "http://localhost:9100/api/versioned/v1/projects"
     post_input_datasets_json = []
     input_datasets_url = (
         f"http://localhost:9100/api/versioned/v1/projects/1/inputDatasets"

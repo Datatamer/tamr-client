@@ -51,6 +51,15 @@ E.g. To fetch the project with ID `'1'`:
 ```python
 project = tamr.projects.by_resource_id('1')
 ```
+Similarly, if you know the name of a specific resource, you can ask for it directly via the `by_name` methods exposed by collections.
+
+E.g. To fetch the project with name `'Number 1'`:
+```python
+project = tamr.projects.by_name('Number 1')
+```
+``` note::
+    If working with projects across Tamr instances for migrations or promotions, use external IDs (via ``by_external_id``) instead of name (via ``by_name``).
+```
 
 ## Resource relationships
 Related resources (like a project and its unified dataset) can be accessed through specific methods.
