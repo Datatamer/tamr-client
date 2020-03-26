@@ -1,7 +1,8 @@
 """
 See https://docs.tamr.com/reference/record
-"The recommended approach for interacting with records is to use the upsert and delete functions for all use cases they
-can handle. For more advanced use cases, the underlying _update function can be used directly."
+"The recommended approach for interacting with records is to use the :func:`~tamr_client.record.upsert` and
+:func:`~tamr_client.record.delete` functions for all use cases they can handle. For more advanced use cases, the
+underlying _update function can be used directly."
 """
 import json
 from typing import Dict, Iterable, Union
@@ -20,8 +21,8 @@ def _update(
     session: tc.Session, dataset: tc.Dataset, updates: Iterable[Dict]
 ) -> JsonDict:
     """Send a batch of record creations/updates/deletions to this dataset.
-    You probably want to use :func:`~tamr_client.dataset.upsert_records`
-    or :func:`~tamr_client.dataset.delete_records` instead.
+    You probably want to use :func:`~tamr_client.record.upsert`
+    or :func:`~tamr_client.record.delete` instead.
 
     Args:
         dataset: Dataset containing records to be updated
