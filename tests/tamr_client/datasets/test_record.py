@@ -14,7 +14,10 @@ def test_update():
     dataset = utils.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
-    updates = utils.records_to_updates(_records_json)
+    updates = [
+        tc.record._create_command(record, primary_key_name="primary_key")
+        for i, record in enumerate(_records_json, start=1)
+    ]
     snoop: Dict = {}
     responses.add_callback(
         responses.POST,
@@ -35,7 +38,10 @@ def test_upsert():
     dataset = utils.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
-    updates = utils.records_to_updates(_records_json)
+    updates = [
+        tc.record._create_command(record, primary_key_name="primary_key")
+        for i, record in enumerate(_records_json, start=1)
+    ]
     snoop: Dict = {}
     responses.add_callback(
         responses.POST,
@@ -64,35 +70,15 @@ def test_upsert_primary_key_not_found():
 
 
 @responses.activate
-def test_delete_by_ids():
-    s = utils.session()
-    dataset = utils.dataset()
-
-    url = tc.URL(path="datasets/1:updateRecords")
-    deletes = utils.records_to_deletes(_records_json)
-    snoop: Dict = {}
-    responses.add_callback(
-        responses.POST,
-        str(url),
-        partial(
-            utils.capture_payload, snoop=snoop, status=200, response_json=_response_json
-        ),
-    )
-
-    ids = (r["primary_key"] for r in _records_json)
-
-    response = tc.record._delete_by_id(s, dataset, ids)
-    assert response == _response_json
-    assert snoop["payload"] == utils.stringify(deletes)
-
-
-@responses.activate
 def test_delete():
     s = utils.session()
     dataset = utils.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
-    deletes = utils.records_to_deletes(_records_json)
+    deletes = [
+        tc.record._delete_command(record, primary_key_name="primary_key")
+        for i, record in enumerate(_records_json, start=1)
+    ]
     snoop: Dict = {}
     responses.add_callback(
         responses.POST,

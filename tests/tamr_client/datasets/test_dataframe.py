@@ -15,7 +15,10 @@ def test_upsert():
     dataset = utils.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
-    updates = utils.records_to_updates(_records_json)
+    updates = [
+        tc.record._create_command(record, primary_key_name="primary_key")
+        for i, record in enumerate(_records_json, start=1)
+    ]
     snoop: Dict = {}
     responses.add_callback(
         responses.POST,

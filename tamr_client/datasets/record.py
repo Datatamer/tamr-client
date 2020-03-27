@@ -5,7 +5,7 @@ See https://docs.tamr.com/reference/record
 underlying _update function can be used directly."
 """
 import json
-from typing import Dict, Iterable, Union
+from typing import Dict, Iterable
 
 import tamr_client as tc
 from tamr_client.types import JsonDict
@@ -70,28 +70,8 @@ def upsert(
             f"Primary key: {primary_key_name} is not in dataset key attribute names: {dataset.key_attribute_names}"
         )
     updates = (
-        {"action": "CREATE", "recordId": record[primary_key_name], "record": record}
-        for record in records
+        _create_command(record, primary_key_name=primary_key_name) for record in records
     )
-    return _update(session, dataset, updates)
-
-
-def _delete_by_id(
-    session: tc.Session, dataset: tc.Dataset, record_ids: Iterable[Union[str, int]]
-) -> JsonDict:
-    """Deletes the specified records.
-
-    Args:
-        dataset: Dataset from which to delete records
-        record_ids: The IDs of the records to delete_records
-
-    Returns:
-        JSON response body from server
-
-    Raises:
-        requests.HTTPError: If an HTTP error is encountered
-    """
-    updates = ({"action": "DELETE", "recordId": rid} for rid in record_ids)
     return _update(session, dataset, updates)
 
 
@@ -102,10 +82,10 @@ def delete(
     *,
     primary_key_name: str,
 ) -> JsonDict:
-    """Deletes the specified records, based on primary key values.  Does not check that other record values match.
+    """Deletes the specified records, based on primary key values.  Does not check that other attribute values match.
 
     Args:
-        dataset: Dateset from which to delete records
+        dataset: Dataset from which to delete records
         records: The records to update, as dictionaries
         primary_key_name: The primary key for these records, which must be a key in each record dictionary
 
@@ -121,5 +101,35 @@ def delete(
         raise PrimaryKeyNotFound(
             f"Primary key: {primary_key_name} is not in dataset key attribute names: {dataset.key_attribute_names}"
         )
-    ids = (record[primary_key_name] for record in records)
-    return _delete_by_id(session, dataset, ids)
+    updates = (
+        _delete_command(record, primary_key_name=primary_key_name) for record in records
+    )
+    return _update(session, dataset, updates)
+
+
+def _create_command(record: Dict, *, primary_key_name: str) -> Dict:
+    """Generates the CREATE command formatted as specified in the `Public Docs for Dataset updates
+    <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
+
+    Args:
+        record: The record to create, as a dictionary
+        primary_key_name: The primary key for this record, which must be a key in the dictionary
+
+    Returns:
+        The CREATE command in the proper format
+    """
+    return {"action": "CREATE", "recordId": record[primary_key_name], "record": record}
+
+
+def _delete_command(record: Dict, *, primary_key_name: str) -> Dict:
+    """Generates the DELETE command formatted as specified in the `Public Docs for Dataset updates
+    <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
+
+    Args:
+        record: The record to delete, as a dictionary
+        primary_key_name: The primary key for this record, which must be a key in the dictionary
+
+    Returns:
+        The DELETE command in the proper format
+    """
+    return {"action": "DELETE", "recordId": record[primary_key_name]}
