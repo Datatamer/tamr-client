@@ -16,7 +16,7 @@ def test_update():
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
         tc.record._create_command(record, primary_key_name="primary_key")
-        for i, record in enumerate(_records_json, start=1)
+        for record in _records_json
     ]
     snoop: Dict = {}
     responses.add_callback(
@@ -40,7 +40,7 @@ def test_upsert():
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
         tc.record._create_command(record, primary_key_name="primary_key")
-        for i, record in enumerate(_records_json, start=1)
+        for record in _records_json
     ]
     snoop: Dict = {}
     responses.add_callback(
@@ -77,7 +77,7 @@ def test_delete():
     url = tc.URL(path="datasets/1:updateRecords")
     deletes = [
         tc.record._delete_command(record, primary_key_name="primary_key")
-        for i, record in enumerate(_records_json, start=1)
+        for record in _records_json
     ]
     snoop: Dict = {}
     responses.add_callback(
