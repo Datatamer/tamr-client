@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 
 from invoke import task
 
@@ -24,15 +25,22 @@ def format(c, fix=False):
 
 @task
 def typecheck(c, warn=True):
+    exit_code = 0
     repo = Path(".")
 
     tc = repo / "tamr_client"
-    c.run(f"poetry run mypy --package {tc}", echo=True, pty=True, warn=warn)
+    result = c.run(f"poetry run mypy --package {tc}", echo=True, pty=True, warn=warn)
+    if not result.exited == 0:
+        exit_code = result.exited
 
     tc_tests = " ".join(
         str(x) for x in (repo / "tests" / "tamr_client").glob("**/*.py")
     )
     c.run(f"poetry run mypy {tc_tests}", echo=True, pty=True, warn=warn)
+    if not result.exited == 0:
+        exit_code = result.exited
+
+    sys.exit(exit_code)
 
 
 @task
