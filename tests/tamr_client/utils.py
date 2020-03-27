@@ -37,18 +37,5 @@ def capture_payload(request, snoop, status, response_json):
     return status, {}, json.dumps(response_json)
 
 
-def records_to_deletes(records):
-    return [
-        {"action": "DELETE", "recordId": i} for i, record in enumerate(records, start=1)
-    ]
-
-
-def records_to_updates(records):
-    return [
-        {"action": "CREATE", "recordId": i, "record": record}
-        for i, record in enumerate(records, start=1)
-    ]
-
-
 def stringify(updates):
     return [json.dumps(u) for u in updates]
