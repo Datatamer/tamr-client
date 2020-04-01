@@ -1,3 +1,4 @@
+from functools import partial
 from typing import Any, Dict, Optional, TypeVar
 
 JsonDict = Dict[str, Any]
@@ -18,3 +19,4 @@ def add(
 T = TypeVar("T")
 
 def activate(T) -> T: ...
+def add_callback(method: Optional[str], url: Optional[str], callback: partial[Any]): ...
