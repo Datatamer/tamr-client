@@ -5,7 +5,7 @@ See https://docs.tamr.com/reference/record
 underlying _update function can be used directly."
 """
 import json
-from typing import Dict, Iterable
+from typing import cast, Dict, IO, Iterable
 
 import tamr_client as tc
 from tamr_client.types import JsonDict
@@ -35,10 +35,12 @@ def _update(
         requests.HTTPError: If an HTTP error is encountered
     """
     stringified_updates = (json.dumps(update) for update in updates)
+    # Requests accepts a generator, but typeshed expects this to be a file-like object
+    io_updates = cast(IO, stringified_updates)
     r = session.post(
         str(dataset.url) + ":updateRecords",
         headers={"Content-Encoding": "utf-8"},
-        data=stringified_updates,
+        data=io_updates,
     )
     return tc.response.successful(r).json()
 
