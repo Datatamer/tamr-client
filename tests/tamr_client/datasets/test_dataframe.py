@@ -96,12 +96,10 @@ def test_upsert_index_as_primary_key():
         index=[record["primary_key"] for record in _records_with_keys_json_2],
     )
     df.index.name = "primary_key"
-    df_original = df.copy()
 
     response = tc.dataframe.upsert(s, dataset, df, primary_key_name="primary_key")
     assert response == _response_json
     assert snoop["payload"] == utils.stringify(updates)
-    assert df.columns == df_original.columns
 
 
 @responses.activate

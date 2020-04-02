@@ -40,24 +40,20 @@ def upsert(
             f"Index {primary_key_name} has the same name as column {primary_key_name}"
         )
 
-    if primary_key_name not in df.columns:
-        # if `df.index.name` is the primary key, create column from `df.index`
-        if primary_key_name == df.index.name:
-            df.insert(0, df.index.name, df.index)
-        else:
-            raise tc.PrimaryKeyNotFound(
-                f"Primary key: {primary_key_name} is not DataFrame index name: {df.index.name} or in DataFrame column names: {df.columns}"
-            )
     # serialize records via to_json to handle `np.nan` values
-    serialized_records = (x[1].to_json() for x in df.iterrows())
-    records = (json.loads(x) for x in serialized_records)
+    if primary_key_name == df.index.name:
+        serialized_records = ((pk, row.to_json()) for pk, row in df.iterrows())
+    elif primary_key_name in df.columns:
+        index_df = df.set_index(primary_key_name)
+        serialized_records = ((pk, row.to_json()) for pk, row in index_df.iterrows())
+    else:
+        raise tc.PrimaryKeyNotFound(
+            f"Primary key: {primary_key_name} is not DataFrame index name: {df.index.name} or in DataFrame column names: {df.columns}"
+        )
 
-    response = tc.datasets.record.upsert(
+    records = (
+        {primary_key_name: pk, **json.loads(row)} for pk, row in serialized_records
+    )
+    return tc.datasets.record.upsert(
         session, dataset, records, primary_key_name=primary_key_name
     )
-
-    # if index was used as the primary key, drop column that was created
-    if primary_key_name == df.index.name:
-        df.drop(primary_key_name, axis=1, inplace=True)
-
-    return response
