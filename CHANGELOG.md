@@ -1,5 +1,6 @@
 ## 0.11.0-dev
   **BETA**
+  
   Important: Do not use BETA features for production workflows.
 
   New `tamr_client` package includes:
