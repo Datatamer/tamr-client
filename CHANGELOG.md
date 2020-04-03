@@ -38,6 +38,7 @@
       - functions: `tc.record.upsert`, `tc.record.delete`
     - `tc.dataframe` module
       - functions: `tc.dataframe.upsert`
+  - [#377](https://github.com/Datatamer/tamr-client/issues/377) dataset.upsert_from_dataframe() functionality added. Can now upsert records from a pandas DataFrame.
   **BUG FIXES**
   - Links from our docs to the `requests` docs were outdated. Links have been updated to point to the new `requests` docs URL.
   - [#323](https://github.com/Datatamer/tamr-client/issues/323) Documentation for setting `dtype=str` before calling `client.datasets.create_from_dataframe`
