@@ -1,6 +1,10 @@
 ## 0.11.0-dev
-  **NEW FEATURES**
-  - BETA: New attributes package!
+  **BETA**
+  Important: Do not use BETA features for production workflows.
+
+  New `tamr_client` package includes:
+
+  - attributes
     - `tc.attribute` module
       - `tc.Attribute` type
       - functions: `from_resource_id`, `from_dataset_all`, `to_json`, `create`, `update`, `delete`
@@ -15,14 +19,18 @@
     - `tc.attributes.type_alias` module
       - `tc.attributes.type_alias.DEFAULT` type
       - `tc.attributes.type_alias.GEOSPATIAL` type
-  - BETA: New datasets package!
+  - datasets
     - `tc.dataset` module
       - `tc.Dataset` type
       - functions: `from_resource_id`
-  - BETA: New `tc.instance` module!
+  - `tc.instance` module
     - `tc.Instance` type
     - functions: `tc.instance.from_auth`
-  - BETA: New supporting modules!
+  - `tc.record` module
+    - functions: `tc.record.upsert`, `tc.record.delete`
+  - `tc.dataframe` module
+    - functions: `tc.dataframe.upsert`
+  - other supporting modules
     - `tc.auth` module
       - `tc.UsernamePasswordAuth` type
     - `tc.session` module
@@ -32,13 +40,11 @@
       - `tc.URL` type
     - `tc.response` module
       - functions: `successful`, `ndjson`
+
+  **NEW FEATURES**
   - [#35](https://github.com/Datatamer/tamr-client/issues/35) projects.by_name() functionality added. Can now fetch a project by its name.
-  - BETA: New record upsert, delete, upsert from DataFrame functionality!
-    - `tc.record` module
-      - functions: `tc.record.upsert`, `tc.record.delete`
-    - `tc.dataframe` module
-      - functions: `tc.dataframe.upsert`
   - [#377](https://github.com/Datatamer/tamr-client/issues/377) dataset.upsert_from_dataframe() functionality added. Can now upsert records from a pandas DataFrame.
+
   **BUG FIXES**
   - Links from our docs to the `requests` docs were outdated. Links have been updated to point to the new `requests` docs URL.
   - [#323](https://github.com/Datatamer/tamr-client/issues/323) Documentation for setting `dtype=str` before calling `client.datasets.create_from_dataframe`
