@@ -41,22 +41,22 @@ def upsert(
     if primary_key_name is None:
         primary_key_name = dataset.key_attribute_names[0]
 
+    # preconditions
     if primary_key_name in df.columns and primary_key_name == df.index.name:
         raise AmbiguousPrimaryKey(
             f"Index {primary_key_name} has the same name as column {primary_key_name}"
         )
-
-    # serialize records via to_json to handle `np.nan` values
-    if primary_key_name == df.index.name:
-        serialized_records = ((pk, row.to_json()) for pk, row in df.iterrows())
-    elif primary_key_name in df.columns:
-        index_df = df.set_index(primary_key_name)
-        serialized_records = ((pk, row.to_json()) for pk, row in index_df.iterrows())
-    else:
+    elif primary_key_name not in df.columns and primary_key_name != df.index.name:
         raise tc.PrimaryKeyNotFound(
             f"Primary key: {primary_key_name} is not DataFrame index name: {df.index.name} or in DataFrame column names: {df.columns}"
         )
 
+    # promote primary key column to index
+    if primary_key_name in df.columns:
+        df = df.set_index(primary_key_name)
+
+    # serialize records via to_json to handle `np.nan` values
+    serialized_records = ((pk, row.to_json()) for pk, row in df.iterrows())
     records = (
         {primary_key_name: pk, **json.loads(row)} for pk, row in serialized_records
     )
