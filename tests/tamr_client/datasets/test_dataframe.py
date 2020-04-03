@@ -113,7 +113,7 @@ def test_upsert_index_column_name_collision():
     # create column in `df` with same name as index and matching "primary_key"
     df.insert(0, df.index.name, df.index)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(tc.AmbiguousPrimaryKey):
         tc.dataframe.upsert(s, dataset, df, primary_key_name="primary_key")
 
 
