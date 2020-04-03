@@ -5,7 +5,7 @@ See https://docs.tamr.com/reference/record
 underlying _update function can be used directly."
 """
 import json
-from typing import cast, Dict, IO, Iterable
+from typing import cast, Dict, IO, Iterable, Optional
 
 import tamr_client as tc
 from tamr_client.types import JsonDict
@@ -50,14 +50,15 @@ def upsert(
     dataset: tc.Dataset,
     records: Iterable[Dict],
     *,
-    primary_key_name: str,
+    primary_key_name: Optional[str] = None,
 ) -> JsonDict:
     """Create or update the specified records.
 
     Args:
         dataset: Dataset to receive record updates
         records: The records to update, as dictionaries
-        primary_key_name: The primary key for these records, which must be a key in each record dictionary
+        primary_key_name: The primary key for these records, which must be a key in each record dictionary.
+            By default the key_attribute_name of dataset
 
     Returns:
         JSON response body from server
@@ -67,6 +68,9 @@ def upsert(
         PrimaryKeyNotFound: If primary_key_name does not match dataset primary key
         PrimaryKeyNotFound: If primary_key_name not in a record dictionary
     """
+    if primary_key_name is None:
+        primary_key_name = dataset.key_attribute_names[0]
+
     if primary_key_name not in dataset.key_attribute_names:
         raise PrimaryKeyNotFound(
             f"Primary key: {primary_key_name} is not in dataset key attribute names: {dataset.key_attribute_names}"
@@ -82,14 +86,15 @@ def delete(
     dataset: tc.Dataset,
     records: Iterable[Dict],
     *,
-    primary_key_name: str,
+    primary_key_name: Optional[str] = None,
 ) -> JsonDict:
     """Deletes the specified records, based on primary key values.  Does not check that other attribute values match.
 
     Args:
         dataset: Dataset from which to delete records
         records: The records to update, as dictionaries
-        primary_key_name: The primary key for these records, which must be a key in each record dictionary
+        primary_key_name: The primary key for these records, which must be a key in each record dictionary.
+            By default the key_attribute_name of dataset
 
     Returns:
         JSON response body from server
@@ -99,6 +104,9 @@ def delete(
         PrimaryKeyNotFound: If primary_key_name does not match dataset primary key
         PrimaryKeyNotFound: If primary_key_name not in a record dictionary
     """
+    if primary_key_name is None:
+        primary_key_name = dataset.key_attribute_names[0]
+
     if primary_key_name not in dataset.key_attribute_names:
         raise PrimaryKeyNotFound(
             f"Primary key: {primary_key_name} is not in dataset key attribute names: {dataset.key_attribute_names}"
