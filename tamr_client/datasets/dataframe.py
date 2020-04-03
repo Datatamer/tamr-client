@@ -32,7 +32,7 @@ def upsert(
         PrimaryKeyNotFound: If `primary_key_name` is not a column in `df` or the index of `df`
         ValueError: If `primary_key_name` matches both a column in `df` and the index of `df`
     """
-    if not primary_key_name:
+    if primary_key_name is None:
         primary_key_name = dataset.key_attribute_names[0]
 
     if primary_key_name in df.columns and primary_key_name == df.index.name:
