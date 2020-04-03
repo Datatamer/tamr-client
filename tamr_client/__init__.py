@@ -62,4 +62,5 @@ from tamr_client.datasets.record import PrimaryKeyNotFound
 import tamr_client.datasets.record as record
 
 # dataframe
+from tamr_client.datasets.dataframe import AmbiguousPrimaryKey
 import tamr_client.datasets.dataframe as dataframe

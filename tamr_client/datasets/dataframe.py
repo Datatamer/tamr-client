@@ -11,6 +11,12 @@ import tamr_client as tc
 from tamr_client.types import JsonDict
 
 
+class AmbiguousPrimaryKey(Exception):
+    """Raised when referencing a primary key by name that matches multiple possible targets."""
+
+    pass
+
+
 def upsert(
     session: tc.Session,
     dataset: tc.Dataset,
@@ -36,7 +42,7 @@ def upsert(
         primary_key_name = dataset.key_attribute_names[0]
 
     if primary_key_name in df.columns and primary_key_name == df.index.name:
-        raise ValueError(
+        raise AmbiguousPrimaryKey(
             f"Index {primary_key_name} has the same name as column {primary_key_name}"
         )
 
