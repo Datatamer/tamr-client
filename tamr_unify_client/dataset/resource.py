@@ -1,5 +1,6 @@
 from copy import deepcopy
 
+import pandas as pd
 import simplejson as json
 
 from tamr_unify_client.attribute.collection import AttributeCollection
@@ -83,6 +84,29 @@ class Dataset(BaseResource):
             .successful()
             .json()
         )
+
+    def upsert_from_dataframe(
+        self, df: pd.DataFrame, *, primary_key_name: str, ignore_nan: bool = True
+    ) -> dict:
+        """Upserts a record for each row of `df` with attributes for each column in `df`.
+
+        Args:
+            df: The data to upsert records from.
+            primary_key_name: The name of the primary key of the dataset.  Must be a column of `df`.
+            ignore_nan: Whether to convert `NaN` values to `null` before upserting records to Tamr. If `False` and `NaN` is in `df`, this function will fail. Optional, default is `True`.
+
+        Returns:
+            JSON response body from the server.
+
+        Raises:
+            KeyError: If `primary_key_name` is not a column in `df`.
+
+        """
+        if primary_key_name not in df.columns:
+            raise KeyError(f"{primary_key_name} is not an attribute of the data")
+
+        records = df.to_dict(orient="records")
+        return self.upsert_records(records, primary_key_name, ignore_nan=ignore_nan)
 
     def upsert_records(self, records, primary_key_name, **json_args):
         """Creates or updates the specified records.

@@ -1,6 +1,7 @@
 from functools import partial
 from unittest import TestCase
 
+from pandas import DataFrame
 from requests.exceptions import HTTPError
 import responses
 import simplejson
@@ -100,6 +101,28 @@ class TestDatasetRecords(TestCase):
         self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, False))
 
     @responses.activate
+    def test_upsert_from_dataframe(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = list(request.body)
+            return 200, {}, simplejson.dumps(self._response_json)
+
+        responses.add(responses.GET, self._dataset_url, json={})
+        dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
+
+        records_url = f"{self._dataset_url}:updateRecords"
+        updates = TestDatasetRecords.records_to_updates(self._records_json)
+        snoop = {}
+        responses.add_callback(
+            responses.POST, records_url, partial(create_callback, snoop=snoop)
+        )
+
+        response = dataset.upsert_from_dataframe(
+            self._dataframe, primary_key_name="attribute1"
+        )
+        self.assertEqual(response, self._response_json)
+        self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, False))
+
+    @responses.activate
     def test_delete(self):
         def create_callback(request, snoop):
             snoop["payload"] = list(request.body)
@@ -173,6 +196,7 @@ class TestDatasetRecords(TestCase):
     _dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/{_dataset_id}"
 
     _records_json = [{"attribute1": 1}, {"attribute1": 2}]
+    _dataframe = DataFrame(_records_json, columns=["attribute1"])
     _nan_records_json = [{"attribute1": float("nan")}, {"attribute1": float("nan")}]
     _response_json = {
         "numCommandsProcessed": 2,
