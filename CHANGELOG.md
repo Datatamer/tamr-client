@@ -1,6 +1,6 @@
 ## 0.11.0-dev
   **BETA**
-  
+
   Important: Do not use BETA features for production workflows.
 
   New `tamr_client` package includes:
@@ -24,13 +24,13 @@
     - `tc.dataset` module
       - `tc.Dataset` type
       - functions: `from_resource_id`
+    - `tc.record` module
+      - functions: `tc.record.upsert`, `tc.record.delete`
+    - `tc.dataframe` module
+      - functions: `tc.dataframe.upsert`
   - `tc.instance` module
     - `tc.Instance` type
     - functions: `tc.instance.from_auth`
-  - `tc.record` module
-    - functions: `tc.record.upsert`, `tc.record.delete`
-  - `tc.dataframe` module
-    - functions: `tc.dataframe.upsert`
   - other supporting modules
     - `tc.auth` module
       - `tc.UsernamePasswordAuth` type
