@@ -33,6 +33,11 @@
     - `tc.response` module
       - functions: `successful`, `ndjson`
   - [#35](https://github.com/Datatamer/tamr-client/issues/35) projects.by_name() functionality added. Can now fetch a project by its name.
+  - BETA: New record upsert, delete, upsert from DataFrame functionality!
+    - `tc.record` module
+      - functions: `tc.record.upsert`, `tc.record.delete`
+    - `tc.dataframe` module
+      - functions: `tc.dataframe.upsert`
   **BUG FIXES**
   - Links from our docs to the `requests` docs were outdated. Links have been updated to point to the new `requests` docs URL.
   - [#323](https://github.com/Datatamer/tamr-client/issues/323) Documentation for setting `dtype=str` before calling `client.datasets.create_from_dataframe`
