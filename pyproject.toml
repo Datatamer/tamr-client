@@ -27,10 +27,11 @@ packages = [
 include = ["tamr_client/py.typed"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.6.1"
 requests = "^2.22"
 simplejson = "^3.16"
 dataclasses = "^0.6.0"
+pandas = "^1.0.3"
 
 [tool.poetry.dev-dependencies]
 Sphinx = "^2.1"
@@ -42,7 +43,6 @@ toml = "^0.10.0"
 sphinx_rtd_theme = "^0.4.3"
 recommonmark = "^0.6.0"
 sphinx-autodoc-typehints = "^1.8"
-pandas = "^0.25.3"
 pytest = "^5.3.2"
 invoke = "^1.4.0"
 mypy = "^0.770"
