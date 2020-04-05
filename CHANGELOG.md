@@ -1,3 +1,6 @@
+## 0.11.1
+Fixes to generated reference documentation.
+
 ## 0.11.0
   **BETA**
 
