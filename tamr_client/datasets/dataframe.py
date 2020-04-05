@@ -25,6 +25,7 @@ def upsert(
     primary_key_name: Optional[str] = None,
 ) -> JsonDict:
     """Upserts a record for each row of `df` with attributes for each column in `df`.
+
     Args:
         dataset: Dataset to receive record updates
         df: The DataFrame containing records to be upserted
