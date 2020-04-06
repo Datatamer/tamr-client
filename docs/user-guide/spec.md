@@ -6,7 +6,7 @@ Resources, such as projects, dataset, and attribute configurations, can be creat
 spec = {
     "name": "project",
     "description": "Mastering Project",
-    "type": "DEDUP"
+    "type": "DEDUP",
     "unifiedDatasetName": "project_unified_dataset"
 }
 project = tamr.projects.create(spec)
