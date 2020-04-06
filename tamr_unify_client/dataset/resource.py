@@ -268,7 +268,7 @@ class Dataset(BaseResource):
         if geo_attr is None:
             geo_attr = self._geo_attr
 
-        self._update_records(
+        return self._update_records(
             self._features_to_updates(features, record_id, key_attrs, geo_attr)
         )
 
