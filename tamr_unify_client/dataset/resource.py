@@ -253,6 +253,8 @@ class Dataset(BaseResource):
         :param features: geospatial features
         :param geo_attr: (optional) name of the Tamr attribute to use for the feature's geometry
         :type geo_attr: str
+        :returns: JSON response body from server.
+        :rtype: :py:class:`dict`
         """
         if hasattr(features, "__geo_interface__"):
             features = features.__geo_interface__
@@ -268,7 +270,7 @@ class Dataset(BaseResource):
         if geo_attr is None:
             geo_attr = self._geo_attr
 
-        self._update_records(
+        return self._update_records(
             self._features_to_updates(features, record_id, key_attrs, geo_attr)
         )
 
