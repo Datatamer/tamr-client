@@ -1,5 +1,8 @@
 ## 0.12.0-dev
 
+  **BUG FIXES**
+  - `from_geo_features` now returns information on the operation.  
+
 ## 0.11.0
   **BETA**
 
