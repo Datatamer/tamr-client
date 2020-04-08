@@ -6,7 +6,7 @@ from typing import Optional
 class Instance:
     protocol: str = "http"
     host: str = "localhost"
-    port: Optional[int] = 9100
+    port: Optional[int] = None
 
 
 def origin(instance: Instance) -> str:
