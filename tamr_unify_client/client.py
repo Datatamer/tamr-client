@@ -43,7 +43,7 @@ class Client:
         auth: requests.auth.AuthBase,
         host: str = "localhost",
         protocol: str = "http",
-        port: int = 9100,
+        port: Optional[int] = 9100,
         base_path: str = "/api/versioned/v1/",
         session: Optional[requests.Session] = None,
     ):
@@ -70,7 +70,10 @@ class Client:
 
         For additional information, see `MDN web docs <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin>`_ .
         """
-        return f"{self.protocol}://{self.host}:{self.port}"
+        if self.port is None:
+            return f"{self.protocol}://{self.host}"
+        else:
+            return f"{self.protocol}://{self.host}:{self.port}"
 
     def request(self, method: str, endpoint: str, **kwargs) -> requests.Response:
         """Sends a request to Tamr.
