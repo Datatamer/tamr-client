@@ -78,3 +78,29 @@ from geopandas import GeoDataFrame
 df = GeoDataFrame.from_features(my_dataset.itergeofeatures())
 ```
 This allows construction of a GeoDataFrame directly from the stream of records, without materializing the intermediate dataset.
+
+## Note on GeoPandas data access
+There is a current limitation in [GeoPandas](https://github.com/geopandas/geopandas/issues/1208) that causes the feature's ID field to be ignored in certain scenarios. The Tamr primary key is stored in this field.
+The result is that when loading data and updating records through the `dataset.from_geo_features()` method, records will not be overwritten as anticipated.
+
+This issue can be circumvented by loading features into GeoPandas by re-inserting the id field into the data. 
+
+```python
+my_dataset = client.datasets.by_name("my_dataset")
+for feature in my_dataset.itergeofeatures():
+    primary_key = feature['id']
+    df = gpd.GeoDataFrame.from_features([feature])
+    do_something(df)
+    geo.index = [primary_key]
+    my_dataset.from_geo_features(df)
+```
+
+Alternatively, it is possible to load the full dataset as follows:
+```python
+def geopandas_dataset(dataset):
+    for feature in dataset.itergeofeatures():
+        feature['properties']['primary_key'] = feature['id']
+        yield feature
+df = gpd.GeoDataFrame.from_features(geo_dataset(test_dataset))
+df.set_index('primary_key')
+```
