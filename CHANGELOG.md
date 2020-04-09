@@ -1,4 +1,11 @@
 ## 0.12.0-dev
+  **BETA**
+
+  Important: Do not use BETA features for production workflows.
+  
+  - [#367](https://github.com/Datatamer/tamr-client/issues/367) Support for projects:
+    - generic projects via `tc.project`
+    - Mastering projects via `tc.mastering.project`
 
   **BUG FIXES**
   - `from_geo_features` now returns information on the operation.  
