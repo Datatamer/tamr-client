@@ -38,6 +38,7 @@ geodataframe = geopandas.GeoDataFrame(...)
 dataset = client.dataset.by_name("my_dataset")
 dataset.from_geo_features(geodataframe)
 ```
+Note that there are currently some limitations to GeoPandas' implementation of the Geo Interface. See below for more details. 
 
 By default the features' geometries will be placed into the first dataset attribute with geometry
 type. You can override this by specifying the geometry attribute to use in the `geo_attr`
@@ -97,10 +98,13 @@ for feature in my_dataset.itergeofeatures():
 
 Alternatively, it is possible to load the full dataset as follows:
 ```python
+my_dataset = client.datasets.by_name("my_dataset")
 def geopandas_dataset(dataset):
     for feature in dataset.itergeofeatures():
         feature['properties']['primary_key'] = feature['id']
         yield feature
-df = gpd.GeoDataFrame.from_features(geo_dataset(test_dataset))
+df = gpd.GeoDataFrame.from_features(geo_dataset(my_dataset))
 df.set_index('primary_key')
+do_something(df)
+my_dataset.from_geo_features(df)
 ```
