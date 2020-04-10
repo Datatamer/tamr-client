@@ -36,6 +36,7 @@ class Client:
         >>> auth = UsernamePasswordAuth('my username', 'my password')
         >>> tamr_local = Client(auth) # on http://localhost:9100
         >>> tamr_remote = Client(auth, protocol='https', host='10.0.10.0') # on https://10.0.10.0:9100
+        >>> tamr_remote = Client(auth, protocol='https', host='10.0.10.0', port=None) # on https://10.0.10.0
     """
 
     def __init__(
