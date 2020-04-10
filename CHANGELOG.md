@@ -2,6 +2,7 @@
 
   **BUG FIXES**
   - `from_geo_features` now returns information on the operation.  
+  - [#366](https://github.com/Datatamer/tamr-client/issues/366) Now able to connect to Tamr instance with implicit port
 
 ## 0.11.0
   **BETA**
