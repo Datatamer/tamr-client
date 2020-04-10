@@ -2,9 +2,13 @@
 
   **BUG FIXES**
   - `from_geo_features` now returns information on the operation.  
+<<<<<<< HEAD
   
   **NEW FEATURES**
   - Added user documentation on [Geospatial functionalities with GeoPandas](https://github.com/Datatamer/tamr-client/blob/master/docs/user-guide/geo.md). Documented limitations in Geopandas and workarounds. 
+=======
+  - [#366](https://github.com/Datatamer/tamr-client/issues/366) Now able to connect to Tamr instance with implicit port
+>>>>>>> 5f7c6e2... Update CHANGELOG.
 
 ## 0.11.0
   **BETA**
