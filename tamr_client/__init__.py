@@ -64,3 +64,6 @@ import tamr_client.datasets.record as record
 # dataframe
 from tamr_client.datasets.dataframe import AmbiguousPrimaryKey
 import tamr_client.datasets.dataframe as dataframe
+
+import tamr_client.mastering as mastering
+import tamr_client.project as project
