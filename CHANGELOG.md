@@ -2,6 +2,9 @@
 
   **BUG FIXES**
   - `from_geo_features` now returns information on the operation.  
+  
+  **NEW FEATURES**
+  - Added user documentation on [Geospatial functionalities with GeoPandas](https://github.com/Datatamer/tamr-client/blob/master/docs/user-guide/geo.md). Documented limitations in Geopandas and workarounds. 
 
 ## 0.11.0
   **BETA**
