@@ -172,7 +172,7 @@ class DatasetCollection(BaseCollection):
         return dataset
 
     def create_from_geodataframe(
-        self, geodf, primary_key_name, dataset_name, geo_attr='geometry'
+        self, geodf, primary_key_name, dataset_name, geo_attr="geometry"
     ):
         """Creates a dataset in this collection with the given name, creates an attribute for each column in the `geodf`
         (with `primary_key_name` as the key attribute), and upserts a record for each row of `geodf`.
@@ -217,58 +217,100 @@ class DatasetCollection(BaseCollection):
             if col == geo_attr:
                 # this column has a different creation spec
                 attr_spec = {
-                        "name": geo_attr,
-                        "description": "",
-                        "type": {
-                            "baseType": "RECORD",
-                            "attributes": [
-                                {
-                                    "name": "point",
-                                    "type": {
+                    "name": geo_attr,
+                    "description": "",
+                    "type": {
+                        "baseType": "RECORD",
+                        "attributes": [
+                            {
+                                "name": "point",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "DOUBLE",
+                                        "attributes": [],
+                                    },
+                                    "attributes": [],
+                                },
+                                "isNullable": True,
+                            },
+                            {
+                                "name": "multiPoint",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
                                         "baseType": "ARRAY",
                                         "innerType": {
                                             "baseType": "DOUBLE",
-                                            "attributes": []
+                                            "attributes": [],
                                         },
-                                        "attributes": []
+                                        "attributes": [],
                                     },
-                                    "isNullable": True
+                                    "attributes": [],
                                 },
-                                {
-                                    "name": "multiPoint",
-                                    "type": {
+                                "isNullable": True,
+                            },
+                            {
+                                "name": "lineString",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "ARRAY",
+                                        "innerType": {
+                                            "baseType": "DOUBLE",
+                                            "attributes": [],
+                                        },
+                                        "attributes": [],
+                                    },
+                                    "attributes": [],
+                                },
+                                "isNullable": True,
+                            },
+                            {
+                                "name": "multiLineString",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
                                         "baseType": "ARRAY",
                                         "innerType": {
                                             "baseType": "ARRAY",
                                             "innerType": {
                                                 "baseType": "DOUBLE",
-                                                "attributes": []
+                                                "attributes": [],
                                             },
-                                            "attributes": []
+                                            "attributes": [],
                                         },
-                                        "attributes": []
+                                        "attributes": [],
                                     },
-                                    "isNullable": True
+                                    "attributes": [],
                                 },
-                                {
-                                    "name": "lineString",
-                                    "type": {
+                                "isNullable": True,
+                            },
+                            {
+                                "name": "polygon",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
                                         "baseType": "ARRAY",
                                         "innerType": {
                                             "baseType": "ARRAY",
                                             "innerType": {
                                                 "baseType": "DOUBLE",
-                                                "attributes": []
+                                                "attributes": [],
                                             },
-                                            "attributes": []
+                                            "attributes": [],
                                         },
-                                        "attributes": []
+                                        "attributes": [],
                                     },
-                                    "isNullable": True
+                                    "attributes": [],
                                 },
-                                {
-                                    "name": "multiLineString",
-                                    "type": {
+                                "isNullable": True,
+                            },
+                            {
+                                "name": "multiPolygon",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
                                         "baseType": "ARRAY",
                                         "innerType": {
                                             "baseType": "ARRAY",
@@ -276,64 +318,22 @@ class DatasetCollection(BaseCollection):
                                                 "baseType": "ARRAY",
                                                 "innerType": {
                                                     "baseType": "DOUBLE",
-                                                    "attributes": []
+                                                    "attributes": [],
                                                 },
-                                                "attributes": []
+                                                "attributes": [],
                                             },
-                                            "attributes": []
+                                            "attributes": [],
                                         },
-                                        "attributes": []
+                                        "attributes": [],
                                     },
-                                    "isNullable": True
+                                    "attributes": [],
                                 },
-                                {
-                                    "name": "polygon",
-                                    "type": {
-                                        "baseType": "ARRAY",
-                                        "innerType": {
-                                            "baseType": "ARRAY",
-                                            "innerType": {
-                                                "baseType": "ARRAY",
-                                                "innerType": {
-                                                    "baseType": "DOUBLE",
-                                                    "attributes": []
-                                                },
-                                                "attributes": []
-                                            },
-                                            "attributes": []
-                                        },
-                                        "attributes": []
-                                    },
-                                    "isNullable": True
-                                },
-                                {
-                                    "name": "multiPolygon",
-                                    "type": {
-                                        "baseType": "ARRAY",
-                                        "innerType": {
-                                            "baseType": "ARRAY",
-                                            "innerType": {
-                                                "baseType": "ARRAY",
-                                                "innerType": {
-                                                    "baseType": "ARRAY",
-                                                    "innerType": {
-                                                        "baseType": "DOUBLE",
-                                                        "attributes": []
-                                                    },
-                                                    "attributes": []
-                                                },
-                                                "attributes": []
-                                            },
-                                            "attributes": []
-                                        },
-                                        "attributes": []
-                                    },
-                                    "isNullable": True
-                                }
-                            ]
-                        },
-                        "isNullable": False
-                    }
+                                "isNullable": True,
+                            },
+                        ],
+                    },
+                    "isNullable": False,
+                }
             else:
                 attr_spec = {
                     "name": col,
@@ -343,7 +343,6 @@ class DatasetCollection(BaseCollection):
                 attributes.create(attr_spec)
             except HTTPError:
                 self._handle_creation_failure(dataset, "An attribute was not created")
-                print(f'spec: {attr_spec}')
 
         try:
             response = dataset.from_geo_features(geodf, geo_attr)
@@ -378,4 +377,3 @@ class CreationError(Exception):
 
     def __init__(self, error_message):
         super().__init__(error_message)
-
