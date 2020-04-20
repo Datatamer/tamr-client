@@ -171,6 +171,189 @@ class DatasetCollection(BaseCollection):
 
         return dataset
 
+    def create_from_geodataframe(
+        self, geodf, primary_key_name, dataset_name, geo_attr="geometry"
+    ):
+        """Creates a dataset in this collection with the given name, creates an attribute for each column in the `geodf`
+        (with `primary_key_name` as the key attribute), and upserts a record for each row of `geodf`.
+
+        Each attribute has the default type `ARRAY[STRING]`, besides the key attribute, which will have type `STRING`,
+        and the geometry attribute `geo_attr` which will have the type `GEOSPATIAL`.
+
+        This function attempts to ensure atomicity, but it is not guaranteed. If an error occurs while creating
+        attributes or records, an attempt will be made to delete the dataset that was created. However, if this
+        request errors, it will not try again.
+
+        :param geodf: The data to create the dataset with.
+        :type df: :class:`geopandas.geodataframe.GeoDataFrame`
+        :param primary_key_name: The name of the primary key of the dataset. Must be a column of `geodf`.
+        :type primary_key_name: str
+        :param dataset_name: What to name the dataset in Tamr. There cannot already be a dataset with this name.
+        :type dataset_name: str
+        :param geo_attr: The name of the geometry column within the `geodf`. Must be a column of `geodf`. Defaults
+            to `geometry`.
+        :type geo_attr: str
+        :returns: The newly created dataset.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.Dataset`
+        :raises KeyError: If `primary_key_name` is not a column in `df`.
+        :raises CreationError: If a step in creating the dataset fails.
+        """
+        if primary_key_name not in geodf.columns:
+            raise KeyError(f"{primary_key_name} is not an attribute of the data")
+
+        creation_spec = {"name": dataset_name, "keyAttributeNames": [primary_key_name]}
+        try:
+            dataset = self.create(creation_spec)
+        except HTTPError:
+            raise CreationError("Dataset was not created")
+        # after this point, if a request fails, try to undo the change by deleting this dataset
+
+        attributes = dataset.attributes
+        for col in geodf.columns:
+            if col == primary_key_name:
+                # this attribute already exists, so don't create it again
+                continue
+
+            if col == geo_attr:
+                # this column has a different creation spec
+                attr_spec = {
+                    "name": geo_attr,
+                    "description": "",
+                    "type": {
+                        "baseType": "RECORD",
+                        "attributes": [
+                            {
+                                "name": "point",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "DOUBLE",
+                                        "attributes": [],
+                                    },
+                                    "attributes": [],
+                                },
+                                "isNullable": True,
+                            },
+                            {
+                                "name": "multiPoint",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "ARRAY",
+                                        "innerType": {
+                                            "baseType": "DOUBLE",
+                                            "attributes": [],
+                                        },
+                                        "attributes": [],
+                                    },
+                                    "attributes": [],
+                                },
+                                "isNullable": True,
+                            },
+                            {
+                                "name": "lineString",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "ARRAY",
+                                        "innerType": {
+                                            "baseType": "DOUBLE",
+                                            "attributes": [],
+                                        },
+                                        "attributes": [],
+                                    },
+                                    "attributes": [],
+                                },
+                                "isNullable": True,
+                            },
+                            {
+                                "name": "multiLineString",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "ARRAY",
+                                        "innerType": {
+                                            "baseType": "ARRAY",
+                                            "innerType": {
+                                                "baseType": "DOUBLE",
+                                                "attributes": [],
+                                            },
+                                            "attributes": [],
+                                        },
+                                        "attributes": [],
+                                    },
+                                    "attributes": [],
+                                },
+                                "isNullable": True,
+                            },
+                            {
+                                "name": "polygon",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "ARRAY",
+                                        "innerType": {
+                                            "baseType": "ARRAY",
+                                            "innerType": {
+                                                "baseType": "DOUBLE",
+                                                "attributes": [],
+                                            },
+                                            "attributes": [],
+                                        },
+                                        "attributes": [],
+                                    },
+                                    "attributes": [],
+                                },
+                                "isNullable": True,
+                            },
+                            {
+                                "name": "multiPolygon",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "ARRAY",
+                                        "innerType": {
+                                            "baseType": "ARRAY",
+                                            "innerType": {
+                                                "baseType": "ARRAY",
+                                                "innerType": {
+                                                    "baseType": "DOUBLE",
+                                                    "attributes": [],
+                                                },
+                                                "attributes": [],
+                                            },
+                                            "attributes": [],
+                                        },
+                                        "attributes": [],
+                                    },
+                                    "attributes": [],
+                                },
+                                "isNullable": True,
+                            },
+                        ],
+                    },
+                    "isNullable": False,
+                }
+            else:
+                attr_spec = {
+                    "name": col,
+                    "type": {"baseType": "ARRAY", "innerType": {"baseType": "STRING"}},
+                }
+            try:
+                attributes.create(attr_spec)
+            except HTTPError:
+                self._handle_creation_failure(dataset, "An attribute was not created")
+
+        try:
+            response = dataset.from_geo_features(geodf, geo_attr)
+        except HTTPError:
+            self._handle_creation_failure(dataset, "Records could not be created")
+
+        if not response["allCommandsSucceeded"]:
+            self._handle_creation_failure(dataset, "Some records had validation errors")
+
+        return dataset
+
     def _handle_creation_failure(self, dataset, error):
         """Attempts to make create_from_dataframe atomic by deleting the created dataset in the event of later failure.
         However, this does not guarantee atomicity: if the request to delete the dataset fails, it will not retry.
