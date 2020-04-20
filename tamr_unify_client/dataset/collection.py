@@ -249,7 +249,7 @@ class DatasetCollection(BaseCollection):
                                         "attributes": []
                                     },
                                     "isNullable": True
-                                },
+                            },
                                 {
                                     "name": "lineString",
                                     "type": {
@@ -265,7 +265,7 @@ class DatasetCollection(BaseCollection):
                                         "attributes": []
                                     },
                                     "isNullable": True
-                                },
+                            },
                                 {
                                     "name": "multiLineString",
                                     "type": {
@@ -285,7 +285,7 @@ class DatasetCollection(BaseCollection):
                                         "attributes": []
                                     },
                                     "isNullable": True
-                                },
+                            },
                                 {
                                     "name": "polygon",
                                     "type": {
@@ -305,7 +305,7 @@ class DatasetCollection(BaseCollection):
                                         "attributes": []
                                     },
                                     "isNullable": True
-                                },
+                            },
                                 {
                                     "name": "multiPolygon",
                                     "type": {
@@ -329,7 +329,7 @@ class DatasetCollection(BaseCollection):
                                         "attributes": []
                                     },
                                     "isNullable": True
-                                }
+                            }
                             ]
                         },
                         "isNullable": False
