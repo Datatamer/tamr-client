@@ -1,0 +1,118 @@
+{
+  "name": null,
+  "description": "",
+  "type": {
+    "baseType": "RECORD",
+    "attributes": [
+      {
+        "name": "point",
+        "type": {
+          "baseType": "ARRAY",
+          "innerType": {
+            "baseType": "DOUBLE",
+            "attributes": []
+          },
+          "attributes": []
+        },
+        "isNullable": true
+      },
+      {
+        "name": "multiPoint",
+        "type": {
+          "baseType": "ARRAY",
+          "innerType": {
+            "baseType": "ARRAY",
+            "innerType": {
+              "baseType": "DOUBLE",
+              "attributes": []
+            },
+            "attributes": []
+          },
+          "attributes": []
+        },
+        "isNullable": true
+      },
+      {
+        "name": "lineString",
+        "type": {
+          "baseType": "ARRAY",
+          "innerType": {
+            "baseType": "ARRAY",
+            "innerType": {
+              "baseType": "DOUBLE",
+              "attributes": []
+            },
+            "attributes": []
+          },
+          "attributes": []
+        },
+        "isNullable": true
+      },
+      {
+        "name": "multiLineString",
+        "type": {
+          "baseType": "ARRAY",
+          "innerType": {
+            "baseType": "ARRAY",
+            "innerType": {
+              "baseType": "ARRAY",
+              "innerType": {
+                "baseType": "DOUBLE",
+                "attributes": []
+              },
+              "attributes": []
+            },
+            "attributes": []
+          },
+          "attributes": []
+        },
+        "isNullable": true
+      },
+      {
+        "name": "polygon",
+        "type": {
+          "baseType": "ARRAY",
+          "innerType": {
+            "baseType": "ARRAY",
+            "innerType": {
+              "baseType": "ARRAY",
+              "innerType": {
+                "baseType": "DOUBLE",
+                "attributes": []
+              },
+              "attributes": []
+            },
+            "attributes": []
+          },
+          "attributes": []
+        },
+        "isNullable": true
+      },
+      {
+        "name": "multiPolygon",
+        "type": {
+          "baseType": "ARRAY",
+          "innerType": {
+            "baseType": "ARRAY",
+            "innerType": {
+              "baseType": "ARRAY",
+              "innerType": {
+                "baseType": "ARRAY",
+                "innerType": {
+                  "baseType": "DOUBLE",
+                  "attributes": []
+                },
+                "attributes": []
+              },
+              "attributes": []
+            },
+            "attributes": []
+          },
+          "attributes": []
+        },
+        "isNullable": true
+      }
+    ]
+  },
+  "isNullable": false
+}
