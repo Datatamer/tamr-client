@@ -1,10 +1,12 @@
 from requests.exceptions import HTTPError
 
 import geopandas as gpd
+import os
 import json
 
 from tamr_unify_client.base_collection import BaseCollection
 from tamr_unify_client.dataset.resource import Dataset
+
 
 class DatasetCollection(BaseCollection):
     """Collection of :class:`~tamr_unify_client.dataset.resource.Dataset` s.
@@ -174,7 +176,11 @@ class DatasetCollection(BaseCollection):
         return dataset
 
     def create_from_geodataframe(
-        self, geodf: gpd.GeoDataFrame, primary_key_name: str, dataset_name: str, geo_attr: str = None
+        self,
+        geodf: gpd.GeoDataFrame,
+        primary_key_name: str,
+        dataset_name: str,
+        geo_attr: str = None,
     ) -> Dataset:
         """Creates dataset out of GeoPandas GeoDataFrame.
 
@@ -215,7 +221,12 @@ class DatasetCollection(BaseCollection):
 
         # Select columns formatted as dtype geometry
         geo_columns = geodf.select_dtypes(include=["geometry"]).columns.to_list()
-        with open('../attribute/types/tamr_geometry.json') as f:
+
+        # Import Tamr Geometry Spec
+        file_dir = os.path.dirname(__file__)
+        file_path = os.path.join(file_dir, "../attribute/types/tamr_geometry.json")
+
+        with open(file_path) as f:
             TAMR_GEOMETRY_TYPE = json.load(f)
 
         for col in geodf.columns:
