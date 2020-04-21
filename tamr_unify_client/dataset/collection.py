@@ -1,5 +1,7 @@
 from requests.exceptions import HTTPError
 
+import geopandas as gpd
+
 from tamr_unify_client.base_collection import BaseCollection
 from tamr_unify_client.dataset.resource import Dataset
 
@@ -174,7 +176,9 @@ class DatasetCollection(BaseCollection):
     def create_from_geodataframe(
         self, geodf: gdp.GeoDataFrame, primary_key_name: str, dataset_name: str, geo_attr: str = "geometry"
     ) -> Dataset:
-        """Creates a dataset in this collection with the given name, creates an attribute for each column in the `geodf`
+        """Creates dataset out of GeoPandas GeoDataFrame.
+
+        Creates a dataset in this collection with the given name, creates an attribute for each column in the `geodf`
         (with `primary_key_name` as the key attribute), and upserts a record for each row of `geodf`.
 
         Each attribute has the default type `ARRAY[STRING]`, besides the key attribute, which will have type `STRING`,
@@ -184,19 +188,19 @@ class DatasetCollection(BaseCollection):
         attributes or records, an attempt will be made to delete the dataset that was created. However, if this
         request errors, it will not try again.
 
-        :param geodf: The data to create the dataset with.
-        :type df: :class:`geopandas.geodataframe.GeoDataFrame`
-        :param primary_key_name: The name of the primary key of the dataset. Must be a column of `geodf`.
-        :type primary_key_name: str
-        :param dataset_name: What to name the dataset in Tamr. There cannot already be a dataset with this name.
-        :type dataset_name: str
-        :param geo_attr: The name of the geometry column within the `geodf`. Must be a column of `geodf`. Defaults
-            to `geometry`.
-        :type geo_attr: str
-        :returns: The newly created dataset.
-        :rtype: :class:`~tamr_unify_client.dataset.resource.Dataset`
-        :raises KeyError: If `primary_key_name` is not a column in `df`.
-        :raises CreationError: If a step in creating the dataset fails.
+        Args:
+            geodf: The data to create the dataset with.
+            primary_key_name: The name of the primary key of the dataset. Must be a column of `geodf`.
+            dataset_name: What to name the dataset in Tamr. There cannot already be a dataset with this name.
+            geo_attr: The name of the geometry column within the `geodf`. Must be a column of `geodf`. Defaults
+                to `geometry`.
+
+        Returns:
+            The newly created dataset.
+
+        Raises:
+            KeyError: If `primary_key_name` is not a column in `df`.
+            CreationError: If a step in creating the dataset fails.
         """
         if primary_key_name not in geodf.columns:
             raise KeyError(f"{primary_key_name} is not an attribute of the data")
