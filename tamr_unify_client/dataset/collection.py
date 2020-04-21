@@ -172,8 +172,8 @@ class DatasetCollection(BaseCollection):
         return dataset
 
     def create_from_geodataframe(
-        self, geodf, primary_key_name, dataset_name, geo_attr="geometry"
-    ):
+        self, geodf: gdp.GeoDataFrame, primary_key_name: str, dataset_name: str, geo_attr: str = "geometry"
+    ) -> Dataset:
         """Creates a dataset in this collection with the given name, creates an attribute for each column in the `geodf`
         (with `primary_key_name` as the key attribute), and upserts a record for each row of `geodf`.
 
