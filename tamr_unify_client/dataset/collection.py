@@ -5,7 +5,7 @@ import geopandas as gpd
 from requests.exceptions import HTTPError
 
 from tamr_unify_client.base_collection import BaseCollection
-from tamr_unify_client.dataset.resource import Dataset
+from tamr_unify_client.dataset.resource import Dataset, DatasetSpec
 
 
 class DatasetCollection(BaseCollection):
@@ -140,7 +140,12 @@ class DatasetCollection(BaseCollection):
         if primary_key_name not in df.columns:
             raise KeyError(f"{primary_key_name} is not an attribute of the data")
 
-        creation_spec = {"name": dataset_name, "keyAttributeNames": [primary_key_name]}
+        creation_spec = (
+            DatasetSpec.new()
+            .with_name(dataset_name)
+            .with_key_attribute_names([primary_key_name])
+        ).to_dict()
+
         try:
             dataset = self.create(creation_spec)
         except HTTPError:
@@ -210,7 +215,12 @@ class DatasetCollection(BaseCollection):
         if primary_key_name not in geodf.columns:
             raise KeyError(f"{primary_key_name} is not an attribute of the data")
 
-        creation_spec = {"name": dataset_name, "keyAttributeNames": [primary_key_name]}
+        creation_spec = (
+            DatasetSpec.new()
+            .with_name(dataset_name)
+            .with_key_attribute_names([primary_key_name])
+        ).to_dict()
+
         try:
             dataset = self.create(creation_spec)
         except HTTPError:
