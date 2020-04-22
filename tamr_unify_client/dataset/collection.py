@@ -259,6 +259,8 @@ class DatasetCollection(BaseCollection):
                 self._handle_creation_failure(dataset, "An attribute was not created")
 
         try:
+            # TODO: Deal with multiple geometry columns. from_geo_features throws a serialisation error when
+            #  upserting second geom column.
             response = dataset.from_geo_features(geodf, geo_attr=geo_attr)
         except HTTPError:
             self._handle_creation_failure(dataset, "Records could not be created")
