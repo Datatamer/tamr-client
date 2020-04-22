@@ -1,8 +1,8 @@
-from requests.exceptions import HTTPError
+import json
+import os
 
 import geopandas as gpd
-import os
-import json
+from requests.exceptions import HTTPError
 
 from tamr_unify_client.base_collection import BaseCollection
 from tamr_unify_client.dataset.resource import Dataset
