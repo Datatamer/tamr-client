@@ -16,7 +16,7 @@ password = os.environ['TAMR_PASSWORD']
 auth = UsernamePasswordAuth(username, password)
 tamr = Client(auth)
 ```
-## How to load a dataset as a pandas Dataframe
+## Load dataset as Dataframe
 
 ### In Memory
 
@@ -32,14 +32,15 @@ This will construct a pandas dataframe based on the records that are streamed in
 Once all records have been loaded, you will be able to interact with the dataframe normally. 
 
 Note that as values are typically represented inside `arrays` within Tamr, the values will be encapsulated `lists` 
-inside the dataframe. You can use traditional methods in pandas to deal with this; for example `.explode()`. 
+inside the dataframe. You can use traditional methods in pandas to deal with this; for example by calling `.explode()`,
+or extracting specific elements. 
 
 ### Streaming
-
+TODO
 
 #### Custom Generators
-In order to customise the data loaded into the pandas dataframe, you can customise the generator object (`dataset.records()`)
-that is read into pandas. 
+In order to customise the data loaded into the pandas dataframe, it is possible to customise the generator object 
+`dataset.records()` by wrapping it in a different generator.  
 
 For example, it is possible to automatically flatten all lists with a length of one, and apply this to the `dataset.records()`
 generator as follows:
@@ -67,18 +68,73 @@ def dataset_to_pandas(dataset):
 df = pd.DataFrame.from_records(dataset_to_pandas(my_dataset))
 ```
 
-Similarly, if you only require certain attributes to be loaded, you could customise as follows:
+Similarly, if to filter to certain attributes only, it is possible to modify as follows:
 
 ```python
 def filter_dataset_to_pandas(dataset, colnames):
     """
-    Filter the dataset to only the columns specified as a list in colnames. Note: To upsert the records you need your 
-    dataset's primary key. This snippet will always load the primary key if it wasn't provided.
+    Filter the dataset to only the primary key and the columns specified as a list in colnames. 
     """
     assert isinstance(colnames, list)
     colnames = dataset.key_attribute_names + colnames if dataset.key_attribute_names[0] not in colnames else colnames
     for record in dataset.records():
         yield {k: unlist(v) for k, v in record.items() if k in colnames}
 
-df = pd.DataFrame.from_records(filter_dataset_to_pandas(dataset, ['City', 'new_attr']))
+df = pd.DataFrame.from_records(filter_dataset_to_pandas(my_dataset, ['City', 'new_attr']))
+```
+
+Note that upserting these records would overwite the existing records and attributes, and cause loss of the data 
+stored in the unloaded attributes.  
+
+## Upload Dataframe as Dataset
+
+### Create New Dataset
+To create a new dataset and upload data, the convenience function `dataset.create_from_dataframe()` can be used. 
+Note that Tamr will throw an error if columns aren't generally formatted as strings. (The exception being geospatial
+columns. For that, see the geospatial guide.)
+
+In order to achieve this, the following code will transform the column types to string.
+```python
+df = df.astype(str)
+```
+
+Creating the dataset is as easy as calling:
+```python
+tamr.datasets.create_from_dataframe(df, 'primaryKey', 'my_new_dataset')
+```
+
+### Make Changes to Dataset
+When making changes to a dataset that was loaded as a dataframe, changes can be pushed back to Tamr using the 
+`dataset.upsert_records()` method as follows:
+
+```python
+df = pd.DataFrame.from_records(my_dataset.records())
+df['column'] = 'new_value'
+my_dataset.upsert_from_dataframe(df, primary_key_name='primary_key')
+```
+
+### Add Attributes
+When making changes to dataframes, new columns are not automatically created when upserting records to Tamr. 
+In order for these changes to be recorded, these attributes first need to be created. 
+
+One way of creating these automatically would be as follows:
+
+```python
+def add_missing_attributes(dataset, df):
+    """
+    Detects any attributes in the dataframe that aren't in the dataset and attempts to add them (as strings).
+    """
+    existing_attributes = [att.name for att in dataset.attributes]
+    new_attributes = [att for att in df.columns.to_list() if att not in existing_attributes]
+    
+    if not new_attributes:
+        return
+    
+    for new_attribute in new_attributes:
+        attr_spec = {"name": new_attribute,
+                     "type": {"baseType": "ARRAY", "innerType": {"baseType": "STRING"}},
+                    }
+        dataset.attributes.create(attr_spec)
+
+add_missing_attributes(my_dataset, df)
 ```
