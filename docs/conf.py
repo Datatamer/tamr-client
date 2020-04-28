@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "Tamr - Python Client"
-copyright = "2019, Tamr"
+copyright = "2020, Tamr"
 author = "Tamr"
 
 
