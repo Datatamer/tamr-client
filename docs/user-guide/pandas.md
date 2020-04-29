@@ -88,7 +88,7 @@ def filter_dataset_to_pandas(dataset, colnames):
 df = pd.DataFrame.from_records(filter_dataset_to_pandas(my_dataset, ['City', 'new_attr']))
 ```
 
-Note that upserting these records would overwite the existing records and attributes, and cause loss of the data 
+Note that upserting these records back to the original Tamr Dataset would overwite the existing records and attributes, and cause loss of the data 
 stored in the unloaded attributes.  
 
 ## Upload Dataframe as Dataset
