@@ -36,9 +36,16 @@ inside the dataframe. You can use traditional methods in pandas to deal with thi
 or extracting specific elements. 
 
 ### Streaming
-TODO
+When working with large `datasets` it is sometimes better not to work in memory, but to iterate through a dataset. 
+Since `dataset.records()` is a generator, this can easily be done as follows:
+```python
+for record in dataset.records():
+    df = pd.DataFrame.from_records(record)
+    df['column_to_change'] = 'new_value'
+    dataset.upsert_from_dataframe(df, primary_key_name='primary_key')
+``` 
 
-#### Custom Generators
+### Custom Generators
 In order to customise the data loaded into the pandas dataframe, it is possible to customise the generator object 
 `dataset.records()` by wrapping it in a different generator.  
 
@@ -91,7 +98,7 @@ stored in the unloaded attributes.
 ### Create New Dataset
 To create a new dataset and upload data, the convenience function `dataset.create_from_dataframe()` can be used. 
 Note that Tamr will throw an error if columns aren't generally formatted as strings. (The exception being geospatial
-columns. For that, see the geospatial guide.)
+columns. For that, see the geospatial examples.)
 
 In order to achieve this, the following code will transform the column types to string.
 ```python
@@ -103,7 +110,7 @@ Creating the dataset is as easy as calling:
 tamr.datasets.create_from_dataframe(df, 'primaryKey', 'my_new_dataset')
 ```
 
-### Make Changes to Dataset
+### Changing Values
 When making changes to a dataset that was loaded as a dataframe, changes can be pushed back to Tamr using the 
 `dataset.upsert_records()` method as follows:
 
@@ -113,11 +120,11 @@ df['column'] = 'new_value'
 my_dataset.upsert_from_dataframe(df, primary_key_name='primary_key')
 ```
 
-### Add Attributes
-When making changes to dataframes, new columns are not automatically created when upserting records to Tamr. 
-In order for these changes to be recorded, these attributes first need to be created. 
+### Adding Attributes
+When making changes to dataframes, new dataframe columns are not automatically created as attributes when upserting 
+records to Tamr. In order for these changes to be recorded, these attributes first need to be created. 
 
-One way of creating these automatically would be as follows:
+One way of creating these for source datasets automatically would be as follows:
 
 ```python
 def add_missing_attributes(dataset, df):
