@@ -41,8 +41,6 @@ Since `dataset.records()` is a generator, this can easily be done as follows:
 ```python
 for record in dataset.records():
     df = pd.DataFrame.from_records(record)
-    df['column_to_change'] = 'new_value'
-    dataset.upsert_from_dataframe(df, primary_key_name='primary_key')
 ``` 
 
 ### Custom Generators
@@ -75,7 +73,7 @@ def dataset_to_pandas(dataset):
 df = pd.DataFrame.from_records(dataset_to_pandas(my_dataset))
 ```
 
-Similarly, if to filter to certain attributes only, it is possible to modify as follows:
+Similarly, it is possible to filter to extracting only certain attributes, by specifying this in the generator:
 
 ```python
 def filter_dataset_to_pandas(dataset, colnames):
@@ -111,8 +109,10 @@ tamr.datasets.create_from_dataframe(df, 'primaryKey', 'my_new_dataset')
 ```
 
 ### Changing Values
+
+#### In Memory
 When making changes to a dataset that was loaded as a dataframe, changes can be pushed back to Tamr using the 
-`dataset.upsert_records()` method as follows:
+`dataset.upsert_from_dataframe()` method as follows:
 
 ```python
 df = pd.DataFrame.from_records(my_dataset.records())
@@ -120,6 +120,15 @@ df['column'] = 'new_value'
 my_dataset.upsert_from_dataframe(df, primary_key_name='primary_key')
 ```
 
+#### Streaming
+For larger datasets it might be better to stream the data and apply changes while iterating through the dataset. 
+This way the full dataset does not need to be loaded into memory. 
+```python
+for record in dataset.records():
+    df = pd.DataFrame.from_records(record)
+    df['column_to_change'] = 'new_value'
+    dataset.upsert_from_dataframe(df, primary_key_name='primary_key')
+```
 ### Adding Attributes
 When making changes to dataframes, new dataframe columns are not automatically created as attributes when upserting 
 records to Tamr. In order for these changes to be recorded, these attributes first need to be created. 
