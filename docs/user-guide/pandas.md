@@ -18,7 +18,7 @@ tamr = Client(auth)
 ```
 ## Load dataset as Dataframe
 
-### In Memory
+### Loading: In Memory
 
 Loading a `dataset` as a pandas `dataframe` is possible via the `from_records()` method that pandas provides. 
 An example is shown below:
@@ -35,7 +35,7 @@ Note that as values are typically represented inside `arrays` within Tamr, the v
 inside the dataframe. You can use traditional methods in pandas to deal with this; for example by calling `.explode()`,
 or extracting specific elements. 
 
-### Streaming
+### Loading:  Streaming
 When working with large `datasets` it is sometimes better not to work in memory, but to iterate through a dataset. 
 Since `dataset.records()` is a generator, this can easily be done as follows:
 ```python
@@ -110,7 +110,7 @@ tamr.datasets.create_from_dataframe(df, 'primaryKey', 'my_new_dataset')
 
 ### Changing Values
 
-#### In Memory
+#### Making Changes: In Memory 
 When making changes to a dataset that was loaded as a dataframe, changes can be pushed back to Tamr using the 
 `dataset.upsert_from_dataframe()` method as follows:
 
@@ -120,7 +120,7 @@ df['column'] = 'new_value'
 my_dataset.upsert_from_dataframe(df, primary_key_name='primary_key')
 ```
 
-#### Streaming
+#### Making Changes: Streaming
 For larger datasets it might be better to stream the data and apply changes while iterating through the dataset. 
 This way the full dataset does not need to be loaded into memory. 
 ```python
