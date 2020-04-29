@@ -9,7 +9,7 @@ import tamr_client as tc
 from tamr_client.types import JsonDict
 
 
-class DatasetNotFound(Exception):
+class NotFound(Exception):
     """Raised when referencing (e.g. updating or deleting) a dataset
     that does not exist on the server.
     """
