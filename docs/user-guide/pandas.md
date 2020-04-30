@@ -128,9 +128,9 @@ For larger datasets it might be better to stream the data and apply changes whil
 This way the full dataset does not need to be loaded into memory. 
 ```python
 for record in dataset.records():
-    df = pd.DataFrame.from_records(record)
-    df['column_to_change'] = 'new_value'
-    dataset.upsert_from_dataframe(df, primary_key_name='primary_key')
+    single_record_df = pd.DataFrame.from_records(record)
+    single_record_df['column_to_change'] = 'new_value'
+    dataset.upsert_from_dataframe(single_record_df, primary_key_name='primary_key')
 ```
 ### Adding Attributes
 When making changes to dataframes, new dataframe columns are not automatically created as attributes when upserting 
