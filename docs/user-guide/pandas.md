@@ -172,7 +172,7 @@ Tamr allows for more variety in attribute names and contents than pandas does. I
 correctly, but it is possible to modify the parsing using a custom generator as shown above. An example below changes
 an attribute name, and extracts only the first element:
 ```python
-def custom_parser(record):
+def custom_parser(dataset):
     for record in dataset.records():
         record['pandas_column_name'] = record.pop('dataset_attribute_name')
         record['first_element_of_column'] = record['multi_value_column'][0]
