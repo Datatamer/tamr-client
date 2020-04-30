@@ -2,4 +2,4 @@
 # See https://github.com/python/mypy/issues/5759
 
 from tamr_client.datasets import Dataset
-import tamr_client.datsets
+import tamr_client.datasets
