@@ -42,8 +42,8 @@ Since `dataset.records()` is a generator, this can easily be done as follows:
 ```python
 output = []
 for record in dataset.records():
-    df = pd.DataFrame.from_records(record)
-    output.append(do_something(df))
+    single_record_df = pd.DataFrame.from_records(record)
+    output.append(do_something(single_record_df))
 ``` 
 
 ### Custom Generators
