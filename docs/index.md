@@ -35,6 +35,7 @@ assert op.succeeded()
   * [Create and update resources](user-guide/spec)
   * [Logging](user-guide/logging)
   * [Geospatial data](user-guide/geo)
+  * [Pandas usage](user-guide/pandas)
   * [Advanced usage](user-guide/advanced-usage)
 
 ## Contributor Guide
