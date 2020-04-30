@@ -39,8 +39,10 @@ or extracting specific elements.
 When working with large `datasets` it is sometimes better not to work in memory, but to iterate through a dataset. 
 Since `dataset.records()` is a generator, this can easily be done as follows:
 ```python
+output = []
 for record in dataset.records():
     df = pd.DataFrame.from_records(record)
+    output.append(do_something(df))
 ``` 
 
 ### Custom Generators
