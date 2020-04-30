@@ -36,7 +36,8 @@ inside the dataframe. You can use traditional methods in pandas to deal with thi
 or extracting specific elements. 
 
 ### Loading:  Streaming
-When working with large `datasets` it is sometimes better not to work in memory, but to iterate through a dataset. 
+When working with large `datasets` it is sometimes better not to work in memory, but to iterate through a dataset, rather
+than load the entire dataset at once. 
 Since `dataset.records()` is a generator, this can easily be done as follows:
 ```python
 output = []
@@ -155,4 +156,27 @@ def add_missing_attributes(dataset, df):
         dataset.attributes.create(attr_spec)
 
 add_missing_attributes(my_dataset, df)
+```
+
+## Troubleshooting
+
+When running into errors upon loading `dataset.records()` into a pandas dataframe, it is good to consider the following
+steps. To extract a single record, the following code can be used to provide a minimal reproducible example:
+```python
+record = next(dataset.records())
+print(record)
+```
+
+### Parsing
+Tamr allows for more variety in attribute names and contents than pandas does. In most cases pandas can load data
+correctly, but it is possible to modify the parsing using a custom generator as shown above. An example below changes
+an attribute name, and extracts only the first element:
+```python
+def custom_parser(record):
+    for record in dataset.records():
+        record['pandas_column_name'] = record.pop('dataset_attribute_name')
+        record['first_element_of_column'] = record['multi_value_column'][0]
+        yield record
+
+df = pd.DataFrame.from_records(custom_parser(dataset))
 ```
