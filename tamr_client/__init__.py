@@ -58,12 +58,13 @@ from tamr_client.attributes.attribute import (
 import tamr_client.attributes.attribute as attribute
 
 # records
-from tamr_client.datasets.record import PrimaryKeyNotFound
-import tamr_client.datasets.record as record
+from tamr_client.dataset.record import PrimaryKeyNotFound
+#import tamr_client.dataset.record as record
 
 # dataframe
-from tamr_client.datasets.dataframe import AmbiguousPrimaryKey
-import tamr_client.datasets.dataframe as dataframe
+from tamr_client.dataset.dataframe import AmbiguousPrimaryKey
+#import tamr_client.dataset.dataframe as dataframe
 
+# projects
 import tamr_client.mastering as mastering
 import tamr_client.project as project

@@ -7,9 +7,11 @@ from typing import Optional
 
 import pandas as pd
 
-import tamr_client as tc
 from tamr_client.types import JsonDict
-
+from tamr_client.dataset import Dataset
+from tamr_client.session import Session
+from tamr_client.dataset import dataset
+from tamr_client.dataset import record
 
 class AmbiguousPrimaryKey(Exception):
     """Raised when referencing a primary key by name that matches multiple possible targets."""
@@ -18,8 +20,8 @@ class AmbiguousPrimaryKey(Exception):
 
 
 def upsert(
-    session: tc.Session,
-    dataset: tc.Dataset,
+    session: Session,
+    dataset: Dataset,
     df: pd.DataFrame,
     *,
     primary_key_name: Optional[str] = None,
@@ -48,7 +50,7 @@ def upsert(
             f"Index {primary_key_name} has the same name as column {primary_key_name}"
         )
     elif primary_key_name not in df.columns and primary_key_name != df.index.name:
-        raise tc.PrimaryKeyNotFound(
+        raise record.PrimaryKeyNotFound(
             f"Primary key: {primary_key_name} is not DataFrame index name: {df.index.name} or in DataFrame column names: {df.columns}"
         )
 
@@ -61,6 +63,6 @@ def upsert(
     records = (
         {primary_key_name: pk, **json.loads(row)} for pk, row in serialized_records
     )
-    return tc.datasets.record.upsert(
+    return record.upsert(
         session, dataset, records, primary_key_name=primary_key_name
     )

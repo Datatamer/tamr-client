@@ -15,7 +15,7 @@ def test_update():
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
-        tc.record._create_command(record, primary_key_name="primary_key")
+        tc.dataset.record._create_command(record, primary_key_name="primary_key")
         for record in _records_json
     ]
     snoop: Dict = {}
@@ -27,7 +27,7 @@ def test_update():
         ),
     )
 
-    response = tc.record._update(s, dataset, updates)
+    response = tc.dataset.record._update(s, dataset, updates)
     assert response == _response_json
     assert snoop["payload"] == utils.stringify(updates)
 
@@ -39,7 +39,7 @@ def test_upsert():
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
-        tc.record._create_command(record, primary_key_name="primary_key")
+        tc.dataset.record._create_command(record, primary_key_name="primary_key")
         for record in _records_json
     ]
     snoop: Dict = {}
@@ -51,7 +51,7 @@ def test_upsert():
         ),
     )
 
-    response = tc.record.upsert(
+    response = tc.dataset.record.upsert(
         s, dataset, _records_json, primary_key_name="primary_key"
     )
     assert response == _response_json
@@ -63,8 +63,8 @@ def test_upsert_primary_key_not_found():
     s = utils.session()
     dataset = utils.dataset()
 
-    with pytest.raises(tc.record.PrimaryKeyNotFound):
-        tc.record.upsert(
+    with pytest.raises(tc.dataset.record.PrimaryKeyNotFound):
+        tc.dataset.record.upsert(
             s, dataset, _records_json, primary_key_name="wrong_primary_key"
         )
 
@@ -76,7 +76,7 @@ def test_upsert_infer_primary_key():
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
-        tc.record._create_command(record, primary_key_name="primary_key")
+        tc.dataset.record._create_command(record, primary_key_name="primary_key")
         for record in _records_json
     ]
     snoop: Dict = {}
@@ -88,7 +88,7 @@ def test_upsert_infer_primary_key():
         ),
     )
 
-    response = tc.record.upsert(s, dataset, _records_json)
+    response = tc.dataset.record.upsert(s, dataset, _records_json)
     assert response == _response_json
     assert snoop["payload"] == utils.stringify(updates)
 
@@ -100,7 +100,7 @@ def test_delete():
 
     url = tc.URL(path="datasets/1:updateRecords")
     deletes = [
-        tc.record._delete_command(record, primary_key_name="primary_key")
+        tc.dataset.record._delete_command(record, primary_key_name="primary_key")
         for record in _records_json
     ]
     snoop: Dict = {}
@@ -112,7 +112,7 @@ def test_delete():
         ),
     )
 
-    response = tc.record.delete(
+    response = tc.dataset.record.delete(
         s, dataset, _records_json, primary_key_name="primary_key"
     )
     assert response == _response_json
@@ -124,8 +124,8 @@ def test_delete_primary_key_not_found():
     s = utils.session()
     dataset = utils.dataset()
 
-    with pytest.raises(tc.record.PrimaryKeyNotFound):
-        tc.record.delete(
+    with pytest.raises(tc.dataset.record.PrimaryKeyNotFound):
+        tc.dataset.record.delete(
             s, dataset, _records_json, primary_key_name="wrong_primary_key"
         )
 
@@ -137,7 +137,7 @@ def test_delete_infer_primary_key():
 
     url = tc.URL(path="datasets/1:updateRecords")
     deletes = [
-        tc.record._delete_command(record, primary_key_name="primary_key")
+        tc.dataset.record._delete_command(record, primary_key_name="primary_key")
         for record in _records_json
     ]
     snoop: Dict = {}
@@ -149,7 +149,7 @@ def test_delete_infer_primary_key():
         ),
     )
 
-    response = tc.record.delete(s, dataset, _records_json)
+    response = tc.dataset.record.delete(s, dataset, _records_json)
     assert response == _response_json
     assert snoop["payload"] == utils.stringify(deletes)
 
