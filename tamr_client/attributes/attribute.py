@@ -5,13 +5,13 @@ from copy import deepcopy
 from dataclasses import dataclass, field, replace
 from typing import Optional, Tuple
 
-from tamr_client.attributes import attribute_type
+import tamr_client.attributes.attribute_type as attribute_type
+import tamr_client.attributes.type_alias as type_alias
 from tamr_client.attributes.attribute_type import AttributeType
 from tamr_client.url import URL
-from tamr_client.attributes import type_alias
 from tamr_client.datasets.dataset import Dataset
-from tamr_client.session import Session
 import tamr_client.response as response
+from tamr_client.session import Session
 from tamr_client.types import JsonDict
 
 _RESERVED_NAMES = frozenset(

@@ -1,11 +1,11 @@
 from typing import Union
 
+import tamr_client.mastering.project as mastering_project
+from tamr_client.mastering.project import Project as MasteringProject
 from tamr_client.instance import Instance
 from tamr_client.session import Session
-from tamr_client.mastering.project import Project as MasteringProject
 import tamr_client.response as response
 from tamr_client.url import URL
-import tamr_client.mastering.project as mastering_project
 from tamr_client.types import JsonDict
 
 Project = Union[MasteringProject]
