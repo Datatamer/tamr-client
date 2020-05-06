@@ -6,10 +6,10 @@ from dataclasses import dataclass
 from typing import Optional, Tuple
 
 from tamr_client.instance import Instance
-from tamr_client.session import Session
 import tamr_client.response as response
-from tamr_client.url import URL
+from tamr_client.session import Session
 from tamr_client.types import JsonDict
+from tamr_client.url import URL
 
 
 class DatasetNotFound(Exception):
