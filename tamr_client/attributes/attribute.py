@@ -5,7 +5,13 @@ from copy import deepcopy
 from dataclasses import dataclass, field, replace
 from typing import Optional, Tuple
 
-import tamr_client as tc
+from tamr_client.url import URL
+from tamr_client.attributes.attribute_type import AttributeType
+from tamr_client.attributes import attribute_type
+from tamr_client.attributes import type_alias
+from tamr_client.session import Session
+from tamr_client.datasets.dataset import Dataset
+import tamr_client.response as response
 from tamr_client.types import JsonDict
 
 _RESERVED_NAMES = frozenset(
@@ -60,15 +66,15 @@ class Attribute:
         description
     """
 
-    url: tc.URL
+    url: URL
     name: str
-    type: tc.AttributeType
+    type: AttributeType
     is_nullable: bool
     _json: JsonDict = field(compare=False, repr=False)
     description: Optional[str] = None
 
 
-def from_resource_id(session: tc.Session, dataset: tc.Dataset, id: str) -> Attribute:
+def from_resource_id(session: Session, dataset: Dataset, id: str) -> Attribute:
     """Get attribute by resource ID
 
     Fetches attribute from Tamr server
@@ -86,7 +92,7 @@ def from_resource_id(session: tc.Session, dataset: tc.Dataset, id: str) -> Attri
     return _from_url(session, url)
 
 
-def _from_url(session: tc.Session, url: tc.URL) -> Attribute:
+def _from_url(session: Session, url: URL) -> Attribute:
     """Get attribute by URL
 
     Fetches attribute from Tamr server
@@ -102,11 +108,11 @@ def _from_url(session: tc.Session, url: tc.URL) -> Attribute:
     r = session.get(str(url))
     if r.status_code == 404:
         raise AttributeNotFound(str(url))
-    data = tc.response.successful(r).json()
+    data = response.successful(r).json()
     return _from_json(url, data)
 
 
-def _from_json(url: tc.URL, data: JsonDict) -> Attribute:
+def _from_json(url: URL, data: JsonDict) -> Attribute:
     """Make attribute from JSON data (deserialize)
 
     Args:
@@ -119,12 +125,12 @@ def _from_json(url: tc.URL, data: JsonDict) -> Attribute:
         name=cp["name"],
         description=cp.get("description"),
         is_nullable=cp["isNullable"],
-        type=tc.attribute_type.from_json(cp["type"]),
+        type = attribute_type.from_json(cp["type"]),
         _json=cp,
     )
 
 
-def from_dataset_all(session: tc.Session, dataset: tc.Dataset) -> Tuple[Attribute, ...]:
+def from_dataset_all(session: Session, dataset: Dataset) -> Tuple[Attribute, ...]:
     """Get all attributes from a dataset
 
     Args:
@@ -138,7 +144,7 @@ def from_dataset_all(session: tc.Session, dataset: tc.Dataset) -> Tuple[Attribut
     """
     attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
     r = session.get(str(attrs_url))
-    attrs_json = tc.response.successful(r).json()
+    attrs_json = response.successful(r).json()
 
     attrs = []
     for attr_json in attrs_json:
@@ -160,7 +166,7 @@ def to_json(attr: Attribute) -> JsonDict:
     """
     d = {
         "name": attr.name,
-        "type": tc.attribute_type.to_json(attr.type),
+        "type": attribute_type.to_json(attr.type),
         "isNullable": attr.is_nullable,
     }
     if attr.description is not None:
@@ -169,12 +175,12 @@ def to_json(attr: Attribute) -> JsonDict:
 
 
 def create(
-    session: tc.Session,
-    dataset: tc.dataset.Dataset,
+    session: Session,
+    dataset: Dataset,
     *,
     name: str,
     is_nullable: bool,
-    type: tc.attribute_type.AttributeType = tc.attributes.type_alias.DEFAULT,
+    type: AttributeType = type_alias.DEFAULT,
     description: Optional[str] = None,
 ) -> Attribute:
     """Create an attribute
@@ -212,12 +218,12 @@ def create(
 
 
 def _create(
-    session: tc.Session,
-    dataset: tc.dataset.Dataset,
+    session: Session,
+    dataset: Dataset,
     *,
     name: str,
     is_nullable: bool,
-    type: tc.attribute_type.AttributeType = tc.attributes.type_alias.DEFAULT,
+    type: AttributeType = type_alias.DEFAULT,
     description: Optional[str] = None,
 ) -> Attribute:
     """Same as `tc.attribute.create`, but does not check for reserved attribute
@@ -228,7 +234,7 @@ def _create(
 
     body = {
         "name": name,
-        "type": tc.attribute_type.to_json(type),
+        "type": attribute_type.to_json(type),
         "isNullable": is_nullable,
     }
     if description is not None:
@@ -237,13 +243,13 @@ def _create(
     r = session.post(str(attrs_url), json=body)
     if r.status_code == 409:
         raise AttributeExists(str(url))
-    data = tc.response.successful(r).json()
+    data = response.successful(r).json()
 
     return _from_json(url, data)
 
 
 def update(
-    session: tc.Session, attribute: Attribute, *, description: Optional[str] = None
+    session: Session, attribute: Attribute, *, description: Optional[str] = None
 ) -> Attribute:
     """Update an existing attribute
 
@@ -265,11 +271,11 @@ def update(
     r = session.put(str(attribute.url), json=updates)
     if r.status_code == 404:
         raise AttributeNotFound(str(attribute.url))
-    data = tc.response.successful(r).json()
+    data = response.successful(r).json()
     return _from_json(attribute.url, data)
 
 
-def delete(session: tc.Session, attribute: Attribute):
+def delete(session: Session, attribute: Attribute):
     """Deletes an existing attribute
 
     Sends a deletion request to the Tamr server
@@ -285,4 +291,4 @@ def delete(session: tc.Session, attribute: Attribute):
     r = session.delete(str(attribute.url))
     if r.status_code == 404:
         raise AttributeNotFound(str(attribute.url))
-    tc.response.successful(r)
+    response.successful(r)

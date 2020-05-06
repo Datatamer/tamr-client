@@ -5,7 +5,8 @@ from dataclasses import dataclass
 import logging
 from typing import ClassVar, Tuple, Union
 
-import tamr_client as tc
+from tamr_client.attributes.subattribute import SubAttribute
+from tamr_client.attributes import subattribute
 from tamr_client.types import JsonDict
 
 logger = logging.getLogger(__name__)
@@ -72,7 +73,7 @@ class Record:
     # NOTE(pcattori) sphinx_autodoc_typehints cannot handle recursive reference
     # docstring written manually
     _tag: ClassVar[str] = "RECORD"
-    attributes: Tuple[tc.SubAttribute, ...]
+    attributes: Tuple[SubAttribute, ...]
 
 
 ComplexType = Union[Array, Map, Record]
@@ -121,7 +122,7 @@ def from_json(data: JsonDict) -> AttributeType:
             logger.error(f"JSON data: {repr(data)}")
             raise ValueError("Missing required field 'attributes' for Record type.")
         return Record(
-            attributes=tuple([tc.subattribute.from_json(attr) for attr in attributes])
+            attributes=tuple([subattribute.from_json(attr) for attr in attributes])
         )
     else:
         logger.error(f"JSON data: {repr(data)}")
@@ -146,7 +147,7 @@ def to_json(attr_type: AttributeType) -> JsonDict:
         return {
             "baseType": type(attr_type)._tag,
             "attributes": [
-                tc.subattribute.to_json(attr) for attr in attr_type.attributes
+                subattribute.to_json(attr) for attr in attr_type.attributes
             ],
         }
     else:

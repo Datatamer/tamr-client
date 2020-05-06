@@ -5,7 +5,10 @@ from copy import deepcopy
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-import tamr_client as tc
+from tamr_client.url import URL
+from tamr_client.session import Session
+from tamr_client.instance import Instance
+import tamr_client.response as response
 from tamr_client.types import JsonDict
 
 
@@ -28,13 +31,13 @@ class Dataset:
         key_attribute_names
     """
 
-    url: tc.URL
+    url: URL
     name: str
     key_attribute_names: Tuple[str, ...]
     description: Optional[str] = None
 
 
-def from_resource_id(session: tc.Session, instance: tc.Instance, id: str) -> Dataset:
+def from_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
     """Get dataset by resource ID
 
     Fetches dataset from Tamr server
@@ -48,11 +51,11 @@ def from_resource_id(session: tc.Session, instance: tc.Instance, id: str) -> Dat
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
-    url = tc.URL(instance=instance, path=f"datasets/{id}")
+    url = URL(instance=instance, path=f"datasets/{id}")
     return _from_url(session, url)
 
 
-def _from_url(session: tc.Session, url: tc.URL) -> Dataset:
+def _from_url(session: Session, url: URL) -> Dataset:
     """Get dataset by URL
 
     Fetches dataset from Tamr server
@@ -68,11 +71,11 @@ def _from_url(session: tc.Session, url: tc.URL) -> Dataset:
     r = session.get(str(url))
     if r.status_code == 404:
         raise DatasetNotFound(str(url))
-    data = tc.response.successful(r).json()
+    data = response.successful(r).json()
     return _from_json(url, data)
 
 
-def _from_json(url: tc.URL, data: JsonDict) -> Dataset:
+def _from_json(url: URL, data: JsonDict) -> Dataset:
     """Make dataset from JSON data (deserialize)
 
     Args:

@@ -1,10 +1,13 @@
+"""This module and attribute_type depend on each other.
+
+"""
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
-import tamr_client as tc
 from tamr_client.types import JsonDict
-
+if TYPE_CHECKING:
+    from tamr_client.attributes.attribute_type import AttributeType
 
 @dataclass(frozen=True)
 class SubAttribute:
@@ -20,7 +23,7 @@ class SubAttribute:
     """
 
     name: str
-    type: "tc.AttributeType"
+    type: "AttributeType"
     is_nullable: bool
     description: Optional[str] = None
 
@@ -31,11 +34,12 @@ def from_json(data: JsonDict) -> SubAttribute:
     Args:
         data: JSON data received from Tamr server.
     """
+    from tamr_client.attributes import attribute_type
     cp = deepcopy(data)
     d = {}
     d["name"] = cp["name"]
     d["is_nullable"] = cp["isNullable"]
-    d["type"] = tc.attribute_type.from_json(cp["type"])
+    d["type"] = attribute_type.from_json(cp["type"])
     return SubAttribute(**d)
 
 
@@ -45,9 +49,10 @@ def to_json(subattr: SubAttribute) -> JsonDict:
     Args:
         subattr: SubAttribute to serialize
     """
+    from tamr_client.attributes import attribute_type
     d = {
         "name": subattr.name,
-        "type": tc.attribute_type.to_json(subattr.type),
+        "type": attribute_type.to_json(subattr.type),
         "isNullable": subattr.is_nullable,
     }
     if subattr.description is not None:

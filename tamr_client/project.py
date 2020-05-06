@@ -1,9 +1,14 @@
 from typing import Union
 
-import tamr_client as tc
+from tamr_client.session import Session
+from tamr_client.instance import Instance
+from tamr_client.url import URL
+import tamr_client.response as response
+from tamr_client.mastering.project import Project as MasteringProject
+import tamr_client.mastering.project as mastering_project
 from tamr_client.types import JsonDict
 
-Project = Union[tc.mastering.Project]
+Project = Union[MasteringProject]
 
 
 class NotFound(Exception):
@@ -13,7 +18,7 @@ class NotFound(Exception):
     pass
 
 
-def from_resource_id(session: tc.Session, instance: tc.Instance, id: str) -> Project:
+def from_resource_id(session: Session, instance: Instance, id: str) -> Project:
     """Get project by resource ID
 
     Fetches project from Tamr server
@@ -27,11 +32,11 @@ def from_resource_id(session: tc.Session, instance: tc.Instance, id: str) -> Pro
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
-    url = tc.URL(instance=instance, path=f"projects/{id}")
+    url = URL(instance=instance, path=f"projects/{id}")
     return _from_url(session, url)
 
 
-def _from_url(session: tc.Session, url: tc.URL) -> Project:
+def _from_url(session: Session, url: URL) -> Project:
     """Get project by URL
 
     Fetches project from Tamr server
@@ -47,11 +52,11 @@ def _from_url(session: tc.Session, url: tc.URL) -> Project:
     r = session.get(str(url))
     if r.status_code == 404:
         raise NotFound(str(url))
-    data = tc.response.successful(r).json()
+    data = response.successful(r).json()
     return _from_json(url, data)
 
 
-def _from_json(url: tc.URL, data: JsonDict) -> Project:
+def _from_json(url: URL, data: JsonDict) -> Project:
     """Make project from JSON data (deserialize)
 
     Args:
@@ -60,6 +65,6 @@ def _from_json(url: tc.URL, data: JsonDict) -> Project:
     """
     proj_type = data["type"]
     if proj_type == "DEDUP":
-        return tc.mastering.project._from_json(url, data)
+        return mastering_project._from_json(url, data)
     else:
         raise ValueError(f"Unrecognized project type '{proj_type}' in {repr(data)}")
