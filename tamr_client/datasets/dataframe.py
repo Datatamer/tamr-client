@@ -7,9 +7,9 @@ from typing import Optional
 
 import pandas as pd
 
-from tamr_client.session import Session
+import tamr_client.datasets.record as record
 from tamr_client.datasets.dataset import Dataset
-from tamr_client.datasets import record
+from tamr_client.session import Session
 from tamr_client.types import JsonDict
 
 
@@ -64,6 +64,4 @@ def upsert(
     records = (
         {primary_key_name: pk, **json.loads(row)} for pk, row in serialized_records
     )
-    return record.upsert(
-        session, dataset, records, primary_key_name=primary_key_name
-    )
+    return record.upsert(session, dataset, records, primary_key_name=primary_key_name)

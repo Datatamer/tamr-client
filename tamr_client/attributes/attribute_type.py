@@ -5,8 +5,8 @@ from dataclasses import dataclass
 import logging
 from typing import ClassVar, Tuple, Union
 
-from tamr_client.attributes.subattribute import SubAttribute
 from tamr_client.attributes import subattribute
+from tamr_client.attributes.subattribute import SubAttribute
 from tamr_client.types import JsonDict
 
 logger = logging.getLogger(__name__)
@@ -146,9 +146,7 @@ def to_json(attr_type: AttributeType) -> JsonDict:
 
         return {
             "baseType": type(attr_type)._tag,
-            "attributes": [
-                subattribute.to_json(attr) for attr in attr_type.attributes
-            ],
+            "attributes": [subattribute.to_json(attr) for attr in attr_type.attributes],
         }
     else:
         raise TypeError(attr_type)

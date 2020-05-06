@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 
-from tamr_client.instance import Instance
 import tamr_client.instance as instance
+from tamr_client.instance import Instance
+
 
 @dataclass(frozen=True)
 class URL:

@@ -1,5 +1,5 @@
-from tamr_client.attributes.subattribute import SubAttribute
 from tamr_client.attributes.attribute_type import Array, DOUBLE, Record, STRING
+from tamr_client.attributes.subattribute import SubAttribute
 
 DEFAULT: Array = Array(STRING)
 

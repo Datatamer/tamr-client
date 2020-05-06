@@ -5,12 +5,12 @@ from copy import deepcopy
 from dataclasses import dataclass, field, replace
 from typing import Optional, Tuple
 
-from tamr_client.url import URL
-from tamr_client.attributes.attribute_type import AttributeType
 from tamr_client.attributes import attribute_type
+from tamr_client.attributes.attribute_type import AttributeType
+from tamr_client.url import URL
 from tamr_client.attributes import type_alias
-from tamr_client.session import Session
 from tamr_client.datasets.dataset import Dataset
+from tamr_client.session import Session
 import tamr_client.response as response
 from tamr_client.types import JsonDict
 
@@ -125,7 +125,7 @@ def _from_json(url: URL, data: JsonDict) -> Attribute:
         name=cp["name"],
         description=cp.get("description"),
         is_nullable=cp["isNullable"],
-        type = attribute_type.from_json(cp["type"]),
+        type=attribute_type.from_json(cp["type"]),
         _json=cp,
     )
 

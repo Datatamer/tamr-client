@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from tamr_client.url import URL
 from tamr_client.types import JsonDict
+from tamr_client.url import URL
 
 
 @dataclass(frozen=True)
@@ -29,6 +29,4 @@ def _from_json(url: URL, data: JsonDict) -> Project:
         url: Project URL
         data: Project JSON data from Tamr server
     """
-    return Project(
-        url, name=data["name"], description=data.get("description")
-    )
+    return Project(url, name=data["name"], description=data.get("description"))

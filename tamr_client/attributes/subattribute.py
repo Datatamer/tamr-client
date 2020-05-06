@@ -6,8 +6,10 @@ from dataclasses import dataclass
 from typing import Optional, TYPE_CHECKING
 
 from tamr_client.types import JsonDict
+
 if TYPE_CHECKING:
     from tamr_client.attributes.attribute_type import AttributeType
+
 
 @dataclass(frozen=True)
 class SubAttribute:
@@ -35,6 +37,7 @@ def from_json(data: JsonDict) -> SubAttribute:
         data: JSON data received from Tamr server.
     """
     from tamr_client.attributes import attribute_type
+
     cp = deepcopy(data)
     d = {}
     d["name"] = cp["name"]
@@ -50,6 +53,7 @@ def to_json(subattr: SubAttribute) -> JsonDict:
         subattr: SubAttribute to serialize
     """
     from tamr_client.attributes import attribute_type
+
     d = {
         "name": subattr.name,
         "type": attribute_type.to_json(subattr.type),
