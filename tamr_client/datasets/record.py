@@ -7,7 +7,9 @@ underlying _update function can be used directly."
 import json
 from typing import cast, Dict, IO, Iterable, Optional
 
-import tamr_client as tc
+from tamr_client.datasets.dataset import Dataset
+import tamr_client.response as response
+from tamr_client.session import Session
 from tamr_client.types import JsonDict
 
 
@@ -17,9 +19,7 @@ class PrimaryKeyNotFound(Exception):
     pass
 
 
-def _update(
-    session: tc.Session, dataset: tc.Dataset, updates: Iterable[Dict]
-) -> JsonDict:
+def _update(session: Session, dataset: Dataset, updates: Iterable[Dict]) -> JsonDict:
     """Send a batch of record creations/updates/deletions to this dataset.
     You probably want to use :func:`~tamr_client.record.upsert`
     or :func:`~tamr_client.record.delete` instead.
@@ -42,12 +42,12 @@ def _update(
         headers={"Content-Encoding": "utf-8"},
         data=io_updates,
     )
-    return tc.response.successful(r).json()
+    return response.successful(r).json()
 
 
 def upsert(
-    session: tc.Session,
-    dataset: tc.Dataset,
+    session: Session,
+    dataset: Dataset,
     records: Iterable[Dict],
     *,
     primary_key_name: Optional[str] = None,
@@ -82,8 +82,8 @@ def upsert(
 
 
 def delete(
-    session: tc.Session,
-    dataset: tc.Dataset,
+    session: Session,
+    dataset: Dataset,
     records: Iterable[Dict],
     *,
     primary_key_name: Optional[str] = None,
