@@ -37,16 +37,16 @@ from tamr_client.session import Session
 import tamr_client.session as session
 
 # records
-from tamr_client.datasets.record import PrimaryKeyNotFound
-import tamr_client.datasets.record as record
+from tamr_client.dataset.record import PrimaryKeyNotFound
+import tamr_client.dataset.record as record
 
 # dataframe
-from tamr_client.datasets.dataframe import AmbiguousPrimaryKey
-import tamr_client.datasets.dataframe as dataframe
+from tamr_client.dataset.dataframe import AmbiguousPrimaryKey
+import tamr_client.dataset.dataframe as dataframe
 
 # datasets
-from tamr_client.datasets.dataset import Dataset, DatasetNotFound
-import tamr_client.datasets.dataset as dataset
+from tamr_client.dataset.dataset import Dataset, DatasetNotFound
+import tamr_client.dataset.dataset as dataset
 
 # attributes
 from tamr_client.attributes.subattribute import SubAttribute
