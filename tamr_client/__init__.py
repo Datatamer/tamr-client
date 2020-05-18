@@ -36,6 +36,10 @@ from tamr_client.auth import UsernamePasswordAuth
 from tamr_client.session import Session
 import tamr_client.session as session
 
+# datasets
+from tamr_client.dataset import Dataset, DatasetNotFound
+import tamr_client.dataset as dataset
+
 # records
 from tamr_client.dataset.record import PrimaryKeyNotFound
 import tamr_client.dataset.record as record
@@ -43,10 +47,6 @@ import tamr_client.dataset.record as record
 # dataframe
 from tamr_client.dataset.dataframe import AmbiguousPrimaryKey
 import tamr_client.dataset.dataframe as dataframe
-
-# datasets
-from tamr_client.dataset.dataset import Dataset, DatasetNotFound
-import tamr_client.dataset.dataset as dataset
 
 # attributes
 from tamr_client.attributes.subattribute import SubAttribute
