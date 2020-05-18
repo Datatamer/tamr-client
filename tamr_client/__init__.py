@@ -42,11 +42,11 @@ import tamr_client.dataset as dataset
 
 # records
 from tamr_client.dataset.record import PrimaryKeyNotFound
-import tamr_client.dataset.record as record
+from tamr_client.dataset import record
 
 # dataframe
 from tamr_client.dataset.dataframe import AmbiguousPrimaryKey
-import tamr_client.dataset.dataframe as dataframe
+from tamr_client.dataset import dataframe
 
 # attributes
 from tamr_client.attributes.subattribute import SubAttribute
