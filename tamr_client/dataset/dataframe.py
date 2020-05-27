@@ -8,7 +8,7 @@ from typing import Optional
 import pandas as pd
 
 from tamr_client.dataset.dataset import Dataset
-import tamr_client.dataset.record as record
+from tamr_client.dataset import record
 from tamr_client.session import Session
 from tamr_client.types import JsonDict
 
