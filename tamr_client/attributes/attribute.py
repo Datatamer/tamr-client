@@ -5,11 +5,10 @@ from copy import deepcopy
 from dataclasses import dataclass, field, replace
 from typing import Optional, Tuple
 
-import tamr_client.attributes.attribute_type as attribute_type
+from tamr_client import response
+from tamr_client.attributes import attribute_type, type_alias
 from tamr_client.attributes.attribute_type import AttributeType
-import tamr_client.attributes.type_alias as type_alias
 from tamr_client.dataset.dataset import Dataset
-import tamr_client.response as response
 from tamr_client.session import Session
 from tamr_client.types import JsonDict
 from tamr_client.url import URL
