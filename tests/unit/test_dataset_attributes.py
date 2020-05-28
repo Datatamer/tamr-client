@@ -16,7 +16,7 @@ def test_dataset_attributes():
         "isNullable": "false",
     }
 
-    dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
+    dataset_url = "http://localhost:9100/api/versioned/v1/datasets/1"
 
     responses.add(responses.GET, dataset_url, json={})
     responses.add(

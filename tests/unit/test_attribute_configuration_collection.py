@@ -22,7 +22,7 @@ class TestAttributeConfigurationCollection(TestCase):
 
     @responses.activate
     def test_by_relative_id(self):
-        ac_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
+        ac_url = "http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
         alias = "projects/1/attributeConfigurations/"
         ac_test = AttributeConfigurationCollection(self.tamr, alias)
         expected = self.acc_json[0]["relativeId"]
@@ -34,7 +34,7 @@ class TestAttributeConfigurationCollection(TestCase):
 
     @responses.activate
     def test_by_resource_id(self):
-        ac_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
+        ac_url = "http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
         alias = "projects/1/attributeConfigurations/"
         ac_test = AttributeConfigurationCollection(self.tamr, alias)
         expected = self.acc_json[0]["relativeId"]
@@ -48,9 +48,9 @@ class TestAttributeConfigurationCollection(TestCase):
             return 204, {}, json.dumps(self.created_json)
 
         url = (
-            f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
+            "http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
         )
-        project_url = f"http://localhost:9100/api/versioned/v1/projects/1"
+        project_url = "http://localhost:9100/api/versioned/v1/projects/1"
         responses.add(responses.GET, project_url, json=self.project_json)
         snoop_dict = {}
         responses.add_callback(
@@ -73,7 +73,7 @@ class TestAttributeConfigurationCollection(TestCase):
             return 204, {}, json.dumps(self.created_json)
 
         url = (
-            f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
+            "http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations"
         )
         snoop_dict = {}
         responses.add_callback(
@@ -94,7 +94,9 @@ class TestAttributeConfigurationCollection(TestCase):
 
     @responses.activate
     def test_stream(self):
-        ac_url = f"http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/"
+        ac_url = (
+            "http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/"
+        )
         alias = "projects/1/attributeConfigurations/"
         ac_test = AttributeConfigurationCollection(self.tamr, alias)
         responses.add(responses.GET, ac_url, json=self.acc_json)

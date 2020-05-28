@@ -13,8 +13,8 @@ class TestCategorization(TestCase):
 
     @responses.activate
     def test_taxonomy(self):
-        project_url = f"http://localhost:9100/api/versioned/v1/projects/1"
-        taxonomy_url = f"http://localhost:9100/api/versioned/v1/projects/1/taxonomy"
+        project_url = "http://localhost:9100/api/versioned/v1/projects/1"
+        taxonomy_url = "http://localhost:9100/api/versioned/v1/projects/1/taxonomy"
         responses.add(responses.GET, project_url, json=self._project_json)
         responses.add(responses.POST, taxonomy_url, json=self._taxonomy_json)
 

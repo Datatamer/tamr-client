@@ -10,7 +10,7 @@ from tamr_unify_client.auth import UsernamePasswordAuth
 def test_http_error():
     """Ensure that the client surfaces HTTP errors as exceptions.
     """
-    endpoint = f"http://localhost:9100/api/versioned/v1/projects/1"
+    endpoint = "http://localhost:9100/api/versioned/v1/projects/1"
     responses.add(responses.GET, endpoint, status=401)
     auth = UsernamePasswordAuth("nonexistent-username", "invalid-password")
     tamr = Client(auth)
