@@ -34,7 +34,7 @@ project_json = {
     "relativeId": "projects/1",
 }
 
-projects_url = f"http://localhost:9100/api/versioned/v1/projects"
+projects_url = "http://localhost:9100/api/versioned/v1/projects"
 project_url = f"{projects_url}/1"
 
 

@@ -169,7 +169,7 @@ _creation_spec = {
     "externalId": "Dataset created with pubapi",
 }
 
-_datasets_url = f"http://localhost:9100/api/versioned/v1/datasets"
+_datasets_url = "http://localhost:9100/api/versioned/v1/datasets"
 _dataset_url = _datasets_url + "/1"
 _attribute_url = _dataset_url + "/attributes"
 _records_url = _dataset_url + ":updateRecords"

@@ -231,7 +231,7 @@ class TestDatasetGeo(TestCase):
 
     @responses.activate
     def test_geo_features(self):
-        dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
+        dataset_url = "http://localhost:9100/api/versioned/v1/datasets/1"
         responses.add(responses.GET, dataset_url, json=self._dataset_json)
 
         attributes_url = f"{dataset_url}/attributes"
@@ -260,7 +260,7 @@ class TestDatasetGeo(TestCase):
 
     @responses.activate
     def test_geo_features_geo_attr(self):
-        dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
+        dataset_url = "http://localhost:9100/api/versioned/v1/datasets/1"
         responses.add(responses.GET, dataset_url, json=self._dataset_json)
 
         # Create a dataset with multiple geometry attributes
@@ -287,7 +287,7 @@ class TestDatasetGeo(TestCase):
 
     @responses.activate
     def test_geo_interface(self):
-        dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
+        dataset_url = "http://localhost:9100/api/versioned/v1/datasets/1"
         responses.add(responses.GET, dataset_url, json=self._dataset_json)
 
         attributes_url = f"{dataset_url}/attributes"
@@ -495,7 +495,7 @@ class TestDatasetGeo(TestCase):
             snoop["payload"] = request.body
             return 200, {}, "{}"
 
-        dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
+        dataset_url = "http://localhost:9100/api/versioned/v1/datasets/1"
         responses.add(responses.GET, dataset_url, json=self._dataset_json)
 
         attributes_url = f"{dataset_url}/attributes"
@@ -546,7 +546,7 @@ class TestDatasetGeo(TestCase):
             snoop["payload"] = request.body
             return 200, {}, "{}"
 
-        dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
+        dataset_url = "http://localhost:9100/api/versioned/v1/datasets/1"
         responses.add(responses.GET, dataset_url, json=self._dataset_json)
 
         # Create a dataset with multiple geometry attributes
@@ -599,7 +599,7 @@ class TestDatasetGeo(TestCase):
 
         composite_key_dataset_json = deepcopy(self._dataset_json)
         composite_key_dataset_json["keyAttributeNames"] = ["id1", "id2"]
-        dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
+        dataset_url = "http://localhost:9100/api/versioned/v1/datasets/1"
         responses.add(responses.GET, dataset_url, json=composite_key_dataset_json)
 
         composite_key_attributes_json = deepcopy(self._attributes_json)

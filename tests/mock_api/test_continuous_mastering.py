@@ -43,7 +43,7 @@ def test_continuous_mastering():
     assert op.succeeded()
 
     estimate_url = (
-        f"http://localhost:9100/api/versioned/v1/projects/1/estimatedPairCounts"
+        "http://localhost:9100/api/versioned/v1/projects/1/estimatedPairCounts"
     )
     estimate_json = {
         "isUpToDate": "true",

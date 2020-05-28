@@ -15,7 +15,7 @@ project_config = {
     "externalId": "Project1",
     "resourceId": "1",
 }
-project_url = f"http://localhost:9100/api/versioned/v1/projects/1"
+project_url = "http://localhost:9100/api/versioned/v1/projects/1"
 
 
 @responses.activate
@@ -34,7 +34,7 @@ def test_binning_model_records():
     ]
 
     records_url = (
-        f"http://localhost:9100/api/versioned/v1/projects/1/binningModel/records"
+        "http://localhost:9100/api/versioned/v1/projects/1/binningModel/records"
     )
 
     responses.add(responses.GET, project_url, json=project_config)
@@ -136,7 +136,7 @@ def test_binning_model_update_records():
         return 200, {}, "{}"
 
     update_records_url = (
-        f"http://localhost:9100/api/versioned/v1/projects/1/binningModel/records"
+        "http://localhost:9100/api/versioned/v1/projects/1/binningModel/records"
     )
 
     responses.add(responses.GET, project_url, json=project_config)

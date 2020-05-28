@@ -71,7 +71,7 @@ class TestUsage(TestCase):
         project = step.project()
         self.assertEqual(project.relative_id, self._projects_json[0]["relativeId"])
 
-    _base_url = f"http://localhost:9100/api/versioned/v1"
+    _base_url = "http://localhost:9100/api/versioned/v1"
 
     _dataset_json = {
         "id": "unify://unified-data/v1/datasets/1",

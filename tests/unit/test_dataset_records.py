@@ -22,7 +22,7 @@ class TestDatasetRecords(TestCase):
         responses.add(
             responses.GET,
             records_url,
-            body="\n".join([simplejson.dumps(l) for l in self._records_json]),
+            body="\n".join([simplejson.dumps(x) for x in self._records_json]),
         )
 
         dataset = self.tamr.datasets.by_resource_id(self._dataset_id)

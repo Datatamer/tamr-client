@@ -238,7 +238,7 @@ class TestProject(TestCase):
     project_list_url = "http://localhost:9100/api/versioned/v1/projects"
     post_input_datasets_json = []
     input_datasets_url = (
-        f"http://localhost:9100/api/versioned/v1/projects/1/inputDatasets"
+        "http://localhost:9100/api/versioned/v1/projects/1/inputDatasets"
     )
     get_input_datasets_json = dataset_json
 

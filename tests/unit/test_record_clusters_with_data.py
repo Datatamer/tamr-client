@@ -64,7 +64,7 @@ def test_record_clusters_with_data():
     unified_dataset_url = (
         f"http://localhost:9100/api/versioned/v1/projects/{project_id}/unifiedDataset"
     )
-    datasets_url = f"http://localhost:9100/api/versioned/v1/datasets"
+    datasets_url = "http://localhost:9100/api/versioned/v1/datasets"
     refresh_url = project_url + "/recordClustersWithData:refresh"
 
     responses.add(responses.GET, project_url, json=project_config)

@@ -65,8 +65,8 @@ class TestAttribute(TestCase):
 
     @responses.activate
     def test_dataset_attributes(self):
-        dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/1"
-        attributes_url = f"http://localhost:9100/api/versioned/v1/datasets/1/attributes"
+        dataset_url = "http://localhost:9100/api/versioned/v1/datasets/1"
+        attributes_url = "http://localhost:9100/api/versioned/v1/datasets/1/attributes"
         responses.add(responses.GET, dataset_url, json=self._dataset_json)
         responses.add(responses.GET, attributes_url, json=self._attributes_json)
         dataset = self.tamr.datasets.by_resource_id("1")
@@ -80,7 +80,7 @@ class TestAttribute(TestCase):
 
     @responses.activate
     def test_delete_attribute(self):
-        url = f"http://localhost:9100/api/versioned/v1/datasets/1/attributes/RowNum"
+        url = "http://localhost:9100/api/versioned/v1/datasets/1/attributes/RowNum"
         responses.add(responses.GET, url, json=self._attributes_json[0])
         responses.add(responses.DELETE, url, status=204)
         responses.add(responses.GET, url, status=404)

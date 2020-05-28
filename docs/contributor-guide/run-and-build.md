@@ -1,11 +1,18 @@
 # Run and Build
 
-This project uses [invoke](http://www.pyinvoke.org/) as its task runner.
+This project uses [nox](https://nox.thea.codes/en/stable/).
 
-Since `invoke` will be running inside of a `poetry` environment, we recommend adding the following alias to your `.bashrc` / `.zshrc` to save you some keystrokes:
+Since `nox` will be running inside of a `poetry` environment (to guarantee you are running the same version of `nox` as everyone else), we recommend adding the following alias to your `.bashrc` / `.zshrc` to save you some keystrokes:
 
 ```sh
-alias pri='poetry run invoke'
+alias prn='poetry run nox'
+```
+
+To run all checks:
+
+```sh
+prn # with alias
+poetry run nox # without alias
 ```
 
 ## Linting & Formatting
@@ -13,22 +20,22 @@ alias pri='poetry run invoke'
 To run linter:
 
 ```sh
-pri lint # with alias
-poetry run invoke lint # without alias
+prn -s lint # with alias
+poetry run nox -s lint # without alias
 ```
 
 To run formatter:
 
 ```sh
-pri format # with alias
-poetry run invoke format # without alias
+prn -s format # with alias
+poetry run nox -s format # without alias
 ```
 
 Run the formatter with the `--fix` flag to autofix formatting:
 
 ```sh
-pri format --fix # with alias
-poetry run invoke format --fix # without alias
+prn -s format -- --fix # with alias
+poetry run nox -s format -- --fix # without alias
 ```
 
 ## Typechecks
@@ -36,8 +43,8 @@ poetry run invoke format --fix # without alias
 To run typechecks:
 
 ```sh
-pri typecheck # with alias
-poetry run invoke typecheck # without alias
+prn -s typecheck # with alias
+poetry run nox -s typecheck # without alias
 ```
 
 ## Tests
@@ -45,14 +52,27 @@ poetry run invoke typecheck # without alias
 To run all tests:
 
 ```sh  
-pri test # with alias
-poetry run invoke test # without alias
+prn -s test # with alias
+poetry run nox -s test # without alias
 ```
 
-To run specific tests, see [these pytest docs](https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests) and run `pytest` explicitly:
+---
+
+To run tests for a specific Python version e.g. 3.6:
 
 ```sh
-poetry run pytest tests/unit/test_attribute.py
+prn -s test-3.6 # with alias
+poetry run nox -s test-3.6 # without alias
+```
+
+See [`nox --list`](https://nox.thea.codes/en/stable/tutorial.html#selecting-which-sessions-to-run) for more details.
+
+---
+
+To run specific tests, see [these pytest docs](https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests) and pass `pytest` args after `--` e.g.:
+
+```sh
+prn -s test -- tests/unit/test_attribute.py
 ```
 
 
@@ -61,13 +81,13 @@ poetry run pytest tests/unit/test_attribute.py
 To build the docs:
 
 ```sh
-pri docs # with alias
-poetry run invoke docs # without alias
+prn -s docs # with alias
+poetry run nox -s docs # without alias
 ```
 
 After docs are build, view them by:
 
 ```sh
-    open -a 'firefox' docs/_build/index.html # open in Firefox
-    open -a 'Google Chrome' docs/_build/index.html # open in Chrome
+open -a 'firefox' docs/_build/index.html # open in Firefox
+open -a 'Google Chrome' docs/_build/index.html # open in Chrome
 ```
