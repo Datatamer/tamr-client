@@ -9,21 +9,20 @@ see the [official documentation](https://poetry.eustace.io/).
       curl https://pyenv.run | bash
       ```
 
-  2. Use `pyenv` to install a compatible Python version (`3.6` or newer; e.g. `3.7.3`):
+  2. Use `pyenv` to install all Python versions in [.python-version](https://github.com/Datatamer/tamr-client/blob/master/.python-version):
+
+      [Automated tests](run-and-build) will use these Python versions.
 
       ```sh
-      pyenv install 3.7.3
+      cd tamr-client/ # or wherever you cloned Datatamer/tamr-client
+
+      # run `pyenv install` for each line in `.python-version`
+      cat .python-version | xargs -L 1 pyenv install
       ```
 
-  3. Set that Python version to be your version for this project(e.g. `3.7.3`):
+  4. Install `poetry` with `python` 3.6+ as [described here](https://poetry.eustace.io/docs/#installation):
 
       ```sh
-      pyenv shell 3.7.3
-      python --version # check that version matches your specified version
-      ```
-
-  4. Install `poetry` as [described here](https://poetry.eustace.io/docs/#installation):
-
-      ```sh
+      python --version # check that version is 3.6.9
       curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
       ```
