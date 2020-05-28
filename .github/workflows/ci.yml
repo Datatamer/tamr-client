@@ -15,33 +15,46 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Install Python
+    - name: Install python
       uses: actions/setup-python@v1.1.1
       with:
         python-version: 3.6
-    - name: Install Poetry
-      uses: dschep/install-poetry-action@v1.2
-    - name: Install dependencies
-      run: poetry install
+    - name: Install poetry
+      run: pip install poetry==1.0.5
+    - name: Install nox
+      run: pip install nox==2020.5.24
     - name: Run flake8
-      run: poetry run invoke lint
+      run: nox -s lint
+  
+  Format:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install python
+      uses: actions/setup-python@v1.1.1
+      with:
+        python-version: 3.6
+    - name: Install poetry
+      run: pip install poetry==1.0.5
+    - name: Install nox
+      run: pip install nox==2020.5.24
     - name: Run black
-      run: poetry run invoke format
+      run: nox -s format
 
   Typecheck:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Install Python
+    - name: Install python
       uses: actions/setup-python@v1.1.1
       with:
         python-version: 3.6
-    - name: Install Poetry
-      uses: dschep/install-poetry-action@v1.2
-    - name: Install dependencies
-      run: poetry install
+    - name: Install poetry
+      run: pip install poetry==1.0.5
+    - name: Install nox
+      run: pip install nox==2020.5.24
     - name: Run mypy
-      run: poetry run invoke typecheck
+      run: nox -s typecheck
 
   Test:
     strategy:
@@ -50,22 +63,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Install Python
+    - name: Install python
       uses: actions/setup-python@v1.1.1
       with:
         python-version: ${{ matrix.python_version }}
-    - name: Install Poetry
-      uses: dschep/install-poetry-action@v1.2
-    - name: Install dependencies
-      run: poetry install
+    - name: Install poetry
+      run: pip install poetry==1.0.5
+    - name: Install nox
+      run: pip install nox==2020.5.24
     - name: Run pytest
-      run: poetry run invoke test
+      run: nox -s test-${{ matrix.python_version }}
 
   Docs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Install Python
+    - name: Install python
       uses: actions/setup-python@v1.1.1
       with:
         python-version: 3.6
