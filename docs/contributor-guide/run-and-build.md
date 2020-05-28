@@ -58,7 +58,7 @@ poetry run nox -s test # without alias
 
 ---
 
-To run tests for a specifc Python version e.g. 3.6:
+To run tests for a specific Python version e.g. 3.6:
 
 ```sh
 prn -s test-3.6 # with alias
