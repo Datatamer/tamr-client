@@ -1,6 +1,7 @@
 # Contributor guide
 
   * [Bug Reports and Feature Requests](contributor-guide/bugs-and-features)
+  * [Style Guide](contributor-guide/style-guide)
   * [Code Migrations](contributor-guide/migration)
   * [Configure your Text Editor](contributor-guide/config-text-editor)
   * [Install](contributor-guide/install)
