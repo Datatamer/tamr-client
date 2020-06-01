@@ -3,7 +3,7 @@ import json
 import responses
 
 import tamr_client as tc
-import tests.tamr_client.utils as utils
+from tests.tamr_client import utils
 
 
 @responses.activate

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-import tamr_client.instance as instance
+from tamr_client import instance
 from tamr_client.instance import Instance
 
 

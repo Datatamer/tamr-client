@@ -7,8 +7,8 @@ underlying _update function can be used directly."
 import json
 from typing import cast, Dict, IO, Iterable, Optional
 
+from tamr_client import response
 from tamr_client.dataset.dataset import Dataset
-import tamr_client.response as response
 from tamr_client.session import Session
 from tamr_client.types import JsonDict
 

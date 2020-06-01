@@ -1,5 +1,5 @@
 import tamr_client as tc
-import tests.tamr_client.utils as utils
+from tests.tamr_client import utils
 
 
 def test_from_json():

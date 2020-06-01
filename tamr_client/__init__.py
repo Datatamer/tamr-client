@@ -19,26 +19,26 @@ logging.getLogger(__name__).addHandler(logging.NullHandler())
 ##################
 
 # utilities
-import tamr_client.response as response
+from tamr_client import response
 
 # instance
 from tamr_client.instance import Instance
-import tamr_client.instance as instance
+from tamr_client import instance
 
 # url
 from tamr_client.url import URL
-import tamr_client.url as url
+from tamr_client import url
 
 # auth
 from tamr_client.auth import UsernamePasswordAuth
 
 # session
 from tamr_client.session import Session
-import tamr_client.session as session
+from tamr_client import session
 
 # datasets
 from tamr_client.dataset import Dataset, DatasetNotFound
-import tamr_client.dataset as dataset
+from tamr_client import dataset
 
 # records
 from tamr_client.dataset.record import PrimaryKeyNotFound
@@ -50,10 +50,10 @@ from tamr_client.dataset import dataframe
 
 # attributes
 from tamr_client.attributes.subattribute import SubAttribute
-import tamr_client.attributes.subattribute as subattribute
+from tamr_client.attributes import subattribute
 
 from tamr_client.attributes.attribute_type import AttributeType
-import tamr_client.attributes.attribute_type as attribute_type
+from tamr_client.attributes import attribute_type
 
 import tamr_client.attributes.type_alias
 
@@ -63,7 +63,7 @@ from tamr_client.attributes.attribute import (
     AttributeExists,
     AttributeNotFound,
 )
-import tamr_client.attributes.attribute as attribute
+from tamr_client.attributes import attribute
 
-import tamr_client.mastering as mastering
-import tamr_client.project as project
+from tamr_client import mastering
+from tamr_client import project

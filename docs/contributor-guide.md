@@ -7,4 +7,5 @@
   * [Navigating Inheritance](contributor-guide/navigating-inheritance)
   * [Pull Requests](contributor-guide/pull-request)
   * [Run and Build](contributor-guide/run-and-build)
+  * [Style Guide](contributor-guide/style-guide)
   * [Toolchain](contributor-guide/toolchain)
