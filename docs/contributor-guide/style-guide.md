@@ -13,7 +13,7 @@ Code should generally conform to the [PEP8 style guidelines](https://www.python.
 All functions and class definitions should use [Google-style docstrings](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html) and be annotated with [type hints](https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#type-annotations).
 
 ### Internal Imports
-When importing from within <code>tamr-client</code>:
+When importing from within `tamr-client`:
 * Use import statements for modules, classes, and exceptions
-* Never import functions directly. Instead import the containing module and use <code>module.function</code>
-* Use <code>from foo import bar</code> instead of <code>import foo.bar as bar</code>
+* Never import functions directly. Instead import the containing module and use `module.function`
+* Use `from foo import bar` instead of `import foo.bar as bar`
