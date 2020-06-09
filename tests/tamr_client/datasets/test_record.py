@@ -1,4 +1,5 @@
 from functools import partial
+import json
 from typing import Dict
 
 import pytest
@@ -152,6 +153,20 @@ def test_delete_infer_primary_key():
     response = tc.record.delete(s, dataset, _records_json)
     assert response == _response_json
     assert snoop["payload"] == utils.stringify(deletes)
+
+
+@responses.activate
+def test_stream():
+    s = utils.session()
+    dataset = utils.dataset()
+
+    url = tc.URL(path="datasets/1/records")
+    responses.add(
+        responses.GET, str(url), body="\n".join([json.dumps(x) for x in _records_json])
+    )
+
+    response = tc.record.stream(s, dataset)
+    assert list(response) == _records_json
 
 
 _records_json = [{"primary_key": 1}, {"primary_key": 2}]
