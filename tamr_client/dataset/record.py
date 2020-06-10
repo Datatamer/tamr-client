@@ -5,7 +5,7 @@ See https://docs.tamr.com/reference/record
 underlying _update function can be used directly."
 """
 import json
-from typing import cast, Dict, Generator, IO, Iterable, Optional
+from typing import cast, Dict, IO, Iterable, Iterator, Optional
 
 from tamr_client import response
 from tamr_client.dataset.dataset import Dataset
@@ -145,7 +145,7 @@ def _delete_command(record: Dict, *, primary_key_name: str) -> Dict:
     return {"action": "DELETE", "recordId": record[primary_key_name]}
 
 
-def stream(session: Session, dataset: Dataset) -> Generator[Dict, None, None]:
+def stream(session: Session, dataset: Dataset) -> Iterator[JsonDict]:
     """Stream the records in this dataset as Python dictionaries.
 
     Args:
@@ -154,6 +154,5 @@ def stream(session: Session, dataset: Dataset) -> Generator[Dict, None, None]:
     Returns:
         Python generator yielding records
     """
-    with session.get(str(dataset.url) + "/records", stream=True) as response:
-        for line in response.iter_lines():
-            yield json.loads(line)
+    with session.get(str(dataset.url) + "/records", stream=True) as request:
+        return response.ndjson(request)
