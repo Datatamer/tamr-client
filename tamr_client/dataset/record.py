@@ -1,8 +1,8 @@
 """
 See https://docs.tamr.com/reference/record
-"The recommended approach for interacting with records is to use the :func:`~tamr_client.record.upsert` and
+"The recommended approach for modifying records is to use the :func:`~tamr_client.record.upsert` and
 :func:`~tamr_client.record.delete` functions for all use cases they can handle. For more advanced use cases, the
-underlying _update function can be used directly."
+underlying :func:`~tamr_client.record._update` function can be used directly."
 """
 import json
 from typing import cast, Dict, IO, Iterable, Iterator, Optional
