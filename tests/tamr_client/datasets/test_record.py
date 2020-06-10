@@ -162,11 +162,11 @@ def test_stream():
 
     url = tc.URL(path="datasets/1/records")
     responses.add(
-        responses.GET, str(url), body="\n".join([json.dumps(x) for x in _records_json])
+        responses.GET, str(url), body="\n".join(json.dumps(x) for x in _records_json)
     )
 
-    response = tc.record.stream(s, dataset)
-    assert list(response) == _records_json
+    records = tc.record.stream(s, dataset)
+    assert list(records) == _records_json
 
 
 _records_json = [{"primary_key": 1}, {"primary_key": 2}]
