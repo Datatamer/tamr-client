@@ -154,5 +154,5 @@ def stream(session: Session, dataset: Dataset) -> Iterator[JsonDict]:
     Returns:
         Python generator yielding records
     """
-    with session.get(str(dataset.url) + "/records", stream=True) as request:
-        return response.ndjson(request)
+    with session.get(str(dataset.url) + "/records", stream=True) as r:
+        return response.ndjson(r)
