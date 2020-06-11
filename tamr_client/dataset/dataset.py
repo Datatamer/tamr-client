@@ -3,20 +3,19 @@ See https://docs.tamr.com/reference/dataset-models
 """
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 
 from tamr_client import response
 from tamr_client.instance import Instance
 from tamr_client.session import Session
 from tamr_client.types import JsonDict
 from tamr_client.url import URL
-
+from tamr_client.dataset.unified import UnifiedDataset
 
 class DatasetNotFound(Exception):
     """Raised when referencing (e.g. updating or deleting) a dataset
     that does not exist on the server.
     """
-
     pass
 
 
@@ -89,3 +88,6 @@ def _from_json(url: URL, data: JsonDict) -> Dataset:
         description=cp.get("description"),
         key_attribute_names=tuple(cp["keyAttributeNames"]),
     )
+
+
+AllDataset = Union[Dataset, UnifiedDataset]
