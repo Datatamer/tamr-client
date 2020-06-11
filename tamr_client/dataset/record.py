@@ -1,11 +1,11 @@
 """
 See https://docs.tamr.com/reference/record
-"The recommended approach for interacting with records is to use the :func:`~tamr_client.record.upsert` and
+"The recommended approach for modifying records is to use the :func:`~tamr_client.record.upsert` and
 :func:`~tamr_client.record.delete` functions for all use cases they can handle. For more advanced use cases, the
-underlying _update function can be used directly."
+underlying :func:`~tamr_client.record._update` function can be used directly."
 """
 import json
-from typing import cast, Dict, IO, Iterable, Optional
+from typing import cast, Dict, IO, Iterable, Iterator, Optional
 
 from tamr_client import response
 from tamr_client.dataset.dataset import Dataset
@@ -143,3 +143,16 @@ def _delete_command(record: Dict, *, primary_key_name: str) -> Dict:
         The DELETE command in the proper format
     """
     return {"action": "DELETE", "recordId": record[primary_key_name]}
+
+
+def stream(session: Session, dataset: Dataset) -> Iterator[JsonDict]:
+    """Stream the records in this dataset as Python dictionaries.
+
+    Args:
+        dataset: Dataset from which to stream records
+
+    Returns:
+        Python generator yielding records
+    """
+    with session.get(str(dataset.url) + "/records", stream=True) as r:
+        return response.ndjson(r)

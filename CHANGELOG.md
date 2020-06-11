@@ -6,6 +6,7 @@
   - [#367](https://github.com/Datatamer/tamr-client/issues/367) Support for projects:
     - generic projects via `tc.project`
     - Mastering projects via `tc.mastering.project`
+  - Support for streaming records from a dataset via `tc.record.stream`
 
   **BUG FIXES**
   - `from_geo_features` now returns information on the operation.  
