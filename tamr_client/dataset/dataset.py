@@ -10,7 +10,8 @@ from tamr_client.instance import Instance
 from tamr_client.session import Session
 from tamr_client.types import JsonDict
 from tamr_client.url import URL
-from tamr_client.dataset.unified import UnifiedDataset
+from tamr_client.dataset.unified import Dataset as UnifiedDataset
+
 
 class DatasetNotFound(Exception):
     """Raised when referencing (e.g. updating or deleting) a dataset
@@ -29,11 +30,13 @@ class Dataset:
         url
         key_attribute_names
     """
-
     url: URL
     name: str
     key_attribute_names: Tuple[str, ...]
     description: Optional[str] = None
+
+
+AllDataset = Union[Dataset, UnifiedDataset]
 
 
 def from_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
@@ -88,6 +91,3 @@ def _from_json(url: URL, data: JsonDict) -> Dataset:
         description=cp.get("description"),
         key_attribute_names=tuple(cp["keyAttributeNames"]),
     )
-
-
-AllDataset = Union[Dataset, UnifiedDataset]
