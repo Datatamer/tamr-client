@@ -1,6 +1,4 @@
-from functools import partial
 import pytest
-from typing import Dict
 import responses
 
 import tamr_client as tc
@@ -51,5 +49,5 @@ def test_commit():
     url = tc.URL(path="projects/1/unifiedDataset:refresh")
     responses.add(responses.POST, str(url), json=operation_json)
 
-    response = tc.unified.commit(unified_dataset,s)
+    response = tc.unified.commit(unified_dataset, s)
     assert response == operation_json
