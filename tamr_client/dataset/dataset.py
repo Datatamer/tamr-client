@@ -13,7 +13,7 @@ from tamr_client.types import JsonDict
 from tamr_client.url import URL
 
 
-class DatasetNotFound(Exception):
+class NotFound(Exception):
     """Raised when referencing (e.g. updating or deleting) a dataset
     that does not exist on the server.
     """
@@ -51,7 +51,7 @@ def from_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
         id: Dataset ID
 
     Raises:
-        DatasetNotFound: If no dataset could be found at the specified URL.
+        dataset.NotFound: If no dataset could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
@@ -68,13 +68,13 @@ def _from_url(session: Session, url: URL) -> Dataset:
         url: Dataset URL
 
     Raises:
-        DatasetNotFound: If no dataset could be found at the specified URL.
+        dataset.NotFound: If no dataset could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     r = session.get(str(url))
     if r.status_code == 404:
-        raise DatasetNotFound(str(url))
+        raise NotFound(str(url))
     data = response.successful(r).json()
     return _from_json(url, data)
 

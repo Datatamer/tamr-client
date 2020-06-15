@@ -37,7 +37,7 @@ from tamr_client.session import Session
 from tamr_client import session
 
 # datasets
-from tamr_client.dataset import AllDataset, Dataset, DatasetNotFound
+from tamr_client.dataset import AnyDataset, Dataset
 from tamr_client import dataset
 
 # records
@@ -47,9 +47,6 @@ from tamr_client.dataset import record
 # dataframe
 from tamr_client.dataset.dataframe import AmbiguousPrimaryKey
 from tamr_client.dataset import dataframe
-
-# unified
-from tamr_client.dataset import unified
 
 # attributes
 from tamr_client.attributes.subattribute import SubAttribute

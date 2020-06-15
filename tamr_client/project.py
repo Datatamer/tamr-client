@@ -29,7 +29,7 @@ def from_resource_id(session: Session, instance: Instance, id: str) -> Project:
         id: Project ID
 
     Raises:
-        NotFound: If no project could be found at the specified URL.
+        project.NotFound: If no project could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """

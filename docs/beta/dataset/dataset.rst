@@ -8,5 +8,5 @@ Dataset
 Exceptions
 ----------
 
-.. autoclass:: tamr_client.DatasetNotFound
+.. autoclass:: tamr_client.dataset.NotFound
   :no-inherited-members:

@@ -30,8 +30,8 @@ def test_from_project_dataset_not_found():
     url = tc.URL(path="projects/1/unifiedDataset")
     responses.add(responses.GET, str(url), status=404)
 
-    with pytest.raises(tc.unified.DatasetNotFound):
-        tc.unified.from_project(s, instance, project)
+    with pytest.raises(tc.dataset.unified.NotFound):
+        tc.dataset.unified.from_project(s, instance, project)
 
 
 @responses.activate
@@ -49,5 +49,5 @@ def test_commit():
     url = tc.URL(path="projects/1/unifiedDataset:refresh")
     responses.add(responses.POST, str(url), json=operation_json)
 
-    response = tc.unified.commit(unified_dataset, s)
+    response = tc.dataset.unified.commit(s, unified_dataset)
     assert response == operation_json
