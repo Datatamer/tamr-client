@@ -20,8 +20,10 @@ def lint(session):
 @nox.session(python="3.6")
 def format(session):
     session.run("poetry", "install", external=True)
-    check = "" if "--fix" in session.posargs else "--check"
-    session.run("black", check, ".")
+    if "--fix" in session.posargs:
+        session.run("black", ".")
+    else:
+        session.run("black", ".", "--check")
 
 
 @nox.session(python="3.6")
