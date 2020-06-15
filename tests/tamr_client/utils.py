@@ -30,13 +30,17 @@ def dataset():
 
 def unified_dataset():
     url = tc.URL(path="projects/1/unifiedDataset")
-    unified_dataset = tc.unified.Dataset(url, name="dataset.csv", key_attribute_names=("primary_key",))
+    unified_dataset = tc.unified.Dataset(
+        url, name="dataset.csv", key_attribute_names=("primary_key",)
+    )
     return unified_dataset
 
 
 def mastering_project():
     url = tc.URL(path="projects/1")
-    mastering_project = tc.mastering.Project(url, name="Project 1", description="A Mastering Project")
+    mastering_project = tc.mastering.Project(
+        url, name="Project 1", description="A Mastering Project"
+    )
     return mastering_project
 
 

@@ -17,6 +17,7 @@ class DatasetNotFound(Exception):
     """Raised when referencing (e.g. updating or deleting) a dataset
     that does not exist on the server.
     """
+
     pass
 
 
@@ -100,7 +101,6 @@ def commit(unified_dataset: Dataset, session: Session) -> JsonDict:
     """
     r = session.post(
         str(unified_dataset.url) + ":refresh",
-        headers={"Content-Type": "application/json",
-                 "Accept": "application/json"}
+        headers={"Content-Type": "application/json", "Accept": "application/json"},
     )
     return response.successful(r).json()

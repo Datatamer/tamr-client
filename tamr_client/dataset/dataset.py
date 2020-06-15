@@ -17,6 +17,7 @@ class DatasetNotFound(Exception):
     """Raised when referencing (e.g. updating or deleting) a dataset
     that does not exist on the server.
     """
+
     pass
 
 
@@ -30,6 +31,7 @@ class Dataset:
         url
         key_attribute_names
     """
+
     url: URL
     name: str
     key_attribute_names: Tuple[str, ...]
