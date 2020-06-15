@@ -1,8 +1,13 @@
 ## 0.12.0-dev
   **BETA**
-
   Important: Do not use BETA features for production workflows.
-  
+  - [#372](https://github.com/Datatamer/tamr-client/issues/372) TC:Design for unified datasets
+    - `AnyDataset` can be any type of dataset.
+    - Unified Dataset is `tc.dataset.unified.Dataset`
+    - Any other Dataset is `tc.dataset.dataset.Dataset`
+  - Added function to get unified dataset from its project
+  - Added function to commit unified dataset
+ 
   - [#367](https://github.com/Datatamer/tamr-client/issues/367) Support for projects:
     - generic projects via `tc.project`
     - Mastering projects via `tc.mastering.project`
