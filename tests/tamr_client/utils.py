@@ -30,7 +30,7 @@ def dataset():
 
 def unified_dataset():
     url = tc.URL(path="projects/1/unifiedDataset")
-    unified_dataset = tc.unified.Dataset(
+    unified_dataset = tc.dataset.unified.Dataset(
         url, name="dataset.csv", key_attribute_names=("primary_key",)
     )
     return unified_dataset
