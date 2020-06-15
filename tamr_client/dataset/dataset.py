@@ -38,7 +38,7 @@ class Dataset:
     description: Optional[str] = None
 
 
-AllDataset = Union[Dataset, UnifiedDataset]
+AnyDataset = Union[Dataset, UnifiedDataset]
 
 
 def from_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
