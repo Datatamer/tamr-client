@@ -92,7 +92,7 @@ def _from_json(url: URL, data: JsonDict) -> Dataset:
     )
 
 
-def commit(unified_dataset: Dataset, session: Session) -> JsonDict:
+def commit(session: Session, unified_dataset: Dataset) -> JsonDict:
     """Commits the Unified Dataset.
 
     Args:
