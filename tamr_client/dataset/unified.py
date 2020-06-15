@@ -14,7 +14,7 @@ from tamr_client.url import URL
 
 
 class NotFound(Exception):
-    """Raised when referencing (e.g. updating or deleting) a dataset
+    """Raised when referencing (e.g. updating or deleting) a unified dataset
     that does not exist on the server.
     """
 
@@ -23,7 +23,7 @@ class NotFound(Exception):
 
 @dataclass(frozen=True)
 class Dataset:
-    """A Tamr dataset
+    """A Tamr unified dataset
 
     See https://docs.tamr.com/reference/dataset-models
 
@@ -41,14 +41,14 @@ class Dataset:
 def from_project(session: Session, instance: Instance, project: Project) -> Dataset:
     """Get unified dataset of a project
 
-    Fetches dataset from Tamr server
+    Fetches the unified dataset of a given project from Tamr server
 
     Args:
         instance: Tamr instance containing this dataset
         project: Tamr project of this Unified Dataset
 
     Raises:
-        UnifiedDatasetNotFound: If no unified dataset could be found at the specified URL.
+        unified.NotFound: If no unified dataset could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
