@@ -67,3 +67,7 @@ from tamr_client.attributes import attribute
 
 from tamr_client import mastering
 from tamr_client import project
+
+# operations
+from tamr_client.operation import Operation
+from tamr_client import operation
