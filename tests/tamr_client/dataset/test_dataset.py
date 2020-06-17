@@ -28,5 +28,5 @@ def test_from_resource_id_dataset_not_found():
     url = tc.URL(path="datasets/1")
     responses.add(responses.GET, str(url), status=404)
 
-    with pytest.raises(tc.DatasetNotFound):
+    with pytest.raises(tc.dataset.NotFound):
         tc.dataset.from_resource_id(s, instance, "1")

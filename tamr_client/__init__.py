@@ -37,7 +37,7 @@ from tamr_client.session import Session
 from tamr_client import session
 
 # datasets
-from tamr_client.dataset import Dataset, DatasetNotFound
+from tamr_client.dataset import AnyDataset, Dataset
 from tamr_client import dataset
 
 # records

@@ -3,18 +3,18 @@ See https://docs.tamr.com/reference/dataset-models
 """
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Optional, Tuple, Union
+from typing import Optional, Tuple
 
 from tamr_client import response
-from tamr_client.dataset.unified import UnifiedDataset
 from tamr_client.instance import Instance
+from tamr_client.project import Project
 from tamr_client.session import Session
 from tamr_client.types import JsonDict
 from tamr_client.url import URL
 
 
 class NotFound(Exception):
-    """Raised when referencing (e.g. updating or deleting) a dataset
+    """Raised when referencing (e.g. updating or deleting) a unified dataset
     that does not exist on the server.
     """
 
@@ -22,8 +22,8 @@ class NotFound(Exception):
 
 
 @dataclass(frozen=True)
-class Dataset:
-    """A Tamr dataset
+class UnifiedDataset:
+    """A Tamr unified dataset
 
     See https://docs.tamr.com/reference/dataset-models
 
@@ -38,28 +38,27 @@ class Dataset:
     description: Optional[str] = None
 
 
-AnyDataset = Union[Dataset, UnifiedDataset]
+def from_project(
+    session: Session, instance: Instance, project: Project
+) -> UnifiedDataset:
+    """Get unified dataset of a project
 
-
-def from_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
-    """Get dataset by resource ID
-
-    Fetches dataset from Tamr server
+    Fetches the unified dataset of a given project from Tamr server
 
     Args:
         instance: Tamr instance containing this dataset
-        id: Dataset ID
+        project: Tamr project of this Unified Dataset
 
     Raises:
-        dataset.NotFound: If no dataset could be found at the specified URL.
+        unified.NotFound: If no unified dataset could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
-    url = URL(instance=instance, path=f"datasets/{id}")
+    url = URL(instance=instance, path=f"{project.url.path}/unifiedDataset")
     return _from_url(session, url)
 
 
-def _from_url(session: Session, url: URL) -> Dataset:
+def _from_url(session: Session, url: URL) -> UnifiedDataset:
     """Get dataset by URL
 
     Fetches dataset from Tamr server
@@ -68,7 +67,7 @@ def _from_url(session: Session, url: URL) -> Dataset:
         url: Dataset URL
 
     Raises:
-        dataset.NotFound: If no dataset could be found at the specified URL.
+        unified.NotFound: If no dataset could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
@@ -79,17 +78,31 @@ def _from_url(session: Session, url: URL) -> Dataset:
     return _from_json(url, data)
 
 
-def _from_json(url: URL, data: JsonDict) -> Dataset:
-    """Make dataset from JSON data (deserialize)
+def _from_json(url: URL, data: JsonDict) -> UnifiedDataset:
+    """Make unified dataset from JSON data (deserialize)
 
     Args:
-        url: Dataset URL
-        data: Dataset JSON data from Tamr server
+        url: Unified Dataset URL
+        data: Unified Dataset JSON data from Tamr server
     """
     cp = deepcopy(data)
-    return Dataset(
+    return UnifiedDataset(
         url,
         name=cp["name"],
         description=cp.get("description"),
         key_attribute_names=tuple(cp["keyAttributeNames"]),
     )
+
+
+def commit(session: Session, unified_dataset: UnifiedDataset) -> JsonDict:
+    """Commits the Unified Dataset.
+
+    Args:
+        unified_dataset: The UnifiedDataset which will be committed
+        session: The Tamr Session
+    """
+    r = session.post(
+        str(unified_dataset.url) + ":refresh",
+        headers={"Content-Type": "application/json", "Accept": "application/json"},
+    )
+    return response.successful(r).json()

@@ -8,7 +8,7 @@ import json
 from typing import cast, Dict, IO, Iterable, Iterator, Optional
 
 from tamr_client import response
-from tamr_client.dataset.dataset import Dataset
+from tamr_client.dataset.dataset import AnyDataset, Dataset
 from tamr_client.session import Session
 from tamr_client.types import JsonDict
 
@@ -145,7 +145,7 @@ def _delete_command(record: Dict, *, primary_key_name: str) -> Dict:
     return {"action": "DELETE", "recordId": record[primary_key_name]}
 
 
-def stream(session: Session, dataset: Dataset) -> Iterator[JsonDict]:
+def stream(session: Session, dataset: AnyDataset) -> Iterator[JsonDict]:
     """Stream the records in this dataset as Python dictionaries.
 
     Args:
