@@ -15,7 +15,7 @@ from tamr_client.types import JsonDict
 from tamr_client.url import URL
 
 
-class OperationNotFound(Exception):
+class NotFound(Exception):
     """Raised when referencing an operation that does not exist on the server.
     """
 
@@ -72,12 +72,39 @@ def from_response(instance: Instance, response: requests.Response) -> Operation:
             "lastModified": {"username": "", "time": _never, "version": "-1"},
             "relativeId": "operations/-1",
         }
-        _url = URL("noop")
     else:
         resource_json = response.json()
-        _id = resource_json["id"]
-        _url = URL(instance=instance, path=f"operations/{_id}")
+    _id = resource_json["id"]
+    _url = URL(instance=instance, path=f"operations/{_id}")
     return _from_json(_url, resource_json)
+
+
+def apply_options(
+    session: Session, operation: Operation, *, asynchronous: bool = False, **options
+) -> Operation:
+    """Applies operation options to this operation.
+
+    **NOTE**: This function **should not** be called directly. Rather, options should be
+    passed in through a higher-level function e.g. :func:`~tamr_client.dataset.unified.commit`.
+
+    Synchronous mode:
+        Automatically waits for operation to resolve before returning the
+        operation.
+
+    asynchronous mode:
+        Immediately return the ``'PENDING'`` operation. It is
+        up to the user to coordinate this operation with their code via
+        :func:`~tamr_client.operation.wait` and/or
+        :func:`~tamr_client.operation.poll` .
+
+    Args:
+        asynchronous: Whether or not to run in asynchronous mode. Default: ``False``.
+        ``**options``: When running in synchronous mode, these options are
+                passed to the underlying :func:`~tamr_client.operation.wait` call.
+    """
+    if asynchronous:
+        return operation
+    return wait(session, operation, **options)
 
 
 def _from_url(session: Session, url: URL) -> Operation:
@@ -95,7 +122,7 @@ def _from_url(session: Session, url: URL) -> Operation:
     """
     r = session.get(str(url))
     if r.status_code == 404:
-        raise OperationNotFound(str(url))
+        raise NotFound(str(url))
     data = response.successful(r).json()
     return _from_json(url, data)
 
