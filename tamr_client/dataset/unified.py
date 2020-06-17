@@ -22,7 +22,7 @@ class NotFound(Exception):
 
 
 @dataclass(frozen=True)
-class Dataset:
+class UnifiedDataset:
     """A Tamr unified dataset
 
     See https://docs.tamr.com/reference/dataset-models
@@ -38,7 +38,9 @@ class Dataset:
     description: Optional[str] = None
 
 
-def from_project(session: Session, instance: Instance, project: Project) -> Dataset:
+def from_project(
+    session: Session, instance: Instance, project: Project
+) -> UnifiedDataset:
     """Get unified dataset of a project
 
     Fetches the unified dataset of a given project from Tamr server
@@ -56,7 +58,7 @@ def from_project(session: Session, instance: Instance, project: Project) -> Data
     return _from_url(session, url)
 
 
-def _from_url(session: Session, url: URL) -> Dataset:
+def _from_url(session: Session, url: URL) -> UnifiedDataset:
     """Get dataset by URL
 
     Fetches dataset from Tamr server
@@ -76,7 +78,7 @@ def _from_url(session: Session, url: URL) -> Dataset:
     return _from_json(url, data)
 
 
-def _from_json(url: URL, data: JsonDict) -> Dataset:
+def _from_json(url: URL, data: JsonDict) -> UnifiedDataset:
     """Make unified dataset from JSON data (deserialize)
 
     Args:
@@ -84,7 +86,7 @@ def _from_json(url: URL, data: JsonDict) -> Dataset:
         data: Unified Dataset JSON data from Tamr server
     """
     cp = deepcopy(data)
-    return Dataset(
+    return UnifiedDataset(
         url,
         name=cp["name"],
         description=cp.get("description"),
@@ -92,7 +94,7 @@ def _from_json(url: URL, data: JsonDict) -> Dataset:
     )
 
 
-def commit(session: Session, unified_dataset: Dataset) -> JsonDict:
+def commit(session: Session, unified_dataset: UnifiedDataset) -> JsonDict:
     """Commits the Unified Dataset.
 
     Args:
