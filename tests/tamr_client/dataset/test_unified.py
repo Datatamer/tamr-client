@@ -40,7 +40,7 @@ def test_commit():
     instance = utils.instance()
     project = utils.mastering_project()
 
-    operation_json = utils.load_json("operation.json")
+    operation_json = utils.load_json("operation_pending.json")
     dataset_json = utils.load_json("dataset.json")
     prj_url = tc.URL(path="projects/1/unifiedDataset")
     responses.add(responses.GET, str(prj_url), json=dataset_json)
