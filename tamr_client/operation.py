@@ -39,108 +39,6 @@ class Operation:
     description: Optional[str] = None
 
 
-def _from_response(instance: Instance, response: requests.Response) -> Operation:
-    """
-    Handle idiosyncrasies in constructing Operations from Tamr responses.
-    When a Tamr API call would start an operation, but all results that would be
-    produced by that operation are already up-to-date, Tamr returns `HTTP 204 No Content`
-
-    To make it easy for client code to handle these API responses without checking
-    the response code, this method will either construct an Operation, or a
-    dummy `NoOp` operation representing the 204 Success response.
-
-    Args:
-        response: HTTP Response from the request that started the operation.
-    """
-    if response.status_code == 204:
-        # Operation was successful, but the response contains no content.
-        # Create a dummy operation to represent this.
-        _never = "0000-00-00T00:00:00.000Z"
-        _description = """Tamr returned HTTP 204 for this operation, indicating that all
-            results that would be produced by the operation are already up-to-date."""
-        resource_json = {
-            "id": "-1",
-            "type": "NOOP",
-            "description": _description,
-            "status": {
-                "state": "SUCCEEDED",
-                "startTime": _never,
-                "endTime": _never,
-                "message": "",
-            },
-            "created": {"username": "", "time": _never, "version": "-1"},
-            "lastModified": {"username": "", "time": _never, "version": "-1"},
-            "relativeId": "operations/-1",
-        }
-    else:
-        resource_json = response.json()
-    _id = resource_json["id"]
-    _url = URL(instance=instance, path=f"operations/{_id}")
-    return _from_json(_url, resource_json)
-
-
-def _apply_options(
-    session: Session, operation: Operation, *, asynchronous: bool = False, **options
-) -> Operation:
-    """Applies operation options to this operation.
-
-    synchronous mode:
-        Automatically waits for operation to resolve before returning the
-        operation.
-
-    asynchronous mode:
-        Immediately return the ``'PENDING'`` operation. It is
-        up to the user to coordinate this operation with their code via
-        :func:`~tamr_client.operation.wait` and/or
-        :func:`~tamr_client.operation.poll` .
-
-    Args:
-        asynchronous: Whether or not to run in asynchronous mode. Default: ``False``.
-        ``**options``: When running in synchronous mode, these options are
-                passed to the underlying :func:`~tamr_client.operation.wait` call.
-    """
-    if asynchronous:
-        return operation
-    return wait(session, operation, **options)
-
-
-def _from_url(session: Session, url: URL) -> Operation:
-    """Get operation by URL
-
-    Fetches operation from Tamr server
-
-    Args:
-        url: Operation URL
-
-    Raises:
-        OperationNotFound: If no operation could be found at the specified URL.
-            Corresponds to a 404 HTTP error.
-        requests.HTTPError: If any other HTTP error is encountered.
-    """
-    r = session.get(str(url))
-    if r.status_code == 404:
-        raise NotFound(str(url))
-    data = response.successful(r).json()
-    return _from_json(url, data)
-
-
-def _from_json(url: URL, data: JsonDict):
-    """Make operation from JSON data (deserialize)
-
-    Args:
-        url: Operation URL
-        data: Operation JSON data from Tamr server
-    """
-    cp = deepcopy(data)
-    return Operation(
-        url,
-        id=cp["id"],
-        type=cp["type"],
-        status=cp.get("status"),
-        description=cp.get("description"),
-    )
-
-
 def poll(session: Session, operation: Operation) -> Operation:
     """Poll this operation for server-side updates.
 
@@ -190,3 +88,105 @@ def succeeded(operation: Operation) -> bool:
     """Convenience method for checking if operation was successful.
     """
     return operation.status is not None and operation.status["state"] == "SUCCEEDED"
+
+
+def _from_response(instance: Instance, response: requests.Response) -> Operation:
+    """
+    Handle idiosyncrasies in constructing Operations from Tamr responses.
+    When a Tamr API call would start an operation, but all results that would be
+    produced by that operation are already up-to-date, Tamr returns `HTTP 204 No Content`
+
+    To make it easy for client code to handle these API responses without checking
+    the response code, this method will either construct an Operation, or a
+    dummy `NoOp` operation representing the 204 Success response.
+
+    Args:
+        response: HTTP Response from the request that started the operation.
+    """
+    if response.status_code == 204:
+        # Operation was successful, but the response contains no content.
+        # Create a dummy operation to represent this.
+        _never = "0000-00-00T00:00:00.000Z"
+        _description = """Tamr returned HTTP 204 for this operation, indicating that all
+            results that would be produced by the operation are already up-to-date."""
+        resource_json = {
+            "id": "-1",
+            "type": "NOOP",
+            "description": _description,
+            "status": {
+                "state": "SUCCEEDED",
+                "startTime": _never,
+                "endTime": _never,
+                "message": "",
+            },
+            "created": {"username": "", "time": _never, "version": "-1"},
+            "lastModified": {"username": "", "time": _never, "version": "-1"},
+            "relativeId": "operations/-1",
+        }
+    else:
+        resource_json = response.json()
+    _id = resource_json["id"]
+    _url = URL(instance=instance, path=f"operations/{_id}")
+    return _from_json(_url, resource_json)
+
+
+def _from_url(session: Session, url: URL) -> Operation:
+    """Get operation by URL
+
+    Fetches operation from Tamr server
+
+    Args:
+        url: Operation URL
+
+    Raises:
+        OperationNotFound: If no operation could be found at the specified URL.
+            Corresponds to a 404 HTTP error.
+        requests.HTTPError: If any other HTTP error is encountered.
+    """
+    r = session.get(str(url))
+    if r.status_code == 404:
+        raise NotFound(str(url))
+    data = response.successful(r).json()
+    return _from_json(url, data)
+
+
+def _from_json(url: URL, data: JsonDict):
+    """Make operation from JSON data (deserialize)
+
+    Args:
+        url: Operation URL
+        data: Operation JSON data from Tamr server
+    """
+    cp = deepcopy(data)
+    return Operation(
+        url,
+        id=cp["id"],
+        type=cp["type"],
+        status=cp.get("status"),
+        description=cp.get("description"),
+    )
+
+
+def _apply_options(
+    session: Session, operation: Operation, *, asynchronous: bool = False, **options
+) -> Operation:
+    """Applies operation options to this operation.
+
+    synchronous mode:
+        Automatically waits for operation to resolve before returning the
+        operation.
+
+    asynchronous mode:
+        Immediately return the ``'PENDING'`` operation. It is
+        up to the user to coordinate this operation with their code via
+        :func:`~tamr_client.operation.wait` and/or
+        :func:`~tamr_client.operation.poll` .
+
+    Args:
+        asynchronous: Whether or not to run in asynchronous mode. Default: ``False``.
+        ``**options``: When running in synchronous mode, these options are
+                passed to the underlying :func:`~tamr_client.operation.wait` call.
+    """
+    if asynchronous:
+        return operation
+    return wait(session, operation, **options)
