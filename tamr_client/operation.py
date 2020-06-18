@@ -39,7 +39,7 @@ class Operation:
     description: Optional[str] = None
 
 
-def from_response(instance: Instance, response: requests.Response) -> Operation:
+def _from_response(instance: Instance, response: requests.Response) -> Operation:
     """
     Handle idiosyncrasies in constructing Operations from Tamr responses.
     When a Tamr API call would start an operation, but all results that would be
@@ -79,15 +79,12 @@ def from_response(instance: Instance, response: requests.Response) -> Operation:
     return _from_json(_url, resource_json)
 
 
-def apply_options(
+def _apply_options(
     session: Session, operation: Operation, *, asynchronous: bool = False, **options
 ) -> Operation:
     """Applies operation options to this operation.
 
-    **NOTE**: This function **should not** be called directly. Rather, options should be
-    passed in through a higher-level function e.g. :func:`~tamr_client.dataset.unified.commit`.
-
-    Synchronous mode:
+    synchronous mode:
         Automatically waits for operation to resolve before returning the
         operation.
 
