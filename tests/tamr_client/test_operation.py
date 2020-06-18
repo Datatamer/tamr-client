@@ -10,7 +10,6 @@ def test_operation_from_json():
     operation_json = utils.load_json("operation_succeeded.json")
     op = tc.operation._from_json(url, operation_json)
     assert op.url == url
-    assert op.id == operation_json["id"]
     assert op.type == operation_json["type"]
     assert op.description == operation_json["description"]
     assert op.status == operation_json["status"]
@@ -27,7 +26,6 @@ def test_operation_from_url():
 
     op = tc.operation._from_url(s, url)
     assert op.url == url
-    assert op.id == operation_json["id"]
     assert op.type == operation_json["type"]
     assert op.description == operation_json["description"]
     assert op.status == operation_json["status"]
@@ -44,9 +42,8 @@ def test_operation_from_response():
     responses.add(responses.GET, str(url), json=operation_json)
 
     r = s.get(str(url))
-    op = tc.operation.from_response(instance, r)
+    op = tc.operation._from_response(instance, r)
     assert op.url == url
-    assert op.id == operation_json["id"]
     assert op.type == operation_json["type"]
     assert op.description == operation_json["description"]
     assert op.status == operation_json["status"]
@@ -64,16 +61,16 @@ def test_operation_from_response_noop():
     responses.add(responses.GET, str(url_dummy), status=404)
 
     r = s.get(str(url))
-    op2 = tc.operation.from_response(instance, r)
+    op2 = tc.operation._from_response(instance, r)
 
-    assert op2.id is not None
+    assert op2.url is not None
     assert op2.type == "NOOP"
     assert op2.description is not None
     assert op2.status is not None
     assert op2.status["state"] == "SUCCEEDED"
     assert tc.operation.succeeded(op2)
 
-    op2a = tc.operation.apply_options(s, op2, asynchronous=True)
+    op2a = tc.operation._apply_options(s, op2, asynchronous=True)
     assert tc.operation.succeeded(op2a)
 
     op2w = tc.operation.wait(s, op2a)
@@ -95,6 +92,6 @@ def test_operation_poll():
     responses.add(responses.GET, str(url), json=succeeded_operation_json)
     op2 = tc.operation.poll(s, op1)
 
-    assert op2.id == op1.id
+    assert op2.url == op1.url
     assert not tc.operation.succeeded(op1)
     assert tc.operation.succeeded(op2)

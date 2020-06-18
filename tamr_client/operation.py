@@ -33,7 +33,6 @@ class Operation:
     """
 
     url: URL
-    id: str
     type: str
     status: Optional[Dict[str, str]] = None
     description: Optional[str] = None
@@ -157,11 +156,7 @@ def _from_json(url: URL, data: JsonDict):
     """
     cp = deepcopy(data)
     return Operation(
-        url,
-        id=cp["id"],
-        type=cp["type"],
-        status=cp.get("status"),
-        description=cp.get("description"),
+        url, type=cp["type"], status=cp.get("status"), description=cp.get("description")
     )
 
 
