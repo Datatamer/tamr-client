@@ -30,6 +30,9 @@ class Operation:
 
     Args:
         url
+        type
+        status
+        description
     """
 
     url: URL
