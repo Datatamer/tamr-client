@@ -70,13 +70,11 @@ def wait(
     """
     started = now()
     while timeout_seconds is None or now() - started < timeout_seconds:
-        if operation.status and operation.status["state"] in ["PENDING", "RUNNING"]:
+        if operation.status is None:
+            return operation
+        elif operation.status["state"] in ["PENDING", "RUNNING"]:
             sleep(poll_interval_seconds)
-        elif not operation.status or operation.status["state"] in [
-            "CANCELED",
-            "SUCCEEDED",
-            "FAILED",
-        ]:
+        elif operation.status["state"] in ["CANCELED", "SUCCEEDED", "FAILED"]:
             return operation
         operation = poll(session, operation)
     raise TimeoutError(
