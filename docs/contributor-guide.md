@@ -10,7 +10,7 @@ If the bug/feature has been submitted already, leave a like 👍 on the descript
 Submit bug reports as [Github issues](https://github.com/Datatamer/tamr-client/issues/new/choose).
 
 ### Feature requests
-Submit feature requests as [Github issues](https://github.com/Datatamer/tamr-client/issues/new/choose) 
+Submit feature requests as [Github issues](https://github.com/Datatamer/tamr-client/issues/new/choose).
 
 
 ## Contributing code

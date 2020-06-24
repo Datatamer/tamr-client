@@ -38,3 +38,10 @@ Contributions / PRs should follow the
 Split and squash commits as necessary to create a clean `git` history. Once you ask for review, only add new commits (do not change existing commits) for reviewer convenience. You may change commits in your PR only if reviewers are ok with it.
 
 Also, write [good commit messages](https://chris.beams.io/posts/git-commit/)!
+
+### CI checks
+
+Continuous integration (CI) checks are run automatically for all pull requests.
+CI runs the same [dev tasks](dev-tasks) that you can run locally.
+
+You should run dev tasks locally _before_ submitting your PR to cut down on subsequent commits to fix the CI checks.
