@@ -1,9 +1,12 @@
-# Install
+# Installation
 
-This project uses `pyenv` and `poetry`.
-If you do not have these installed, checkout the [toolchain guide](toolchain).
+### Pre-requisites
 
----
+1. Install [build dependencies for pyenv](https://github.com/pyenv/pyenv/wiki#suggested-build-environment)
+2. Install [pyenv](https://github.com/pyenv/pyenv#installation)
+3. Install [poetry](https://python-poetry.org/docs/#installation)
+
+### Clone + install
 
 1. Clone your fork and `cd` into the project:
 
@@ -12,20 +15,16 @@ If you do not have these installed, checkout the [toolchain guide](toolchain).
     cd tamr-client
     ```
 
-2. Set a Python version for this project. Must be Python 3.6+ (e.g. `3.7.3`):
+2. Install all Python versions in [.python-version](https://github.com/Datatamer/tamr-client/blob/master/.python-version):
+
+    [Dev tasks](dev-tasks) will use these Python versions.
 
     ```sh
-    pyenv local 3.7.3
+    # run `pyenv install` for each line in `.python-version`
+    cat .python-version | xargs -L 1 pyenv install
     ```
 
-3. Check that your Python version matches the version specified in `.python-version`:
-
-    ```sh
-    cat .python-version
-    python --version
-    ```
-
-4. Install dependencies via `poetry`:
+3. Install project dependencies via `poetry`:
 
     ```sh
     poetry install
