@@ -29,7 +29,9 @@ class Dataset:
 
     Args:
         url
+        name
         key_attribute_names
+        description
     """
 
     url: URL

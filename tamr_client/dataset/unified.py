@@ -30,7 +30,9 @@ class UnifiedDataset:
 
     Args:
         url
+        name
         key_attribute_names
+        description
     """
 
     url: URL
