@@ -161,28 +161,3 @@ def _from_json(url: URL, data: JsonDict):
     return Operation(
         url, type=cp["type"], status=cp.get("status"), description=cp.get("description")
     )
-
-
-def _apply_options(
-    session: Session, operation: Operation, *, asynchronous: bool = False, **options
-) -> Operation:
-    """Applies operation options to this operation.
-
-    synchronous mode:
-        Automatically waits for operation to resolve before returning the
-        operation.
-
-    asynchronous mode:
-        Immediately return the ``'PENDING'`` operation. It is
-        up to the user to coordinate this operation with their code via
-        :func:`~tamr_client.operation.wait` and/or
-        :func:`~tamr_client.operation.poll` .
-
-    Args:
-        asynchronous: Whether or not to run in asynchronous mode. Default: ``False``.
-        ``**options``: When running in synchronous mode, these options are
-                passed to the underlying :func:`~tamr_client.operation.wait` call.
-    """
-    if asynchronous:
-        return operation
-    return wait(session, operation, **options)

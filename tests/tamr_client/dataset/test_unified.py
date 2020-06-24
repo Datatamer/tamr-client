@@ -35,19 +35,16 @@ def test_from_project_dataset_not_found():
 
 
 @responses.activate
-def test_commit():
+def test_apply_changes():
     s = utils.session()
-    instance = utils.instance()
-    project = utils.mastering_project()
+    dataset_json = utils.load_json("dataset.json")
+    dataset_url = tc.URL(path="projects/1/unifiedDataset")
+    unified_dataset = tc.dataset.unified._from_json(dataset_url, dataset_json)
 
     operation_json = utils.load_json("operation_pending.json")
-    dataset_json = utils.load_json("dataset.json")
-    prj_url = tc.URL(path="projects/1/unifiedDataset")
-    responses.add(responses.GET, str(prj_url), json=dataset_json)
-    unified_dataset = tc.dataset.unified.from_project(s, instance, project)
-
+    operation_url = tc.URL(path="operations/1")
     url = tc.URL(path="projects/1/unifiedDataset:refresh")
     responses.add(responses.POST, str(url), json=operation_json)
 
-    response = tc.dataset.unified.commit(s, unified_dataset)
-    assert response == operation_json
+    response = tc.dataset.unified._apply_changes_async(s, unified_dataset)
+    assert response == tc.operation._from_json(operation_url, operation_json)

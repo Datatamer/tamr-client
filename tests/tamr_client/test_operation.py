@@ -70,10 +70,7 @@ def test_operation_from_response_noop():
     assert op2.status["state"] == "SUCCEEDED"
     assert tc.operation.succeeded(op2)
 
-    op2a = tc.operation._apply_options(s, op2, asynchronous=True)
-    assert tc.operation.succeeded(op2a)
-
-    op2w = tc.operation.wait(s, op2a)
+    op2w = tc.operation.wait(s, op2)
     assert tc.operation.succeeded(op2w)
 
     with pytest.raises(tc.operation.NotFound):
