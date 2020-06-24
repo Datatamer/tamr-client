@@ -12,6 +12,7 @@
     - generic projects via `tc.project`
     - Mastering projects via `tc.mastering.project`
   - Support for streaming records from a dataset via `tc.record.stream`
+  - Support for operations via `tc.operations`
 
   **BUG FIXES**
   - `from_geo_features` now returns information on the operation.  
