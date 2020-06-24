@@ -98,7 +98,7 @@ def _from_json(url: URL, data: JsonDict) -> UnifiedDataset:
 
 
 def apply_changes(session: Session, unified_dataset: UnifiedDataset) -> Operation:
-    """Applies changes to the unified dataset and waits for the operation to resolve
+    """Applies changes to the unified dataset and waits for the operation to complete
 
     Args:
         unified_dataset: The Unified Dataset which will be committed
