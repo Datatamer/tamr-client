@@ -5,8 +5,9 @@ from copy import deepcopy
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from tamr_client import response
+from tamr_client import operation, response
 from tamr_client.instance import Instance
+from tamr_client.operation import Operation
 from tamr_client.project import Project
 from tamr_client.session import Session
 from tamr_client.types import JsonDict
@@ -29,7 +30,9 @@ class UnifiedDataset:
 
     Args:
         url
+        name
         key_attribute_names
+        description
     """
 
     url: URL
@@ -94,15 +97,26 @@ def _from_json(url: URL, data: JsonDict) -> UnifiedDataset:
     )
 
 
-def commit(session: Session, unified_dataset: UnifiedDataset) -> JsonDict:
-    """Commits the Unified Dataset.
+def apply_changes(session: Session, unified_dataset: UnifiedDataset) -> Operation:
+    """Applies changes to the unified dataset and waits for the operation to complete
 
     Args:
-        unified_dataset: The UnifiedDataset which will be committed
-        session: The Tamr Session
+        unified_dataset: The Unified Dataset which will be committed
+    """
+    op = _apply_changes_async(session, unified_dataset)
+    return operation.wait(session, op)
+
+
+def _apply_changes_async(
+    session: Session, unified_dataset: UnifiedDataset
+) -> Operation:
+    """Applies changes to the unified dataset
+
+    Args:
+        unified_dataset: The Unified Dataset which will be committed
     """
     r = session.post(
         str(unified_dataset.url) + ":refresh",
         headers={"Content-Type": "application/json", "Accept": "application/json"},
     )
-    return response.successful(r).json()
+    return operation._from_response(unified_dataset.url.instance, r)

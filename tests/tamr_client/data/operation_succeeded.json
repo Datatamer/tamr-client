@@ -1,0 +1,22 @@
+{
+    "id": "1",
+    "type": "SPARK",
+    "description": "operation 1 description",
+    "status": {
+        "state": "SUCCEEDED",
+        "startTime": "",
+        "endTime": "",
+        "message": ""
+    },
+    "created": {
+        "username": "admin",
+        "time": "2020-06-12T18:21:42.288Z",
+        "version": "operation 1 created version"
+    },
+    "lastModified": {
+        "username": "admin",
+        "time": "2020-06-12T18:21:42.288Z",
+        "version": "operation 1 modified version"
+    },
+    "relativeId": "operations/1"
+}

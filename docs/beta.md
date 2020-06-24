@@ -10,6 +10,7 @@
   * [Dataset](beta/dataset)
   * [Instance](beta/instance)
   * [Mastering](beta/mastering)
+  * [Operation](beta/operation)
   * [Project](beta/project)
   * [Response](beta/response)
   * [Session](beta/session)
