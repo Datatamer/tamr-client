@@ -1,5 +1,7 @@
 # Contributor guide
 
+Make sure you are viewing the [latest version of Contributor Guide](https://tamr-client.readthedocs.io/en/latest/contributor-guide.html).
+
 ## Contributing feedback
 
 Check through existing issues (open and closed) to confirm that the bug or feature hasn’t been reported before.
