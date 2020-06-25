@@ -2,7 +2,7 @@
 
 Make sure you are viewing the [latest version of Contributor Guide](https://tamr-client.readthedocs.io/en/latest/contributor-guide.html).
 
-## Contributing feedback
+## Feedback
 
 Check through existing issues (open and closed) to confirm that the bug or feature hasn’t been reported before.
 
@@ -14,8 +14,11 @@ Submit bug reports as [Github issues](https://github.com/Datatamer/tamr-client/i
 ### Feature requests
 Submit feature requests as [Github issues](https://github.com/Datatamer/tamr-client/issues/new/choose).
 
+## Documentation
 
-## Contributing code
+* [How to write user-facing documentation](contributor-guide/how-to-write-docs)
+
+## Code
 * [Install the codebase](contributor-guide/install)
 * [Run dev tasks](contributor-guide/dev-tasks)
 * [Configure your text editor](contributor-guide/text-editor)
