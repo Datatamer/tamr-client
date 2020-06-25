@@ -4,7 +4,7 @@
 Code should generally conform to the [PEP8 style guidelines](https://www.python.org/dev/peps/pep-0008/). 
   * [Flake8](https://flake8.pycqa.org/en/latest/) is a linter to help check that code is aligned with these formatting requirements
   * [Black](https://black.readthedocs.io/en/stable/) is a formatter that can be used to automatically reformat code to resolve many (but not all) formatting issues
-  * For details on using these tools [see here](run-and-build)
+  * For details on using these tools, see [the dev tasks guide](dev-tasks)
 
 ### Structure
 * Classes with methods should be avoided in favor of simple [dataclasses](https://docs.python.org/3/library/dataclasses.html) and functions

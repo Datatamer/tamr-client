@@ -1,4 +1,4 @@
-# Run and Build
+# Run dev tasks
 
 This project uses [nox](https://nox.thea.codes/en/stable/).
 
@@ -15,7 +15,7 @@ prn # with alias
 poetry run nox # without alias
 ```
 
-## Linting & Formatting
+## Linting
 
 To run linter:
 
@@ -23,6 +23,8 @@ To run linter:
 prn -s lint # with alias
 poetry run nox -s lint # without alias
 ```
+
+## Formatting
 
 To run formatter:
 
