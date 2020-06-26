@@ -1,12 +1,14 @@
 # Contributor guide
 
-Make sure you are viewing the [latest version of Contributor Guide](https://tamr-client.readthedocs.io/en/latest/contributor-guide.html).
+Thank you for learning how to contribute to the Tamr's Python Client!
+Your contribution will help you and many others in the Tamr community.
+Before you begin, make sure you are viewing the [latest version of Contributor Guide](https://tamr-client.readthedocs.io/en/latest/contributor-guide.html).
 
 ## Feedback
 
-Check through existing issues (open and closed) to confirm that the bug or feature hasn’t been reported before.
-
+Before submitting a new issue, [you can search existing issues](https://github.com/Datatamer/tamr-client/issues?q=is%3Aissue).
 If the bug/feature has been submitted already, leave a like 👍 on the description of the Github Issue.
+Maintainers will consider number of likes when prioritizing issues.
 
 ### Bug reports
 Submit bug reports as [Github issues](https://github.com/Datatamer/tamr-client/issues/new/choose).
