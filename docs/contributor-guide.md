@@ -1,6 +1,6 @@
 # Contributor guide
 
-Thank you for learning how to contribute to the Tamr's Python Client!
+Thank you for learning how to contribute to Tamr's Python Client!
 Your contribution will help you and many others in the Tamr community.
 Before you begin, make sure you are viewing the [latest version of Contributor Guide](https://tamr-client.readthedocs.io/en/latest/contributor-guide.html).
 
