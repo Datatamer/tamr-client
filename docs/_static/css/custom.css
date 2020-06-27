@@ -11,6 +11,10 @@ legend {
     font-family: 'Lexend Deca', sans-serif;
 }
 
+h1 {
+    font-size: 225%;
+}
+
 .wy-side-nav-search {
     background-color: #0859C6;
 }
