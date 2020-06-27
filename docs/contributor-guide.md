@@ -26,3 +26,18 @@ Submit feature requests as [Github issues](https://github.com/Datatamer/tamr-cli
 * [Configure your text editor](contributor-guide/text-editor)
 * [Read the style guide](contributor-guide/style-guide)
 * [Submit a pull request](contributor-guide/pull-request)
+
+
+## Maintainers
+
+Maintainer responsabilities:
+- Triage issues
+- Review + merge pull requests
+- Discuss RFCs
+- Publish new releases
+
+Current maintainers:
+- [pcattori](https://github.com/pcattori)
+
+Want to become a maintainer?
+Open a pull request that adds your name to the list of current maintainers!
