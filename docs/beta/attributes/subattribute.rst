@@ -1,6 +1,11 @@
 SubAttribute
 ============
 
+.. NOTE(pcattori):
+   `SubAttribute` has a recursive dependency on `AttributeType`.
+   `sphinx_autodoc_typehint` cannot handle recursive dependencies,
+   so reference docs are written manually
+
 .. class:: tamr_client.SubAttribute(name, type, is_nullable, description=None)
 
   :param name:

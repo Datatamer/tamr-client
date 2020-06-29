@@ -1,70 +1,28 @@
 """
 See https://docs.tamr.com/reference#attribute-types
 """
-from dataclasses import dataclass
-from enum import Enum
 import logging
-from typing import ClassVar, Tuple, Union
 
-from tamr_client._types import JsonDict
+from tamr_client._types import (
+    Array,
+    AttributeType,
+    JsonDict,
+    Map,
+    PrimitiveType,
+    Record,
+)
+from tamr_client._types import (  # noqa: F401
+    BOOLEAN,
+    DEFAULT,
+    DOUBLE,
+    GEOSPATIAL,
+    INT,
+    LONG,
+    STRING,
+)
 from tamr_client.attributes import subattribute
-from tamr_client.attributes.subattribute import SubAttribute
 
 logger = logging.getLogger(__name__)
-
-# primitive types
-#################
-
-PrimitiveType = Enum("PrimitiveType", ["BOOLEAN", "DOUBLE", "INT", "LONG", "STRING"])
-
-# aliases
-DOUBLE = PrimitiveType.DOUBLE
-BOOLEAN = PrimitiveType.BOOLEAN
-INT = PrimitiveType.INT
-LONG = PrimitiveType.LONG
-STRING = PrimitiveType.STRING
-
-
-# complex types
-###############
-
-
-@dataclass(frozen=True)
-class Array:
-    """See https://docs.tamr.com/reference#attribute-types"""
-
-    # NOTE(pcattori) sphinx_autodoc_typehints cannot handle recursive reference
-    # docstring written manually
-    _tag: ClassVar[str] = "ARRAY"
-    inner_type: "AttributeType"
-
-
-@dataclass(frozen=True)
-class Map:
-    """See https://docs.tamr.com/reference#attribute-types"""
-
-    # NOTE(pcattori): sphinx_autodoc_typehints cannot handle recursive reference
-    # docstring written manually
-    _tag: ClassVar[str] = "MAP"
-    inner_type: "AttributeType"
-
-
-@dataclass(frozen=True)
-class Record:
-    """See https://docs.tamr.com/reference#attribute-types"""
-
-    # NOTE(pcattori) sphinx_autodoc_typehints cannot handle recursive reference
-    # docstring written manually
-    _tag: ClassVar[str] = "RECORD"
-    attributes: Tuple[SubAttribute, ...]
-
-
-ComplexType = Union[Array, Map, Record]
-
-# attribute type
-################
-
-AttributeType = Union[PrimitiveType, ComplexType]
 
 
 def from_json(data: JsonDict) -> AttributeType:

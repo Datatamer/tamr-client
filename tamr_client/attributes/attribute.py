@@ -2,13 +2,12 @@
 See https://docs.tamr.com/reference/attribute-types
 """
 from copy import deepcopy
-from dataclasses import dataclass, field, replace
+from dataclasses import replace
 from typing import Optional, Tuple
 
 from tamr_client import response
-from tamr_client._types import JsonDict, URL
-from tamr_client.attributes import attribute_type, type_alias
-from tamr_client.attributes.attribute_type import AttributeType
+from tamr_client._types import Attribute, AttributeType, JsonDict, URL
+from tamr_client.attributes import type as attribute_type
 from tamr_client.dataset.dataset import Dataset
 from tamr_client.session import Session
 
@@ -50,27 +49,6 @@ class ReservedAttributeName(Exception):
     """Raised when attempting to create an attribute with a reserved name"""
 
     pass
-
-
-@dataclass(frozen=True)
-class Attribute:
-    """A Tamr Attribute.
-
-    See https://docs.tamr.com/reference#attribute-types
-
-    Args:
-        url
-        name
-        type
-        description
-    """
-
-    url: URL
-    name: str
-    type: AttributeType
-    is_nullable: bool
-    _json: JsonDict = field(compare=False, repr=False)
-    description: Optional[str] = None
 
 
 def from_resource_id(session: Session, dataset: Dataset, id: str) -> Attribute:
@@ -125,7 +103,6 @@ def _from_json(url: URL, data: JsonDict) -> Attribute:
         description=cp.get("description"),
         is_nullable=cp["isNullable"],
         type=attribute_type.from_json(cp["type"]),
-        _json=cp,
     )
 
 
@@ -179,7 +156,7 @@ def create(
     *,
     name: str,
     is_nullable: bool,
-    type: AttributeType = type_alias.DEFAULT,
+    type: AttributeType = attribute_type.DEFAULT,
     description: Optional[str] = None,
 ) -> Attribute:
     """Create an attribute
@@ -222,7 +199,7 @@ def _create(
     *,
     name: str,
     is_nullable: bool,
-    type: AttributeType = type_alias.DEFAULT,
+    type: AttributeType = attribute_type.DEFAULT,
     description: Optional[str] = None,
 ) -> Attribute:
     """Same as `tc.attribute.create`, but does not check for reserved attribute

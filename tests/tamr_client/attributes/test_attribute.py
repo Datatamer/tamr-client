@@ -40,7 +40,7 @@ def test_create():
             tc.SubAttribute(
                 name=str(i),
                 is_nullable=True,
-                type=tc.attribute_type.Array(tc.attribute_type.STRING),
+                type=tc.attributes.type.Array(tc.attributes.type.STRING),
             )
             for i in range(4)
         ]
@@ -55,7 +55,7 @@ def test_create():
         dataset,
         name="attr",
         is_nullable=False,
-        type=tc.attribute_type.Record(attributes=attrs),
+        type=tc.attributes.type.Record(attributes=attrs),
     )
 
     assert attr == tc.attribute._from_json(url, attr_json)
@@ -136,11 +136,11 @@ def test_from_dataset_all():
 
     row_num = attrs[0]
     assert row_num.name == "RowNum"
-    assert row_num.type == tc.attribute_type.STRING
+    assert row_num.type == tc.attributes.type.STRING
 
     geom = attrs[1]
     assert geom.name == "geom"
-    assert isinstance(geom.type, tc.attribute_type.Record)
+    assert isinstance(geom.type, tc.attributes.type.Record)
 
 
 @responses.activate

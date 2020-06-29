@@ -13,7 +13,7 @@ import logging
 # https://docs.python-guide.org/writing/logging/#logging-in-a-library
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
-from ._types import URL
+from ._types import Attribute, AttributeType, SubAttribute, URL
 
 # Import shortcuts
 ##################
@@ -45,16 +45,9 @@ from tamr_client.dataset.dataframe import AmbiguousPrimaryKey
 from tamr_client.dataset import dataframe
 
 # attributes
-from tamr_client.attributes.subattribute import SubAttribute
 from tamr_client.attributes import subattribute
 
-from tamr_client.attributes.attribute_type import AttributeType
-from tamr_client.attributes import attribute_type
-
-import tamr_client.attributes.type_alias
-
 from tamr_client.attributes.attribute import (
-    Attribute,
     AttributeExists,
     AttributeNotFound,
     ReservedAttributeName,
