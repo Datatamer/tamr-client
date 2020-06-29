@@ -31,7 +31,7 @@ _RESERVED_NAMES = frozenset(
 )
 
 
-class AttributeNotFound(Exception):
+class NotFound(Exception):
     """Raised when referencing (e.g. updating or deleting) an attribute
     that does not exist on the server.
     """
@@ -39,13 +39,13 @@ class AttributeNotFound(Exception):
     pass
 
 
-class AttributeExists(Exception):
+class AlreadyExists(Exception):
     """Raised when trying to create an attribute that already exists on the server"""
 
     pass
 
 
-class ReservedAttributeName(Exception):
+class ReservedName(Exception):
     """Raised when attempting to create an attribute with a reserved name"""
 
     pass
@@ -61,7 +61,7 @@ def from_resource_id(session: Session, dataset: Dataset, id: str) -> Attribute:
         id: Attribute ID
 
     Raises:
-        AttributeNotFound: If no attribute could be found at the specified URL.
+        attributes.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
@@ -78,13 +78,13 @@ def _from_url(session: Session, url: URL) -> Attribute:
         url: Attribute URL
 
     Raises:
-        AttributeNotFound: If no attribute could be found at the specified URL.
+        attributes.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     r = session.get(str(url))
     if r.status_code == 404:
-        raise AttributeNotFound(str(url))
+        raise NotFound(str(url))
     data = response.successful(r).json()
     return _from_json(url, data)
 
@@ -175,13 +175,13 @@ def create(
         The newly created attribute
 
     Raises:
-        ReservedAttributeName: If attribute name is reserved.
-        AttributeExists: If an attribute already exists at the specified URL.
+        ReservedName: If attribute name is reserved.
+        AlreadyExists: If an attribute already exists at the specified URL.
             Corresponds to a 409 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     if name in _RESERVED_NAMES:
-        raise ReservedAttributeName(name)
+        raise ReservedName(name)
 
     return _create(
         session,
@@ -218,7 +218,7 @@ def _create(
 
     r = session.post(str(attrs_url), json=body)
     if r.status_code == 409:
-        raise AttributeExists(str(url))
+        raise AlreadyExists(str(url))
     data = response.successful(r).json()
 
     return _from_json(url, data)
@@ -239,14 +239,14 @@ def update(
         The newly updated attribute
 
     Raises:
-        AttributeNotFound: If no attribute could be found at the specified URL.
+        attributes.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     updates = {"description": description}
     r = session.put(str(attribute.url), json=updates)
     if r.status_code == 404:
-        raise AttributeNotFound(str(attribute.url))
+        raise NotFound(str(attribute.url))
     data = response.successful(r).json()
     return _from_json(attribute.url, data)
 
@@ -260,11 +260,11 @@ def delete(session: Session, attribute: Attribute):
         attribute: Existing attribute to delete
 
     Raises:
-        AttributeNotFound: If no attribute could be found at the specified URL.
+        attributes.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     r = session.delete(str(attribute.url))
     if r.status_code == 404:
-        raise AttributeNotFound(str(attribute.url))
+        raise NotFound(str(attribute.url))
     response.successful(r)

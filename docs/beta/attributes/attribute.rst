@@ -13,11 +13,11 @@ Attribute
 Exceptions
 ----------
 
-.. autoclass:: tamr_client.ReservedAttributeName
+.. autoclass:: tamr_client.attributes.AlreadyExists
   :no-inherited-members:
 
-.. autoclass:: tamr_client.AttributeExists
+.. autoclass:: tamr_client.attributes.NotFound
   :no-inherited-members:
 
-.. autoclass:: tamr_client.AttributeNotFound
+.. autoclass:: tamr_client.attributes.ReservedName
   :no-inherited-members:

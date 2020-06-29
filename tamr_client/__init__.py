@@ -45,11 +45,6 @@ from tamr_client.dataset.dataframe import AmbiguousPrimaryKey
 from tamr_client.dataset import dataframe
 
 # attributes
-from tamr_client.attributes.attribute import (
-    AttributeExists,
-    AttributeNotFound,
-    ReservedAttributeName,
-)
 from tamr_client.attributes import attribute
 
 from tamr_client import mastering
