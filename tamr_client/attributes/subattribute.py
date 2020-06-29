@@ -5,7 +5,7 @@ from copy import deepcopy
 from dataclasses import dataclass
 from typing import Optional, TYPE_CHECKING
 
-from tamr_client.types import JsonDict
+from tamr_client._types import JsonDict
 
 if TYPE_CHECKING:
     from tamr_client.attributes.attribute_type import AttributeType

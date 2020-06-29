@@ -6,10 +6,10 @@ from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
 from tamr_client import response
+from tamr_client._types import JsonDict
 from tamr_client.dataset.unified import UnifiedDataset
 from tamr_client.instance import Instance
 from tamr_client.session import Session
-from tamr_client.types import JsonDict
 from tamr_client.url import URL
 
 

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from tamr_client.types import JsonDict
+from tamr_client._types import JsonDict
 from tamr_client.url import URL
 
 

@@ -5,9 +5,9 @@ from dataclasses import dataclass
 import logging
 from typing import ClassVar, Tuple, Union
 
+from tamr_client._types import JsonDict
 from tamr_client.attributes import subattribute
 from tamr_client.attributes.subattribute import SubAttribute
-from tamr_client.types import JsonDict
 
 logger = logging.getLogger(__name__)
 

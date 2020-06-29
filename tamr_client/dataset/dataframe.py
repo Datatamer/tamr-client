@@ -7,10 +7,10 @@ from typing import Optional
 
 import pandas as pd
 
+from tamr_client._types import JsonDict
 from tamr_client.dataset import record
 from tamr_client.dataset.dataset import Dataset
 from tamr_client.session import Session
-from tamr_client.types import JsonDict
 
 
 class AmbiguousPrimaryKey(Exception):
