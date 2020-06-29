@@ -17,5 +17,5 @@ SubAttribute
   :param description:
   :type description: :class:`~typing.Optional` [:class:`str`]
 
-.. autofunction:: tamr_client.subattribute.from_json
-.. autofunction:: tamr_client.subattribute.to_json
+.. autofunction:: tamr_client.attributes.sub.from_json
+.. autofunction:: tamr_client.attributes.sub.to_json

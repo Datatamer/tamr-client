@@ -20,7 +20,7 @@ from tamr_client._types import (  # noqa: F401
     LONG,
     STRING,
 )
-from tamr_client.attributes import subattribute
+from tamr_client.attributes import sub
 
 logger = logging.getLogger(__name__)
 
@@ -57,9 +57,7 @@ def from_json(data: JsonDict) -> AttributeType:
         if attributes is None:
             logger.error(f"JSON data: {repr(data)}")
             raise ValueError("Missing required field 'attributes' for Record type.")
-        return Record(
-            attributes=tuple([subattribute.from_json(attr) for attr in attributes])
-        )
+        return Record(attributes=tuple([sub.from_json(attr) for attr in attributes]))
     else:
         logger.error(f"JSON data: {repr(data)}")
         raise ValueError(f"Unrecognized 'baseType': {base_type}")
@@ -82,7 +80,7 @@ def to_json(attr_type: AttributeType) -> JsonDict:
 
         return {
             "baseType": type(attr_type)._tag,
-            "attributes": [subattribute.to_json(attr) for attr in attr_type.attributes],
+            "attributes": [sub.to_json(attr) for attr in attr_type.attributes],
         }
     else:
         raise TypeError(attr_type)
