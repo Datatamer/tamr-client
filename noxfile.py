@@ -56,5 +56,5 @@ def docs(session):
         "docs",
         "docs/_build",
         "-W",
-        env={"TAMR_CLIENT_BETA": "1"},
+        env={"TAMR_CLIENT_BETA": "1", "TAMR_CLIENT_DOCS": "1"},
     )

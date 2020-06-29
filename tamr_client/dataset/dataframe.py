@@ -3,14 +3,17 @@ Convenient functionality for interacting with pandas DataFrames.
 """
 
 import json
-from typing import Optional
-
-import pandas as pd
+import os
+from typing import Optional, TYPE_CHECKING
 
 from tamr_client._types import JsonDict
 from tamr_client.dataset import record
 from tamr_client.dataset.dataset import Dataset
 from tamr_client.session import Session
+
+BUILDING_DOCS = os.environ.get("TAMR_CLIENT_DOCS") == "1"
+if TYPE_CHECKING or BUILDING_DOCS:
+    import pandas as pd
 
 
 class AmbiguousPrimaryKey(Exception):
@@ -22,7 +25,7 @@ class AmbiguousPrimaryKey(Exception):
 def upsert(
     session: Session,
     dataset: Dataset,
-    df: pd.DataFrame,
+    df: "pd.DataFrame",
     *,
     primary_key_name: Optional[str] = None,
 ) -> JsonDict:
