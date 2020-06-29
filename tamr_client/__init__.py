@@ -1,5 +1,3 @@
-# flake8: noqa
-
 # BETA check
 ############
 
@@ -59,9 +57,9 @@ import tamr_client.attributes.type_alias
 
 from tamr_client.attributes.attribute import (
     Attribute,
-    ReservedAttributeName,
     AttributeExists,
     AttributeNotFound,
+    ReservedAttributeName,
 )
 from tamr_client.attributes import attribute
 

@@ -8,6 +8,9 @@ max-complexity = 18
 select = B,C,E,F,I,W,T4,B9
 exclude = build,.venv,*.egg-info
 
+per-file-ignores =
+    tamr_client/__init__.py:E402,F401,I100,I202
+
 # flake8-import-order plugin
 import-order-style = google
 application-import-names = tamr_client, tamr_unify_client, tests
