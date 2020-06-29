@@ -6,12 +6,11 @@ from dataclasses import dataclass, field, replace
 from typing import Optional, Tuple
 
 from tamr_client import response
-from tamr_client._types import JsonDict
+from tamr_client._types import JsonDict, URL
 from tamr_client.attributes import attribute_type, type_alias
 from tamr_client.attributes.attribute_type import AttributeType
 from tamr_client.dataset.dataset import Dataset
 from tamr_client.session import Session
-from tamr_client.url import URL
 
 
 _RESERVED_NAMES = frozenset(

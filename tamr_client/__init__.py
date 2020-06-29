@@ -13,6 +13,8 @@ import logging
 # https://docs.python-guide.org/writing/logging/#logging-in-a-library
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
+from ._types import URL
+
 # Import shortcuts
 ##################
 
@@ -22,10 +24,6 @@ from tamr_client import response
 # instance
 from tamr_client.instance import Instance
 from tamr_client import instance
-
-# url
-from tamr_client.url import URL
-from tamr_client import url
 
 # auth
 from tamr_client.auth import UsernamePasswordAuth
