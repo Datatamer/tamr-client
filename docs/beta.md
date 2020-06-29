@@ -5,7 +5,7 @@
 
 ## Reference
 
-  * [Attributes](beta/attributes)
+  * [Attribute](beta/attribute)
   * [Auth](beta/auth)
   * [Dataset](beta/dataset)
   * [Instance](beta/instance)

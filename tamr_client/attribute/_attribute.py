@@ -7,7 +7,7 @@ from typing import Optional, Tuple
 
 from tamr_client import response
 from tamr_client._types import Attribute, AttributeType, JsonDict, URL
-from tamr_client.attributes import type as attribute_type
+from tamr_client.attribute import type as attribute_type
 from tamr_client.dataset.dataset import Dataset
 from tamr_client.session import Session
 
@@ -31,16 +31,16 @@ _RESERVED_NAMES = frozenset(
 )
 
 
-class NotFound(Exception):
-    """Raised when referencing (e.g. updating or deleting) an attribute
-    that does not exist on the server.
-    """
+class AlreadyExists(Exception):
+    """Raised when trying to create an attribute that already exists on the server"""
 
     pass
 
 
-class AlreadyExists(Exception):
-    """Raised when trying to create an attribute that already exists on the server"""
+class NotFound(Exception):
+    """Raised when referencing (e.g. updating or deleting) an attribute
+    that does not exist on the server.
+    """
 
     pass
 
@@ -61,7 +61,7 @@ def from_resource_id(session: Session, dataset: Dataset, id: str) -> Attribute:
         id: Attribute ID
 
     Raises:
-        attributes.NotFound: If no attribute could be found at the specified URL.
+        attribute.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
@@ -78,7 +78,7 @@ def _from_url(session: Session, url: URL) -> Attribute:
         url: Attribute URL
 
     Raises:
-        attributes.NotFound: If no attribute could be found at the specified URL.
+        attribute.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
@@ -239,7 +239,7 @@ def update(
         The newly updated attribute
 
     Raises:
-        attributes.NotFound: If no attribute could be found at the specified URL.
+        attribute.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
@@ -260,7 +260,7 @@ def delete(session: Session, attribute: Attribute):
         attribute: Existing attribute to delete
 
     Raises:
-        attributes.NotFound: If no attribute could be found at the specified URL.
+        attribute.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """

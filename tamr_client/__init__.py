@@ -45,7 +45,7 @@ from tamr_client.dataset.dataframe import AmbiguousPrimaryKey
 from tamr_client.dataset import dataframe
 
 # attributes
-from tamr_client.attributes import attribute
+from tamr_client import attribute
 
 from tamr_client import mastering
 from tamr_client import project

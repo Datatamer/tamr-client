@@ -11,7 +11,7 @@ exclude = build,.venv,*.egg-info
 per-file-ignores =
     tamr_client/__init__.py:E402,F401,I100,I202
     tamr_client/_types/__init__.py:F401
-    tamr_client/attributes/__init__.py:F401
+    tamr_client/attribute/__init__.py:F401
 
 # flake8-import-order plugin
 import-order-style = google

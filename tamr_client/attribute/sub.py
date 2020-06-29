@@ -4,7 +4,7 @@
 from copy import deepcopy
 
 from tamr_client._types import JsonDict, SubAttribute
-from tamr_client.attributes import type as attribute_type
+from tamr_client.attribute import type as attribute_type
 
 
 def from_json(data: JsonDict) -> SubAttribute:

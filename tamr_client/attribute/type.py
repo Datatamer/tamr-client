@@ -20,7 +20,7 @@ from tamr_client._types import (  # noqa: F401
     LONG,
     STRING,
 )
-from tamr_client.attributes import sub
+from tamr_client.attribute import sub
 
 logger = logging.getLogger(__name__)
 
