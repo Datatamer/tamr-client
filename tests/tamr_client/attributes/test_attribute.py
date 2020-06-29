@@ -40,7 +40,7 @@ def test_create():
             tc.SubAttribute(
                 name=str(i),
                 is_nullable=True,
-                type=tc.attribute_type.Array(inner_type=tc.attribute_type.String()),
+                type=tc.attribute_type.Array(tc.attribute_type.STRING),
             )
             for i in range(4)
         ]
@@ -136,7 +136,7 @@ def test_from_dataset_all():
 
     row_num = attrs[0]
     assert row_num.name == "RowNum"
-    assert isinstance(row_num.type, tc.attribute_type.String)
+    assert row_num.type == tc.attribute_type.STRING
 
     geom = attrs[1]
     assert geom.name == "geom"

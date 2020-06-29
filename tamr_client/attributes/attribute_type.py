@@ -2,6 +2,7 @@
 See https://docs.tamr.com/reference#attribute-types
 """
 from dataclasses import dataclass
+from enum import Enum
 import logging
 from typing import ClassVar, Tuple, Union
 
@@ -14,33 +15,15 @@ logger = logging.getLogger(__name__)
 # primitive types
 #################
 
+PrimitiveType = Enum("PrimitiveType", ["BOOLEAN", "DOUBLE", "INT", "LONG", "STRING"])
 
-@dataclass(frozen=True)
-class Boolean:
-    _tag: ClassVar[str] = "BOOLEAN"
+# aliases
+DOUBLE = PrimitiveType.DOUBLE
+BOOLEAN = PrimitiveType.BOOLEAN
+INT = PrimitiveType.INT
+LONG = PrimitiveType.LONG
+STRING = PrimitiveType.STRING
 
-
-@dataclass(frozen=True)
-class Double:
-    _tag: ClassVar[str] = "DOUBLE"
-
-
-@dataclass(frozen=True)
-class Int:
-    _tag: ClassVar[str] = "INT"
-
-
-@dataclass(frozen=True)
-class Long:
-    _tag: ClassVar[str] = "LONG"
-
-
-@dataclass(frozen=True)
-class String:
-    _tag: ClassVar[str] = "STRING"
-
-
-PrimitiveType = Union[Boolean, Double, Int, Long, String]
 
 # complex types
 ###############
@@ -94,17 +77,12 @@ def from_json(data: JsonDict) -> AttributeType:
     if base_type is None:
         logger.error(f"JSON data: {repr(data)}")
         raise ValueError("Missing required field 'baseType'.")
-    if base_type == Boolean._tag:
-        return BOOLEAN
-    elif base_type == Double._tag:
-        return DOUBLE
-    elif base_type == Int._tag:
-        return INT
-    elif base_type == Long._tag:
-        return LONG
-    elif base_type == String._tag:
-        return STRING
-    elif base_type == Array._tag:
+
+    for primitive in PrimitiveType:
+        if base_type == primitive.name:
+            return primitive
+
+    if base_type == Array._tag:
         inner_type = data.get("innerType")
         if inner_type is None:
             logger.error(f"JSON data: {repr(data)}")
@@ -135,8 +113,8 @@ def to_json(attr_type: AttributeType) -> JsonDict:
     Args:
         attr_type: Attribute type to serialize
     """
-    if isinstance(attr_type, (Boolean, Double, Int, Long, String)):
-        return {"baseType": type(attr_type)._tag}
+    if isinstance(attr_type, PrimitiveType):
+        return {"baseType": attr_type.name}
     elif isinstance(attr_type, (Array, Map)):
         return {
             "baseType": type(attr_type)._tag,
@@ -150,12 +128,3 @@ def to_json(attr_type: AttributeType) -> JsonDict:
         }
     else:
         raise TypeError(attr_type)
-
-
-# Singletons
-
-BOOLEAN = Boolean()
-DOUBLE = Double()
-INT = Int()
-LONG = Long()
-STRING = String()
