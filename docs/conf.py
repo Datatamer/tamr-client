@@ -54,7 +54,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.autosectionlabel",
 ]
-autodoc_default_flags = ["inherited-members", "members"]
+autodoc_default_options = {"inherited-members": True, "members": True}
 autodoc_member_order = "bysource"
 autosectionlabel_prefix_document = True
 intersphinx_mapping = {
