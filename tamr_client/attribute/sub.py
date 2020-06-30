@@ -2,32 +2,9 @@
 
 """
 from copy import deepcopy
-from dataclasses import dataclass
-from typing import Optional, TYPE_CHECKING
 
-from tamr_client.types import JsonDict
-
-if TYPE_CHECKING:
-    from tamr_client.attributes.attribute_type import AttributeType
-
-
-@dataclass(frozen=True)
-class SubAttribute:
-    """An attribute which is itself a property of another attribute.
-
-    See https://docs.tamr.com/reference#attribute-types
-
-    Args:
-        name: Name of sub-attribute
-        description: Description of sub-attribute
-        type: See https://docs.tamr.com/reference#attribute-types
-        is_nullable: If this sub-attribute can be null
-    """
-
-    name: str
-    type: "AttributeType"
-    is_nullable: bool
-    description: Optional[str] = None
+from tamr_client._types import JsonDict, SubAttribute
+from tamr_client.attribute import type as attribute_type
 
 
 def from_json(data: JsonDict) -> SubAttribute:
@@ -36,7 +13,6 @@ def from_json(data: JsonDict) -> SubAttribute:
     Args:
         data: JSON data received from Tamr server.
     """
-    from tamr_client.attributes import attribute_type
 
     cp = deepcopy(data)
     d = {}
@@ -52,7 +28,6 @@ def to_json(subattr: SubAttribute) -> JsonDict:
     Args:
         subattr: SubAttribute to serialize
     """
-    from tamr_client.attributes import attribute_type
 
     d = {
         "name": subattr.name,

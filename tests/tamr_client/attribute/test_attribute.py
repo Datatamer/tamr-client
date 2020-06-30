@@ -40,7 +40,7 @@ def test_create():
             tc.SubAttribute(
                 name=str(i),
                 is_nullable=True,
-                type=tc.attribute_type.Array(inner_type=tc.attribute_type.String()),
+                type=tc.attribute.type.Array(tc.attribute.type.STRING),
             )
             for i in range(4)
         ]
@@ -55,7 +55,7 @@ def test_create():
         dataset,
         name="attr",
         is_nullable=False,
-        type=tc.attribute_type.Record(attributes=attrs),
+        type=tc.attribute.type.Record(attributes=attrs),
     )
 
     assert attr == tc.attribute._from_json(url, attr_json)
@@ -111,7 +111,7 @@ def test_from_resource_id_attribute_not_found():
     url = replace(dataset.url, path=dataset.url.path + "/attributes/attr")
 
     responses.add(responses.GET, str(url), status=404)
-    with pytest.raises(tc.AttributeNotFound):
+    with pytest.raises(tc.attribute.NotFound):
         tc.attribute.from_resource_id(s, dataset, "attr")
 
 
@@ -119,7 +119,7 @@ def test_create_reserved_attribute_name():
     s = utils.session()
     dataset = utils.dataset()
 
-    with pytest.raises(tc.ReservedAttributeName):
+    with pytest.raises(tc.attribute.ReservedName):
         tc.attribute.create(s, dataset, name="clusterId", is_nullable=False)
 
 
@@ -136,11 +136,11 @@ def test_from_dataset_all():
 
     row_num = attrs[0]
     assert row_num.name == "RowNum"
-    assert isinstance(row_num.type, tc.attribute_type.String)
+    assert row_num.type == tc.attribute.type.STRING
 
     geom = attrs[1]
     assert geom.name == "geom"
-    assert isinstance(geom.type, tc.attribute_type.Record)
+    assert isinstance(geom.type, tc.attribute.type.Record)
 
 
 @responses.activate
@@ -150,7 +150,7 @@ def test_create_attribute_exists():
 
     url = replace(dataset.url, path=dataset.url.path + "/attributes")
     responses.add(responses.POST, str(url), status=409)
-    with pytest.raises(tc.AttributeExists):
+    with pytest.raises(tc.attribute.AlreadyExists):
         tc.attribute.create(s, dataset, name="attr", is_nullable=False)
 
 
@@ -163,7 +163,7 @@ def test_update_attribute_not_found():
     attr = tc.attribute._from_json(url, attr_json)
 
     responses.add(responses.PUT, str(attr.url), status=404)
-    with pytest.raises(tc.AttributeNotFound):
+    with pytest.raises(tc.attribute.NotFound):
         tc.attribute.update(s, attr)
 
 
@@ -176,5 +176,5 @@ def test_delete_attribute_not_found():
     attr = tc.attribute._from_json(url, attr_json)
 
     responses.add(responses.PUT, str(attr.url), status=404)
-    with pytest.raises(tc.AttributeNotFound):
+    with pytest.raises(tc.attribute.NotFound):
         attr = tc.attribute.update(s, attr)

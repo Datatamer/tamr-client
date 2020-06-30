@@ -2,16 +2,14 @@
 See https://docs.tamr.com/reference/attribute-types
 """
 from copy import deepcopy
-from dataclasses import dataclass, field, replace
+from dataclasses import replace
 from typing import Optional, Tuple
 
 from tamr_client import response
-from tamr_client.attributes import attribute_type, type_alias
-from tamr_client.attributes.attribute_type import AttributeType
+from tamr_client._types import Attribute, AttributeType, JsonDict, URL
+from tamr_client.attribute import type as attribute_type
 from tamr_client.dataset.dataset import Dataset
 from tamr_client.session import Session
-from tamr_client.types import JsonDict
-from tamr_client.url import URL
 
 
 _RESERVED_NAMES = frozenset(
@@ -33,7 +31,13 @@ _RESERVED_NAMES = frozenset(
 )
 
 
-class AttributeNotFound(Exception):
+class AlreadyExists(Exception):
+    """Raised when trying to create an attribute that already exists on the server"""
+
+    pass
+
+
+class NotFound(Exception):
     """Raised when referencing (e.g. updating or deleting) an attribute
     that does not exist on the server.
     """
@@ -41,37 +45,10 @@ class AttributeNotFound(Exception):
     pass
 
 
-class AttributeExists(Exception):
-    """Raised when trying to create an attribute that already exists on the server"""
-
-    pass
-
-
-class ReservedAttributeName(Exception):
+class ReservedName(Exception):
     """Raised when attempting to create an attribute with a reserved name"""
 
     pass
-
-
-@dataclass(frozen=True)
-class Attribute:
-    """A Tamr Attribute.
-
-    See https://docs.tamr.com/reference#attribute-types
-
-    Args:
-        url
-        name
-        type
-        description
-    """
-
-    url: URL
-    name: str
-    type: AttributeType
-    is_nullable: bool
-    _json: JsonDict = field(compare=False, repr=False)
-    description: Optional[str] = None
 
 
 def from_resource_id(session: Session, dataset: Dataset, id: str) -> Attribute:
@@ -84,7 +61,7 @@ def from_resource_id(session: Session, dataset: Dataset, id: str) -> Attribute:
         id: Attribute ID
 
     Raises:
-        AttributeNotFound: If no attribute could be found at the specified URL.
+        attribute.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
@@ -101,13 +78,13 @@ def _from_url(session: Session, url: URL) -> Attribute:
         url: Attribute URL
 
     Raises:
-        AttributeNotFound: If no attribute could be found at the specified URL.
+        attribute.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     r = session.get(str(url))
     if r.status_code == 404:
-        raise AttributeNotFound(str(url))
+        raise NotFound(str(url))
     data = response.successful(r).json()
     return _from_json(url, data)
 
@@ -126,7 +103,6 @@ def _from_json(url: URL, data: JsonDict) -> Attribute:
         description=cp.get("description"),
         is_nullable=cp["isNullable"],
         type=attribute_type.from_json(cp["type"]),
-        _json=cp,
     )
 
 
@@ -180,7 +156,7 @@ def create(
     *,
     name: str,
     is_nullable: bool,
-    type: AttributeType = type_alias.DEFAULT,
+    type: AttributeType = attribute_type.DEFAULT,
     description: Optional[str] = None,
 ) -> Attribute:
     """Create an attribute
@@ -199,13 +175,13 @@ def create(
         The newly created attribute
 
     Raises:
-        ReservedAttributeName: If attribute name is reserved.
-        AttributeExists: If an attribute already exists at the specified URL.
+        ReservedName: If attribute name is reserved.
+        AlreadyExists: If an attribute already exists at the specified URL.
             Corresponds to a 409 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     if name in _RESERVED_NAMES:
-        raise ReservedAttributeName(name)
+        raise ReservedName(name)
 
     return _create(
         session,
@@ -223,7 +199,7 @@ def _create(
     *,
     name: str,
     is_nullable: bool,
-    type: AttributeType = type_alias.DEFAULT,
+    type: AttributeType = attribute_type.DEFAULT,
     description: Optional[str] = None,
 ) -> Attribute:
     """Same as `tc.attribute.create`, but does not check for reserved attribute
@@ -242,7 +218,7 @@ def _create(
 
     r = session.post(str(attrs_url), json=body)
     if r.status_code == 409:
-        raise AttributeExists(str(url))
+        raise AlreadyExists(str(url))
     data = response.successful(r).json()
 
     return _from_json(url, data)
@@ -263,14 +239,14 @@ def update(
         The newly updated attribute
 
     Raises:
-        AttributeNotFound: If no attribute could be found at the specified URL.
+        attribute.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     updates = {"description": description}
     r = session.put(str(attribute.url), json=updates)
     if r.status_code == 404:
-        raise AttributeNotFound(str(attribute.url))
+        raise NotFound(str(attribute.url))
     data = response.successful(r).json()
     return _from_json(attribute.url, data)
 
@@ -284,11 +260,11 @@ def delete(session: Session, attribute: Attribute):
         attribute: Existing attribute to delete
 
     Raises:
-        AttributeNotFound: If no attribute could be found at the specified URL.
+        attribute.NotFound: If no attribute could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     r = session.delete(str(attribute.url))
     if r.status_code == 404:
-        raise AttributeNotFound(str(attribute.url))
+        raise NotFound(str(attribute.url))
     response.successful(r)

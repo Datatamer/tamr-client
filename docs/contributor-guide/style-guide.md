@@ -8,6 +8,7 @@ Code should generally conform to the [PEP8 style guidelines](https://www.python.
 
 ### Structure
 * Classes with methods should be avoided in favor of simple [dataclasses](https://docs.python.org/3/library/dataclasses.html) and functions
+* Types (i.e. `dataclass`es) should be within the `_types` package. Separating types and functions into different packages helps keep type resolution simple so that all of our tools (`mypy`, `sphinx`, `pytest`) run correctly.
 
 ### Google-style docstrings
 All functions and class definitions should use [Google-style docstrings](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html) and be annotated with [type hints](https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html#type-annotations).

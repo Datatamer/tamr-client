@@ -6,12 +6,11 @@ from dataclasses import dataclass
 from typing import Optional, Tuple
 
 from tamr_client import operation, response
+from tamr_client._types import JsonDict, URL
 from tamr_client.instance import Instance
 from tamr_client.operation import Operation
 from tamr_client.project import Project
 from tamr_client.session import Session
-from tamr_client.types import JsonDict
-from tamr_client.url import URL
 
 
 class NotFound(Exception):
