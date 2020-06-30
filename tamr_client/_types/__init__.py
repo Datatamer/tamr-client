@@ -1,4 +1,4 @@
-from .attribute import (
+from tamr_client._types.attribute import (
     Array,
     Attribute,
     AttributeType,
@@ -15,5 +15,5 @@ from .attribute import (
     STRING,
     SubAttribute,
 )
-from .json import JsonDict
-from .url import URL
+from tamr_client._types.json import JsonDict
+from tamr_client._types.url import URL

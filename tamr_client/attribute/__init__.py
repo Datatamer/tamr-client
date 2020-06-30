@@ -1,6 +1,6 @@
-from . import sub
-from . import type
-from ._attribute import (
+from tamr_client.attribute import sub
+from tamr_client.attribute import type
+from tamr_client.attribute._attribute import (
     _from_json,
     AlreadyExists,
     create,

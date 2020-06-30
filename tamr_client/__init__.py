@@ -13,7 +13,7 @@ import logging
 # https://docs.python-guide.org/writing/logging/#logging-in-a-library
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
-from ._types import Attribute, AttributeType, SubAttribute, URL
+from tamr_client._types import Attribute, AttributeType, SubAttribute, URL
 
 # Import shortcuts
 ##################
