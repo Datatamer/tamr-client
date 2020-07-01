@@ -2,7 +2,7 @@ import os
 import sys
 
 
-def _check():
+def check():
     beta_flag = "TAMR_CLIENT_BETA"
     beta_enabled = "1"
     beta = os.environ.get(beta_flag)
