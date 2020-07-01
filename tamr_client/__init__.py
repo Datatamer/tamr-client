@@ -1,9 +1,9 @@
 # BETA check
 ############
 
-import tamr_client.beta as beta
+from tamr_client import _beta
 
-beta._check()
+_beta.check()
 
 # Logging
 #########
@@ -13,10 +13,13 @@ import logging
 # https://docs.python-guide.org/writing/logging/#logging-in-a-library
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
+# types
+#######
+
 from tamr_client._types import Attribute, AttributeType, SubAttribute, URL
 
-# Import shortcuts
-##################
+# functions
+###########
 
 # utilities
 from tamr_client import response
