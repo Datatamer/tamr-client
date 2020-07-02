@@ -15,7 +15,7 @@ def test_from_resource_id_mastering():
     responses.add(responses.GET, str(url), json=project_json)
 
     project = tc.project.from_resource_id(s, instance, "1")
-    assert isinstance(project, tc.mastering.Project)
+    assert isinstance(project, tc.MasteringProject)
     assert project.name == "proj"
     assert project.description == "Mastering Project"
 
