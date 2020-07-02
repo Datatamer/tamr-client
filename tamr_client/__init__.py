@@ -29,6 +29,7 @@ from tamr_client._types import (
     SubAttribute,
     UnifiedDataset,
     URL,
+    UsernamePasswordAuth,
 )
 
 # functions
@@ -39,9 +40,6 @@ from tamr_client import response
 
 # instance
 from tamr_client import instance
-
-# auth
-from tamr_client.auth import UsernamePasswordAuth
 
 # session
 from tamr_client import session
