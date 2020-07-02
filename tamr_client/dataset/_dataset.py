@@ -2,12 +2,9 @@
 See https://docs.tamr.com/reference/dataset-models
 """
 from copy import deepcopy
-from dataclasses import dataclass
-from typing import Optional, Tuple, Union
 
 from tamr_client import response
-from tamr_client._types import JsonDict, URL
-from tamr_client.dataset.unified import UnifiedDataset
+from tamr_client._types import Dataset, JsonDict, URL
 from tamr_client.instance import Instance
 from tamr_client.session import Session
 
@@ -18,28 +15,6 @@ class NotFound(Exception):
     """
 
     pass
-
-
-@dataclass(frozen=True)
-class Dataset:
-    """A Tamr dataset
-
-    See https://docs.tamr.com/reference/dataset-models
-
-    Args:
-        url
-        name
-        key_attribute_names
-        description
-    """
-
-    url: URL
-    name: str
-    key_attribute_names: Tuple[str, ...]
-    description: Optional[str] = None
-
-
-AnyDataset = Union[Dataset, UnifiedDataset]
 
 
 def from_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
