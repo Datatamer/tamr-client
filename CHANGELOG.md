@@ -1,3 +1,7 @@
+## 0.12.1
+**BUG FIXES**
+- Fix `pandas` import causing a crash in `tamr_unify_client`
+
 ## 0.12.0
   **BETA**
   Important: Do not use BETA features for production workflows.
