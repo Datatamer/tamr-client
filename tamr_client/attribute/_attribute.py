@@ -8,6 +8,7 @@ from typing import Optional, Tuple
 from tamr_client import response
 from tamr_client._types import Attribute, AttributeType, Dataset, JsonDict, Session, URL
 from tamr_client.attribute import type as attribute_type
+from tamr_client.exception import TamrClientException
 
 
 _RESERVED_NAMES = frozenset(
@@ -29,13 +30,13 @@ _RESERVED_NAMES = frozenset(
 )
 
 
-class AlreadyExists(Exception):
+class AlreadyExists(TamrClientException):
     """Raised when trying to create an attribute that already exists on the server"""
 
     pass
 
 
-class NotFound(Exception):
+class NotFound(TamrClientException):
     """Raised when referencing (e.g. updating or deleting) an attribute
     that does not exist on the server.
     """
@@ -43,7 +44,7 @@ class NotFound(Exception):
     pass
 
 
-class ReservedName(Exception):
+class ReservedName(TamrClientException):
     """Raised when attempting to create an attribute with a reserved name"""
 
     pass

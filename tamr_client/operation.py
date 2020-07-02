@@ -9,9 +9,10 @@ import requests
 
 from tamr_client import response
 from tamr_client._types import Instance, JsonDict, Operation, Session, URL
+from tamr_client.exception import TamrClientException
 
 
-class NotFound(Exception):
+class NotFound(TamrClientException):
     """Raised when referencing an operation that does not exist on the server.
     """
 
