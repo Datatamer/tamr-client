@@ -38,7 +38,7 @@ def unified_dataset():
 
 def mastering_project():
     url = tc.URL(path="projects/1")
-    mastering_project = tc.mastering.Project(
+    mastering_project = tc.MasteringProject(
         url, name="Project 1", description="A Mastering Project"
     )
     return mastering_project

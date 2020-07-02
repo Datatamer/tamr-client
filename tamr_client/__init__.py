@@ -17,9 +17,12 @@ logging.getLogger(__name__).addHandler(logging.NullHandler())
 #######
 
 from tamr_client._types import (
+    AnyDataset,
     Attribute,
     AttributeType,
     Dataset,
+    MasteringProject,
+    Project,
     SubAttribute,
     UnifiedDataset,
     URL,
