@@ -6,18 +6,13 @@ import json
 import os
 from typing import Optional, TYPE_CHECKING
 
+from tamr_client import primary_key
 from tamr_client._types import Dataset, JsonDict, Session
 from tamr_client.dataset import record
 
 BUILDING_DOCS = os.environ.get("TAMR_CLIENT_DOCS") == "1"
 if TYPE_CHECKING or BUILDING_DOCS:
     import pandas as pd
-
-
-class AmbiguousPrimaryKey(Exception):
-    """Raised when referencing a primary key by name that matches multiple possible targets."""
-
-    pass
 
 
 def upsert(
@@ -40,7 +35,7 @@ def upsert(
     Raises:
         requests.HTTPError: If an HTTP error is encountered
         requests.HTTPError: If an HTTP error is encountered
-        PrimaryKeyNotFound: If `primary_key_name` is not a column in `df` or the index of `df`
+        primary_key.NotFound: If `primary_key_name` is not a column in `df` or the index of `df`
         ValueError: If `primary_key_name` matches both a column in `df` and the index of `df`
     """
     if primary_key_name is None:
@@ -48,11 +43,11 @@ def upsert(
 
     # preconditions
     if primary_key_name in df.columns and primary_key_name == df.index.name:
-        raise AmbiguousPrimaryKey(
+        raise primary_key.Ambiguous(
             f"Index {primary_key_name} has the same name as column {primary_key_name}"
         )
     elif primary_key_name not in df.columns and primary_key_name != df.index.name:
-        raise record.PrimaryKeyNotFound(
+        raise primary_key.NotFound(
             f"Primary key: {primary_key_name} is not DataFrame index name: {df.index.name} or in DataFrame column names: {df.columns}"
         )
 

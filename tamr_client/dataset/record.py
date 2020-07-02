@@ -7,14 +7,9 @@ underlying :func:`~tamr_client.record._update` function can be used directly."
 import json
 from typing import cast, Dict, IO, Iterable, Iterator, Optional
 
+from tamr_client import primary_key
 from tamr_client import response
 from tamr_client._types import AnyDataset, Dataset, JsonDict, Session
-
-
-class PrimaryKeyNotFound(Exception):
-    """Raised when referencing a primary key by name that does not exist."""
-
-    pass
 
 
 def _update(session: Session, dataset: Dataset, updates: Iterable[Dict]) -> JsonDict:
@@ -63,14 +58,14 @@ def upsert(
 
     Raises:
         requests.HTTPError: If an HTTP error is encountered
-        PrimaryKeyNotFound: If primary_key_name does not match dataset primary key
-        PrimaryKeyNotFound: If primary_key_name not in a record dictionary
+        primary_key.NotFound: If primary_key_name does not match dataset primary key
+        primary_key.NotFound: If primary_key_name not in a record dictionary
     """
     if primary_key_name is None:
         primary_key_name = dataset.key_attribute_names[0]
 
     if primary_key_name not in dataset.key_attribute_names:
-        raise PrimaryKeyNotFound(
+        raise primary_key.NotFound(
             f"Primary key: {primary_key_name} is not in dataset key attribute names: {dataset.key_attribute_names}"
         )
     updates = (
@@ -99,14 +94,14 @@ def delete(
 
     Raises:
         requests.HTTPError: If an HTTP error is encountered
-        PrimaryKeyNotFound: If primary_key_name does not match dataset primary key
-        PrimaryKeyNotFound: If primary_key_name not in a record dictionary
+        primary_key.NotFound: If primary_key_name does not match dataset primary key
+        primary_key.NotFound: If primary_key_name not in a record dictionary
     """
     if primary_key_name is None:
         primary_key_name = dataset.key_attribute_names[0]
 
     if primary_key_name not in dataset.key_attribute_names:
-        raise PrimaryKeyNotFound(
+        raise primary_key.NotFound(
             f"Primary key: {primary_key_name} is not in dataset key attribute names: {dataset.key_attribute_names}"
         )
     updates = (

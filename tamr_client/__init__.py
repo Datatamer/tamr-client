@@ -44,15 +44,15 @@ from tamr_client import instance
 # session
 from tamr_client import session
 
+from tamr_client import primary_key
+
 # datasets
 from tamr_client import dataset
 
 # records
-from tamr_client.dataset.record import PrimaryKeyNotFound
 from tamr_client.dataset import record
 
 # dataframe
-from tamr_client.dataset.dataframe import AmbiguousPrimaryKey
 from tamr_client.dataset import dataframe
 
 # attributes

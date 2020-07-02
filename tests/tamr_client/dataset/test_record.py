@@ -64,7 +64,7 @@ def test_upsert_primary_key_not_found():
     s = utils.session()
     dataset = utils.dataset()
 
-    with pytest.raises(tc.record.PrimaryKeyNotFound):
+    with pytest.raises(tc.primary_key.NotFound):
         tc.record.upsert(
             s, dataset, _records_json, primary_key_name="wrong_primary_key"
         )
@@ -125,7 +125,7 @@ def test_delete_primary_key_not_found():
     s = utils.session()
     dataset = utils.dataset()
 
-    with pytest.raises(tc.record.PrimaryKeyNotFound):
+    with pytest.raises(tc.primary_key.NotFound):
         tc.record.delete(
             s, dataset, _records_json, primary_key_name="wrong_primary_key"
         )
