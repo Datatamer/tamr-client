@@ -1,4 +1,6 @@
-## 0.12.0-dev
+## 0.13.0-dev
+
+## 0.12.0
   **BETA**
   Important: Do not use BETA features for production workflows.
   - [#372](https://github.com/Datatamer/tamr-client/issues/372) TC:Design for unified datasets
