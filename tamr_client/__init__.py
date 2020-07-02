@@ -21,6 +21,7 @@ from tamr_client._types import (
     Attribute,
     AttributeType,
     Dataset,
+    Instance,
     MasteringProject,
     Operation,
     Project,
@@ -36,7 +37,6 @@ from tamr_client._types import (
 from tamr_client import response
 
 # instance
-from tamr_client.instance import Instance
 from tamr_client import instance
 
 # auth

@@ -8,8 +8,7 @@ from typing import Optional
 import requests
 
 from tamr_client import response
-from tamr_client._types import JsonDict, Operation, URL
-from tamr_client.instance import Instance
+from tamr_client._types import Instance, JsonDict, Operation, URL
 from tamr_client.session import Session
 
 

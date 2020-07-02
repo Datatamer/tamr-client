@@ -4,8 +4,7 @@ See https://docs.tamr.com/reference/dataset-models
 from copy import deepcopy
 
 from tamr_client import response
-from tamr_client._types import Dataset, JsonDict, URL
-from tamr_client.instance import Instance
+from tamr_client._types import Dataset, Instance, JsonDict, URL
 from tamr_client.session import Session
 
 
