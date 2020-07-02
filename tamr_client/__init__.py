@@ -21,11 +21,15 @@ from tamr_client._types import (
     Attribute,
     AttributeType,
     Dataset,
+    Instance,
     MasteringProject,
+    Operation,
     Project,
+    Session,
     SubAttribute,
     UnifiedDataset,
     URL,
+    UsernamePasswordAuth,
 )
 
 # functions
@@ -35,14 +39,9 @@ from tamr_client._types import (
 from tamr_client import response
 
 # instance
-from tamr_client.instance import Instance
 from tamr_client import instance
 
-# auth
-from tamr_client.auth import UsernamePasswordAuth
-
 # session
-from tamr_client.session import Session
 from tamr_client import session
 
 # datasets
@@ -63,5 +62,4 @@ from tamr_client import mastering
 from tamr_client import project
 
 # operations
-from tamr_client.operation import Operation
 from tamr_client import operation

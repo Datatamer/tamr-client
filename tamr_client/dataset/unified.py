@@ -4,11 +4,15 @@ See https://docs.tamr.com/reference/dataset-models
 from copy import deepcopy
 
 from tamr_client import operation, response
-from tamr_client._types import JsonDict, UnifiedDataset, URL
-from tamr_client.instance import Instance
-from tamr_client.operation import Operation
-from tamr_client.project import Project
-from tamr_client.session import Session
+from tamr_client._types import (
+    Instance,
+    JsonDict,
+    Operation,
+    Project,
+    Session,
+    UnifiedDataset,
+    URL,
+)
 
 
 class NotFound(Exception):

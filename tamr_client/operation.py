@@ -2,16 +2,13 @@
 See https://docs.tamr.com/new/reference/the-operation-object
 """
 from copy import deepcopy
-from dataclasses import dataclass
 from time import sleep, time as now
-from typing import Dict, Optional
+from typing import Optional
 
 import requests
 
 from tamr_client import response
-from tamr_client._types import JsonDict, URL
-from tamr_client.instance import Instance
-from tamr_client.session import Session
+from tamr_client._types import Instance, JsonDict, Operation, Session, URL
 
 
 class NotFound(Exception):
@@ -19,25 +16,6 @@ class NotFound(Exception):
     """
 
     pass
-
-
-@dataclass(frozen=True)
-class Operation:
-    """A Tamr operation
-
-    See https://docs.tamr.com/new/reference/the-operation-object
-
-    Args:
-        url
-        type
-        status
-        description
-    """
-
-    url: URL
-    type: str
-    status: Optional[Dict[str, str]] = None
-    description: Optional[str] = None
 
 
 def poll(session: Session, operation: Operation) -> Operation:

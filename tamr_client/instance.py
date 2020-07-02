@@ -1,12 +1,4 @@
-from dataclasses import dataclass
-from typing import Optional
-
-
-@dataclass(frozen=True)
-class Instance:
-    protocol: str = "http"
-    host: str = "localhost"
-    port: Optional[int] = None
+from tamr_client._types import Instance
 
 
 def origin(instance: Instance) -> str:
