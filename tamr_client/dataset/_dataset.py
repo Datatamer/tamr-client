@@ -5,9 +5,10 @@ from copy import deepcopy
 
 from tamr_client import response
 from tamr_client._types import Dataset, Instance, JsonDict, Session, URL
+from tamr_client.exception import TamrClientException
 
 
-class NotFound(Exception):
+class NotFound(TamrClientException):
     """Raised when referencing (e.g. updating or deleting) a dataset
     that does not exist on the server.
     """

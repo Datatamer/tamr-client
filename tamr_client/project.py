@@ -1,9 +1,10 @@
 from tamr_client import response
 from tamr_client._types import Instance, JsonDict, Project, Session, URL
+from tamr_client.exception import TamrClientException
 from tamr_client.mastering import project as mastering_project
 
 
-class NotFound(Exception):
+class NotFound(TamrClientException):
     """Raised when referencing (e.g. updating or deleting) a project
     that does not exist on the server."""
 

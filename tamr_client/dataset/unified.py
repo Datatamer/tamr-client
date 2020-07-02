@@ -13,9 +13,10 @@ from tamr_client._types import (
     UnifiedDataset,
     URL,
 )
+from tamr_client.exception import TamrClientException
 
 
-class NotFound(Exception):
+class NotFound(TamrClientException):
     """Raised when referencing (e.g. updating or deleting) a unified dataset
     that does not exist on the server.
     """
