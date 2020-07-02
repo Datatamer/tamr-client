@@ -1,6 +1,7 @@
 from copy import deepcopy
+import os
+from typing import TYPE_CHECKING
 
-import pandas as pd
 import simplejson as json
 
 from tamr_unify_client.attribute.collection import AttributeCollection
@@ -10,6 +11,10 @@ from tamr_unify_client.dataset.status import DatasetStatus
 from tamr_unify_client.dataset.uri import DatasetURI
 from tamr_unify_client.dataset.usage import DatasetUsage
 from tamr_unify_client.operation import Operation
+
+BUILDING_DOCS = os.environ.get("TAMR_CLIENT_DOCS") == "1"
+if TYPE_CHECKING or BUILDING_DOCS:
+    import pandas as pd
 
 
 class Dataset(BaseResource):
@@ -86,7 +91,7 @@ class Dataset(BaseResource):
         )
 
     def upsert_from_dataframe(
-        self, df: pd.DataFrame, *, primary_key_name: str, ignore_nan: bool = True
+        self, df: "pd.DataFrame", *, primary_key_name: str, ignore_nan: bool = True
     ) -> dict:
         """Upserts a record for each row of `df` with attributes for each column in `df`.
 
