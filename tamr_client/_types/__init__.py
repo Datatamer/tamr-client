@@ -17,5 +17,6 @@ from tamr_client._types.attribute import (
 )
 from tamr_client._types.dataset import AnyDataset, Dataset, UnifiedDataset
 from tamr_client._types.json import JsonDict
+from tamr_client._types.operation import Operation
 from tamr_client._types.project import MasteringProject, Project
 from tamr_client._types.url import URL

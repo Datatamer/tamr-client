@@ -22,6 +22,7 @@ from tamr_client._types import (
     AttributeType,
     Dataset,
     MasteringProject,
+    Operation,
     Project,
     SubAttribute,
     UnifiedDataset,
@@ -63,5 +64,4 @@ from tamr_client import mastering
 from tamr_client import project
 
 # operations
-from tamr_client.operation import Operation
 from tamr_client import operation
