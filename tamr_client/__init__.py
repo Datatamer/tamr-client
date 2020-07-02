@@ -25,6 +25,7 @@ from tamr_client._types import (
     MasteringProject,
     Operation,
     Project,
+    Session,
     SubAttribute,
     UnifiedDataset,
     URL,
@@ -43,7 +44,6 @@ from tamr_client import instance
 from tamr_client.auth import UsernamePasswordAuth
 
 # session
-from tamr_client.session import Session
 from tamr_client import session
 
 # datasets

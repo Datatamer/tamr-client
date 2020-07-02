@@ -1,6 +1,6 @@
 import requests
 
-Session = requests.Session
+from tamr_client._types import Session
 
 
 def from_auth(auth: requests.auth.HTTPBasicAuth) -> Session:

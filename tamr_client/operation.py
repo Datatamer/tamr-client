@@ -8,8 +8,7 @@ from typing import Optional
 import requests
 
 from tamr_client import response
-from tamr_client._types import Instance, JsonDict, Operation, URL
-from tamr_client.session import Session
+from tamr_client._types import Instance, JsonDict, Operation, Session, URL
 
 
 class NotFound(Exception):

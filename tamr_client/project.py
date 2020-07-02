@@ -1,7 +1,6 @@
 from tamr_client import response
-from tamr_client._types import Instance, JsonDict, Project, URL
+from tamr_client._types import Instance, JsonDict, Project, Session, URL
 from tamr_client.mastering import project as mastering_project
-from tamr_client.session import Session
 
 
 class NotFound(Exception):
