@@ -42,7 +42,7 @@ def test_upsert_primary_key_not_found():
 
     df = pd.DataFrame(_records_json)
 
-    with pytest.raises(tc.record.PrimaryKeyNotFound):
+    with pytest.raises(tc.primary_key.NotFound):
         tc.dataframe.upsert(s, dataset, df, primary_key_name="wrong_primary_key")
 
 
@@ -113,7 +113,7 @@ def test_upsert_index_column_name_collision():
     # create column in `df` with same name as index and matching "primary_key"
     df.insert(0, df.index.name, df.index)
 
-    with pytest.raises(tc.AmbiguousPrimaryKey):
+    with pytest.raises(tc.primary_key.Ambiguous):
         tc.dataframe.upsert(s, dataset, df, primary_key_name="primary_key")
 
 
