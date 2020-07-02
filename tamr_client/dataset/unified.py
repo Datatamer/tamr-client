@@ -8,11 +8,11 @@ from tamr_client._types import (
     Instance,
     JsonDict,
     Operation,
+    Project,
     Session,
     UnifiedDataset,
     URL,
 )
-from tamr_client.project import Project
 
 
 class NotFound(Exception):
