@@ -6,9 +6,8 @@ import json
 import os
 from typing import Optional, TYPE_CHECKING
 
-from tamr_client._types import JsonDict
+from tamr_client._types import Dataset, JsonDict
 from tamr_client.dataset import record
-from tamr_client.dataset.dataset import Dataset
 from tamr_client.session import Session
 
 BUILDING_DOCS = os.environ.get("TAMR_CLIENT_DOCS") == "1"

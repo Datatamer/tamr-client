@@ -8,8 +8,7 @@ import json
 from typing import cast, Dict, IO, Iterable, Iterator, Optional
 
 from tamr_client import response
-from tamr_client._types import JsonDict
-from tamr_client.dataset.dataset import AnyDataset, Dataset
+from tamr_client._types import AnyDataset, Dataset, JsonDict
 from tamr_client.session import Session
 
 
