@@ -1,5 +1,8 @@
 ## 0.13.0-dev
-
+  **BETA**
+  Important: Do not use BETA features for production workflows.
+  - Added function to get operation from resource ID
+  
 ## 0.12.0
   **BETA**
   Important: Do not use BETA features for production workflows.
