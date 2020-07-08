@@ -60,6 +60,16 @@ def test_operation_from_json(client):
 
 
 @responses.activate
+def test_operation_from_resource_id(client):
+    responses.add(responses.GET, full_url(client, "operations/1"), json=op_1_json)
+
+    op1 = Operation.from_resource_id(client, "1")
+
+    assert op1.resource_id == "1"
+    assert op1.succeeded
+
+
+@responses.activate
 def test_operation_from_response(client):
     responses.add(responses.GET, full_url(client, "operations/1"), json=op_1_json)
 

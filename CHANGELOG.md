@@ -1,5 +1,11 @@
 ## 0.13.0-dev
-
+  **BETA**
+  Important: Do not use BETA features for production workflows.
+  - Added function to get operation from resource ID
+  
+  **NEW FEATURES**
+  - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id
+  
 ## 0.12.0
   **BETA**
   Important: Do not use BETA features for production workflows.
