@@ -30,7 +30,7 @@ class Operation(BaseResource):
         :rtype: :class:`~tamr_unify_client.operation.Operation`
         """
         url = f"operations/{resource_id}"
-        response = client.get(url, headers={"Accept": "application/json"}).successful()
+        response = client.get(url).successful()
         return Operation.from_response(client, response)
 
     @classmethod

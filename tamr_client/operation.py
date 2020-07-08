@@ -77,7 +77,7 @@ def from_resource_id(
         resource_id: The ID of the operation
     """
     url = URL(instance=instance, path=f"operations/{resource_id}")
-    r = session.get(str(url), headers={"Accept": "application/json"})
+    r = session.get(str(url))
     return _from_response(instance, r)
 
 
