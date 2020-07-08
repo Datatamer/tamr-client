@@ -78,6 +78,24 @@ def test_operation_from_response_noop():
 
 
 @responses.activate
+def test_from_resource_id():
+    s = utils.session()
+    instance = utils.instance()
+    url = tc.URL(path="operations/1")
+
+    operation_json = utils.load_json("operation_succeeded.json")
+    responses.add(responses.GET, str(url), json=operation_json)
+
+    resource_id = "1"
+    op = tc.operation.from_resource_id(s, instance, resource_id)
+    assert op.url == url
+    assert op.type == operation_json["type"]
+    assert op.description == operation_json["description"]
+    assert op.status == operation_json["status"]
+    assert tc.operation.succeeded(op)
+
+
+@responses.activate
 def test_operation_poll():
     s = utils.session()
     url = tc.URL(path="operations/1")
