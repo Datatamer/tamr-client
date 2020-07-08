@@ -68,6 +68,19 @@ def succeeded(operation: Operation) -> bool:
     return operation.status is not None and operation.status["state"] == "SUCCEEDED"
 
 
+def from_resource_id(
+    session: Session, instance: Instance, resource_id: str
+) -> Operation:
+    """Get operation by ID
+
+    Args:
+        resource_id: The ID of the operation
+    """
+    url = URL(instance=instance, path=f"operations/{resource_id}")
+    r = session.get(str(url), headers={"Accept": "application/json"})
+    return _from_response(instance, r)
+
+
 def _from_response(instance: Instance, response: requests.Response) -> Operation:
     """
     Handle idiosyncrasies in constructing Operations from Tamr responses.
