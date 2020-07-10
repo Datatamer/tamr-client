@@ -27,7 +27,7 @@ def successful(response: requests.Response) -> requests.Response:
         logger.error(
             f"Encountered HTTP error code {r.status_code}. Response body: {r.text}"
         )
-        raise e
+        raise requests.HTTPError(e, f"Caused by: {response.content}")
     return response
 
 
