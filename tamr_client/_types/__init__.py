@@ -13,7 +13,7 @@ from tamr_client._types.attribute import (
     PrimitiveType,
     Record,
     STRING,
-    SubAttribute
+    SubAttribute,
 )
 from tamr_client._types.auth import UsernamePasswordAuth
 from tamr_client._types.dataset import AnyDataset, Dataset, UnifiedDataset
@@ -22,5 +22,5 @@ from tamr_client._types.json import JsonDict
 from tamr_client._types.operation import Operation
 from tamr_client._types.project import MasteringProject, Project
 from tamr_client._types.session import Session
+from tamr_client._types.transformations import InputTransformation, Transformations
 from tamr_client._types.url import URL
-from tamr_client._types.transformations import Transformations, InputTransformation

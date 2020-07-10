@@ -1,9 +1,28 @@
-from tamr_client import response, dataset
+import requests
+from simplejson.errors import JSONDecodeError
+
+from tamr_client import dataset, response
 from tamr_client._types import Instance, JsonDict, Project, Session
-from tamr_client._types.transformations import Transformations, InputTransformation
+from tamr_client._types.transformations import InputTransformation, Transformations
+from tamr_client.exception import TamrClientException
 
 
-def _input_transformation_from_json(session: Session, instance: Instance, data: JsonDict) -> InputTransformation:
+class InvalidInputDataset(TamrClientException):
+    """Raised when a Dataset within a InputTransformation
+    is not an input dataset of the target project."""
+
+    pass
+
+
+class LintingError(TamrClientException):
+    """Raised when there are linting errors within Transformations."""
+
+    pass
+
+
+def _input_transformation_from_json(
+    session: Session, instance: Instance, data: JsonDict
+) -> InputTransformation:
     """Make input transformation from JSON data (deserialize)
 
     Args:
@@ -15,13 +34,10 @@ def _input_transformation_from_json(session: Session, instance: Instance, data: 
         dataset.from_resource_id(session, instance, d_id)
         for d_id in dataset_resource_ids
     ]
-    return InputTransformation(
-        transformation=data["transformation"],
-        datasets=datasets
-    )
+    return InputTransformation(transformation=data["transformation"], datasets=datasets)
 
 
-def _transformations_from_json(session: Session, instance: Instance, data: JsonDict) -> Transformations:
+def _from_json(session: Session, instance: Instance, data: JsonDict) -> Transformations:
     """Make transformations from JSON data (deserialize)
 
     Args:
@@ -33,7 +49,7 @@ def _transformations_from_json(session: Session, instance: Instance, data: JsonD
         input_scope=[
             _input_transformation_from_json(session, instance, tx)
             for tx in data["parameterized"]
-        ]
+        ],
     )
 
 
@@ -44,20 +60,14 @@ def _input_transformation_to_json(tx: InputTransformation) -> JsonDict:
         tx: Input transformation to convert
     """
     # datasetId omitted, only one of "datasetId" or "relativeDatasetId" is required
-    dataset_json = [{
-          "name": d.name,
-          "relativeDatasetId": d.url.path
-        }
-        for d in tx.datasets
-        ]
+    dataset_json = [
+        {"name": d.name, "relativeDatasetId": d.url.path} for d in tx.datasets
+    ]
 
-    return {
-        "datasets": dataset_json,
-        "transformation": tx.transformation
-    }
+    return {"datasets": dataset_json, "transformation": tx.transformation}
 
 
-def _transformations_to_json(tx: Transformations) -> JsonDict:
+def _to_json(tx: Transformations) -> JsonDict:
     """Convert transformations to JSON data (serialize)
 
     Args:
@@ -65,7 +75,7 @@ def _transformations_to_json(tx: Transformations) -> JsonDict:
     """
     return {
         "parameterized": [_input_transformation_to_json(t) for t in tx.input_scope],
-        "unified": tx.unified_scope
+        "unified": tx.unified_scope,
     }
 
 
@@ -90,10 +100,12 @@ def get_all(session: Session, project: Project) -> Transformations:
         headers={"Content-Type": "application/json", "Accept": "application/json"},
     )
     response.successful(r)
-    return _transformations_from_json(session, project.url.instance, r.json())
+    return _from_json(session, project.url.instance, r.json())
 
 
-def replace_all(session: Session, project: Project, tx: Transformations) -> response:
+def replace_all(
+    session: Session, project: Project, tx: Transformations
+) -> requests.Response:
     """Replaces the transformations of a Project
 
     Args:
@@ -115,11 +127,23 @@ def replace_all(session: Session, project: Project, tx: Transformations) -> resp
         ... )
         >>> tc.transformations.replace_all(session, project1, all_tx)
     """
-    body = _transformations_to_json(tx)
+    body = _to_json(tx)
     r = session.put(
         f"{project.url}/transformations",
         json=body,
         headers={"Content-Type": "application/json", "Accept": "application/json"},
     )
+    if r.status_code == 400:
+        try:
+            r_json = r.json()
+            if r_json["class"] == "java.lang.IllegalArgumentException":
+                raise InvalidInputDataset(r_json["message"], str(tx))
+            if r_json["class"] == "javax.ws.rs.BadRequestException":
+                raise LintingError(r_json["message"], str(tx))
+        except JSONDecodeError:
+            # Any status code 400 that doesn't have a valid json body
+            # be caught with the generic success check below
+            pass
+
     response.successful(r)
     return r

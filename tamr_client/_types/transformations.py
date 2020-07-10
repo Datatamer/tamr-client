@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List
 
-from tamr_client import Dataset
+from tamr_client._types import Dataset
 
 
 @dataclass(frozen=True)
@@ -14,4 +14,3 @@ class InputTransformation:
 class Transformations:
     input_scope: List[InputTransformation] = field(default_factory=list)
     unified_scope: List[str] = field(default_factory=list)
-

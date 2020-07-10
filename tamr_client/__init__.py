@@ -21,6 +21,7 @@ from tamr_client._types import (
     Attribute,
     AttributeType,
     Dataset,
+    InputTransformation,
     Instance,
     MasteringProject,
     Operation,
@@ -28,10 +29,9 @@ from tamr_client._types import (
     Session,
     SubAttribute,
     Transformations,
-    InputTransformation,
     UnifiedDataset,
     URL,
-    UsernamePasswordAuth
+    UsernamePasswordAuth,
 )
 
 # functionality
