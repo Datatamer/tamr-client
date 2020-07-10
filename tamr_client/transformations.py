@@ -123,7 +123,8 @@ def replace_all(
         >>> dataset3 = tc.dataset.from_resource_id(session, instance, id='3')
         >>> new_input_tx = tc.InputTransformation("SELECT *, upper(name) as name;", [dataset3])
         >>> all_tx = tc.Transformations(
-        ... input_scope=[new_input_tx], unified_scope=["SELECT *, 1 as one;"]
+        ... input_scope=[new_input_tx],
+        ... unified_scope=["SELECT *, 1 as one;"]
         ... )
         >>> tc.transformations.replace_all(session, project1, all_tx)
     """
