@@ -1,9 +1,14 @@
 import requests
-from simplejson.errors import JSONDecodeError
 
 from tamr_client import dataset, response
-from tamr_client._types import Instance, JsonDict, Project, Session
-from tamr_client._types.transformations import InputTransformation, Transformations
+from tamr_client._types import (
+    InputTransformation,
+    Instance,
+    JsonDict,
+    Project,
+    Session,
+    Transformations,
+)
 from tamr_client.exception import TamrClientException
 
 
@@ -14,7 +19,7 @@ class InvalidInputDataset(TamrClientException):
     pass
 
 
-class LintingError(TamrClientException):
+class LintingFailed(TamrClientException):
     """Raised when there are linting errors within Transformations."""
 
     pass
@@ -95,10 +100,7 @@ def get_all(session: Session, project: Project) -> Transformations:
         >>> project1 = tc.project.from_resource_id(session, instance, id='1')
         >>> print(tc.transformations.get_all(session, project1))
     """
-    r = session.get(
-        f"{project.url}/transformations",
-        headers={"Content-Type": "application/json", "Accept": "application/json"},
-    )
+    r = session.get(f"{project.url}/transformations")
     response.successful(r)
     return _from_json(session, project.url.instance, r.json())
 
@@ -140,10 +142,9 @@ def replace_all(
             if r_json["class"] == "java.lang.IllegalArgumentException":
                 raise InvalidInputDataset(r_json["message"], str(tx))
             if r_json["class"] == "javax.ws.rs.BadRequestException":
-                raise LintingError(r_json["message"], str(tx))
-        except JSONDecodeError:
-            # Any status code 400 that doesn't have a valid json body
-            # be caught with the generic success check below
+                raise LintingFailed(r_json["message"], str(tx))
+        finally:
+            # Any failure in this try will be caught with the generic success check below
             pass
 
     response.successful(r)

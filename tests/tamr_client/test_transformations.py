@@ -28,8 +28,6 @@ def test_get_all():
 
     transforms = tc.transformations.get_all(s, project)
 
-    assert isinstance(transforms, tc.Transformations)
-
     assert len(transforms.input_scope) == 2
     assert len(transforms.unified_scope) == 1
 
@@ -73,8 +71,6 @@ def test_replace_all():
     r = tc.transformations.replace_all(s, project, transforms)
 
     posted_tx = tc.transformations._from_json(s, project.url.instance, r.json())
-
-    assert isinstance(posted_tx, tc.Transformations)
 
     assert len(posted_tx.input_scope) == 1
     assert len(posted_tx.unified_scope) == 2
@@ -129,11 +125,13 @@ def test_replace_all_errors():
     with pytest.raises(tc.transformations.InvalidInputDataset):
         tc.transformations.replace_all(s, project, transforms)
 
-    with pytest.raises(tc.transformations.LintingError):
+    with pytest.raises(tc.transformations.LintingFailed):
         tc.transformations.replace_all(s, project, transforms)
 
+    # 400 error with different class
     with pytest.raises(HTTPError):
         tc.transformations.replace_all(s, project, transforms)
 
+    # 403 error
     with pytest.raises(HTTPError):
         tc.transformations.replace_all(s, project, transforms)
