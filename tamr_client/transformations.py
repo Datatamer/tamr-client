@@ -9,20 +9,6 @@ from tamr_client._types import (
     Session,
     Transformations,
 )
-from tamr_client.exception import TamrClientException
-
-
-class InvalidInputDataset(TamrClientException):
-    """Raised when a Dataset within a InputTransformation
-    is not an input dataset of the target project."""
-
-    pass
-
-
-class LintingFailed(TamrClientException):
-    """Raised when there are linting errors within Transformations."""
-
-    pass
 
 
 def _input_transformation_from_json(
@@ -131,21 +117,7 @@ def replace_all(
         >>> tc.transformations.replace_all(session, project1, all_tx)
     """
     body = _to_json(tx)
-    r = session.put(
-        f"{project.url}/transformations",
-        json=body,
-        headers={"Content-Type": "application/json", "Accept": "application/json"},
-    )
-    if r.status_code == 400:
-        try:
-            r_json = r.json()
-            if r_json["class"] == "java.lang.IllegalArgumentException":
-                raise InvalidInputDataset(r_json["message"], str(tx))
-            if r_json["class"] == "javax.ws.rs.BadRequestException":
-                raise LintingFailed(r_json["message"], str(tx))
-        finally:
-            # Any failure in this try will be caught with the generic success check below
-            pass
+    r = session.put(f"{project.url}/transformations", json=body)
 
     response.successful(r)
     return r

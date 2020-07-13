@@ -104,34 +104,7 @@ def test_replace_all_errors():
 
     transforms = tc.transformations._from_json(s, instance, tx_json)
 
-    bad_dataset_err = (
-        '{"status": 400, "class": "java.lang.IllegalArgumentException", '
-        '"message": "Could not find dataset d1 in this project", "stackTrace": ""}'
-    )
-    lint_err = (
-        '{"status": 400, "class": "javax.ws.rs.BadRequestException", '
-        '"message": "------ ERROR ------\\n\\n       mismatched input", "stackTrace": ""}'
-    )
-    other_err = (
-        '{"status": 400, "class": "anything.else", '
-        '"message": "A bad thing happened.", "stackTrace": ""}'
-    )
+    responses.add(responses.PUT, str(tx_url), status=400)
 
-    responses.add(responses.PUT, str(tx_url), status=400, body=bad_dataset_err)
-    responses.add(responses.PUT, str(tx_url), status=400, body=lint_err)
-    responses.add(responses.PUT, str(tx_url), status=400, body=other_err)
-    responses.add(responses.PUT, str(tx_url), status=403)
-
-    with pytest.raises(tc.transformations.InvalidInputDataset):
-        tc.transformations.replace_all(s, project, transforms)
-
-    with pytest.raises(tc.transformations.LintingFailed):
-        tc.transformations.replace_all(s, project, transforms)
-
-    # 400 error with different class
-    with pytest.raises(HTTPError):
-        tc.transformations.replace_all(s, project, transforms)
-
-    # 403 error
     with pytest.raises(HTTPError):
         tc.transformations.replace_all(s, project, transforms)
