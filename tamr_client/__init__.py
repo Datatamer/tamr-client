@@ -21,12 +21,14 @@ from tamr_client._types import (
     Attribute,
     AttributeType,
     Dataset,
+    InputTransformation,
     Instance,
     MasteringProject,
     Operation,
     Project,
     Session,
     SubAttribute,
+    Transformations,
     UnifiedDataset,
     URL,
     UsernamePasswordAuth,
@@ -44,6 +46,7 @@ from tamr_client import primary_key
 from tamr_client import project
 from tamr_client import response
 from tamr_client import session
+from tamr_client import transformations
 from tamr_client.dataset import dataframe
 from tamr_client.dataset import record
 from tamr_client.exception import TamrClientException

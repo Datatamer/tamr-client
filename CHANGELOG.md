@@ -1,8 +1,10 @@
 ## 0.13.0-dev
-  **BETA**
+  **BETA** 
   Important: Do not use BETA features for production workflows.
   - Added function to get operation from resource ID
-  
+  - [#421](https://github.com/Datatamer/tamr-client/pull/421) Added functions for getting and replacing the transformations of a projects via `tc.transformations.get_all()` and `tc.transformations.replace_all()`
+   - Added new dataclasses `Transformations` and `InputTransformations` to support these functions
+
   **NEW FEATURES**
   - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id
   

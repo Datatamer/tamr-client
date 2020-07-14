@@ -13,5 +13,6 @@
   * [Operation](beta/operation)
   * [Primary Key](beta/primary_key)
   * [Project](beta/project)
+  * [Transformations](beta/transformations)
   * [Response](beta/response)
   * [Session](beta/session)
