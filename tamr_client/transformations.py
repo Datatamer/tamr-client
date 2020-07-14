@@ -119,5 +119,4 @@ def replace_all(
     body = _to_json(tx)
     r = session.put(f"{project.url}/transformations", json=body)
 
-    response.successful(r)
-    return r
+    return response.successful(r)
