@@ -34,7 +34,6 @@ def upsert(
 
     Raises:
         requests.HTTPError: If an HTTP error is encountered
-        requests.HTTPError: If an HTTP error is encountered
         primary_key.NotFound: If `primary_key_name` is not a column in `df` or the index of `df`
         ValueError: If `primary_key_name` matches both a column in `df` and the index of `df`
     """

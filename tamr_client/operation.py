@@ -141,7 +141,7 @@ def _from_url(session: Session, url: URL) -> Operation:
     return _from_json(url, data)
 
 
-def _from_json(url: URL, data: JsonDict):
+def _from_json(url: URL, data: JsonDict) -> Operation:
     """Make operation from JSON data (deserialize)
 
     Args:
