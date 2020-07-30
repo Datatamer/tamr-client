@@ -1,0 +1,29 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "url": "http://localhost/api/versioned/v1/projects/1"
+        },
+        "response": {
+            "json": {
+                "id": "unify://unified-data/v1/projects/1",
+                "name": "proj",
+                "description": "Mastering Project",
+                "type": "DEDUP",
+                "unifiedDatasetName": "proj_unified_dataset",
+                "created": {
+                    "username": "admin",
+                    "time": "2020-04-03T14:14:18.752Z",
+                    "version": "18"
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2020-04-03T14:14:20.115Z",
+                    "version": "19"
+                },
+                "relativeId": "projects/1",
+                "externalId": "58bdbe72-3c08-427d-97bd-45b16d92c79c"
+            }
+        }
+    }
+]

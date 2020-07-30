@@ -1,0 +1,11 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "url": "http://localhost/api/versioned/v1/projects/1"
+        },
+        "response": {
+            "status": 404
+        }
+    }
+]
