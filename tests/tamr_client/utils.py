@@ -13,22 +13,26 @@ def load_json(path: Union[str, Path]):
 
 
 def session():
+    # TODO move to fake.py
     auth = tc.UsernamePasswordAuth("username", "password")
     s = tc.session.from_auth(auth)
     return s
 
 
 def instance():
+    # TODO move to fake.py
     return tc.Instance()
 
 
 def dataset():
+    # TODO move to fake.py
     url = tc.URL(path="datasets/1")
     dataset = tc.Dataset(url, name="dataset.csv", key_attribute_names=("primary_key",))
     return dataset
 
 
 def unified_dataset():
+    # TODO move to fake.py
     url = tc.URL(path="projects/1/unifiedDataset")
     unified_dataset = tc.dataset.unified.UnifiedDataset(
         url, name="dataset.csv", key_attribute_names=("primary_key",)
@@ -37,6 +41,7 @@ def unified_dataset():
 
 
 def mastering_project():
+    # TODO move to fake.py
     url = tc.URL(path="projects/1")
     mastering_project = tc.MasteringProject(
         url, name="Project 1", description="A Mastering Project"
