@@ -3,7 +3,7 @@ from requests import HTTPError
 import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake, utils
 
 
 @responses.activate
@@ -22,8 +22,8 @@ def test_get_all():
     responses.add(responses.GET, str(dataset_url), json=dataset_json)
 
     # test
-    s = utils.session()
-    instance = utils.instance()
+    s = fake.session()
+    instance = fake.instance()
     project = tc.project.from_resource_id(s, instance, "1")
 
     transforms = tc.transformations.get_all(s, project)
@@ -56,8 +56,8 @@ def test_replace_all():
     responses.add(responses.GET, str(dataset_url), json=dataset_json)
 
     # test
-    s = utils.session()
-    instance = utils.instance()
+    s = fake.session()
+    instance = fake.instance()
     project = tc.project.from_resource_id(s, instance, "1")
 
     transforms = tc.transformations._from_json(s, instance, tx_json)
@@ -98,8 +98,8 @@ def test_replace_all_errors():
     responses.add(responses.GET, str(dataset_url), json=dataset_json)
 
     # test
-    s = utils.session()
-    instance = utils.instance()
+    s = fake.session()
+    instance = fake.instance()
     project = tc.project.from_resource_id(s, instance, "1")
 
     transforms = tc.transformations._from_json(s, instance, tx_json)

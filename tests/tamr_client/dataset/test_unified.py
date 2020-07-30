@@ -2,14 +2,14 @@ import pytest
 import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake, utils
 
 
 @responses.activate
 def test_from_project():
-    s = utils.session()
-    instance = utils.instance()
-    project = utils.mastering_project()
+    s = fake.session()
+    instance = fake.instance()
+    project = fake.mastering_project()
 
     dataset_json = utils.load_json("dataset.json")
     url = tc.URL(path="projects/1/unifiedDataset")
@@ -23,9 +23,9 @@ def test_from_project():
 
 @responses.activate
 def test_from_project_dataset_not_found():
-    s = utils.session()
-    instance = utils.instance()
-    project = utils.mastering_project()
+    s = fake.session()
+    instance = fake.instance()
+    project = fake.mastering_project()
 
     url = tc.URL(path="projects/1/unifiedDataset")
     responses.add(responses.GET, str(url), status=404)
@@ -36,7 +36,7 @@ def test_from_project_dataset_not_found():
 
 @responses.activate
 def test_apply_changes():
-    s = utils.session()
+    s = fake.session()
     dataset_json = utils.load_json("dataset.json")
     dataset_url = tc.URL(path="projects/1/unifiedDataset")
     unified_dataset = tc.dataset.unified._from_json(dataset_url, dataset_json)

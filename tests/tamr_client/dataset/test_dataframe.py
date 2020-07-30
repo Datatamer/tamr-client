@@ -6,13 +6,13 @@ import pytest
 import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake, utils
 
 
 @responses.activate
 def test_upsert():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
@@ -37,8 +37,8 @@ def test_upsert():
 
 @responses.activate
 def test_upsert_primary_key_not_found():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     df = pd.DataFrame(_records_json)
 
@@ -48,8 +48,8 @@ def test_upsert_primary_key_not_found():
 
 @responses.activate
 def test_upsert_infer_primary_key():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
@@ -74,8 +74,8 @@ def test_upsert_infer_primary_key():
 
 @responses.activate
 def test_upsert_index_as_primary_key():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
@@ -104,8 +104,8 @@ def test_upsert_index_as_primary_key():
 
 @responses.activate
 def test_upsert_index_column_name_collision():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     df = pd.DataFrame(_records_json_2)
     df.index.name = "primary_key"

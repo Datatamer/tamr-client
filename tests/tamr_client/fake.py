@@ -5,6 +5,9 @@ from pathlib import Path
 
 import responses
 
+import tamr_client as tc
+
+
 tests_tc_dir = (Path(__file__) / "..").resolve()
 fake_json_dir = tests_tc_dir / "fake_json"
 
@@ -31,3 +34,35 @@ def json(test_fn):
             test_fn(*args, **kwargs)
 
     return wrapper
+
+
+def session():
+    auth = tc.UsernamePasswordAuth("username", "password")
+    s = tc.session.from_auth(auth)
+    return s
+
+
+def instance():
+    return tc.Instance()
+
+
+def dataset():
+    url = tc.URL(path="datasets/1")
+    dataset = tc.Dataset(url, name="dataset.csv", key_attribute_names=("primary_key",))
+    return dataset
+
+
+def unified_dataset():
+    url = tc.URL(path="projects/1/unifiedDataset")
+    unified_dataset = tc.dataset.unified.UnifiedDataset(
+        url, name="dataset.csv", key_attribute_names=("primary_key",)
+    )
+    return unified_dataset
+
+
+def mastering_project():
+    url = tc.URL(path="projects/1")
+    mastering_project = tc.MasteringProject(
+        url, name="Project 1", description="A Mastering Project"
+    )
+    return mastering_project

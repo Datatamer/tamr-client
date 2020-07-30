@@ -6,13 +6,13 @@ import pytest
 import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake, utils
 
 
 @responses.activate
 def test_update():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
@@ -35,8 +35,8 @@ def test_update():
 
 @responses.activate
 def test_upsert():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
@@ -61,8 +61,8 @@ def test_upsert():
 
 @responses.activate
 def test_upsert_primary_key_not_found():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     with pytest.raises(tc.primary_key.NotFound):
         tc.record.upsert(
@@ -72,8 +72,8 @@ def test_upsert_primary_key_not_found():
 
 @responses.activate
 def test_upsert_infer_primary_key():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
@@ -96,8 +96,8 @@ def test_upsert_infer_primary_key():
 
 @responses.activate
 def test_delete():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
     deletes = [
@@ -122,8 +122,8 @@ def test_delete():
 
 @responses.activate
 def test_delete_primary_key_not_found():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     with pytest.raises(tc.primary_key.NotFound):
         tc.record.delete(
@@ -133,8 +133,8 @@ def test_delete_primary_key_not_found():
 
 @responses.activate
 def test_delete_infer_primary_key():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
     deletes = [
@@ -157,8 +157,8 @@ def test_delete_infer_primary_key():
 
 @responses.activate
 def test_stream():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1/records")
     responses.add(
