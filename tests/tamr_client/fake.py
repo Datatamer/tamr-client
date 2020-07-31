@@ -21,7 +21,13 @@ fake_json_dir = tests_tc_dir / "fake_json"
 def _to_kwargs(fake):
     req = fake["request"]
     resp = fake["response"]
-    return {**req, **resp}
+
+    url = req.get("url")
+    if url is None:
+        path = req.get("path")
+        url = "http://localhost/api/versioned/v1/" + path
+
+    return dict(method=req["method"], url=url, **resp)
 
 
 def json(test_fn):

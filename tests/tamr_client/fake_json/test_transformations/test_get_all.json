@@ -2,7 +2,7 @@
     {
         "request": {
             "method": "GET",
-            "url": "http://localhost/api/versioned/v1/projects/1/transformations"
+            "path": "projects/1/transformations"
         },
         "response": {
             "json": {
@@ -31,7 +31,7 @@
     {
         "request": {
             "method": "GET",
-            "url": "http://localhost/api/versioned/v1/datasets/1"
+            "path": "datasets/1"
         },
         "response": {
             "json": {
