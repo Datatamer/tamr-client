@@ -1,3 +1,9 @@
+"""
+Utilities for faking Tamr resources and server responses for testing.
+
+For more, see "How to write tests" in the Contributor guide.
+"""
+
 from functools import wraps
 from inspect import getfile
 from json import load
@@ -19,6 +25,11 @@ def _to_kwargs(fake):
 
 
 def json(test_fn):
+    """Intercept API requests and respond with fake JSON data.
+
+    Will look in fake_json directory for data corresponding to the decorated test.
+    Data format is a JSON list of request/response pairs in order of execution.
+    """
     test_file = Path(getfile(test_fn))
 
     fakes_mod_path = fake_json_dir / test_file.relative_to(tests_tc_dir).with_suffix("")
@@ -36,23 +47,23 @@ def json(test_fn):
     return wrapper
 
 
-def session():
+def session() -> tc.Session:
     auth = tc.UsernamePasswordAuth("username", "password")
     s = tc.session.from_auth(auth)
     return s
 
 
-def instance():
+def instance() -> tc.Instance:
     return tc.Instance()
 
 
-def dataset():
+def dataset() -> tc.Dataset:
     url = tc.URL(path="datasets/1")
     dataset = tc.Dataset(url, name="dataset.csv", key_attribute_names=("primary_key",))
     return dataset
 
 
-def unified_dataset():
+def unified_dataset() -> tc.UnifiedDataset:
     url = tc.URL(path="projects/1/unifiedDataset")
     unified_dataset = tc.dataset.unified.UnifiedDataset(
         url, name="dataset.csv", key_attribute_names=("primary_key",)
@@ -60,7 +71,7 @@ def unified_dataset():
     return unified_dataset
 
 
-def mastering_project():
+def mastering_project() -> tc.MasteringProject:
     url = tc.URL(path="projects/1")
     mastering_project = tc.MasteringProject(
         url, name="Project 1", description="A Mastering Project"
@@ -68,7 +79,7 @@ def mastering_project():
     return mastering_project
 
 
-def transforms():
+def transforms() -> tc.Transformations:
     return tc.Transformations(
         input_scope=[
             tc.InputTransformation("SELECT *, 1 as one;"),
