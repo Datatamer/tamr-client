@@ -1,0 +1,22 @@
+[
+    {
+        "request": {
+            "method": "PUT",
+            "url": "http://localhost/api/versioned/v1/projects/1/transformations"
+        },
+        "response": {
+            "json": {
+                "parameterized": [
+                    {
+                        "datasets": [],
+                        "transformation": "SELECT *, 1 as one;"
+                    }
+                ],
+                "unified": [
+                    "//Comment\nSELECT *;",
+                    "//extra TX"
+                ]
+            }
+        }
+    }
+]

@@ -66,3 +66,13 @@ def mastering_project():
         url, name="Project 1", description="A Mastering Project"
     )
     return mastering_project
+
+
+def transforms():
+    return tc.Transformations(
+        input_scope=[
+            tc.InputTransformation("SELECT *, 1 as one;"),
+            tc.InputTransformation("SELECT *, 2 as two;", datasets=[dataset()]),
+        ],
+        unified_scope=["//Comment\nSELECT *;"],
+    )

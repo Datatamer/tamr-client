@@ -1,0 +1,11 @@
+[
+    {
+        "request": {
+            "method": "PUT",
+            "url": "http://localhost/api/versioned/v1/projects/1/transformations"
+        },
+        "response": {
+            "status": 400
+        }
+    }
+]
