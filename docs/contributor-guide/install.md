@@ -1,6 +1,6 @@
 # Installation
 
-### Pre-requisites
+### Prerequisites
 
 1. Install [build dependencies for pyenv](https://github.com/pyenv/pyenv/wiki#suggested-build-environment)
 2. Install [pyenv](https://github.com/pyenv/pyenv#installation)
