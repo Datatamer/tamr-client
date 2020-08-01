@@ -4,7 +4,7 @@ import pytest
 import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake, utils
 
 
 def test_from_json():
@@ -32,8 +32,8 @@ def test_json():
 
 @responses.activate
 def test_create():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     attrs = tuple(
         [
@@ -63,7 +63,7 @@ def test_create():
 
 @responses.activate
 def test_update():
-    s = utils.session()
+    s = fake.session()
 
     url = tc.URL(path="datasets/1/attributes/RowNum")
     attr_json = utils.load_json("attributes.json")[0]
@@ -80,7 +80,7 @@ def test_update():
 
 @responses.activate
 def test_delete():
-    s = utils.session()
+    s = fake.session()
 
     url = tc.URL(path="datasets/1/attributes/RowNum")
     attr_json = utils.load_json("attributes.json")[0]
@@ -92,8 +92,8 @@ def test_delete():
 
 @responses.activate
 def test_from_resource_id():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path=dataset.url.path + "/attributes/attr")
     attr_json = utils.load_json("attribute.json")
@@ -105,8 +105,8 @@ def test_from_resource_id():
 
 @responses.activate
 def test_from_resource_id_attribute_not_found():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = replace(dataset.url, path=dataset.url.path + "/attributes/attr")
 
@@ -116,8 +116,8 @@ def test_from_resource_id_attribute_not_found():
 
 
 def test_create_reserved_attribute_name():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     with pytest.raises(tc.attribute.ReservedName):
         tc.attribute.create(s, dataset, name="clusterId", is_nullable=False)
@@ -125,8 +125,8 @@ def test_create_reserved_attribute_name():
 
 @responses.activate
 def test_from_dataset_all():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
     attrs_json = utils.load_json("attributes.json")
@@ -145,8 +145,8 @@ def test_from_dataset_all():
 
 @responses.activate
 def test_create_attribute_exists():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = replace(dataset.url, path=dataset.url.path + "/attributes")
     responses.add(responses.POST, str(url), status=409)
@@ -156,7 +156,7 @@ def test_create_attribute_exists():
 
 @responses.activate
 def test_update_attribute_not_found():
-    s = utils.session()
+    s = fake.session()
 
     url = tc.URL(path="datasets/1/attributes/RowNum")
     attr_json = utils.load_json("attributes.json")[0]
@@ -169,7 +169,7 @@ def test_update_attribute_not_found():
 
 @responses.activate
 def test_delete_attribute_not_found():
-    s = utils.session()
+    s = fake.session()
 
     url = tc.URL(path="datasets/1/attributes/RowNum")
     attr_json = utils.load_json("attributes.json")[0]

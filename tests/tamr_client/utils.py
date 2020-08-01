@@ -2,7 +2,6 @@ import json
 from pathlib import Path
 from typing import Union
 
-import tamr_client as tc
 
 data_dir = Path(__file__).parent / "data"
 
@@ -10,38 +9,6 @@ data_dir = Path(__file__).parent / "data"
 def load_json(path: Union[str, Path]):
     with open(data_dir / path) as f:
         return json.load(f)
-
-
-def session():
-    auth = tc.UsernamePasswordAuth("username", "password")
-    s = tc.session.from_auth(auth)
-    return s
-
-
-def instance():
-    return tc.Instance()
-
-
-def dataset():
-    url = tc.URL(path="datasets/1")
-    dataset = tc.Dataset(url, name="dataset.csv", key_attribute_names=("primary_key",))
-    return dataset
-
-
-def unified_dataset():
-    url = tc.URL(path="projects/1/unifiedDataset")
-    unified_dataset = tc.dataset.unified.UnifiedDataset(
-        url, name="dataset.csv", key_attribute_names=("primary_key",)
-    )
-    return unified_dataset
-
-
-def mastering_project():
-    url = tc.URL(path="projects/1")
-    mastering_project = tc.MasteringProject(
-        url, name="Project 1", description="A Mastering Project"
-    )
-    return mastering_project
 
 
 def capture_payload(request, snoop, status, response_json):

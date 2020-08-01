@@ -2,7 +2,7 @@ import pytest
 import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake, utils
 
 
 def test_operation_from_json():
@@ -18,7 +18,7 @@ def test_operation_from_json():
 
 @responses.activate
 def test_operation_from_url():
-    s = utils.session()
+    s = fake.session()
     url = tc.URL(path="operations/1")
 
     operation_json = utils.load_json("operation_succeeded.json")
@@ -34,8 +34,8 @@ def test_operation_from_url():
 
 @responses.activate
 def test_operation_from_response():
-    s = utils.session()
-    instance = utils.instance()
+    s = fake.session()
+    instance = fake.instance()
     url = tc.URL(path="operations/1")
 
     operation_json = utils.load_json("operation_succeeded.json")
@@ -52,8 +52,8 @@ def test_operation_from_response():
 
 @responses.activate
 def test_operation_from_response_noop():
-    s = utils.session()
-    instance = utils.instance()
+    s = fake.session()
+    instance = fake.instance()
     url = tc.URL(path="operations/2")
     responses.add(responses.GET, str(url), status=204)
 
@@ -79,8 +79,8 @@ def test_operation_from_response_noop():
 
 @responses.activate
 def test_from_resource_id():
-    s = utils.session()
-    instance = utils.instance()
+    s = fake.session()
+    instance = fake.instance()
     url = tc.URL(path="operations/1")
 
     operation_json = utils.load_json("operation_succeeded.json")
@@ -97,7 +97,7 @@ def test_from_resource_id():
 
 @responses.activate
 def test_operation_poll():
-    s = utils.session()
+    s = fake.session()
     url = tc.URL(path="operations/1")
 
     pending_operation_json = utils.load_json("operation_pending.json")

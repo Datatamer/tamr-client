@@ -1,5 +1,5 @@
 from functools import partial
-from typing import Any, Dict, Optional, TypeVar
+from typing import Any, ContextManager, Dict, Optional, TypeVar
 
 JsonDict = Dict[str, Any]
 
@@ -20,3 +20,4 @@ T = TypeVar("T")
 
 def activate(T) -> T: ...
 def add_callback(method: Optional[str], url: Optional[str], callback: partial[Any]): ...
+def RequestsMock() -> ContextManager[Any]: ...

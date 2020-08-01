@@ -1,18 +1,13 @@
 import pytest
-import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake
 
 
-@responses.activate
+@fake.json
 def test_from_resource_id_mastering():
-    s = utils.session()
-    instance = utils.instance()
-
-    project_json = utils.load_json("mastering_project.json")
-    url = tc.URL(path="projects/1")
-    responses.add(responses.GET, str(url), json=project_json)
+    s = fake.session()
+    instance = fake.instance()
 
     project = tc.project.from_resource_id(s, instance, "1")
     assert isinstance(project, tc.MasteringProject)
@@ -20,13 +15,10 @@ def test_from_resource_id_mastering():
     assert project.description == "Mastering Project"
 
 
-@responses.activate
+@fake.json
 def test_from_resource_id_not_found():
-    s = utils.session()
-    instance = utils.instance()
-
-    url = tc.URL(path="projects/1")
-    responses.add(responses.GET, str(url), status=404)
+    s = fake.session()
+    instance = fake.instance()
 
     with pytest.raises(tc.project.NotFound):
         tc.project.from_resource_id(s, instance, "1")
