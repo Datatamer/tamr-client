@@ -5,7 +5,6 @@ from tamr_client.attribute._attribute import (
     AlreadyExists,
     create,
     delete,
-    from_dataset_all,
     from_resource_id,
     NotFound,
     ReservedName,

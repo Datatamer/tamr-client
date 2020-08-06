@@ -124,26 +124,6 @@ def test_create_reserved_attribute_name():
 
 
 @responses.activate
-def test_from_dataset_all():
-    s = fake.session()
-    dataset = fake.dataset()
-
-    attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
-    attrs_json = utils.load_json("attributes.json")
-    responses.add(responses.GET, str(attrs_url), json=attrs_json, status=204)
-
-    attrs = tc.attribute.from_dataset_all(s, dataset)
-
-    row_num = attrs[0]
-    assert row_num.name == "RowNum"
-    assert row_num.type == tc.attribute.type.STRING
-
-    geom = attrs[1]
-    assert geom.name == "geom"
-    assert isinstance(geom.type, tc.attribute.type.Record)
-
-
-@responses.activate
 def test_create_attribute_exists():
     s = fake.session()
     dataset = fake.dataset()
