@@ -22,6 +22,8 @@ def format(session):
     session.run("poetry", "install", external=True)
     if "--fix" in session.posargs:
         session.run("black", ".")
+    elif "--diff" in session.posargs:
+        session.run("black", ".", "--diff")
     else:
         session.run("black", ".", "--check")
 
