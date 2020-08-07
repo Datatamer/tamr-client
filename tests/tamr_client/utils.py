@@ -16,7 +16,7 @@ def capture_payload(request, snoop, status, response_json):
 
     See https://github.com/getsentry/responses#dynamic-responses
     """
-    snoop["payload"] = list(request.body)
+    snoop["payload"] = [x.decode("utf-8") for x in request.body]
     return status, {}, json.dumps(response_json)
 
 
