@@ -97,19 +97,26 @@ stored in the removed attributes.
 ## Upload Dataframe as Dataset
 
 ### Create New Dataset
-To create a new dataset and upload data, the convenience function `dataset.create_from_dataframe()` can be used. 
+To create a new dataset and upload data, the convenience function `datasets.create_from_dataframe()` can be used. 
 Note that Tamr will throw an error if columns aren't generally formatted as strings. (The exception being geospatial
 columns. For that, see the geospatial examples.)
 
-In order to achieve this, the following code will transform the column types to string.
+To format values as strings while preserving null information, specify `dtype=object` when creating a dataframe from a csv file.
 ```python
-df = df.astype(str)
+df = pd.read_csv("my_file.csv", dtype=object)
 ```
 
 Creating the dataset is as easy as calling:
 ```python
 tamr.datasets.create_from_dataframe(df, 'primaryKey', 'my_new_dataset')
 ```
+
+For an already-existing dataframe, the columns can be converted to strings using:
+```python
+df = df.astype(str)
+```
+Note, however, that converting this way will cause any `NaN` or `None` values to become strings like `'nan'` 
+that will persist into the created Tamr dataset.
 
 ### Changing Values
 
