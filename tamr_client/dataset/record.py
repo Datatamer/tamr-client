@@ -27,7 +27,7 @@ def _update(session: Session, dataset: Dataset, updates: Iterable[Dict]) -> Json
     Raises:
         requests.HTTPError: If an HTTP error is encountered
     """
-    stringified_updates = (json.dumps(update) for update in updates)
+    stringified_updates = (json.dumps(update).encode("utf-8") for update in updates)
     # `requests` accepts a generator for `data` param, but stubs for `requests` in https://github.com/python/typeshed expects this to be a file-like object
     io_updates = cast(IO, stringified_updates)
     r = session.post(
