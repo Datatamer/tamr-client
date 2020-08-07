@@ -6,3 +6,6 @@
 
 ### VS Code
 - [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+
+### IntelliJ
+- [Black](https://black.readthedocs.io/en/stable/editor_integration.html#pycharm-intellij-idea)
