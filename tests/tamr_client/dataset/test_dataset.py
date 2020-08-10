@@ -1,10 +1,7 @@
-from dataclasses import replace
-
 import pytest
-import responses
 
 import tamr_client as tc
-from tests.tamr_client import fake, utils
+from tests.tamr_client import fake
 
 
 @fake.json
@@ -27,14 +24,10 @@ def test_from_resource_id_dataset_not_found():
         tc.dataset.from_resource_id(s, instance, "1")
 
 
-@responses.activate
+@fake.json
 def test_attributes():
     s = fake.session()
     dataset = fake.dataset()
-
-    attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
-    attrs_json = utils.load_json("attributes.json")
-    responses.add(responses.GET, str(attrs_url), json=attrs_json, status=204)
 
     attrs = tc.dataset.attributes(s, dataset)
 
