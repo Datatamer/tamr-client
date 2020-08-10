@@ -1,7 +1,6 @@
 from dataclasses import replace
 
 import pytest
-import responses
 
 import tamr_client as tc
 from tests.tamr_client import fake, utils
@@ -30,7 +29,7 @@ def test_json():
         assert attr == tc.attribute._from_json(url, tc.attribute.to_json(attr))
 
 
-@responses.activate
+@fake.json
 def test_create():
     s = fake.session()
     dataset = fake.dataset()
@@ -46,10 +45,9 @@ def test_create():
         ]
     )
 
-    attrs_url = tc.URL(path=dataset.url.path + "/attributes")
-    url = replace(attrs_url, path=attrs_url.path + "/attr")
+    url = tc.URL(path=dataset.url.path + "/attributes/attr")
     attr_json = utils.load_json("attribute.json")
-    responses.add(responses.POST, str(attrs_url), json=attr_json)
+
     attr = tc.attribute.create(
         s,
         dataset,
@@ -61,7 +59,7 @@ def test_create():
     assert attr == tc.attribute._from_json(url, attr_json)
 
 
-@responses.activate
+@fake.json
 def test_update():
     s = fake.session()
 
@@ -70,15 +68,15 @@ def test_update():
     attr = tc.attribute._from_json(url, attr_json)
 
     updated_attr_json = utils.load_json("updated_attribute.json")
-    responses.add(responses.PUT, str(attr.url), json=updated_attr_json)
+
     updated_attr = tc.attribute.update(
-        s, attr, description=updated_attr_json["description"]
+        s, attr, description="Synthetic row number updated"
     )
 
     assert updated_attr == replace(attr, description=updated_attr_json["description"])
 
 
-@responses.activate
+@fake.json
 def test_delete():
     s = fake.session()
 
@@ -86,31 +84,27 @@ def test_delete():
     attr_json = utils.load_json("attributes.json")[0]
     attr = tc.attribute._from_json(url, attr_json)
 
-    responses.add(responses.DELETE, str(attr.url), status=204)
     tc.attribute.delete(s, attr)
 
 
-@responses.activate
+@fake.json
 def test_from_resource_id():
     s = fake.session()
     dataset = fake.dataset()
 
     url = tc.URL(path=dataset.url.path + "/attributes/attr")
     attr_json = utils.load_json("attribute.json")
-    responses.add(responses.GET, str(url), json=attr_json)
+
     attr = tc.attribute.from_resource_id(s, dataset, "attr")
 
     assert attr == tc.attribute._from_json(url, attr_json)
 
 
-@responses.activate
+@fake.json
 def test_from_resource_id_attribute_not_found():
     s = fake.session()
     dataset = fake.dataset()
 
-    url = replace(dataset.url, path=dataset.url.path + "/attributes/attr")
-
-    responses.add(responses.GET, str(url), status=404)
     with pytest.raises(tc.attribute.NotFound):
         tc.attribute.from_resource_id(s, dataset, "attr")
 
@@ -123,18 +117,16 @@ def test_create_reserved_attribute_name():
         tc.attribute.create(s, dataset, name="clusterId", is_nullable=False)
 
 
-@responses.activate
+@fake.json
 def test_create_attribute_exists():
     s = fake.session()
     dataset = fake.dataset()
 
-    url = replace(dataset.url, path=dataset.url.path + "/attributes")
-    responses.add(responses.POST, str(url), status=409)
     with pytest.raises(tc.attribute.AlreadyExists):
         tc.attribute.create(s, dataset, name="attr", is_nullable=False)
 
 
-@responses.activate
+@fake.json
 def test_update_attribute_not_found():
     s = fake.session()
 
@@ -142,12 +134,11 @@ def test_update_attribute_not_found():
     attr_json = utils.load_json("attributes.json")[0]
     attr = tc.attribute._from_json(url, attr_json)
 
-    responses.add(responses.PUT, str(attr.url), status=404)
     with pytest.raises(tc.attribute.NotFound):
         tc.attribute.update(s, attr)
 
 
-@responses.activate
+@fake.json
 def test_delete_attribute_not_found():
     s = fake.session()
 
@@ -155,6 +146,5 @@ def test_delete_attribute_not_found():
     attr_json = utils.load_json("attributes.json")[0]
     attr = tc.attribute._from_json(url, attr_json)
 
-    responses.add(responses.PUT, str(attr.url), status=404)
     with pytest.raises(tc.attribute.NotFound):
-        attr = tc.attribute.update(s, attr)
+        tc.attribute.update(s, attr)
