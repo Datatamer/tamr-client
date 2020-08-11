@@ -16,6 +16,12 @@ class NotFound(TamrClientException):
     pass
 
 
+class Ambiguous(TamrClientException):
+    """Raised when referencing a dataset by name that matches multiple possible targets."""
+
+    pass
+
+
 def from_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
     """Get dataset by resource ID
 
