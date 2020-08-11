@@ -6,7 +6,7 @@ ignore = E203, E266, E501, W503, F403
 max-line-length = 88
 max-complexity = 18
 select = B,C,E,F,I,W,T4,B9
-exclude = build,.venv,*.egg-info
+exclude = build,venv,.venv,*.egg-info
 per-file-ignores =
     tamr_client/__init__.py:E402,F401,I100,I202
     tamr_client/*/__init__.py:F401
