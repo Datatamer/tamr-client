@@ -7,6 +7,7 @@
 
   * [Attribute](beta/attribute)
   * [Auth](beta/auth)
+  * [Categorization](beta/categorization)
   * [Dataset](beta/dataset)
   * [Instance](beta/instance)
   * [Mastering](beta/mastering)

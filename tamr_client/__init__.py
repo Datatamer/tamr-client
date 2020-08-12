@@ -20,6 +20,7 @@ from tamr_client._types import (
     AnyDataset,
     Attribute,
     AttributeType,
+    CategorizationProject,
     Dataset,
     InputTransformation,
     Instance,
@@ -38,6 +39,7 @@ from tamr_client._types import (
 ###############
 
 from tamr_client import attribute
+from tamr_client import categorization
 from tamr_client import dataset
 from tamr_client import instance
 from tamr_client import mastering

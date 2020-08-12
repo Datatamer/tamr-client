@@ -21,4 +21,21 @@ class MasteringProject:
     description: Optional[str] = None
 
 
-Project = Union[MasteringProject]
+@dataclass(frozen=True)
+class CategorizationProject:
+    """A Tamr Categorization project
+
+    See https://docs.tamr.com/reference/the-project-object
+
+    Args:
+        url
+        name
+        description
+    """
+
+    url: URL
+    name: str
+    description: Optional[str] = None
+
+
+Project = Union[MasteringProject, CategorizationProject]

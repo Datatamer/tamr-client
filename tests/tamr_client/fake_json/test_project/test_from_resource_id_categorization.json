@@ -1,0 +1,29 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "path": "projects/2"
+        },
+        "response": {
+            "json": {
+                "id": "unify://unified-data/v1/projects/2",
+                "name": "Party Categorization",
+                "description": "Categorizes organization at the Party/Domestic level",
+                "type": "CATEGORIZATION",
+                "unifiedDatasetName": "party_categorization_unified_dataset",
+                "created": {
+                    "username": "admin",
+                    "time": "2020-08-04T14:54:11.767Z",
+                    "version": "20"
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2020-08-04T14:54:11.767Z",
+                    "version": "21"
+                },
+                "relativeId": "projects/2",
+                "externalId": "98f9e4ee-1a35-4242-917d-1163363d5411"
+            }
+        }
+    }
+]

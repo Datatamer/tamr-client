@@ -7,7 +7,8 @@
 
   **NEW FEATURES**
   - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id
-  
+  - [#425](https://github.com/Datatamer/tamr-client/pull/425) Now able to get, update and delete manual labels for Categorization projects
+
 ## 0.12.0
   **BETA**
   Important: Do not use BETA features for production workflows.
