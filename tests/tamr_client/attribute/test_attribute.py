@@ -1,5 +1,3 @@
-from dataclasses import replace
-
 import pytest
 
 import tamr_client as tc
@@ -45,9 +43,6 @@ def test_create():
         ]
     )
 
-    url = tc.URL(path=dataset.url.path + "/attributes/attr")
-    attr_json = utils.load_json("attribute.json")
-
     attr = tc.attribute.create(
         s,
         dataset,
@@ -56,33 +51,28 @@ def test_create():
         type=tc.attribute.type.Record(attributes=attrs),
     )
 
-    assert attr == tc.attribute._from_json(url, attr_json)
+    assert attr.name == "attr"
+    assert not attr.is_nullable
+    assert isinstance(attr.type, tc.attribute.type.Record)
+    assert attr.type.attributes == attrs
 
 
 @fake.json
 def test_update():
     s = fake.session()
-
-    url = tc.URL(path="datasets/1/attributes/RowNum")
-    attr_json = utils.load_json("attributes.json")[0]
-    attr = tc.attribute._from_json(url, attr_json)
-
-    updated_attr_json = utils.load_json("updated_attribute.json")
+    attr = fake.attribute()
 
     updated_attr = tc.attribute.update(
         s, attr, description="Synthetic row number updated"
     )
 
-    assert updated_attr == replace(attr, description=updated_attr_json["description"])
+    assert updated_attr.description == "Synthetic row number updated"
 
 
 @fake.json
 def test_delete():
     s = fake.session()
-
-    url = tc.URL(path="datasets/1/attributes/RowNum")
-    attr_json = utils.load_json("attributes.json")[0]
-    attr = tc.attribute._from_json(url, attr_json)
+    attr = fake.attribute()
 
     tc.attribute.delete(s, attr)
 
@@ -92,12 +82,23 @@ def test_from_resource_id():
     s = fake.session()
     dataset = fake.dataset()
 
-    url = tc.URL(path=dataset.url.path + "/attributes/attr")
-    attr_json = utils.load_json("attribute.json")
+    attrs = tuple(
+        [
+            tc.SubAttribute(
+                name=str(i),
+                is_nullable=True,
+                type=tc.attribute.type.Array(tc.attribute.type.STRING),
+            )
+            for i in range(4)
+        ]
+    )
 
     attr = tc.attribute.from_resource_id(s, dataset, "attr")
 
-    assert attr == tc.attribute._from_json(url, attr_json)
+    assert attr.name == "attr"
+    assert not attr.is_nullable
+    assert isinstance(attr.type, tc.attribute.type.Record)
+    assert attr.type.attributes == attrs
 
 
 @fake.json
@@ -129,10 +130,7 @@ def test_create_attribute_exists():
 @fake.json
 def test_update_attribute_not_found():
     s = fake.session()
-
-    url = tc.URL(path="datasets/1/attributes/RowNum")
-    attr_json = utils.load_json("attributes.json")[0]
-    attr = tc.attribute._from_json(url, attr_json)
+    attr = fake.attribute()
 
     with pytest.raises(tc.attribute.NotFound):
         tc.attribute.update(s, attr)
@@ -141,10 +139,7 @@ def test_update_attribute_not_found():
 @fake.json
 def test_delete_attribute_not_found():
     s = fake.session()
-
-    url = tc.URL(path="datasets/1/attributes/RowNum")
-    attr_json = utils.load_json("attributes.json")[0]
-    attr = tc.attribute._from_json(url, attr_json)
+    attr = fake.attribute()
 
     with pytest.raises(tc.attribute.NotFound):
-        tc.attribute.update(s, attr)
+        tc.attribute.delete(s, attr)
