@@ -74,7 +74,8 @@ See [`nox --list`](https://nox.thea.codes/en/stable/tutorial.html#selecting-whic
 To run specific tests, see [these pytest docs](https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests) and pass `pytest` args after `--` e.g.:
 
 ```sh
-prn -s test -- tests/unit/test_attribute.py
+prn -s test -- tests/unit/test_attribute.py # with alias
+poetry run nox -s test -- tests/unit/test_attribute.py # without alias
 ```
 
 
