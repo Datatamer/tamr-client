@@ -6,7 +6,7 @@ For more, see "How to write tests" in the Contributor guide.
 
 from functools import wraps
 from inspect import getfile
-from json import load
+from json import dumps, load
 from pathlib import Path
 
 import responses
@@ -26,6 +26,10 @@ def _to_kwargs(fake):
     if url is None:
         path = req.get("path")
         url = "http://localhost/api/versioned/v1/" + path
+
+    ndjson = resp.pop("ndjson", None)
+    if ndjson is not None:
+        resp["body"] = "\n".join((dumps(line) for line in ndjson))
 
     return dict(method=req["method"], url=url, **resp)
 
