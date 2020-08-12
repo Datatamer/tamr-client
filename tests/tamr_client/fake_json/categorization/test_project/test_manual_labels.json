@@ -1,0 +1,99 @@
+[
+  {
+    "request": {
+      "method": "GET",
+      "path": "projects/2/unifiedDataset"
+    },
+    "response": {
+      "json": {
+        "id": "unify://unified-data/v1/datasets/161",
+        "name": "Party_Categorization_Unified_Dataset",
+        "description": "",
+        "version": "3607",
+        "keyAttributeNames": [
+          "tamr_id"
+        ],
+        "tags": [],
+        "created": {
+          "username": "afsana.afzal",
+          "time": "2020-05-21T15:18:38.575Z",
+          "version": "18336"
+        },
+        "lastModified": {
+          "username": "workflow.bot",
+          "time": "2020-06-18T15:18:30.833Z",
+          "version": "149940"
+        },
+        "relativeId": "datasets/161",
+        "upstreamDatasetIds": [
+          "unify://unified-data/v1/datasets/106"
+        ],
+        "externalId": "Party_Categorization_Unified_Dataset"
+      }
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "datasets?filter=name==Party_Categorization_Unified_Dataset_manual_categorizations"
+    },
+    "response": {
+      "json": [
+        {
+          "id": "unify://unified-data/v1/datasets/167",
+          "name": "Party_Categorization_Unified_Dataset_manual_categorizations",
+          "description": "Manual categorizations",
+          "version": "2992",
+          "keyAttributeNames": [
+            "recordId"
+          ],
+          "tags": [],
+          "created": {
+            "username": "afsana.afzal",
+            "time": "2020-06-01T20:49:46.549Z",
+            "version": "57920"
+          },
+          "lastModified": {
+            "username": "workflow.bot",
+            "time": "2020-06-18T15:32:44.631Z",
+            "version": "150069"
+          },
+          "relativeId": "datasets/167",
+          "upstreamDatasetIds": [],
+          "externalId": "Party_Categorization_Unified_Dataset_manual_categorizations"
+        }
+      ]
+    }
+  },
+  {
+    "request": {
+      "method": "GET",
+      "path": "datasets/167"
+    },
+    "response": {
+      "json": {
+        "id": "unify://unified-data/v1/datasets/167",
+        "name": "Party_Categorization_Unified_Dataset_manual_categorizations",
+        "description": "Manual categorizations",
+        "version": "2992",
+        "keyAttributeNames": [
+          "recordId"
+        ],
+        "tags": [],
+        "created": {
+          "username": "afsana.afzal",
+          "time": "2020-06-01T20:49:46.549Z",
+          "version": "57920"
+        },
+        "lastModified": {
+          "username": "workflow.bot",
+          "time": "2020-06-18T15:32:44.631Z",
+          "version": "150069"
+        },
+        "relativeId": "datasets/167",
+        "upstreamDatasetIds": [],
+        "externalId": "Party_Categorization_Unified_Dataset_manual_categorizations"
+      }
+    }
+  }
+]

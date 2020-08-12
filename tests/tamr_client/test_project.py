@@ -16,6 +16,17 @@ def test_from_resource_id_mastering():
 
 
 @fake.json
+def test_from_resource_id_categorization():
+    s = fake.session()
+    instance = fake.instance()
+
+    project = tc.project.from_resource_id(s, instance, "2")
+    assert isinstance(project, tc.CategorizationProject)
+    assert project.name == "Party Categorization"
+    assert project.description == "Categorizes organization at the Party/Domestic level"
+
+
+@fake.json
 def test_from_resource_id_not_found():
     s = fake.session()
     instance = fake.instance()

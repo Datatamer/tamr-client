@@ -85,6 +85,14 @@ def mastering_project() -> tc.MasteringProject:
     return mastering_project
 
 
+def categorization_project() -> tc.CategorizationProject:
+    url = tc.URL(path="projects/2")
+    categorization_project = tc.CategorizationProject(
+        url, name="Project 2", description="A Categorization Project"
+    )
+    return categorization_project
+
+
 def transforms() -> tc.Transformations:
     return tc.Transformations(
         input_scope=[
