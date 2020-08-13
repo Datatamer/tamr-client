@@ -4,7 +4,7 @@ from typing import Iterator
 
 import requests
 
-from tamr_client.types import JsonDict
+from tamr_client._types import JsonDict
 
 logger = logging.getLogger(__name__)
 

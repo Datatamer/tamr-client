@@ -1,16 +1,16 @@
-# ↪️ Pull Requests
+# Contributing pull requests
 
-For larger, new features:
+### ️RFCs
+If the proposed changes require design input, [open a Request For Comment issue](https://github.com/Datatamer/tamr-client/issues/new/choose).
 
-  [Open an RFC issue](https://github.com/Datatamer/tamr-client/issues/new/choose).
-  Discuss the feature with project maintainers to be sure that your change fits with the project vision and that you won't be wasting effort going in the wrong direction.
+Discuss the feature with project maintainers to be sure that your change fits with the project vision and that you won't be wasting effort going in the wrong direction.
 
-  Once you get the green light 🚦 from maintainers, you can proceed with the PR.
+Once you get the green light 🟢 from maintainers, you can proceed with the PR.
 
----
+### Pull requests
 
 Contributions / PRs should follow the
-[Forking Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow):
+[Forking Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow). In short:
 
   1. Fork it: `https://github.com/[your-github-username]/tamr-client/fork`
   2. Create your feature branch:
@@ -33,12 +33,15 @@ Contributions / PRs should follow the
 
   5. Create a new Pull Request
 
-----
+### Commits
 
-We optimize for PR readability, so please squash commits before and during the PR review process if you think it will help reviewers and onlookers navigate your changes.
+Split and squash commits as necessary to create a clean `git` history. Once you ask for review, only add new commits (do not change existing commits) for reviewer convenience. You may change commits in your PR only if reviewers are ok with it.
 
-Don't be afraid to `push -f` on your PRs when it helps our eyes read your code.
+Also, write [good commit messages](https://chris.beams.io/posts/git-commit/)!
 
----
+### CI checks
 
-Remember to check for any [ongoing code migrations](migration) that may be relevant to your PR.
+Continuous integration (CI) checks are run automatically for all pull requests.
+CI runs the same [dev tasks](dev-tasks) that you can run locally.
+
+You should run dev tasks locally _before_ submitting your PR to cut down on subsequent commits to fix the CI checks.

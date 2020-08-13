@@ -2,13 +2,13 @@ import pytest
 import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake, utils
 
 
 @responses.activate
 def test_from_resource_id():
-    s = utils.session()
-    instance = utils.instance()
+    s = fake.session()
+    instance = fake.instance()
 
     dataset_json = utils.load_json("dataset.json")
     url = tc.URL(path="datasets/1")
@@ -22,8 +22,8 @@ def test_from_resource_id():
 
 @responses.activate
 def test_from_resource_id_dataset_not_found():
-    s = utils.session()
-    instance = utils.instance()
+    s = fake.session()
+    instance = fake.instance()
 
     url = tc.URL(path="datasets/1")
     responses.add(responses.GET, str(url), status=404)

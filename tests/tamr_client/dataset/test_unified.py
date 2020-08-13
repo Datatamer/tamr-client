@@ -2,14 +2,14 @@ import pytest
 import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake, utils
 
 
 @responses.activate
 def test_from_project():
-    s = utils.session()
-    instance = utils.instance()
-    project = utils.mastering_project()
+    s = fake.session()
+    instance = fake.instance()
+    project = fake.mastering_project()
 
     dataset_json = utils.load_json("dataset.json")
     url = tc.URL(path="projects/1/unifiedDataset")
@@ -23,9 +23,9 @@ def test_from_project():
 
 @responses.activate
 def test_from_project_dataset_not_found():
-    s = utils.session()
-    instance = utils.instance()
-    project = utils.mastering_project()
+    s = fake.session()
+    instance = fake.instance()
+    project = fake.mastering_project()
 
     url = tc.URL(path="projects/1/unifiedDataset")
     responses.add(responses.GET, str(url), status=404)
@@ -35,19 +35,16 @@ def test_from_project_dataset_not_found():
 
 
 @responses.activate
-def test_commit():
-    s = utils.session()
-    instance = utils.instance()
-    project = utils.mastering_project()
-
-    operation_json = utils.load_json("operation.json")
+def test_apply_changes():
+    s = fake.session()
     dataset_json = utils.load_json("dataset.json")
-    prj_url = tc.URL(path="projects/1/unifiedDataset")
-    responses.add(responses.GET, str(prj_url), json=dataset_json)
-    unified_dataset = tc.dataset.unified.from_project(s, instance, project)
+    dataset_url = tc.URL(path="projects/1/unifiedDataset")
+    unified_dataset = tc.dataset.unified._from_json(dataset_url, dataset_json)
 
+    operation_json = utils.load_json("operation_pending.json")
+    operation_url = tc.URL(path="operations/1")
     url = tc.URL(path="projects/1/unifiedDataset:refresh")
     responses.add(responses.POST, str(url), json=operation_json)
 
-    response = tc.dataset.unified.commit(s, unified_dataset)
-    assert response == operation_json
+    response = tc.dataset.unified._apply_changes_async(s, unified_dataset)
+    assert response == tc.operation._from_json(operation_url, operation_json)

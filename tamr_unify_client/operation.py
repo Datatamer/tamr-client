@@ -19,6 +19,21 @@ class Operation(BaseResource):
         return super().from_data(client, resource_json, api_path)
 
     @classmethod
+    def from_resource_id(cls, client, resource_id):
+        """Get an operation by resource ID.
+
+        :param client: Delegate underlying API calls to this client.
+        :type client: :class:`~tamr_unify_client.Client`
+        :param resource_id: The ID of the operation
+        :type resource_id: str
+        :returns: The specified operation
+        :rtype: :class:`~tamr_unify_client.operation.Operation`
+        """
+        url = f"operations/{resource_id}"
+        response = client.get(url).successful()
+        return Operation.from_response(client, response)
+
+    @classmethod
     def from_response(cls, client, response):
         """
         Handle idiosyncrasies in constructing Operations from Tamr responses.

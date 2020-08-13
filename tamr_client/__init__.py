@@ -1,12 +1,3 @@
-# flake8: noqa
-
-# BETA check
-############
-
-import tamr_client.beta as beta
-
-beta._check()
-
 # Logging
 #########
 
@@ -15,55 +6,49 @@ import logging
 # https://docs.python-guide.org/writing/logging/#logging-in-a-library
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
-# Import shortcuts
-##################
+# BETA check
+############
 
-# utilities
-from tamr_client import response
+from tamr_client import _beta
 
-# instance
-from tamr_client.instance import Instance
-from tamr_client import instance
+_beta.check()
 
-# url
-from tamr_client.url import URL
-from tamr_client import url
+# types
+#######
 
-# auth
-from tamr_client.auth import UsernamePasswordAuth
-
-# session
-from tamr_client.session import Session
-from tamr_client import session
-
-# datasets
-from tamr_client.dataset import AnyDataset, Dataset
-from tamr_client import dataset
-
-# records
-from tamr_client.dataset.record import PrimaryKeyNotFound
-from tamr_client.dataset import record
-
-# dataframe
-from tamr_client.dataset.dataframe import AmbiguousPrimaryKey
-from tamr_client.dataset import dataframe
-
-# attributes
-from tamr_client.attributes.subattribute import SubAttribute
-from tamr_client.attributes import subattribute
-
-from tamr_client.attributes.attribute_type import AttributeType
-from tamr_client.attributes import attribute_type
-
-import tamr_client.attributes.type_alias
-
-from tamr_client.attributes.attribute import (
+from tamr_client._types import (
+    AnyDataset,
     Attribute,
-    ReservedAttributeName,
-    AttributeExists,
-    AttributeNotFound,
+    AttributeType,
+    CategorizationProject,
+    Dataset,
+    InputTransformation,
+    Instance,
+    MasteringProject,
+    Operation,
+    Project,
+    Session,
+    SubAttribute,
+    Transformations,
+    UnifiedDataset,
+    URL,
+    UsernamePasswordAuth,
 )
-from tamr_client.attributes import attribute
 
+# functionality
+###############
+
+from tamr_client import attribute
+from tamr_client import categorization
+from tamr_client import dataset
+from tamr_client import instance
 from tamr_client import mastering
+from tamr_client import operation
+from tamr_client import primary_key
 from tamr_client import project
+from tamr_client import response
+from tamr_client import session
+from tamr_client import transformations
+from tamr_client.dataset import dataframe
+from tamr_client.dataset import record
+from tamr_client.exception import TamrClientException

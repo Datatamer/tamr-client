@@ -38,13 +38,13 @@ assert op.succeeded()
   * [Pandas usage](user-guide/pandas)
   * [Advanced usage](user-guide/advanced-usage)
 
-## Contributor Guide
-
-  * [Contributor guide](contributor-guide)
-
 ## Reference
 
   * [Reference](reference)
+
+## Contributor Guide
+
+  * [Contributor guide](contributor-guide)
 
 ## BETA
 

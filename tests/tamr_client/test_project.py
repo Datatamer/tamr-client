@@ -1,32 +1,35 @@
 import pytest
-import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake
 
 
-@responses.activate
+@fake.json
 def test_from_resource_id_mastering():
-    s = utils.session()
-    instance = utils.instance()
-
-    project_json = utils.load_json("mastering_project.json")
-    url = tc.URL(path="projects/1")
-    responses.add(responses.GET, str(url), json=project_json)
+    s = fake.session()
+    instance = fake.instance()
 
     project = tc.project.from_resource_id(s, instance, "1")
-    assert isinstance(project, tc.mastering.Project)
+    assert isinstance(project, tc.MasteringProject)
     assert project.name == "proj"
     assert project.description == "Mastering Project"
 
 
-@responses.activate
-def test_from_resource_id_not_found():
-    s = utils.session()
-    instance = utils.instance()
+@fake.json
+def test_from_resource_id_categorization():
+    s = fake.session()
+    instance = fake.instance()
 
-    url = tc.URL(path="projects/1")
-    responses.add(responses.GET, str(url), status=404)
+    project = tc.project.from_resource_id(s, instance, "2")
+    assert isinstance(project, tc.CategorizationProject)
+    assert project.name == "Party Categorization"
+    assert project.description == "Categorizes organization at the Party/Domestic level"
+
+
+@fake.json
+def test_from_resource_id_not_found():
+    s = fake.session()
+    instance = fake.instance()
 
     with pytest.raises(tc.project.NotFound):
         tc.project.from_resource_id(s, instance, "1")

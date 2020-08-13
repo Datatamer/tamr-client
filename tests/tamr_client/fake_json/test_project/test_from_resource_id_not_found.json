@@ -1,0 +1,11 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "path": "projects/1"
+        },
+        "response": {
+            "status": 404
+        }
+    }
+]

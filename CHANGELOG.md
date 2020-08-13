@@ -1,4 +1,15 @@
-## 0.12.0-dev
+## 0.13.0-dev
+  **BETA** 
+  Important: Do not use BETA features for production workflows.
+  - Added function to get operation from resource ID
+  - [#421](https://github.com/Datatamer/tamr-client/pull/421) Added functions for getting and replacing the transformations of a projects via `tc.transformations.get_all()` and `tc.transformations.replace_all()`
+   - Added new dataclasses `Transformations` and `InputTransformations` to support these functions
+
+  **NEW FEATURES**
+  - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id
+  - [#425](https://github.com/Datatamer/tamr-client/pull/425) Now able to get, update and delete manual labels for Categorization projects
+
+## 0.12.0
   **BETA**
   Important: Do not use BETA features for production workflows.
   - [#372](https://github.com/Datatamer/tamr-client/issues/372) TC:Design for unified datasets
@@ -12,6 +23,8 @@
     - generic projects via `tc.project`
     - Mastering projects via `tc.mastering.project`
   - Support for streaming records from a dataset via `tc.record.stream`
+  - Support for operations via `tc.operations`
+  - `tc.TamrClientException` as a base class for all `tamr_client` exceptions
 
   **BUG FIXES**
   - `from_geo_features` now returns information on the operation.  

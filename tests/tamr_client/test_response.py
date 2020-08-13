@@ -3,12 +3,12 @@ import json
 import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake
 
 
 @responses.activate
 def test_ndjson():
-    s = utils.session()
+    s = fake.session()
 
     records = [{"a": 1}, {"b": 2}, {"c": 3}]
     url = tc.URL(path="datasets/1/records")

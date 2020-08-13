@@ -46,7 +46,9 @@ def test(session):
 
 @nox.session(python="3.6")
 def docs(session):
-    session.run("poetry", "install", external=True)
+    # RTD uses pip for managing dependencies, so we mirror that approach
+    session.install(".")
+    session.install("-r", "docs/requirements.txt")
     session.run(
         "sphinx-build",
         "-b",
@@ -54,5 +56,5 @@ def docs(session):
         "docs",
         "docs/_build",
         "-W",
-        env={"TAMR_CLIENT_BETA": "1"},
+        env={"TAMR_CLIENT_BETA": "1", "TAMR_CLIENT_DOCS": "1"},
     )

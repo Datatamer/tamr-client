@@ -6,13 +6,13 @@ import pytest
 import responses
 
 import tamr_client as tc
-from tests.tamr_client import utils
+from tests.tamr_client import fake, utils
 
 
 @responses.activate
 def test_upsert():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
@@ -37,19 +37,19 @@ def test_upsert():
 
 @responses.activate
 def test_upsert_primary_key_not_found():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     df = pd.DataFrame(_records_json)
 
-    with pytest.raises(tc.record.PrimaryKeyNotFound):
+    with pytest.raises(tc.primary_key.NotFound):
         tc.dataframe.upsert(s, dataset, df, primary_key_name="wrong_primary_key")
 
 
 @responses.activate
 def test_upsert_infer_primary_key():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
@@ -74,8 +74,8 @@ def test_upsert_infer_primary_key():
 
 @responses.activate
 def test_upsert_index_as_primary_key():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     url = tc.URL(path="datasets/1:updateRecords")
     updates = [
@@ -104,8 +104,8 @@ def test_upsert_index_as_primary_key():
 
 @responses.activate
 def test_upsert_index_column_name_collision():
-    s = utils.session()
-    dataset = utils.dataset()
+    s = fake.session()
+    dataset = fake.dataset()
 
     df = pd.DataFrame(_records_json_2)
     df.index.name = "primary_key"
@@ -113,7 +113,7 @@ def test_upsert_index_column_name_collision():
     # create column in `df` with same name as index and matching "primary_key"
     df.insert(0, df.index.name, df.index)
 
-    with pytest.raises(tc.AmbiguousPrimaryKey):
+    with pytest.raises(tc.primary_key.Ambiguous):
         tc.dataframe.upsert(s, dataset, df, primary_key_name="primary_key")
 
 

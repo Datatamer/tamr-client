@@ -5,11 +5,15 @@
 
 ## Reference
 
-  * [Attributes](beta/attributes)
+  * [Attribute](beta/attribute)
   * [Auth](beta/auth)
+  * [Categorization](beta/categorization)
   * [Dataset](beta/dataset)
   * [Instance](beta/instance)
   * [Mastering](beta/mastering)
+  * [Operation](beta/operation)
+  * [Primary Key](beta/primary_key)
   * [Project](beta/project)
+  * [Transformations](beta/transformations)
   * [Response](beta/response)
   * [Session](beta/session)
