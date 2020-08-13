@@ -1,0 +1,11 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets/1"
+        },
+        "response": {
+            "status": 404
+        }
+    }
+]

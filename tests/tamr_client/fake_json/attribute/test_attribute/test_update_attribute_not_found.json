@@ -1,0 +1,11 @@
+[
+    {
+        "request": {
+            "method": "PUT",
+            "path": "datasets/1/attributes/RowNum"
+        },
+        "response": {
+            "status": 404
+        }
+    }
+]

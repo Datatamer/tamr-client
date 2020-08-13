@@ -2,9 +2,12 @@
 See https://docs.tamr.com/reference/dataset-models
 """
 from copy import deepcopy
+from dataclasses import replace
+from typing import Tuple
 
 from tamr_client import response
-from tamr_client._types import Dataset, Instance, JsonDict, Session, URL
+from tamr_client._types import Attribute, Dataset, Instance, JsonDict, Session, URL
+from tamr_client.attribute import _from_json as _attribute_from_json
 from tamr_client.exception import TamrClientException
 
 
@@ -74,3 +77,28 @@ def _from_json(url: URL, data: JsonDict) -> Dataset:
         description=cp.get("description"),
         key_attribute_names=tuple(cp["keyAttributeNames"]),
     )
+
+
+def attributes(session: Session, dataset: Dataset) -> Tuple[Attribute, ...]:
+    """Get all attributes from a dataset
+
+    Args:
+        dataset: Dataset containing the desired attributes
+
+    Returns:
+        The attributes for the specified dataset
+
+    Raises:
+        requests.HTTPError: If an HTTP error is encountered.
+    """
+    attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
+    r = session.get(str(attrs_url))
+    attrs_json = response.successful(r).json()
+
+    attrs = []
+    for attr_json in attrs_json:
+        id = attr_json["name"]
+        attr_url = replace(attrs_url, path=attrs_url.path + f"/{id}")
+        attr = _attribute_from_json(attr_url, attr_json)
+        attrs.append(attr)
+    return tuple(attrs)

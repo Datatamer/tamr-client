@@ -101,3 +101,13 @@ def transforms() -> tc.Transformations:
         ],
         unified_scope=["//Comment\nSELECT *;"],
     )
+
+
+def attribute() -> tc.Attribute:
+    return tc.Attribute(
+        url=tc.URL(path="datasets/1/attributes/RowNum"),
+        name="RowNum",
+        type=tc.attribute.type.DEFAULT,
+        description="Synthetic row number",
+        is_nullable=False,
+    )

@@ -1,7 +1,4 @@
-from dataclasses import replace
-
 import pytest
-import responses
 
 import tamr_client as tc
 from tests.tamr_client import fake, utils
@@ -30,7 +27,7 @@ def test_json():
         assert attr == tc.attribute._from_json(url, tc.attribute.to_json(attr))
 
 
-@responses.activate
+@fake.json
 def test_create():
     s = fake.session()
     dataset = fake.dataset()
@@ -46,10 +43,6 @@ def test_create():
         ]
     )
 
-    attrs_url = tc.URL(path=dataset.url.path + "/attributes")
-    url = replace(attrs_url, path=attrs_url.path + "/attr")
-    attr_json = utils.load_json("attribute.json")
-    responses.add(responses.POST, str(attrs_url), json=attr_json)
     attr = tc.attribute.create(
         s,
         dataset,
@@ -58,59 +51,61 @@ def test_create():
         type=tc.attribute.type.Record(attributes=attrs),
     )
 
-    assert attr == tc.attribute._from_json(url, attr_json)
+    assert attr.name == "attr"
+    assert not attr.is_nullable
+    assert isinstance(attr.type, tc.attribute.type.Record)
+    assert attr.type.attributes == attrs
 
 
-@responses.activate
+@fake.json
 def test_update():
     s = fake.session()
+    attr = fake.attribute()
 
-    url = tc.URL(path="datasets/1/attributes/RowNum")
-    attr_json = utils.load_json("attributes.json")[0]
-    attr = tc.attribute._from_json(url, attr_json)
-
-    updated_attr_json = utils.load_json("updated_attribute.json")
-    responses.add(responses.PUT, str(attr.url), json=updated_attr_json)
     updated_attr = tc.attribute.update(
-        s, attr, description=updated_attr_json["description"]
+        s, attr, description="Synthetic row number updated"
     )
 
-    assert updated_attr == replace(attr, description=updated_attr_json["description"])
+    assert updated_attr.description == "Synthetic row number updated"
 
 
-@responses.activate
+@fake.json
 def test_delete():
     s = fake.session()
+    attr = fake.attribute()
 
-    url = tc.URL(path="datasets/1/attributes/RowNum")
-    attr_json = utils.load_json("attributes.json")[0]
-    attr = tc.attribute._from_json(url, attr_json)
-
-    responses.add(responses.DELETE, str(attr.url), status=204)
     tc.attribute.delete(s, attr)
 
 
-@responses.activate
+@fake.json
 def test_from_resource_id():
     s = fake.session()
     dataset = fake.dataset()
 
-    url = tc.URL(path=dataset.url.path + "/attributes/attr")
-    attr_json = utils.load_json("attribute.json")
-    responses.add(responses.GET, str(url), json=attr_json)
+    attrs = tuple(
+        [
+            tc.SubAttribute(
+                name=str(i),
+                is_nullable=True,
+                type=tc.attribute.type.Array(tc.attribute.type.STRING),
+            )
+            for i in range(4)
+        ]
+    )
+
     attr = tc.attribute.from_resource_id(s, dataset, "attr")
 
-    assert attr == tc.attribute._from_json(url, attr_json)
+    assert attr.name == "attr"
+    assert not attr.is_nullable
+    assert isinstance(attr.type, tc.attribute.type.Record)
+    assert attr.type.attributes == attrs
 
 
-@responses.activate
+@fake.json
 def test_from_resource_id_attribute_not_found():
     s = fake.session()
     dataset = fake.dataset()
 
-    url = replace(dataset.url, path=dataset.url.path + "/attributes/attr")
-
-    responses.add(responses.GET, str(url), status=404)
     with pytest.raises(tc.attribute.NotFound):
         tc.attribute.from_resource_id(s, dataset, "attr")
 
@@ -123,58 +118,28 @@ def test_create_reserved_attribute_name():
         tc.attribute.create(s, dataset, name="clusterId", is_nullable=False)
 
 
-@responses.activate
-def test_from_dataset_all():
-    s = fake.session()
-    dataset = fake.dataset()
-
-    attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
-    attrs_json = utils.load_json("attributes.json")
-    responses.add(responses.GET, str(attrs_url), json=attrs_json, status=204)
-
-    attrs = tc.attribute.from_dataset_all(s, dataset)
-
-    row_num = attrs[0]
-    assert row_num.name == "RowNum"
-    assert row_num.type == tc.attribute.type.STRING
-
-    geom = attrs[1]
-    assert geom.name == "geom"
-    assert isinstance(geom.type, tc.attribute.type.Record)
-
-
-@responses.activate
+@fake.json
 def test_create_attribute_exists():
     s = fake.session()
     dataset = fake.dataset()
 
-    url = replace(dataset.url, path=dataset.url.path + "/attributes")
-    responses.add(responses.POST, str(url), status=409)
     with pytest.raises(tc.attribute.AlreadyExists):
         tc.attribute.create(s, dataset, name="attr", is_nullable=False)
 
 
-@responses.activate
+@fake.json
 def test_update_attribute_not_found():
     s = fake.session()
+    attr = fake.attribute()
 
-    url = tc.URL(path="datasets/1/attributes/RowNum")
-    attr_json = utils.load_json("attributes.json")[0]
-    attr = tc.attribute._from_json(url, attr_json)
-
-    responses.add(responses.PUT, str(attr.url), status=404)
     with pytest.raises(tc.attribute.NotFound):
         tc.attribute.update(s, attr)
 
 
-@responses.activate
+@fake.json
 def test_delete_attribute_not_found():
     s = fake.session()
+    attr = fake.attribute()
 
-    url = tc.URL(path="datasets/1/attributes/RowNum")
-    attr_json = utils.load_json("attributes.json")[0]
-    attr = tc.attribute._from_json(url, attr_json)
-
-    responses.add(responses.PUT, str(attr.url), status=404)
     with pytest.raises(tc.attribute.NotFound):
-        attr = tc.attribute.update(s, attr)
+        tc.attribute.delete(s, attr)
