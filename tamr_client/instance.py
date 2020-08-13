@@ -22,8 +22,4 @@ def version(session: Session, instance: Instance) -> str:
     Returns: Version
 
     """
-    return _version(session, instance)["version"]
-
-
-def _version(session: Session, instance: Instance) -> dict:
-    return session.get(f"{origin(instance)}/api/versioned/service/version").json()
+    return session.get(f"{origin(instance)}/api/versioned/service/version").json()["version"]
