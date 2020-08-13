@@ -22,7 +22,7 @@ def version(session: Session, instance: Instance) -> str:
     Returns: Version
 
     """
-    return _version(session, instance)['version']
+    return _version(session, instance)["version"]
 
 
 def _version(session: Session, instance: Instance) -> dict:
