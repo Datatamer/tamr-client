@@ -23,4 +23,6 @@ def version(session: Session, instance: Instance) -> str:
 
     """
     # Version endpoints are not themselves versioned by design, but they are stable so they are ok to use here.
-    return session.get(f"{origin(instance)}/api/versioned/service/version").json()["version"]
+    return session.get(f"{origin(instance)}/api/versioned/service/version").json()[
+        "version"
+    ]
