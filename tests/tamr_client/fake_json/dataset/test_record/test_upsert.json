@@ -3,7 +3,7 @@
         "request": {
             "method": "POST",
             "path": "datasets/1:updateRecords",
-            "payload": [
+            "ndjson": [
                 {
                     "action": "CREATE",
                     "recordId": 1,

@@ -18,9 +18,9 @@ tests_tc_dir = (Path(__file__) / "..").resolve()
 fake_json_dir = tests_tc_dir / "fake_json"
 
 
-def check_payload(request, correct_payload, status, response_json):
-    if correct_payload is not None:
-        if [x.decode("utf-8") for x in request.body] != correct_payload:
+def check_request_body(request, request_body, status, response_json):
+    if request_body is not None:
+        if [x.decode("utf-8") for x in request.body] != request_body:
             raise Exception("placeholder exception")
     return status, {}, response_json
 
@@ -34,22 +34,29 @@ def add_response(rsps, fake):
         path = req.get("path")
         url = "http://localhost/api/versioned/v1/" + path
 
-    ndjson = resp.pop("ndjson", None)
+    # Get response body from either ndjson or json
+    ndjson = resp.get("ndjson")
     if ndjson is not None:
         resp["body"] = "\n".join((dumps(line) for line in ndjson))
+    else:
+        resp["body"] = dumps(resp.get("json"))
 
-    payload = req.pop("payload", None)
-    callback = partial(
-        check_payload,
-        correct_payload=[dumps(x) for x in payload] if payload is not None else None,
-        status=resp["status"],
-        response_json=resp.get("body") or dumps(resp.get("json")),
-    )
+    # Get expected request body from ndjson
+    payload = req.get("ndjson")
+    if payload is not None:
+        req["body"] = [dumps(x) for x in payload]
+    else:
+        req["body"] = None
 
     rsps.add_callback(
         method=req["method"],
         url=url,
-        callback=callback,
+        callback=partial(
+            check_request_body,
+            request_body=req["body"],
+            status=resp["status"],
+            response_json=resp["body"],
+        ),
     )
 
 
