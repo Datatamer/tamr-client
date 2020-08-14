@@ -3,7 +3,7 @@
   Important: Do not use BETA features for production workflows.
   - Added function to get operation from resource ID
   - [#421](https://github.com/Datatamer/tamr-client/pull/421) Added functions for getting and replacing the transformations of a projects via `tc.transformations.get_all()` and `tc.transformations.replace_all()`
-  - Added new dataclasses `Transformations` and `InputTransformations` to support these functions
+   - Added new dataclasses `Transformations` and `InputTransformations` to support these functions
   - Added `tc.instance.version` function to get Tamr Version
 
   **NEW FEATURES**
