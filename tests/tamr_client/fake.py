@@ -6,7 +6,7 @@ For more, see "How to write tests" in the Contributor guide.
 
 from functools import partial, wraps
 from inspect import getfile
-from json import dumps, load
+from json import dumps, load, loads
 from pathlib import Path
 
 import responses
@@ -18,10 +18,23 @@ tests_tc_dir = (Path(__file__) / "..").resolve()
 fake_json_dir = tests_tc_dir / "fake_json"
 
 
+class WrongRequestBody(Exception):
+    """Raised when the body of a request does not match the value expected during
+    testing
+    """
+
+    pass
+
+
 def check_request_body(request, request_body, status, response_json):
-    if request_body is not None:
-        if [x.decode("utf-8") for x in request.body] != request_body:
-            raise Exception("placeholder exception")
+    if isinstance(request_body, list):
+        caught_body = [loads(x.decode("utf-8")) for x in request.body]
+        if caught_body != request_body:
+            raise WrongRequestBody(caught_body)
+    elif request_body is not None:
+        caught_body = loads(request.body.decode("utf-8"))
+        if caught_body != request_body:
+            raise WrongRequestBody(caught_body)
     return status, {}, response_json
 
 
@@ -35,27 +48,25 @@ def add_response(rsps, fake):
         url = "http://localhost/api/versioned/v1/" + path
 
     # Get response body from either ndjson or json
-    ndjson = resp.get("ndjson")
-    if ndjson is not None:
-        resp["body"] = "\n".join((dumps(line) for line in ndjson))
-    else:
-        resp["body"] = dumps(resp.get("json"))
+    if resp.get("ndjson") is not None:
+        resp["body"] = "\n".join((dumps(line) for line in resp["ndjson"]))
+    elif resp.get("json") is not None:
+        resp["body"] = dumps(resp["json"])
 
     # Get expected request body from ndjson
-    payload = req.get("ndjson")
-    if payload is not None:
-        req["body"] = [dumps(x) for x in payload]
-    else:
-        req["body"] = None
+    if req.get("ndjson") is not None:
+        req["body"] = [x for x in req["ndjson"]]
+    elif req.get("json") is not None:
+        req["body"] = req["json"]
 
     rsps.add_callback(
         method=req["method"],
         url=url,
         callback=partial(
             check_request_body,
-            request_body=req["body"],
+            request_body=req.get("body"),
             status=resp["status"],
-            response_json=resp["body"],
+            response_json=resp.get("body"),
         ),
     )
 
