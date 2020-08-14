@@ -1,0 +1,11 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "datasets/1/attributes"
+        },
+        "response": {
+            "status": 409
+        }
+    }
+]

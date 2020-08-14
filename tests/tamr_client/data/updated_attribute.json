@@ -1,9 +1,0 @@
-{
-    "name": "RowNum",
-    "description": "Synthetic row number updated",
-    "type": {
-        "baseType": "STRING",
-        "attributes": []
-    },
-    "isNullable": false
-}

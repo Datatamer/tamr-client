@@ -1,0 +1,19 @@
+[
+    {
+        "request": {
+            "method": "PUT",
+            "path": "datasets/1/attributes/RowNum"
+        },
+        "response": {
+            "json": {
+                "name": "RowNum",
+                "description": "Synthetic row number updated",
+                "type": {
+                    "baseType": "STRING",
+                    "attributes": []
+                },
+                "isNullable": false
+            }
+        }
+    }
+]
