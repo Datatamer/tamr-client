@@ -5,7 +5,8 @@
   - [#421](https://github.com/Datatamer/tamr-client/pull/421) Added functions for getting and replacing the transformations of a projects via `tc.transformations.get_all()` and `tc.transformations.replace_all()`
    - Added new dataclasses `Transformations` and `InputTransformations` to support these functions
   - Moved function `tc.attribute.from_dataset_all` to `tc.dataset.attributes`
-
+  - [#434] Added `tc.instance.version` function to get Tamr Version
+  
   **NEW FEATURES**
   - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id
   - [#425](https://github.com/Datatamer/tamr-client/pull/425) Now able to get, update and delete manual labels for Categorization projects

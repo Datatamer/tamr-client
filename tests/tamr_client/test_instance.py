@@ -1,4 +1,5 @@
 import tamr_client as tc
+from tests.tamr_client import fake
 
 
 def test_instance_default():
@@ -19,3 +20,11 @@ def test_client_set_host():
 def test_client_set_port():
     instance = tc.Instance(port=9100)
     assert tc.instance.origin(instance) == "http://localhost:9100"
+
+
+@fake.json
+def test_version():
+    s = fake.session()
+    instance = fake.instance()
+    version = tc.instance.version(s, instance)
+    assert version == "2020.012.0"
