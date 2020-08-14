@@ -24,7 +24,7 @@ Submit feature requests as [Github issues](https://github.com/Datatamer/tamr-cli
 * [Install the codebase](contributor-guide/install)
 * [Run dev tasks](contributor-guide/dev-tasks)
 * [Configure your text editor](contributor-guide/text-editor)
-* [Read the style guide](contributor-guide/style-guide)
+* [Read the ADRs](contributor-guide/adrs)
 * [How to write tests](contributor-guide/how-to-write-tests)
 * [Submit a pull request](contributor-guide/pull-request)
 
