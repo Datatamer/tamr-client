@@ -5,6 +5,7 @@
             "path": "projects/2"
         },
         "response": {
+            "status": 200,
             "json": {
                 "id": "unify://unified-data/v1/projects/2",
                 "name": "Party Categorization",

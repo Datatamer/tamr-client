@@ -5,6 +5,7 @@
             "path": "datasets/1/attributes/attr"
         },
         "response": {
+            "status": 200,
             "json": {
                 "name": "attr",
                 "isNullable": false,

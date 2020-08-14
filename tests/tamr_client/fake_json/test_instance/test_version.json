@@ -5,6 +5,7 @@
             "url": "http://localhost/api/versioned/service/version"
         },
         "response": {
+            "status": 200,
             "json": {
                 "version": "2020.012.0",
                 "gitDescribe": "Element/release/1.0.3-26513-gab2085fb5d",

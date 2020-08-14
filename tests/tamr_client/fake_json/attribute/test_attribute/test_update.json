@@ -5,6 +5,7 @@
             "path": "datasets/1/attributes/RowNum"
         },
         "response": {
+            "status":  200,
             "json": {
                 "name": "RowNum",
                 "description": "Synthetic row number updated",

@@ -5,6 +5,7 @@
             "path": "datasets/1"
         },
         "response": {
+            "status": 200,
             "json": {
                 "id": "unify://unified-data/v1/datasets/1",
                 "externalId": "number 1",

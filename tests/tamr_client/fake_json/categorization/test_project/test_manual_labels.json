@@ -5,6 +5,7 @@
       "path": "projects/2/unifiedDataset"
     },
     "response": {
+      "status": 200,
       "json": {
         "id": "unify://unified-data/v1/datasets/161",
         "name": "Party_Categorization_Unified_Dataset",
@@ -38,6 +39,7 @@
       "path": "datasets?filter=name==Party_Categorization_Unified_Dataset_manual_categorizations"
     },
     "response": {
+      "status": 200,
       "json": [
         {
           "id": "unify://unified-data/v1/datasets/167",
@@ -71,6 +73,7 @@
       "path": "datasets/167"
     },
     "response": {
+      "status": 200,
       "json": {
         "id": "unify://unified-data/v1/datasets/167",
         "name": "Party_Categorization_Unified_Dataset_manual_categorizations",

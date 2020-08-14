@@ -5,6 +5,7 @@
             "path": "datasets/1/attributes"
         },
         "response": {
+            "status": 200,
             "json": [
                 {
                     "name": "RowNum",

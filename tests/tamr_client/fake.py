@@ -42,7 +42,7 @@ def add_response(rsps, fake):
     callback = partial(
         check_payload,
         correct_payload=[dumps(x) for x in payload] if payload is not None else None,
-        status=resp.get("status", 200),  # TODO: Every response needs a status
+        status=resp["status"],
         response_json=resp.get("body") or dumps(resp.get("json")),
     )
 
