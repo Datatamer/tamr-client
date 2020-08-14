@@ -14,6 +14,7 @@
   * [Operation](beta/operation)
   * [Primary Key](beta/primary_key)
   * [Project](beta/project)
+  * [Schema Mapping](beta/schema_mapping)
   * [Transformations](beta/transformations)
   * [Response](beta/response)
   * [Session](beta/session)
