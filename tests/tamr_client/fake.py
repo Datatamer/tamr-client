@@ -4,7 +4,7 @@ Utilities for faking Tamr resources and server responses for testing.
 For more, see "How to write tests" in the Contributor guide.
 """
 
-from functools import wraps
+from functools import partial, wraps
 from inspect import getfile
 from json import dumps, load
 from pathlib import Path
@@ -18,7 +18,14 @@ tests_tc_dir = (Path(__file__) / "..").resolve()
 fake_json_dir = tests_tc_dir / "fake_json"
 
 
-def _to_kwargs(fake):
+def check_payload(request, correct_payload, status, response_json):
+    if correct_payload is not None:
+        if [x.decode("utf-8") for x in request.body] != correct_payload:
+            raise Exception("placeholder exception")
+    return status, {}, response_json
+
+
+def add_response(rsps, fake):
     req = fake["request"]
     resp = fake["response"]
 
@@ -31,7 +38,19 @@ def _to_kwargs(fake):
     if ndjson is not None:
         resp["body"] = "\n".join((dumps(line) for line in ndjson))
 
-    return dict(method=req["method"], url=url, **resp)
+    payload = req.pop("payload", None)
+    callback = partial(
+        check_payload,
+        correct_payload=[dumps(x) for x in payload] if payload is not None else None,
+        status=resp.get("status", 200),  # TODO: Every response needs a status
+        response_json=resp.get("body") or dumps(resp.get("json")),
+    )
+
+    rsps.add_callback(
+        method=req["method"],
+        url=url,
+        callback=callback,
+    )
 
 
 def json(test_fn):
@@ -51,7 +70,7 @@ def json(test_fn):
     def wrapper(*args, **kwargs):
         with responses.RequestsMock() as rsps:
             for fake in fakes:
-                rsps.add(**_to_kwargs(fake))
+                add_response(rsps, fake)
             test_fn(*args, **kwargs)
 
     return wrapper

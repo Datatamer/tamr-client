@@ -32,30 +32,15 @@ def test_update():
     assert snoop["payload"] == utils.stringify(updates)
 
 
-@responses.activate
+@fake.json
 def test_upsert():
     s = fake.session()
     dataset = fake.dataset()
-
-    url = tc.URL(path="datasets/1:updateRecords")
-    updates = [
-        tc.record._create_command(record, primary_key_name="primary_key")
-        for record in _records_json
-    ]
-    snoop: Dict = {}
-    responses.add_callback(
-        responses.POST,
-        str(url),
-        partial(
-            utils.capture_payload, snoop=snoop, status=200, response_json=_response_json
-        ),
-    )
 
     response = tc.record.upsert(
         s, dataset, _records_json, primary_key_name="primary_key"
     )
     assert response == _response_json
-    assert snoop["payload"] == utils.stringify(updates)
 
 
 @responses.activate
