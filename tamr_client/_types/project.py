@@ -5,6 +5,23 @@ from tamr_client._types.url import URL
 
 
 @dataclass(frozen=True)
+class CategorizationProject:
+    """A Tamr Categorization project
+
+    See https://docs.tamr.com/reference/the-project-object
+
+    Args:
+        url
+        name
+        description
+    """
+
+    url: URL
+    name: str
+    description: Optional[str] = None
+
+
+@dataclass(frozen=True)
 class MasteringProject:
     """A Tamr Mastering project
 
@@ -22,8 +39,8 @@ class MasteringProject:
 
 
 @dataclass(frozen=True)
-class CategorizationProject:
-    """A Tamr Categorization project
+class SchemaMappingProject:
+    """A Tamr Schema Mapping project
 
     See https://docs.tamr.com/reference/the-project-object
 
@@ -38,4 +55,4 @@ class CategorizationProject:
     description: Optional[str] = None
 
 
-Project = Union[MasteringProject, CategorizationProject]
+Project = Union[CategorizationProject, MasteringProject, SchemaMappingProject]

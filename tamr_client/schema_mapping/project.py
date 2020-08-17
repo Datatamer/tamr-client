@@ -4,21 +4,23 @@ from tamr_client import project
 from tamr_client._types import (
     Instance,
     JsonDict,
-    MasteringProject,
     Project,
+    SchemaMappingProject,
     Session,
     URL,
 )
 
 
-def _from_json(url: URL, data: JsonDict) -> MasteringProject:
-    """Make mastering project from JSON data (deserialize)
+def _from_json(url: URL, data: JsonDict) -> SchemaMappingProject:
+    """Make schema mapping project from JSON data (deserialize)
 
     Args:
         url: Project URL
         data: Project JSON data from Tamr server
     """
-    return MasteringProject(url, name=data["name"], description=data.get("description"))
+    return SchemaMappingProject(
+        url, name=data["name"], description=data.get("description")
+    )
 
 
 def create(
@@ -29,7 +31,7 @@ def create(
     external_id: Optional[str] = None,
     unified_dataset_name: Optional[str] = None,
 ) -> Project:
-    """Create a Mastering project in Tamr.
+    """Create a Schema Mapping project in Tamr.
 
     Args:
         instance: Tamr instance
@@ -49,7 +51,7 @@ def create(
         session=session,
         instance=instance,
         name=name,
-        project_type="DEDUP",
+        project_type="SCHEMA_MAPPING_RECOMMENDATIONS",
         description=description,
         external_id=external_id,
         unified_dataset_name=unified_dataset_name,

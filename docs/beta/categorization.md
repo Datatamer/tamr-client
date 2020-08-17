@@ -1,3 +1,3 @@
-# Categoriation
+# Categorization
 
   * [Project](/beta/categorization/project)

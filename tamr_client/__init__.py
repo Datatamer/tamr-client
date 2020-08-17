@@ -27,6 +27,7 @@ from tamr_client._types import (
     MasteringProject,
     Operation,
     Project,
+    SchemaMappingProject,
     Session,
     SubAttribute,
     Transformations,
@@ -47,6 +48,7 @@ from tamr_client import operation
 from tamr_client import primary_key
 from tamr_client import project
 from tamr_client import response
+from tamr_client import schema_mapping
 from tamr_client import session
 from tamr_client import transformations
 from tamr_client.dataset import dataframe
