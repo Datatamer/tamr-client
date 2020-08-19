@@ -55,7 +55,7 @@ def add_response(rsps, fake):
 
     # Get expected request body from ndjson
     if req.get("ndjson") is not None:
-        req["body"] = [x for x in req["ndjson"]]
+        req["body"] = req["ndjson"]
     elif req.get("json") is not None:
         req["body"] = req["json"]
 
