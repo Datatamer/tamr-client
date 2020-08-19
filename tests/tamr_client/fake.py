@@ -8,10 +8,12 @@ from functools import partial, wraps
 from inspect import getfile
 from json import dumps, load, loads
 from pathlib import Path
+from typing import Dict, Tuple
 
 import responses
 
 import tamr_client as tc
+from tamr_client._types import JsonDict
 
 
 tests_tc_dir = (Path(__file__) / "..").resolve()
@@ -26,7 +28,18 @@ class WrongRequestBody(Exception):
     pass
 
 
-def _check_request_body(request, expected_body):
+def _check_request_body(request, expected_body: JsonDict):
+    """Checks that the body of a caught request matches the expected content
+
+    The body is decoded and loaded as a JSON object so the comparison is not sensitive to the
+    order of dictionary contents.  The comparison is sensitive to the order of a newline-delimited
+    JSON request body.
+
+    Args:
+        request: The caught request
+        expected_body: The expected request body as a dictionary (for JSON contents) or a list of
+            dictionaries (for newline-delimited JSON contents)
+    """
     if isinstance(expected_body, list):
         actual_body = [loads(x.decode("utf-8")) for x in request.body]
         if actual_body != expected_body:
@@ -37,12 +50,33 @@ def _check_request_body(request, expected_body):
             raise WrongRequestBody(actual_body)
 
 
-def _callback(request, expected_body, status, response_json):
+def _callback(
+    request, expected_body: JsonDict, status: int, response_json: str
+) -> Tuple[int, Dict, str]:
+    """Adds a callback to intercept an API request, check the validity of the request, and emit a
+    response
+
+    Args:
+        expected_body: The expected request body as a dictionary (for JSON contents) or a list of
+            dictionaries (for newline-delimited JSON contents)
+        status: The status of the response to be emitted
+        response_json: The JSON body of the response to be emitted
+
+    Returns:
+        Response status, headers, and JSON body.  This conforms to the callback interface of
+            `~responses.RequestsMock.add_callback`
+    """
     _check_request_body(request, expected_body)
     return status, {}, response_json
 
 
-def add_response(rsps, fake):
+def add_response(rsps, fake: JsonDict):
+    """Adds a mock response to intercept API requests and respond with fake JSON data
+
+    Args:
+        fake: The JSON dictionary containing the fake data defining what requests to intercept and
+            what responses to emit
+    """
     req = fake["request"]
     resp = fake["response"]
 
