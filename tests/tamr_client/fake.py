@@ -26,15 +26,15 @@ class WrongRequestBody(Exception):
     pass
 
 
-def check_request_body(request, request_body, status, response_json):
-    if isinstance(request_body, list):
-        caught_body = [loads(x.decode("utf-8")) for x in request.body]
-        if caught_body != request_body:
-            raise WrongRequestBody(caught_body)
-    elif request_body is not None:
-        caught_body = loads(request.body.decode("utf-8"))
-        if caught_body != request_body:
-            raise WrongRequestBody(caught_body)
+def check_request_body(request, expected_body, status, response_json):
+    if isinstance(expected_body, list):
+        actual_body = [loads(x.decode("utf-8")) for x in request.body]
+        if actual_body != expected_body:
+            raise WrongRequestBody(actual_body)
+    elif expected_body is not None:
+        actual_body = loads(request.body.decode("utf-8"))
+        if actual_body != expected_body:
+            raise WrongRequestBody(actual_body)
     return status, {}, response_json
 
 
@@ -64,7 +64,7 @@ def add_response(rsps, fake):
         url=url,
         callback=partial(
             check_request_body,
-            request_body=req.get("body"),
+            expected_body=req.get("body"),
             status=resp["status"],
             response_json=resp.get("body"),
         ),
