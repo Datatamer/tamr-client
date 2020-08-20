@@ -16,6 +16,7 @@ from tamr_client._types.attribute import (
     SubAttribute,
 )
 from tamr_client._types.auth import UsernamePasswordAuth
+from tamr_client._types.backup import Backup
 from tamr_client._types.dataset import AnyDataset, Dataset, UnifiedDataset
 from tamr_client._types.instance import Instance
 from tamr_client._types.json import JsonDict
@@ -27,6 +28,7 @@ from tamr_client._types.project import (
     Project,
     SchemaMappingProject,
 )
+from tamr_client._types.restore import Restore
 from tamr_client._types.session import Session
 from tamr_client._types.transformations import InputTransformation, Transformations
 from tamr_client._types.url import URL

@@ -20,6 +20,7 @@ from tamr_client._types import (
     AnyDataset,
     Attribute,
     AttributeType,
+    Backup,
     CategorizationProject,
     Dataset,
     GoldenRecordsProject,
@@ -28,6 +29,7 @@ from tamr_client._types import (
     MasteringProject,
     Operation,
     Project,
+    Restore,
     SchemaMappingProject,
     Session,
     SubAttribute,
@@ -41,6 +43,7 @@ from tamr_client._types import (
 ###############
 
 from tamr_client import attribute
+from tamr_client import backup
 from tamr_client import categorization
 from tamr_client import dataset
 from tamr_client import golden_records
@@ -50,6 +53,7 @@ from tamr_client import operation
 from tamr_client import primary_key
 from tamr_client import project
 from tamr_client import response
+from tamr_client import restore
 from tamr_client import schema_mapping
 from tamr_client import session
 from tamr_client import transformations

@@ -1,4 +1,7 @@
 ## 0.14.0-dev
+   **BETA** 
+  Important: Do not use BETA features for production workflows.
+  - [#438](https://github.com/Datatamer/tamr-client/pull/438) Now able to get, initiate and cancel Tamr backups and restores
 
 ## 0.13.0
   **BETA** 
