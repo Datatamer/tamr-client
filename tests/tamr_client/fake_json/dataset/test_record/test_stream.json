@@ -1,0 +1,15 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets/1/records"
+        },
+        "response": {
+            "status": 200,
+            "ndjson": [
+                {"primary_key": 1},
+                {"primary_key": 2}
+            ]
+        }
+    }
+]

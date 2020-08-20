@@ -5,6 +5,7 @@
             "path": "projects/1"
         },
         "response": {
+            "status": 200,
             "json": {
                 "id": "unify://unified-data/v1/projects/1",
                 "name": "proj",

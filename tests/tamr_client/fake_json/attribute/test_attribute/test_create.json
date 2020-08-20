@@ -2,9 +2,59 @@
     {
         "request": {
             "method": "POST",
-            "path": "datasets/1/attributes"
+            "path": "datasets/1/attributes",
+            "json": {
+                "name": "attr",
+                "isNullable": false,
+                "type": {
+                    "baseType": "RECORD",
+                    "attributes": [
+                        {
+                            "name": "0",
+                            "isNullable": true,
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING"
+                                }
+                            }
+                        },
+                        {
+                            "name": "1",
+                            "isNullable": true,
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING"
+                                }
+                            }
+                        },
+                        {
+                            "name": "2",
+                            "isNullable": true,
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING"
+                                }
+                            }
+                        },
+                        {
+                            "name": "3",
+                            "isNullable": true,
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
         },
         "response": {
+            "status": 201,
             "json": {
                 "name": "attr",
                 "isNullable": false,

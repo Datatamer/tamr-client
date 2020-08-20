@@ -1,0 +1,26 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "datasets/1:updateRecords",
+            "ndjson": [
+                {
+                    "action": "DELETE",
+                    "recordId": 1
+                },
+                {
+                    "action": "DELETE",
+                    "recordId": 2
+                }
+            ]
+        },
+        "response": {
+            "status": 204,
+            "json": {
+                "numCommandsProcessed": 2,
+                "allCommandsSucceeded": true,
+                "validationErrors": []
+            }
+        }
+    }
+]
