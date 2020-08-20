@@ -1,16 +1,17 @@
 ## 0.13.0-dev
   **BETA** 
   Important: Do not use BETA features for production workflows.
-  - Added function to get operation from resource ID
+  - [#383](https://github.com/Datatamer/tamr-client/issues/383) Added function to get operation from resource ID
   - [#421](https://github.com/Datatamer/tamr-client/pull/421) Added functions for getting and replacing the transformations of a projects via `tc.transformations.get_all()` and `tc.transformations.replace_all()`
-   - Added new dataclasses `Transformations` and `InputTransformations` to support these functions
-  - Moved function `tc.attribute.from_dataset_all` to `tc.dataset.attributes`
-  - [#434] Added `tc.instance.version` function to get Tamr Version
+    - Added new dataclasses `Transformations` and `InputTransformations` to support these functions
+  - [#425](https://github.com/Datatamer/tamr-client/pull/425) Now able to get, update and delete manual labels for Categorization projects
+  - [#428](https://github.com/Datatamer/tamr-client/pull/428) Moved function `tc.attribute.from_dataset_all` to `tc.dataset.attributes`
+  - [#434](https://github.com/Datatamer/tamr-client/pull/434) Added `tc.instance.version` function to get Tamr Version
+  - [#435](https://github.com/Datatamer/tamr-client/pull/435) Now able to create projects of the following type in Tamr: Categorization, Mastering, Schema Mapping
+  - [#440](https://github.com/Datatamer/tamr-client/pull/440) Added functions for initiating basic mastering workflow operations in `tc.mastering`
   
   **NEW FEATURES**
   - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id
-  - [#425](https://github.com/Datatamer/tamr-client/pull/425) Now able to get, update and delete manual labels for Categorization projects
-  - [#435](https://github.com/Datatamer/tamr-client/pull/435) Now able to create projects of the following type in Tamr: Categorization, Mastering, Schema Mapping
 
 ## 0.12.0
   **BETA**
