@@ -1,3 +1,9 @@
+"""
+Tamr - Mastering
+See https://docs.tamr.com/docs/overall-workflow-mastering
+
+The terminology used here is consistent with Tamr UI terminology
+"""
 from tamr_client import operation
 from tamr_client._types import MasteringProject, Operation, Session
 from tamr_client.dataset import unified
@@ -44,7 +50,7 @@ def apply_feedback(session: Session, project: MasteringProject) -> Operation:
 
 
 def update_pair_results(session: Session, project: MasteringProject) -> Operation:
-    """Update record pair predictions according to the latest pair-matching model
+    """Updates record pair predictions according to the latest pair-matching model
 
     Args:
         project: Tamr Mastering project
