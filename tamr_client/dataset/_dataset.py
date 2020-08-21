@@ -5,8 +5,8 @@ from copy import deepcopy
 from dataclasses import replace
 from typing import Tuple
 
-from tamr_client import response
-from tamr_client._types import Attribute, Dataset, Instance, JsonDict, Session, URL
+from tamr_client import response, operation
+from tamr_client._types import Attribute, Dataset, Instance, JsonDict, Operation, Session, URL
 from tamr_client.attribute import _from_json as _attribute_from_json
 from tamr_client.exception import TamrClientException
 
@@ -102,3 +102,28 @@ def attributes(session: Session, dataset: Dataset) -> Tuple[Attribute, ...]:
         attr = _attribute_from_json(attr_url, attr_json)
         attrs.append(attr)
     return tuple(attrs)
+
+
+def refresh(session: Session, dataset: Dataset) -> Operation:
+    """Applies changes to the unified dataset and waits for the operation to complete
+
+    Args:
+        unified_dataset: The Unified Dataset which will be committed
+    """
+    op = _refresh_async(session, dataset)
+    return operation.wait(session, op)
+
+
+def _refresh_async(
+    session: Session, dataset: Dataset
+) -> Operation:
+    """Applies changes to the unified dataset
+
+    Args:
+        unified_dataset: The Unified Dataset which will be committed
+    """
+    r = session.post(
+        str(dataset.url) + ":refresh",
+        headers={"Content-Type": "application/json", "Accept": "application/json"},
+    )
+    return operation._from_response(dataset.url.instance, r)
