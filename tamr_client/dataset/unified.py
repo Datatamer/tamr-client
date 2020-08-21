@@ -96,6 +96,5 @@ def _apply_changes_async(
     """
     r = session.post(
         str(unified_dataset.url) + ":refresh",
-        headers={"Content-Type": "application/json", "Accept": "application/json"},
     )
     return operation._from_response(unified_dataset.url.instance, r)

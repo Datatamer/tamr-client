@@ -130,6 +130,5 @@ def _refresh_async(session: Session, dataset: Dataset) -> Operation:
     """
     r = session.post(
         str(dataset.url) + ":refresh",
-        headers={"Content-Type": "application/json", "Accept": "application/json"},
     )
     return operation._from_response(dataset.url.instance, r)
