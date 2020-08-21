@@ -5,8 +5,16 @@ from copy import deepcopy
 from dataclasses import replace
 from typing import Tuple
 
-from tamr_client import response, operation
-from tamr_client._types import Attribute, Dataset, Instance, JsonDict, Operation, Session, URL
+from tamr_client import operation, response
+from tamr_client._types import (
+    Attribute,
+    Dataset,
+    Instance,
+    JsonDict,
+    Operation,
+    Session,
+    URL,
+)
 from tamr_client.attribute import _from_json as _attribute_from_json
 from tamr_client.exception import TamrClientException
 
@@ -114,9 +122,7 @@ def refresh(session: Session, dataset: Dataset) -> Operation:
     return operation.wait(session, op)
 
 
-def _refresh_async(
-    session: Session, dataset: Dataset
-) -> Operation:
+def _refresh_async(session: Session, dataset: Dataset) -> Operation:
     """Applies changes to the unified dataset
 
     Args:
