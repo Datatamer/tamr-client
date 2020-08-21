@@ -15,6 +15,12 @@ class NotFound(TamrClientException):
     pass
 
 
+class Ambiguous(TamrClientException):
+    """Raised when referencing a project by name that matches multiple possible targets."""
+
+    pass
+
+
 class AlreadyExists(TamrClientException):
     """Raised when a project with these specifications already exists."""
 
@@ -36,6 +42,36 @@ def from_resource_id(session: Session, instance: Instance, id: str) -> Project:
     """
     url = URL(instance=instance, path=f"projects/{id}")
     return _from_url(session, url)
+
+
+def by_name(session: Session, instance: Instance, name: str) -> Project:
+    """Get project by name
+    Fetches project from Tamr server.
+
+    Args:
+        instance: Tamr instance containing this project
+        name: Project name
+
+    Raises:
+        project.NotFound: If no project could be found with that name.
+        project.Ambiguous: If multiple targets match project name.
+        requests.HTTPError: If any other HTTP error is encountered.
+    """
+    r = session.get(
+        url=str(URL(instance=instance, path="projects")),
+        params={"filter": f"name=={name}"},
+    )
+
+    # Check that exactly one project is returned
+    matches = r.json()
+    if len(matches) == 0:
+        raise NotFound(str(r.url))
+    if len(matches) > 1:
+        raise Ambiguous(str(r.url))
+
+    # Make Project from response
+    url = URL(instance=instance, path=matches[0]["relativeId"])
+    return _from_json(url=url, data=matches[0])
 
 
 def _from_url(session: Session, url: URL) -> Project:

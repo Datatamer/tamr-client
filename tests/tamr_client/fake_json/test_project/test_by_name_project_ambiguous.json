@@ -2,56 +2,48 @@
     {
         "request": {
             "method": "GET",
-            "path": "datasets?filter=name==ambiguous dataset"
+            "path": "projects?filter=name==ambiguous proj"
         },
         "response": {
             "status": 200,
             "json": [
                 {
-                    "id": "unify://unified-data/v1/datasets/1",
-                    "externalId": "number 1",
-                    "name": "ambiguous dataset",
-                    "description": "description",
-                    "version": "version",
-                    "keyAttributeNames": [
-                        "tamr_id"
-                    ],
-                    "tags": [],
+                    "id": "unify://unified-data/v1/projects/1",
+                    "name": "ambiguous proj",
+                    "description": "Mastering Project",
+                    "type": "DEDUP",
+                    "unifiedDatasetName": "proj_unified_dataset",
                     "created": {
                         "username": "admin",
-                        "time": "2018-09-10T16:06:20.636Z",
-                        "version": "dataset 1 created version"
+                        "time": "2020-04-03T14:14:18.752Z",
+                        "version": "18"
                     },
                     "lastModified": {
                         "username": "admin",
-                        "time": "2018-09-10T16:06:20.851Z",
-                        "version": "dataset 1 modified version"
+                        "time": "2020-04-03T14:14:20.115Z",
+                        "version": "19"
                     },
-                    "relativeId": "datasets/1",
-                    "upstreamDatasetIds": []
+                    "relativeId": "projects/1",
+                    "externalId": "58bdbe72-3c08-427d-97bd-45b16d92c79c"
                 },
                 {
-                    "id": "unify://unified-data/v1/datasets/2",
-                    "externalId": "number 2",
-                    "name": "ambiguous dataset",
-                    "description": "description",
-                    "version": "version",
-                    "keyAttributeNames": [
-                        "tamr_id"
-                    ],
-                    "tags": [],
+                    "id": "unify://unified-data/v1/projects/2",
+                    "name": "ambiguous proj",
+                    "description": "Mastering Project",
+                    "type": "DEDUP",
+                    "unifiedDatasetName": "proj_unified_dataset",
                     "created": {
                         "username": "admin",
-                        "time": "2018-09-10T16:06:20.636Z",
-                        "version": "dataset 2 created version"
+                        "time": "2020-04-03T14:14:18.752Z",
+                        "version": "18"
                     },
                     "lastModified": {
                         "username": "admin",
-                        "time": "2018-09-10T16:06:20.851Z",
-                        "version": "dataset 2 modified version"
+                        "time": "2020-04-03T14:14:20.115Z",
+                        "version": "19"
                     },
-                    "relativeId": "datasets/2",
-                    "upstreamDatasetIds": []
+                    "relativeId": "projects/2",
+                    "externalId": "39abcd72-3c08-427d-9d7b-d92c45b1679c"
                 }
             ]
         }

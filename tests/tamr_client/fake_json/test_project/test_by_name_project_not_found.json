@@ -2,7 +2,7 @@
     {
         "request": {
             "method": "GET",
-            "path": "datasets?filter=name==missing dataset"
+            "path": "projects?filter=name==missing proj"
         },
         "response": {
             "status": 200,
