@@ -113,7 +113,7 @@ def attributes(session: Session, dataset: Dataset) -> Tuple[Attribute, ...]:
 
 
 def materialize(session: Session, dataset: Dataset) -> Operation:
-    """Materialize a dataset
+    """Materialize a dataset and wait for the operation to complete
     Materializing consists of updating the dataset (including records) in persistent storage (HBase) based on upstream changes to data.
 
     Args:
