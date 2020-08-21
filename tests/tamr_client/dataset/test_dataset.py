@@ -25,6 +25,35 @@ def test_from_resource_id_dataset_not_found():
 
 
 @fake.json
+def test_by_name():
+    s = fake.session()
+    instance = fake.instance()
+
+    dataset = tc.dataset.by_name(s, instance, "dataset 1 name")
+    assert dataset.name == "dataset 1 name"
+    assert dataset.description == "dataset 1 description"
+    assert dataset.key_attribute_names == ("tamr_id",)
+
+
+@fake.json
+def test_by_name_dataset_not_found():
+    s = fake.session()
+    instance = fake.instance()
+
+    with pytest.raises(tc.dataset.NotFound):
+        tc.dataset.by_name(s, instance, "missing dataset")
+
+
+@fake.json
+def test_by_name_dataset_ambiguous():
+    s = fake.session()
+    instance = fake.instance()
+
+    with pytest.raises(tc.dataset.Ambiguous):
+        tc.dataset.by_name(s, instance, "ambiguous dataset")
+
+
+@fake.json
 def test_attributes():
     s = fake.session()
     dataset = fake.dataset()

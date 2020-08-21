@@ -46,7 +46,7 @@ def create(
         Project created in Tamr
 
     Raises:
-        AlreadyExists: If a project with these specifications already exists
+        attribute.AlreadyExists: If a project with these specifications already exists
         requests.HTTPError: If any other HTTP error is encountered
     """
     return project._create(
@@ -60,34 +60,21 @@ def create(
     )
 
 
-def manual_labels(
-    session: Session, instance: Instance, project: CategorizationProject
-) -> Dataset:
+def manual_labels(session: Session, project: CategorizationProject) -> Dataset:
     """Get manual labels from a Categorization project.
 
     Args:
-        instance: Tamr instance containing project
         project: Tamr project containing labels
 
     Returns:
         Dataset containing manual labels
 
     Raises:
-        _dataset.NotFound: If no dataset could be found at the specified URL
-        Ambiguous: If multiple targets match dataset name
+        dataset.NotFound: If no dataset could be found at the specified URL
+        dataset.Ambiguous: If multiple targets match dataset name
     """
     unified_dataset = unified.from_project(session=session, project=project)
     labels_dataset_name = unified_dataset.name + "_manual_categorizations"
-    datasets_url = URL(instance=instance, path="datasets")
-    r = session.get(
-        url=str(datasets_url), params={"filter": f"name=={labels_dataset_name}"}
+    return _dataset.by_name(
+        session=session, instance=project.url.instance, name=labels_dataset_name
     )
-    matches = r.json()
-    if len(matches) == 0:
-        raise _dataset.NotFound(str(r.url))
-    if len(matches) > 1:
-        raise _dataset.Ambiguous(str(r.url))
-
-    dataset_path = matches[0]["relativeId"]
-    dataset_url = URL(instance=instance, path=dataset_path)
-    return _dataset._from_url(session=session, url=dataset_url)

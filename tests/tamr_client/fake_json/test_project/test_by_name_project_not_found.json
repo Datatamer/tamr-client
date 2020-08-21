@@ -1,0 +1,12 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets?filter=name==missing dataset"
+        },
+        "response": {
+            "status": 200,
+            "json": []
+        }
+    }
+]

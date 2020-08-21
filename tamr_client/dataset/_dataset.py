@@ -51,6 +51,37 @@ def from_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
     return _from_url(session, url)
 
 
+def by_name(session: Session, instance: Instance, name: str) -> Dataset:
+    """Get dataset by name
+
+    Fetches dataset from Tamr server
+
+    Args:
+        instance: Tamr instance containing this dataset
+        name: Dataset name
+
+    Raises:
+        dataset.NotFound: If no dataset could be found with that name.
+        dataset.Ambiguous: If multiple targets match dataset name.
+        requests.HTTPError: If any other HTTP error is encountered.
+    """
+    r = session.get(
+        url=str(URL(instance=instance, path="datasets")),
+        params={"filter": f"name=={name}"},
+    )
+
+    # Check that exactly one dataset is returned
+    matches = r.json()
+    if len(matches) == 0:
+        raise NotFound(str(r.url))
+    if len(matches) > 1:
+        raise Ambiguous(str(r.url))
+
+    # Make Dataset from response
+    url = URL(instance=instance, path=matches[0]["relativeId"])
+    return _from_json(url=url, data=matches[0])
+
+
 def _from_url(session: Session, url: URL) -> Dataset:
     """Get dataset by URL
 
