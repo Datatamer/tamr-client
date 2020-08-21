@@ -113,20 +113,20 @@ def attributes(session: Session, dataset: Dataset) -> Tuple[Attribute, ...]:
 
 
 def refresh(session: Session, dataset: Dataset) -> Operation:
-    """Applies changes to the unified dataset and waits for the operation to complete
+    """Refreshes a dataset and waits for the operation to complete
 
     Args:
-        unified_dataset: The Unified Dataset which will be committed
+        dataset: A Tamr dataset which will be refreshed
     """
     op = _refresh_async(session, dataset)
     return operation.wait(session, op)
 
 
 def _refresh_async(session: Session, dataset: Dataset) -> Operation:
-    """Applies changes to the unified dataset
+    """Refreshes the dataset
 
     Args:
-        unified_dataset: The Unified Dataset which will be committed
+        dataset: The Dataset which will be refreshed
     """
     r = session.post(
         str(dataset.url) + ":refresh",
