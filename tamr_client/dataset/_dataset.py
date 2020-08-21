@@ -120,12 +120,14 @@ def materialize(session: Session, dataset: Dataset) -> Operation:
     Args:
         dataset: A Tamr dataset which will be refreshed
     """
-    op = _refresh_async(session, dataset)
+    op = _materialize_async(session, dataset)
     return operation.wait(session, op)
 
 
-def _refresh_async(session: Session, dataset: Dataset) -> Operation:
-    """Refreshes the dataset
+def _materialize_async(session: Session, dataset: Dataset) -> Operation:
+    """Materialize a dataset
+    
+    Materializing consists of updating the dataset (including records) in persistent storage (HBase) based on upstream changes to data.
 
     Args:
         dataset: The Dataset which will be refreshed
