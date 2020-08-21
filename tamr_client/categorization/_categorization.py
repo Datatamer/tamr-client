@@ -1,0 +1,67 @@
+"""
+Tamr - Categorization
+See https://docs.tamr.com/docs/overall-workflow-classification
+
+The terminology used here is consistent with Tamr UI terminology
+
+Asynchronous versions of each function can be found with the suffix `_async` and may be of
+interest to power users
+"""
+from tamr_client import operation
+from tamr_client._types import CategorizationProject, Operation, Session
+from tamr_client.dataset import unified
+
+
+def update_unified_dataset(
+    session: Session, project: CategorizationProject
+) -> Operation:
+    """Apply changes to the unified dataset and wait for the operation to complete
+
+    Args:
+        project: Tamr Categorization project
+    """
+    op = _update_unified_dataset_async(session, project)
+    return operation.wait(session, op)
+
+
+def apply_feedback(session: Session, project: CategorizationProject) -> Operation:
+    """Train the categorization model according to verified labels and wait for the
+    operation to complete
+
+    Args:
+        project: Tamr Categorization project
+    """
+    op = _apply_feedback_async(session, project)
+    return operation.wait(session, op)
+
+
+def update_results(session: Session, project: CategorizationProject) -> Operation:
+    """Generate classifications based on the latest categorization model and wait for the
+    operation to complete
+
+    Args:
+        project: Tamr Categorization project
+    """
+    op = _update_results_async(session, project)
+    return operation.wait(session, op)
+
+
+def _update_unified_dataset_async(
+    session: Session, project: CategorizationProject
+) -> Operation:
+    unified_dataset = unified.from_project(session, project)
+    return unified._apply_changes_async(session, unified_dataset)
+
+
+def _apply_feedback_async(
+    session: Session, project: CategorizationProject
+) -> Operation:
+    r = session.post(str(project.url) + "/categorizations/model:refresh")
+    return operation._from_response(project.url.instance, r)
+
+
+def _update_results_async(
+    session: Session, project: CategorizationProject
+) -> Operation:
+    r = session.post(str(project.url) + "/categorizations:refresh")
+    return operation._from_response(project.url.instance, r)
