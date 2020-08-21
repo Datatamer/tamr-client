@@ -124,11 +124,5 @@ def materialize(session: Session, dataset: Dataset) -> Operation:
 
 
 def _materialize_async(session: Session, dataset: Dataset) -> Operation:
-    """Materialize a dataset
-    Materializing consists of updating the dataset (including records) in persistent storage (HBase) based on upstream changes to data.
-
-    Args:
-        dataset: The Dataset which will be materialized
-    """
     r = session.post(str(dataset.url) + ":refresh",)
     return operation._from_response(dataset.url.instance, r)
