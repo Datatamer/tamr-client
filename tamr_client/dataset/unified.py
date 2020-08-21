@@ -94,5 +94,5 @@ def _apply_changes_async(
     Args:
         unified_dataset: The Unified Dataset which will be committed
     """
-    r = session.post(str(unified_dataset.url) + ":refresh",)
+    r = session.post(str(unified_dataset.url) + ":refresh")
     return operation._from_response(unified_dataset.url.instance, r)
