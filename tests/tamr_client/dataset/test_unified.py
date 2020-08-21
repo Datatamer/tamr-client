@@ -8,14 +8,13 @@ from tests.tamr_client import fake, utils
 @responses.activate
 def test_from_project():
     s = fake.session()
-    instance = fake.instance()
     project = fake.mastering_project()
 
     dataset_json = utils.load_json("dataset.json")
     url = tc.URL(path="projects/1/unifiedDataset")
     responses.add(responses.GET, str(url), json=dataset_json)
 
-    unified_dataset = tc.dataset.unified.from_project(s, instance, project)
+    unified_dataset = tc.dataset.unified.from_project(s, project)
     assert unified_dataset.name == "dataset 1 name"
     assert unified_dataset.description == "dataset 1 description"
     assert unified_dataset.key_attribute_names == ("tamr_id",)
@@ -24,14 +23,13 @@ def test_from_project():
 @responses.activate
 def test_from_project_dataset_not_found():
     s = fake.session()
-    instance = fake.instance()
     project = fake.mastering_project()
 
     url = tc.URL(path="projects/1/unifiedDataset")
     responses.add(responses.GET, str(url), status=404)
 
     with pytest.raises(tc.dataset.unified.NotFound):
-        tc.dataset.unified.from_project(s, instance, project)
+        tc.dataset.unified.from_project(s, project)
 
 
 @responses.activate

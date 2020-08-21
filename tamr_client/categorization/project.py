@@ -76,9 +76,7 @@ def manual_labels(
         _dataset.NotFound: If no dataset could be found at the specified URL
         Ambiguous: If multiple targets match dataset name
     """
-    unified_dataset = unified.from_project(
-        session=session, instance=instance, project=project
-    )
+    unified_dataset = unified.from_project(session=session, project=project)
     labels_dataset_name = unified_dataset.name + "_manual_categorizations"
     datasets_url = URL(instance=instance, path="datasets")
     r = session.get(

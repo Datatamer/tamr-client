@@ -5,7 +5,6 @@ from copy import deepcopy
 
 from tamr_client import operation, response
 from tamr_client._types import (
-    Instance,
     JsonDict,
     Operation,
     Project,
@@ -24,15 +23,12 @@ class NotFound(TamrClientException):
     pass
 
 
-def from_project(
-    session: Session, instance: Instance, project: Project
-) -> UnifiedDataset:
+def from_project(session: Session, project: Project) -> UnifiedDataset:
     """Get unified dataset of a project
 
     Fetches the unified dataset of a given project from Tamr server
 
     Args:
-        instance: Tamr instance containing this dataset
         project: Tamr project of this Unified Dataset
 
     Raises:
@@ -40,7 +36,7 @@ def from_project(
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
-    url = URL(instance=instance, path=f"{project.url.path}/unifiedDataset")
+    url = URL(instance=project.url.instance, path=f"{project.url.path}/unifiedDataset")
     return _from_url(session, url)
 
 

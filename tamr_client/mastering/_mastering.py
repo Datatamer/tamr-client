@@ -97,7 +97,7 @@ def publish_clusters(session: Session, project: MasteringProject) -> Operation:
 def _update_unified_dataset_async(
     session: Session, project: MasteringProject
 ) -> Operation:
-    unified_dataset = unified.from_project(session, project.url.instance, project)
+    unified_dataset = unified.from_project(session, project)
     return unified._apply_changes_async(session, unified_dataset)
 
 
