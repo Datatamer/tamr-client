@@ -97,41 +97,21 @@ def publish_clusters(session: Session, project: MasteringProject) -> Operation:
 def _update_unified_dataset_async(
     session: Session, project: MasteringProject
 ) -> Operation:
-    """Apply changes to the unified dataset
-
-    Args:
-        project: Tamr Mastering project
-    """
     unified_dataset = unified.from_project(session, project.url.instance, project)
     return unified._apply_changes_async(session, unified_dataset)
 
 
 def _estimate_pairs_async(session: Session, project: MasteringProject) -> Operation:
-    """Update the estimated pair counts
-
-    Args:
-        project: Tamr Mastering project
-    """
     r = session.post(str(project.url) + "/estimatedPairCounts:refresh")
     return operation._from_response(project.url.instance, r)
 
 
 def _generate_pairs_async(session: Session, project: MasteringProject) -> Operation:
-    """Generate pairs according to the binning model
-
-    Args:
-        project: Tamr Mastering project
-    """
     r = session.post(str(project.url) + "/recordPairs:refresh")
     return operation._from_response(project.url.instance, r)
 
 
 def _apply_feedback_async(session: Session, project: MasteringProject) -> Operation:
-    """Train the pair-matching model according to verified labels
-
-    Args:
-        project: Tamr Mastering project
-    """
     r = session.post(str(project.url) + "/recordPairsWithPredictions/model:refresh")
     return operation._from_response(project.url.instance, r)
 
@@ -139,11 +119,6 @@ def _apply_feedback_async(session: Session, project: MasteringProject) -> Operat
 def _update_pair_results_async(
     session: Session, project: MasteringProject
 ) -> Operation:
-    """Update record pair predictions according to the latest pair-matching model
-
-    Args:
-        project: Tamr Mastering project
-    """
     r = session.post(str(project.url) + "/recordPairsWithPredictions:refresh")
     return operation._from_response(project.url.instance, r)
 
@@ -151,11 +126,6 @@ def _update_pair_results_async(
 def _update_high_impact_pairs_async(
     session: Session, project: MasteringProject
 ) -> Operation:
-    """Produce new high-impact pairs according to the latest pair-matching model
-
-    Args:
-        project: Tamr Mastering project
-    """
     r = session.post(str(project.url) + "/highImpactPairs:refresh")
     return operation._from_response(project.url.instance, r)
 
@@ -163,20 +133,10 @@ def _update_high_impact_pairs_async(
 def _update_cluster_results_async(
     session: Session, project: MasteringProject
 ) -> Operation:
-    """Generate clusters based on the latest pair-matching model
-
-    Args:
-        project: Tamr Mastering project
-    """
     r = session.post(str(project.url) + "/recordClusters:refresh")
     return operation._from_response(project.url.instance, r)
 
 
 def _publish_clusters_async(session: Session, project: MasteringProject) -> Operation:
-    """Publish current record clusters
-
-    Args:
-        project: Tamr Mastering project
-    """
     r = session.post(str(project.url) + "/publishedClustersWithData:refresh")
     return operation._from_response(project.url.instance, r)
