@@ -45,7 +45,7 @@ def test_materialize_async():
     s = fake.session()
     dataset = fake.dataset()
 
-    op = tc.dataset._refresh_async(s, dataset)
+    op = tc.dataset._materialize_async(s, dataset)
 
     assert op.type == "SPARK"
     assert op.description == "Materialize views to Elastic"
