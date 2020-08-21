@@ -3,5 +3,6 @@ from tamr_client.dataset._dataset import(
     attributes,
     from_resource_id,
     NotFound,
+    Ambiguous,
     refresh,
 )
