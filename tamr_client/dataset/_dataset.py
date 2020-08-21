@@ -112,7 +112,7 @@ def attributes(session: Session, dataset: Dataset) -> Tuple[Attribute, ...]:
     return tuple(attrs)
 
 
-def refresh(session: Session, dataset: Dataset) -> Operation:
+def materialize(session: Session, dataset: Dataset) -> Operation:
     """Refreshes a dataset and waits for the operation to complete
 
     Args:
