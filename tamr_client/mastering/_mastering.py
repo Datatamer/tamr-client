@@ -3,6 +3,9 @@ Tamr - Mastering
 See https://docs.tamr.com/docs/overall-workflow-mastering
 
 The terminology used here is consistent with Tamr UI terminology
+
+Asynchronous versions of each function can be found with the suffix `_async` and may be of
+interest to power users
 """
 from tamr_client import operation
 from tamr_client._types import MasteringProject, Operation, Session
