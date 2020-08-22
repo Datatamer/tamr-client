@@ -5,8 +5,16 @@ from copy import deepcopy
 from dataclasses import replace
 from typing import Tuple
 
-from tamr_client import response
-from tamr_client._types import Attribute, Dataset, Instance, JsonDict, Session, URL
+from tamr_client import operation, response
+from tamr_client._types import (
+    Attribute,
+    Dataset,
+    Instance,
+    JsonDict,
+    Operation,
+    Session,
+    URL,
+)
 from tamr_client.attribute import _from_json as _attribute_from_json
 from tamr_client.exception import TamrClientException
 
@@ -102,3 +110,19 @@ def attributes(session: Session, dataset: Dataset) -> Tuple[Attribute, ...]:
         attr = _attribute_from_json(attr_url, attr_json)
         attrs.append(attr)
     return tuple(attrs)
+
+
+def materialize(session: Session, dataset: Dataset) -> Operation:
+    """Materialize a dataset and wait for the operation to complete
+    Materializing consists of updating the dataset (including records) in persistent storage (HBase) based on upstream changes to data.
+
+    Args:
+        dataset: A Tamr dataset which will be materialized
+    """
+    op = _materialize_async(session, dataset)
+    return operation.wait(session, op)
+
+
+def _materialize_async(session: Session, dataset: Dataset) -> Operation:
+    r = session.post(str(dataset.url) + ":refresh",)
+    return operation._from_response(dataset.url.instance, r)

@@ -9,6 +9,7 @@
   - [#434](https://github.com/Datatamer/tamr-client/pull/434) Added `tc.instance.version` function to get Tamr Version
   - [#435](https://github.com/Datatamer/tamr-client/pull/435) Now able to create projects of the following type in Tamr: Categorization, Mastering, Schema Mapping
   - [#440](https://github.com/Datatamer/tamr-client/pull/440) Added functions for initiating basic mastering workflow operations in `tc.mastering`
+  - [#443](https://github.com/Datatamer/tamr-client/pull/443) Added function to materialize datasets.
   
   **NEW FEATURES**
   - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id

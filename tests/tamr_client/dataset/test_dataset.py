@@ -38,3 +38,20 @@ def test_attributes():
     geom = attrs[1]
     assert geom.name == "geom"
     assert isinstance(geom.type, tc.attribute.type.Record)
+
+
+@fake.json
+def test_materialize_async():
+    s = fake.session()
+    dataset = fake.dataset()
+
+    op = tc.dataset._materialize_async(s, dataset)
+
+    assert op.type == "SPARK"
+    assert op.description == "Materialize views to Elastic"
+    assert op.status == {
+        "state": "PENDING",
+        "startTime": "",
+        "endTime": "",
+        "message": "Job has not yet been submitted to Spark",
+    }
