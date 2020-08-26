@@ -68,9 +68,7 @@ def succeeded(operation: Operation) -> bool:
     return operation.status is not None and operation.status["state"] == "SUCCEEDED"
 
 
-def from_resource_id(
-    session: Session, instance: Instance, resource_id: str
-) -> Operation:
+def by_resource_id(session: Session, instance: Instance, resource_id: str) -> Operation:
     """Get operation by ID
 
     Args:

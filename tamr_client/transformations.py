@@ -22,8 +22,7 @@ def _input_transformation_from_json(
     """
     dataset_resource_ids = [d["datasetId"].split("/")[-1] for d in data["datasets"]]
     datasets = [
-        dataset.from_resource_id(session, instance, d_id)
-        for d_id in dataset_resource_ids
+        dataset.by_resource_id(session, instance, d_id) for d_id in dataset_resource_ids
     ]
     return InputTransformation(transformation=data["transformation"], datasets=datasets)
 
@@ -83,7 +82,7 @@ def get_all(session: Session, project: Project) -> Transformations:
         >>> import tamr_client as tc
         >>> session = tc.session.from_auth('username', 'password')
         >>> instance = tc.instance.Instance(host="localhost", port=9100)
-        >>> project1 = tc.project.from_resource_id(session, instance, id='1')
+        >>> project1 = tc.project.by_resource_id(session, instance, id='1')
         >>> print(tc.transformations.get_all(session, project1))
     """
     r = session.get(f"{project.url}/transformations")
@@ -107,8 +106,8 @@ def replace_all(
         >>> import tamr_client as tc
         >>> session = tc.session.from_auth('username', 'password')
         >>> instance = tc.instance.Instance(host="localhost", port=9100)
-        >>> project1 = tc.project.from_resource_id(session, instance, id='1')
-        >>> dataset3 = tc.dataset.from_resource_id(session, instance, id='3')
+        >>> project1 = tc.project.by_resource_id(session, instance, id='1')
+        >>> dataset3 = tc.dataset.by_resource_id(session, instance, id='3')
         >>> new_input_tx = tc.InputTransformation("SELECT *, upper(name) as name;", [dataset3])
         >>> all_tx = tc.Transformations(
         ... input_scope=[new_input_tx],

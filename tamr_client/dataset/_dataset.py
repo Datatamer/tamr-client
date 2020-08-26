@@ -33,7 +33,7 @@ class Ambiguous(TamrClientException):
     pass
 
 
-def from_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
+def by_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
     """Get dataset by resource ID
 
     Fetches dataset from Tamr server

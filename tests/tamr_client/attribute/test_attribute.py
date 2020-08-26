@@ -78,7 +78,7 @@ def test_delete():
 
 
 @fake.json
-def test_from_resource_id():
+def test_by_resource_id():
     s = fake.session()
     dataset = fake.dataset()
 
@@ -93,7 +93,7 @@ def test_from_resource_id():
         ]
     )
 
-    attr = tc.attribute.from_resource_id(s, dataset, "attr")
+    attr = tc.attribute.by_resource_id(s, dataset, "attr")
 
     assert attr.name == "attr"
     assert not attr.is_nullable
@@ -102,12 +102,12 @@ def test_from_resource_id():
 
 
 @fake.json
-def test_from_resource_id_attribute_not_found():
+def test_by_resource_id_attribute_not_found():
     s = fake.session()
     dataset = fake.dataset()
 
     with pytest.raises(tc.attribute.NotFound):
-        tc.attribute.from_resource_id(s, dataset, "attr")
+        tc.attribute.by_resource_id(s, dataset, "attr")
 
 
 def test_create_reserved_attribute_name():

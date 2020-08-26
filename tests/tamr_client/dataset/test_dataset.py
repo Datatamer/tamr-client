@@ -5,23 +5,23 @@ from tests.tamr_client import fake
 
 
 @fake.json
-def test_from_resource_id():
+def test_by_resource_id():
     s = fake.session()
     instance = fake.instance()
 
-    dataset = tc.dataset.from_resource_id(s, instance, "1")
+    dataset = tc.dataset.by_resource_id(s, instance, "1")
     assert dataset.name == "dataset 1 name"
     assert dataset.description == "dataset 1 description"
     assert dataset.key_attribute_names == ("tamr_id",)
 
 
 @fake.json
-def test_from_resource_id_dataset_not_found():
+def test_by_resource_id_dataset_not_found():
     s = fake.session()
     instance = fake.instance()
 
     with pytest.raises(tc.dataset.NotFound):
-        tc.dataset.from_resource_id(s, instance, "1")
+        tc.dataset.by_resource_id(s, instance, "1")
 
 
 @fake.json

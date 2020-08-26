@@ -78,7 +78,7 @@ def test_operation_from_response_noop():
 
 
 @responses.activate
-def test_from_resource_id():
+def test_by_resource_id():
     s = fake.session()
     instance = fake.instance()
     url = tc.URL(path="operations/1")
@@ -87,7 +87,7 @@ def test_from_resource_id():
     responses.add(responses.GET, str(url), json=operation_json)
 
     resource_id = "1"
-    op = tc.operation.from_resource_id(s, instance, resource_id)
+    op = tc.operation.by_resource_id(s, instance, resource_id)
     assert op.url == url
     assert op.type == operation_json["type"]
     assert op.description == operation_json["description"]

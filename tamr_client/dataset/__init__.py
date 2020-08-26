@@ -4,7 +4,7 @@ from tamr_client.dataset._dataset import (
     Ambiguous,
     attributes,
     by_name,
-    from_resource_id,
+    by_resource_id,
     materialize,
     NotFound,
 )

@@ -27,7 +27,7 @@ class AlreadyExists(TamrClientException):
     pass
 
 
-def from_resource_id(session: Session, instance: Instance, id: str) -> Project:
+def by_resource_id(session: Session, instance: Instance, id: str) -> Project:
     """Get project by resource ID.
     Fetches project from Tamr server.
 

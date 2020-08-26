@@ -11,6 +11,7 @@
   - [#440](https://github.com/Datatamer/tamr-client/pull/440) Added functions for initiating basic mastering workflow operations in `tc.mastering`
   - [#443](https://github.com/Datatamer/tamr-client/pull/443) Added function to materialize datasets.
   - [#445](https://github.com/Datatamer/tamr-client/pull/445) Added functions for getting projects and datasets by name via `tc.project.by_name` and `tc.dataset.by_name`
+    - Renamed functions `from_resource_id` to `by_resource_id` in `tc.attribute`, `tc.dataset`, `tc.operation`, and `tc.project`
   
   **NEW FEATURES**
   - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id
