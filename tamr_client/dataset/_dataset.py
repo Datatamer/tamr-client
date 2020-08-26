@@ -48,7 +48,7 @@ def by_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
         requests.HTTPError: If any other HTTP error is encountered.
     """
     url = URL(instance=instance, path=f"datasets/{id}")
-    return _from_url(session, url)
+    return _by_url(session, url)
 
 
 def by_name(session: Session, instance: Instance, name: str) -> Dataset:
@@ -82,7 +82,7 @@ def by_name(session: Session, instance: Instance, name: str) -> Dataset:
     return _from_json(url=url, data=matches[0])
 
 
-def _from_url(session: Session, url: URL) -> Dataset:
+def _by_url(session: Session, url: URL) -> Dataset:
     """Get dataset by URL
 
     Fetches dataset from Tamr server

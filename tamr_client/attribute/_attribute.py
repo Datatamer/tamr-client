@@ -65,10 +65,10 @@ def by_resource_id(session: Session, dataset: Dataset, id: str) -> Attribute:
         requests.HTTPError: If any other HTTP error is encountered.
     """
     url = replace(dataset.url, path=dataset.url.path + f"/attributes/{id}")
-    return _from_url(session, url)
+    return _by_url(session, url)
 
 
-def _from_url(session: Session, url: URL) -> Attribute:
+def _by_url(session: Session, url: URL) -> Attribute:
     """Get attribute by URL
 
     Fetches attribute from Tamr server

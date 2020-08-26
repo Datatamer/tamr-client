@@ -41,7 +41,7 @@ def by_resource_id(session: Session, instance: Instance, id: str) -> Project:
         requests.HTTPError: If any other HTTP error is encountered.
     """
     url = URL(instance=instance, path=f"projects/{id}")
-    return _from_url(session, url)
+    return _by_url(session, url)
 
 
 def by_name(session: Session, instance: Instance, name: str) -> Project:
@@ -74,7 +74,7 @@ def by_name(session: Session, instance: Instance, name: str) -> Project:
     return _from_json(url=url, data=matches[0])
 
 
-def _from_url(session: Session, url: URL) -> Project:
+def _by_url(session: Session, url: URL) -> Project:
     """Get project by URL.
     Fetches project from Tamr server.
 
@@ -156,4 +156,4 @@ def _create(
     project_path = data["relativeId"]
     project_url = URL(instance=instance, path=str(project_path))
 
-    return _from_url(session=session, url=project_url)
+    return _by_url(session=session, url=project_url)

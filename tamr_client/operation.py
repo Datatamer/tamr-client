@@ -28,7 +28,7 @@ def poll(session: Session, operation: Operation) -> Operation:
     Args:
         operation: Operation to be polled.
     """
-    return _from_url(session, operation.url)
+    return _by_url(session, operation.url)
 
 
 def wait(
@@ -119,7 +119,7 @@ def _from_response(instance: Instance, response: requests.Response) -> Operation
     return _from_json(_url, resource_json)
 
 
-def _from_url(session: Session, url: URL) -> Operation:
+def _by_url(session: Session, url: URL) -> Operation:
     """Get operation by URL
 
     Fetches operation from Tamr server

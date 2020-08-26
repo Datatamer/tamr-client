@@ -37,10 +37,10 @@ def from_project(session: Session, project: Project) -> UnifiedDataset:
         requests.HTTPError: If any other HTTP error is encountered.
     """
     url = URL(instance=project.url.instance, path=f"{project.url.path}/unifiedDataset")
-    return _from_url(session, url)
+    return _by_url(session, url)
 
 
-def _from_url(session: Session, url: URL) -> UnifiedDataset:
+def _by_url(session: Session, url: URL) -> UnifiedDataset:
     """Get dataset by URL
 
     Fetches dataset from Tamr server
