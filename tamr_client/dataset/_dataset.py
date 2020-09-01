@@ -157,3 +157,23 @@ def materialize(session: Session, dataset: Dataset) -> Operation:
 def _materialize_async(session: Session, dataset: Dataset) -> Operation:
     r = session.post(str(dataset.url) + ":refresh",)
     return operation._from_response(dataset.url.instance, r)
+
+
+def delete(session: Session, dataset: Dataset, *, cascade: bool = False):
+    """Deletes an existing dataset
+
+    Sends a deletion request to the Tamr server
+
+    Args:
+        dataset: Existing dataset to delete
+        cascade: Whether to delete all derived datasets as well
+
+    Raises:
+        dataset.NotFound: If no dataset could be found at the specified URL.
+            Corresponds to a 404 HTTP error.
+        requests.HTTPError: If any other HTTP error is encountered.
+    """
+    r = session.delete(str(dataset.url), params={"cascade": cascade},)
+    if r.status_code == 404:
+        raise NotFound(str(dataset.url))
+    response.successful(r)

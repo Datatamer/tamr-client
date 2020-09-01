@@ -7,6 +7,7 @@ Dataset
 .. autofunction:: tamr_client.dataset.by_name
 .. autofunction:: tamr_client.dataset.attributes
 .. autofunction:: tamr_client.dataset.materialize
+.. autofunction:: tamr_client.dataset.delete
 
 Exceptions
 ----------

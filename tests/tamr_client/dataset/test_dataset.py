@@ -84,3 +84,28 @@ def test_materialize_async():
         "endTime": "",
         "message": "Job has not yet been submitted to Spark",
     }
+
+
+@fake.json
+def test_delete():
+    s = fake.session()
+    dataset = fake.dataset()
+
+    tc.dataset.delete(s, dataset)
+
+
+@fake.json
+def test_delete_cascading():
+    s = fake.session()
+    dataset = fake.dataset()
+
+    tc.dataset.delete(s, dataset, cascade=True)
+
+
+@fake.json
+def test_delete_dataset_not_found():
+    s = fake.session()
+    dataset = fake.dataset()
+
+    with pytest.raises(tc.dataset.NotFound):
+        tc.dataset.delete(s, dataset)

@@ -1,0 +1,11 @@
+[
+    {
+        "request": {
+            "method": "DELETE",
+            "path": "datasets/1?cascade=false"
+        },
+        "response": {
+            "status": 404
+        }
+    }
+]
