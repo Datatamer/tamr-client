@@ -1,0 +1,11 @@
+[
+    {
+        "request": {
+            "method": "DELETE",
+            "path": "datasets/1/records"
+        },
+        "response": {
+            "status": 204
+        }
+    }
+]

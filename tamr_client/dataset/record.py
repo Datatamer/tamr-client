@@ -149,3 +149,13 @@ def stream(session: Session, dataset: AnyDataset) -> Iterator[JsonDict]:
     """
     with session.get(str(dataset.url) + "/records", stream=True) as r:
         return response.ndjson(r)
+
+
+def delete_all(session: Session, dataset: AnyDataset):
+    """Delete all records in this dataset
+
+    Args:
+        dataset: Dataset from which to delete records
+    """
+    r = session.delete(str(dataset.url) + "/records")
+    response.successful(r)
