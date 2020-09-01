@@ -40,7 +40,8 @@ def update_unified_dataset(
     Args:
         project: Tamr Categorization project
     """
-    op = _update_unified_dataset_async(session, project)
+    unified_dataset = unified.from_project(session, project)
+    op = unified._apply_changes_async(session, unified_dataset)
     return operation.wait(session, op)
 
 
@@ -64,13 +65,6 @@ def update_results(session: Session, project: CategorizationProject) -> Operatio
     """
     op = _update_results_async(session, project)
     return operation.wait(session, op)
-
-
-def _update_unified_dataset_async(
-    session: Session, project: CategorizationProject
-) -> Operation:
-    unified_dataset = unified.from_project(session, project)
-    return unified._apply_changes_async(session, unified_dataset)
 
 
 def _apply_feedback_async(

@@ -20,12 +20,6 @@ def update_unified_dataset(
     Args:
         project: Tamr Schema Mapping project
     """
-    op = _update_unified_dataset_async(session, project)
-    return operation.wait(session, op)
-
-
-def _update_unified_dataset_async(
-    session: Session, project: SchemaMappingProject
-) -> Operation:
     unified_dataset = unified.from_project(session, project)
-    return unified._apply_changes_async(session, unified_dataset)
+    op = unified._apply_changes_async(session, unified_dataset)
+    return operation.wait(session, op)
