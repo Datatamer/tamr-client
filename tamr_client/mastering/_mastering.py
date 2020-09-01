@@ -18,7 +18,8 @@ def update_unified_dataset(session: Session, project: MasteringProject) -> Opera
     Args:
         project: Tamr Mastering project
     """
-    op = _update_unified_dataset_async(session, project)
+    unified_dataset = unified.from_project(session, project)
+    op = unified._apply_changes_async(session, unified_dataset)
     return operation.wait(session, op)
 
 
@@ -95,13 +96,6 @@ def publish_clusters(session: Session, project: MasteringProject) -> Operation:
     """
     op = _publish_clusters_async(session, project)
     return operation.wait(session, op)
-
-
-def _update_unified_dataset_async(
-    session: Session, project: MasteringProject
-) -> Operation:
-    unified_dataset = unified.from_project(session, project)
-    return unified._apply_changes_async(session, unified_dataset)
 
 
 def _estimate_pairs_async(session: Session, project: MasteringProject) -> Operation:
