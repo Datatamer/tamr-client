@@ -3,9 +3,9 @@ from tamr_client.attribute import type
 from tamr_client.attribute._attribute import (
     _from_json,
     AlreadyExists,
+    by_resource_id,
     create,
     delete,
-    from_resource_id,
     NotFound,
     ReservedName,
     to_json,

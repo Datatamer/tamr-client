@@ -28,7 +28,7 @@ def poll(session: Session, operation: Operation) -> Operation:
     Args:
         operation: Operation to be polled.
     """
-    return _from_url(session, operation.url)
+    return _by_url(session, operation.url)
 
 
 def wait(
@@ -68,9 +68,7 @@ def succeeded(operation: Operation) -> bool:
     return operation.status is not None and operation.status["state"] == "SUCCEEDED"
 
 
-def from_resource_id(
-    session: Session, instance: Instance, resource_id: str
-) -> Operation:
+def by_resource_id(session: Session, instance: Instance, resource_id: str) -> Operation:
     """Get operation by ID
 
     Args:
@@ -121,7 +119,7 @@ def _from_response(instance: Instance, response: requests.Response) -> Operation
     return _from_json(_url, resource_json)
 
 
-def _from_url(session: Session, url: URL) -> Operation:
+def _by_url(session: Session, url: URL) -> Operation:
     """Get operation by URL
 
     Fetches operation from Tamr server
