@@ -3,14 +3,12 @@ from typing import Optional
 from tamr_client import project
 from tamr_client._types import (
     CategorizationProject,
-    Dataset,
     Instance,
     JsonDict,
     Project,
     Session,
     URL,
 )
-from tamr_client.dataset import _dataset, unified
 
 
 def _from_json(url: URL, data: JsonDict) -> CategorizationProject:
@@ -57,24 +55,4 @@ def create(
         description=description,
         external_id=external_id,
         unified_dataset_name=unified_dataset_name,
-    )
-
-
-def manual_labels(session: Session, project: CategorizationProject) -> Dataset:
-    """Get manual labels from a Categorization project.
-
-    Args:
-        project: Tamr project containing labels
-
-    Returns:
-        Dataset containing manual labels
-
-    Raises:
-        dataset.NotFound: If no dataset could be found at the specified URL
-        dataset.Ambiguous: If multiple targets match dataset name
-    """
-    unified_dataset = unified.from_project(session=session, project=project)
-    labels_dataset_name = unified_dataset.name + "_manual_categorizations"
-    return _dataset.by_name(
-        session=session, instance=project.url.instance, name=labels_dataset_name
     )

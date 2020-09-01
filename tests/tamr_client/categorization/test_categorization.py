@@ -3,6 +3,14 @@ from tests.tamr_client import fake
 
 
 @fake.json
+def test_manual_labels():
+    s = fake.session()
+    project = fake.categorization_project()
+
+    tc.categorization.manual_labels(session=s, project=project)
+
+
+@fake.json
 def test_apply_feedback_async():
     s = fake.session()
     project = fake.categorization_project()

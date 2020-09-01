@@ -8,8 +8,28 @@ Asynchronous versions of each function can be found with the suffix `_async` and
 interest to power users
 """
 from tamr_client import operation
-from tamr_client._types import CategorizationProject, Operation, Session
-from tamr_client.dataset import unified
+from tamr_client._types import CategorizationProject, Dataset, Operation, Session
+from tamr_client.dataset import _dataset, unified
+
+
+def manual_labels(session: Session, project: CategorizationProject) -> Dataset:
+    """Get manual labels from a Categorization project.
+
+    Args:
+        project: Tamr project containing labels
+
+    Returns:
+        Dataset containing manual labels
+
+    Raises:
+        dataset.NotFound: If no dataset could be found at the specified URL
+        dataset.Ambiguous: If multiple targets match dataset name
+    """
+    unified_dataset = unified.from_project(session=session, project=project)
+    labels_dataset_name = unified_dataset.name + "_manual_categorizations"
+    return _dataset.by_name(
+        session=session, instance=project.url.instance, name=labels_dataset_name
+    )
 
 
 def update_unified_dataset(

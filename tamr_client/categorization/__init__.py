@@ -8,6 +8,7 @@ from tamr_client.categorization._categorization import (
     _update_results_async,
     _update_unified_dataset_async,
     apply_feedback,
+    manual_labels,
     update_results,
     update_unified_dataset,
 )
