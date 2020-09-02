@@ -213,3 +213,44 @@ def get_all(
         dataset = _from_json(dataset_url, dataset_json)
         datasets.append(dataset)
     return tuple(datasets)
+
+
+def create(
+    session: Session,
+    instance: Instance,
+    *,
+    name: str,
+    key_attribute_names: Tuple[str, ...],
+    description: Optional[str] = None,
+    external_id: Optional[str] = None,
+) -> Dataset:
+    """Create a dataset in Tamr.
+
+    Args:
+        instance: Tamr instance
+        name: Dataset name
+        key_attribute_names: Dataset primary key attribute names
+        description: Dataset description
+        external_id: External ID of the dataset
+
+    Returns:
+        Dataset created in Tamr
+
+    Raises:
+        requests.HTTPError: If any other HTTP error is encountered.
+    """
+    data = {
+        "name": name,
+        "keyAttributeNames": key_attribute_names,
+        "description": description,
+        "externalId": external_id,
+    }
+
+    dataset_url = URL(instance=instance, path="datasets")
+    r = session.post(url=str(dataset_url), json=data)
+
+    data = response.successful(r).json()
+    dataset_path = data["relativeId"]
+    dataset_url = URL(instance=instance, path=str(dataset_path))
+
+    return _by_url(session=session, url=dataset_url)

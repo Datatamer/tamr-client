@@ -9,6 +9,7 @@ Dataset
 .. autofunction:: tamr_client.dataset.materialize
 .. autofunction:: tamr_client.dataset.delete
 .. autofunction:: tamr_client.dataset.get_all
+.. autofunction:: tamr_client.dataset.create
 
 Exceptions
 ----------

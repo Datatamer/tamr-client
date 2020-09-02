@@ -162,3 +162,20 @@ def test_get_all_filter_list():
     assert dataset.name == "dataset 2 name"
     assert dataset.description == "dataset 2 description"
     assert dataset.key_attribute_names == ("tamr_id",)
+
+
+@fake.json
+def test_create():
+    s = fake.session()
+    instance = fake.instance()
+
+    dataset = tc.dataset.create(
+        s,
+        instance,
+        name="new dataset",
+        key_attribute_names=("primary_key",),
+        description="a new dataset",
+    )
+    assert dataset.name == "new dataset"
+    assert dataset.description == "a new dataset"
+    assert dataset.key_attribute_names == ("primary_key",)
