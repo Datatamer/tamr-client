@@ -13,6 +13,9 @@
   - [#445](https://github.com/Datatamer/tamr-client/pull/445) Added functions for getting projects and datasets by name via `tc.project.by_name` and `tc.dataset.by_name`
     - Renamed functions `from_resource_id` to `by_resource_id` in `tc.attribute`, `tc.dataset`, `tc.operation`, and `tc.project`
   - [#446](https://github.com/Datatamer/tamr-client/pull/446) Added functions for categorization workflow operations in `tc.categorization` and schema mapping workflow operations in `tc.schema_mapping`
+  - [#452](https://github.com/Datatamer/tamr-client/pull/452) Added functions for creating and deleting a dataset via `tc.dataset.create` and `tc.dataset.delete`
+    - Added function for deleting all records in a dataset via `tc.record.delete_all`
+    - Added functions for getting all datasets and projects in a Tamr instance via `get_all` functions in `tc.dataset` and `tc.project`
   
   **NEW FEATURES**
   - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id
