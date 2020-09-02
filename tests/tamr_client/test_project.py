@@ -61,3 +61,54 @@ def test_by_name_project_ambiguous():
 
     with pytest.raises(tc.project.Ambiguous):
         tc.project.by_name(s, instance, "ambiguous project")
+
+
+@fake.json
+def test_get_all():
+    s = fake.session()
+    instance = fake.instance()
+
+    all_projects = tc.project.get_all(s, instance)
+    assert len(all_projects) == 2
+
+    project_1 = all_projects[0]
+    assert isinstance(project_1, tc.MasteringProject)
+    assert project_1.name == "project 1"
+    assert project_1.description == "Mastering Project"
+
+    project_2 = all_projects[1]
+    assert isinstance(project_2, tc.CategorizationProject)
+    assert project_2.name == "project 2"
+    assert project_2.description == "Categorization Project"
+
+
+@fake.json
+def test_get_all_filter():
+    s = fake.session()
+    instance = fake.instance()
+
+    all_projects = tc.project.get_all(
+        s, instance, filter="description==Categorization Project"
+    )
+    assert len(all_projects) == 1
+
+    project = all_projects[0]
+    assert isinstance(project, tc.CategorizationProject)
+    assert project.name == "project 2"
+    assert project.description == "Categorization Project"
+
+
+@fake.json
+def test_get_all_filter_list():
+    s = fake.session()
+    instance = fake.instance()
+
+    all_projects = tc.project.get_all(
+        s, instance, filter=["description==Categorization Project", "name==project 2"]
+    )
+    assert len(all_projects) == 1
+
+    project = all_projects[0]
+    assert isinstance(project, tc.CategorizationProject)
+    assert project.name == "project 2"
+    assert project.description == "Categorization Project"

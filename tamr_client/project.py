@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional, Tuple, Union
 
 from tamr_client import response
 from tamr_client._types import Instance, JsonDict, Project, Session, URL
@@ -157,3 +157,39 @@ def _create(
     project_url = URL(instance=instance, path=str(project_path))
 
     return _by_url(session=session, url=project_url)
+
+
+def get_all(
+    session: Session,
+    instance: Instance,
+    *,
+    filter: Optional[Union[str, List[str]]] = None,
+) -> Tuple[Project, ...]:
+    """Get all projects from an instance
+
+    Args:
+        instance: Tamr instance from which to get projects
+        filter: Filter expression, e.g. "externalId==wobbly"
+            Multiple expressions can be passed as a list
+
+    Returns:
+        The projects retrieved from the instance
+
+    Raises:
+        requests.HTTPError: If an HTTP error is encountered.
+    """
+    url = URL(instance=instance, path="projects")
+
+    if filter is not None:
+        r = session.get(str(url), params={"filter": filter})
+    else:
+        r = session.get(str(url))
+
+    projects_json = response.successful(r).json()
+
+    projects = []
+    for project_json in projects_json:
+        project_url = URL(instance=instance, path=project_json["relativeId"])
+        project = _from_json(project_url, project_json)
+        projects.append(project)
+    return tuple(projects)

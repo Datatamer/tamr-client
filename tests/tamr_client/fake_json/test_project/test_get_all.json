@@ -1,0 +1,51 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "path": "projects"
+        },
+        "response": {
+            "status": 200,
+            "json": [
+                {
+                    "id": "unify://unified-data/v1/projects/1",
+                    "name": "project 1",
+                    "description": "Mastering Project",
+                    "type": "DEDUP",
+                    "unifiedDatasetName": "project_1_unified_dataset",
+                    "created": {
+                        "username": "admin",
+                        "time": "2020-04-03T14:14:18.752Z",
+                        "version": "18"
+                    },
+                    "lastModified": {
+                        "username": "admin",
+                        "time": "2020-04-03T14:14:20.115Z",
+                        "version": "19"
+                    },
+                    "relativeId": "projects/1",
+                    "externalId": "58bdbe72-3c08-427d-97bd-45b16d92c79c"
+                },
+                {
+                    "id": "unify://unified-data/v1/projects/2",
+                    "name": "project 2",
+                    "description": "Categorization Project",
+                    "type": "CATEGORIZATION",
+                    "unifiedDatasetName": "project_2_unified_dataset",
+                    "created": {
+                        "username": "admin",
+                        "time": "2020-08-04T14:54:11.767Z",
+                        "version": "20"
+                    },
+                    "lastModified": {
+                        "username": "admin",
+                        "time": "2020-08-04T14:54:11.767Z",
+                        "version": "21"
+                    },
+                    "relativeId": "projects/2",
+                    "externalId": "98f9e4ee-1a35-4242-917d-1163363d5411"
+                }
+            ]
+        }
+    }
+]
