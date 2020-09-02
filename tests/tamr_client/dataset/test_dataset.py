@@ -109,3 +109,56 @@ def test_delete_dataset_not_found():
 
     with pytest.raises(tc.dataset.NotFound):
         tc.dataset.delete(s, dataset)
+
+
+@fake.json
+def test_get_all():
+    s = fake.session()
+    instance = fake.instance()
+
+    all_datasets = tc.dataset.get_all(s, instance)
+    assert len(all_datasets) == 2
+
+    dataset_1 = all_datasets[0]
+    assert dataset_1.name == "dataset 1 name"
+    assert dataset_1.description == "dataset 1 description"
+    assert dataset_1.key_attribute_names == ("tamr_id",)
+
+    dataset_2 = all_datasets[1]
+    assert dataset_2.name == "dataset 2 name"
+    assert dataset_2.description == "dataset 2 description"
+    assert dataset_2.key_attribute_names == ("tamr_id",)
+
+
+@fake.json
+def test_get_all_filter():
+    s = fake.session()
+    instance = fake.instance()
+
+    all_datasets = tc.dataset.get_all(
+        s, instance, filter="description==dataset 2 description"
+    )
+    assert len(all_datasets) == 1
+
+    dataset = all_datasets[0]
+    assert dataset.name == "dataset 2 name"
+    assert dataset.description == "dataset 2 description"
+    assert dataset.key_attribute_names == ("tamr_id",)
+
+
+@fake.json
+def test_get_all_filter_list():
+    s = fake.session()
+    instance = fake.instance()
+
+    all_datasets = tc.dataset.get_all(
+        s,
+        instance,
+        filter=["description==dataset 2 description", "version==dataset 2 version"],
+    )
+    assert len(all_datasets) == 1
+
+    dataset = all_datasets[0]
+    assert dataset.name == "dataset 2 name"
+    assert dataset.description == "dataset 2 description"
+    assert dataset.key_attribute_names == ("tamr_id",)

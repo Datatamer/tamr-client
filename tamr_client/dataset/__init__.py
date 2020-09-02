@@ -6,6 +6,7 @@ from tamr_client.dataset._dataset import (
     by_name,
     by_resource_id,
     delete,
+    get_all,
     materialize,
     NotFound,
 )

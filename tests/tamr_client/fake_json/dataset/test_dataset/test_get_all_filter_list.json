@@ -1,0 +1,36 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets?filter=description==dataset%202%20description&?filter=version==dataset%202%20version"
+        },
+        "response": {
+            "status": 200,
+            "json": [
+                {
+                    "id": "unify://unified-data/v1/datasets/2",
+                    "externalId": "number 2",
+                    "name": "dataset 2 name",
+                    "description": "dataset 2 description",
+                    "version": "dataset 2 version",
+                    "keyAttributeNames": [
+                        "tamr_id"
+                    ],
+                    "tags": [],
+                    "created": {
+                        "username": "admin",
+                        "time": "2018-09-10T16:06:20.636Z",
+                        "version": "dataset 2 created version"
+                    },
+                    "lastModified": {
+                        "username": "admin",
+                        "time": "2018-09-10T16:06:20.851Z",
+                        "version": "dataset 2 modified version"
+                    },
+                    "relativeId": "datasets/2",
+                    "upstreamDatasetIds": []
+                }
+            ]
+        }
+    }
+]

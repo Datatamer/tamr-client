@@ -3,7 +3,7 @@ See https://docs.tamr.com/reference/dataset-models
 """
 from copy import deepcopy
 from dataclasses import replace
-from typing import Tuple
+from typing import List, Optional, Tuple, Union
 
 from tamr_client import operation, response
 from tamr_client._types import (
@@ -173,7 +173,43 @@ def delete(session: Session, dataset: Dataset, *, cascade: bool = False):
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
-    r = session.delete(str(dataset.url), params={"cascade": cascade},)
+    r = session.delete(str(dataset.url), params={"cascade": cascade})
     if r.status_code == 404:
         raise NotFound(str(dataset.url))
     response.successful(r)
+
+
+def get_all(
+    session: Session,
+    instance: Instance,
+    *,
+    filter: Optional[Union[str, List[str]]] = None,
+) -> Tuple[Dataset, ...]:
+    """Get all datasets from an instance
+
+    Args:
+        instance: Tamr instance from which to get datasets
+        filter: Filter expression, e.g. "externalId==wobbly"
+            Multiple expressions can be passed as a list
+
+    Returns:
+        The datasets retrieved from the instance
+
+    Raises:
+        requests.HTTPError: If an HTTP error is encountered.
+    """
+    url = URL(instance=instance, path="datasets")
+
+    if filter is not None:
+        r = session.get(str(url), params={"filter": filter})
+    else:
+        r = session.get(str(url))
+
+    datasets_json = response.successful(r).json()
+
+    datasets = []
+    for dataset_json in datasets_json:
+        dataset_url = URL(instance=instance, path=dataset_json["relativeId"])
+        dataset = _from_json(dataset_url, dataset_json)
+        datasets.append(dataset)
+    return tuple(datasets)
