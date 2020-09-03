@@ -1,3 +1,5 @@
+import pytest
+
 import tamr_client as tc
 from tests.tamr_client import utils
 
@@ -27,6 +29,41 @@ def test_from_json():
                 )
             )
             assert subattr.is_nullable
+
+
+def test_from_json_missing_base_type():
+    type_json: tc._types.JsonDict = {"attributes": []}
+
+    with pytest.raises(ValueError):
+        tc.attribute.type.from_json(type_json)
+
+
+def test_from_json_unrecognized_base_type():
+    type_json: tc._types.JsonDict = {"baseType": "NOT_A_TYPE", "attributes": []}
+
+    with pytest.raises(ValueError):
+        tc.attribute.type.from_json(type_json)
+
+
+def test_from_json_array_missing_inner_type():
+    type_json: tc._types.JsonDict = {"baseType": "ARRAY"}
+
+    with pytest.raises(ValueError):
+        tc.attribute.type.from_json(type_json)
+
+
+def test_from_json_map_missing_inner_type():
+    type_json: tc._types.JsonDict = {"baseType": "MAP"}
+
+    with pytest.raises(ValueError):
+        tc.attribute.type.from_json(type_json)
+
+
+def test_from_json_record_missing_attributes():
+    type_json: tc._types.JsonDict = {"baseType": "RECORD"}
+
+    with pytest.raises(ValueError):
+        tc.attribute.type.from_json(type_json)
 
 
 def test_json():
