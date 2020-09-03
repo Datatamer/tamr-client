@@ -87,6 +87,14 @@ def test_stream():
     assert list(records) == _records_json
 
 
+@fake.json
+def test_delete_all():
+    s = fake.session()
+    dataset = fake.dataset()
+
+    tc.record.delete_all(s, dataset)
+
+
 _records_json = [{"primary_key": 1}, {"primary_key": 2}]
 
 _response_json = {

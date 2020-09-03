@@ -1,0 +1,74 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "datasets",
+            "json": {
+                "name": "new dataset",
+                "keyAttributeNames": [
+                    "primary_key"
+                ],
+                "description": "a new dataset",
+                "externalId": null
+            }
+        },
+        "response": {
+            "status": 201,
+            "json": {
+                "id": "unify://unified-data/v1/datasets/1",
+                "externalId": "number 1",
+                "name": "new dataset",
+                "description": "a new dataset",
+                "version": "dataset version",
+                "keyAttributeNames": [
+                    "primary_key"
+                ],
+                "tags": [],
+                "created": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.636Z",
+                    "version": "dataset 1 created version"
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.851Z",
+                    "version": "dataset 1 modified version"
+                },
+                "relativeId": "datasets/1",
+                "upstreamDatasetIds": []
+            }
+        }
+    },
+        {
+        "request": {
+            "method": "GET",
+            "path": "datasets/1"
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "id": "unify://unified-data/v1/datasets/1",
+                "externalId": "number 1",
+                "name": "new dataset",
+                "description": "a new dataset",
+                "version": "dataset version",
+                "keyAttributeNames": [
+                    "primary_key"
+                ],
+                "tags": [],
+                "created": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.636Z",
+                    "version": "dataset 1 created version"
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.851Z",
+                    "version": "dataset 1 modified version"
+                },
+                "relativeId": "datasets/1",
+                "upstreamDatasetIds": []
+            }
+        }
+    }
+]

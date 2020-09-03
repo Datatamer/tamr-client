@@ -3,6 +3,7 @@ Project
 
 .. autofunction:: tamr_client.project.by_resource_id
 .. autofunction:: tamr_client.project.by_name
+.. autofunction:: tamr_client.project.get_all
 
 Exceptions
 ----------

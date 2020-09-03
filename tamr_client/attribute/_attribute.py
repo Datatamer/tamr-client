@@ -149,8 +149,8 @@ def create(
         The newly created attribute
 
     Raises:
-        ReservedName: If attribute name is reserved.
-        AlreadyExists: If an attribute already exists at the specified URL.
+        attribute.ReservedName: If attribute name is reserved.
+        attribute.AlreadyExists: If an attribute already exists at the specified URL.
             Corresponds to a 409 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """

@@ -44,7 +44,7 @@ def create(
         Project created in Tamr
 
     Raises:
-        attribute.AlreadyExists: If a project with these specifications already exists
+        project.AlreadyExists: If a project with these specifications already exists
         requests.HTTPError: If any other HTTP error is encountered
     """
     return project._create(

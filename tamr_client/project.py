@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional, Tuple, Union
 
 from tamr_client import response
 from tamr_client._types import Instance, JsonDict, Project, Session, URL
@@ -82,7 +82,7 @@ def _by_url(session: Session, url: URL) -> Project:
         url: Project URL
 
     Raises:
-        NotFound: If no project could be found at the specified URL.
+        project.NotFound: If no project could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
@@ -133,7 +133,7 @@ def _create(
         Project created in Tamr
 
     Raises:
-        AlreadyExists: If a project with these specifications already exists.
+        project.AlreadyExists: If a project with these specifications already exists.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     if not unified_dataset_name:
@@ -157,3 +157,39 @@ def _create(
     project_url = URL(instance=instance, path=str(project_path))
 
     return _by_url(session=session, url=project_url)
+
+
+def get_all(
+    session: Session,
+    instance: Instance,
+    *,
+    filter: Optional[Union[str, List[str]]] = None,
+) -> Tuple[Project, ...]:
+    """Get all projects from an instance
+
+    Args:
+        instance: Tamr instance from which to get projects
+        filter: Filter expression, e.g. "externalId==wobbly"
+            Multiple expressions can be passed as a list
+
+    Returns:
+        The projects retrieved from the instance
+
+    Raises:
+        requests.HTTPError: If an HTTP error is encountered.
+    """
+    url = URL(instance=instance, path="projects")
+
+    if filter is not None:
+        r = session.get(str(url), params={"filter": filter})
+    else:
+        r = session.get(str(url))
+
+    projects_json = response.successful(r).json()
+
+    projects = []
+    for project_json in projects_json:
+        project_url = URL(instance=instance, path=project_json["relativeId"])
+        project = _from_json(project_url, project_json)
+        projects.append(project)
+    return tuple(projects)
