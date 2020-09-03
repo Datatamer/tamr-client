@@ -112,3 +112,26 @@ def test_get_all_filter_list():
     assert isinstance(project, tc.CategorizationProject)
     assert project.name == "project 2"
     assert project.description == "Categorization Project"
+
+
+@fake.json
+def test_create_project_already_exists():
+    s = fake.session()
+    instance = fake.instance()
+
+    with pytest.raises(tc.project.AlreadyExists):
+        tc.project._create(
+            s,
+            instance,
+            name="New Mastering Project",
+            project_type="DEDUP",
+            description="A Mastering Project",
+        )
+
+
+def test_from_json_unrecognized_project_type():
+    instance = fake.instance()
+    url = tc.URL("project/1", instance)
+    data: tc._types.JsonDict = {"type": "NOT_A_PROJECT_TYPE"}
+    with pytest.raises(ValueError):
+        tc.project._from_json(url, data)

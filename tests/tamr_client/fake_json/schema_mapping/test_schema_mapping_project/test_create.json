@@ -1,0 +1,65 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "projects",
+            "json": {
+                "name": "New Schema Mapping Project",
+                "type": "SCHEMA_MAPPING_RECOMMENDATIONS",
+                "unifiedDatasetName": "New Schema Mapping Project_unified_dataset",
+                "description": "A Schema Mapping Project",
+                "externalId": null
+            }
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "id": "unify://unified-data/v1/projects/3",
+                "name": "New Schema Mapping Project",
+                "description": "A Schema Mapping Project",
+                "type": "SCHEMA_MAPPING_RECOMMENDATIONS",
+                "unifiedDatasetName": "New Schema Mapping Project_unified_dataset",
+                "created": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.636Z",
+                    "version": "created version"
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.851Z",
+                    "version": "modified version"
+                },
+                "relativeId": "projects/3",
+                "externalId": "b129f3b1-82f5-4e30-90a3-e562ca977992"
+            }
+        }
+    },
+        {
+        "request": {
+            "method": "GET",
+            "path": "projects/3"
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "id": "unify://unified-data/v1/projects/3",
+                "name": "New Schema Mapping Project",
+                "description": "A Schema Mapping Project",
+                "type": "SCHEMA_MAPPING_RECOMMENDATIONS",
+                "unifiedDatasetName": "New Schema Mapping Project_unified_dataset",
+                "created": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.636Z",
+                    "version": "created version"
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.851Z",
+                    "version": "modified version"
+                },
+                "relativeId": "projects/3",
+                "externalId": "b129f3b1-82f5-4e30-90a3-e562ca977992"
+            }
+        }
+    }
+]
