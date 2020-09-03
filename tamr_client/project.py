@@ -82,7 +82,7 @@ def _by_url(session: Session, url: URL) -> Project:
         url: Project URL
 
     Raises:
-        NotFound: If no project could be found at the specified URL.
+        project.NotFound: If no project could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
@@ -133,7 +133,7 @@ def _create(
         Project created in Tamr
 
     Raises:
-        AlreadyExists: If a project with these specifications already exists.
+        project.AlreadyExists: If a project with these specifications already exists.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     if not unified_dataset_name:

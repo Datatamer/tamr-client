@@ -179,3 +179,18 @@ def test_create():
     assert dataset.name == "new dataset"
     assert dataset.description == "a new dataset"
     assert dataset.key_attribute_names == ("primary_key",)
+
+
+@fake.json
+def test_create_dataset_already_exists():
+    s = fake.session()
+    instance = fake.instance()
+
+    with pytest.raises(tc.dataset.AlreadyExists):
+        tc.dataset.create(
+            s,
+            instance,
+            name="new dataset",
+            key_attribute_names=("primary_key",),
+            description="a new dataset",
+        )

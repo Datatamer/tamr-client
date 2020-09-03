@@ -128,7 +128,7 @@ def _by_url(session: Session, url: URL) -> Operation:
         url: Operation URL
 
     Raises:
-        OperationNotFound: If no operation could be found at the specified URL.
+        operation.NotFound: If no operation could be found at the specified URL.
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """

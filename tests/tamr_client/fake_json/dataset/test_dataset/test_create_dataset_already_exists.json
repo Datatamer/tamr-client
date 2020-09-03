@@ -1,0 +1,22 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "datasets",
+            "json": {
+                "name": "new dataset",
+                "keyAttributeNames": [
+                    "primary_key"
+                ],
+                "description": "a new dataset",
+                "externalId": null
+            }
+        },
+        "response": {
+            "status": 400,
+            "json": {
+                "message": "Dataset \"new dataset\" already exists"
+            }
+        }
+    }
+]

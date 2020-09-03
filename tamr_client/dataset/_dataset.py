@@ -33,6 +33,12 @@ class Ambiguous(TamrClientException):
     pass
 
 
+class AlreadyExists(TamrClientException):
+    """Raised when a dataset with these specifications already exists."""
+
+    pass
+
+
 def by_resource_id(session: Session, instance: Instance, id: str) -> Dataset:
     """Get dataset by resource ID
 
@@ -237,6 +243,7 @@ def create(
         Dataset created in Tamr
 
     Raises:
+        dataset.AlreadyExists: If a dataset with these specifications already exists.
         requests.HTTPError: If any other HTTP error is encountered.
     """
     data = {
@@ -248,6 +255,9 @@ def create(
 
     dataset_url = URL(instance=instance, path="datasets")
     r = session.post(url=str(dataset_url), json=data)
+
+    if r.status_code == 400 and "already exists" in r.json()["message"]:
+        raise AlreadyExists(r.json()["message"])
 
     data = response.successful(r).json()
     dataset_path = data["relativeId"]

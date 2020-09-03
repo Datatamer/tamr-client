@@ -19,3 +19,6 @@ Exceptions
 
 .. autoclass:: tamr_client.dataset.Ambiguous
   :no-inherited-members:
+
+.. autoclass:: tamr_client.dataset.AlreadyExists
+  :no-inherited-members:
