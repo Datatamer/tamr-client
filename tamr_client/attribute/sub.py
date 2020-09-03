@@ -34,6 +34,4 @@ def to_json(subattr: SubAttribute) -> JsonDict:
         "type": attribute_type.to_json(subattr.type),
         "isNullable": subattr.is_nullable,
     }
-    if subattr.description is not None:
-        d["description"] = subattr.description
     return d

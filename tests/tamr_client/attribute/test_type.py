@@ -13,14 +13,12 @@ def test_from_json():
             assert subattr.name == "point"
             assert subattr.type == tc.attribute.type.Array(tc.attribute.type.DOUBLE)
             assert subattr.is_nullable
-            assert subattr.description is None
         elif i == 1:
             assert subattr.name == "lineString"
             assert subattr.type == tc.attribute.type.Array(
                 tc.attribute.type.Array(tc.attribute.type.DOUBLE)
             )
             assert subattr.is_nullable
-            assert subattr.description is None
         elif i == 2:
             assert subattr.name == "polygon"
             assert subattr.type == tc.attribute.type.Array(
@@ -29,7 +27,6 @@ def test_from_json():
                 )
             )
             assert subattr.is_nullable
-            assert subattr.description is None
 
 
 def test_json():
