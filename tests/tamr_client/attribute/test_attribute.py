@@ -49,12 +49,14 @@ def test_create():
         name="attr",
         is_nullable=False,
         type=tc.attribute.type.Record(attributes=attrs),
+        description="an attribute",
     )
 
     assert attr.name == "attr"
     assert not attr.is_nullable
     assert isinstance(attr.type, tc.attribute.type.Record)
     assert attr.type.attributes == attrs
+    assert attr.description == "an attribute"
 
 
 @fake.json

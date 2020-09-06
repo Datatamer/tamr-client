@@ -1,0 +1,21 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "projects",
+            "json": {
+                "name": "New Mastering Project",
+                "type": "DEDUP",
+                "unifiedDatasetName": "New Mastering Project_unified_dataset",
+                "description": "A Mastering Project",
+                "externalId": null
+            }
+        },
+        "response": {
+            "status": 409,
+            "json": {
+                "message": "Can't create project with the requested name 'New Mastering Project' because a project with that name already exists"
+            }
+        }
+    }
+]

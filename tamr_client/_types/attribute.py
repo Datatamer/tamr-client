@@ -35,7 +35,6 @@ class SubAttribute:
 
     Args:
         name: Name of sub-attribute
-        description: Description of sub-attribute
         type: See https://docs.tamr.com/reference#attribute-types
         is_nullable: If this sub-attribute can be null
     """
@@ -43,7 +42,6 @@ class SubAttribute:
     name: str
     type: "AttributeType"
     is_nullable: bool
-    description: Optional[str] = None
 
 
 # attribute types
