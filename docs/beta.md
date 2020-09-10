@@ -3,6 +3,9 @@
   **WARNING**: Do not rely on BETA features in production workflows.
   Support from Tamr may be limited.
 
+## Tutorials
+  * [Get Tamr version](beta/tutorial/get_version)
+
 ## Reference
 
   * [Attribute](beta/attribute)

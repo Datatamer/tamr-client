@@ -16,6 +16,8 @@
   - [#452](https://github.com/Datatamer/tamr-client/pull/452) Added functions for creating and deleting a dataset via `tc.dataset.create` and `tc.dataset.delete`
     - Added function for deleting all records in a dataset via `tc.record.delete_all`
     - Added functions for getting all datasets and projects in a Tamr instance via `get_all` functions in `tc.dataset` and `tc.project`
+  - [#454](https://github.com/Datatamer/tamr-client/pull/454) Added first `tamr_client` tutorial "Get Tamr version"
+  
   
   **NEW FEATURES**
   - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id
