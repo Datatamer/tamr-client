@@ -14,4 +14,4 @@ port = 9100
 
 instance = tc.Instance(protocol=protocol, host=host, port=port)
 
-print(tc.version(session, instance))
+print(tc.instance.version(session, instance))

@@ -26,7 +26,7 @@ A `Session` carries authentication credentials derived from a username and passw
  - Use your username and password to create an instance of `tamr_client.UsernamePasswordAuth`.
  - Use the function `tamr_client.session.from.auth` to create a `Session`.
 ```eval_rst
-.. literalinclude:: ../../../tamr_client/examples/get_tamr_version.py
+.. literalinclude:: ../../../examples/get_tamr_version.py
     :language: python
     :lines: 1-9
 ```
@@ -35,17 +35,17 @@ An `Instance` models the installation or instance of Tamr with which a user inte
 
 - Create an `Instance` using the `protocol`, `host`, and `port` of your Tamr instance.
 ```eval_rst
-.. literalinclude:: ../../../tamr_client/examples/get_tamr_version.py
+.. literalinclude:: ../../../examples/get_tamr_version.py
     :language: python
     :lines: 11-15
 ```
 ### Getting the version of Tamr
 With the `Session` and `Instance` defined, you can now interact with the API of the Tamr instance.  One simple example is fetching the version of the Tamr software running on the server.
 
-- Use the function `tc.version` and print the returned value.
+- Use the function `tc.instance.version` and print the returned value.
 
 ```eval_rst
-.. literalinclude:: ../../../tamr_client/examples/get_tamr_version.py
+.. literalinclude:: ../../../examples/get_tamr_version.py
     :language: python
     :lines: 17
 ```
@@ -53,7 +53,7 @@ With the `Session` and `Instance` defined, you can now interact with the API of 
 All of the above steps can be combined into the following script `get_tamr_version.py`:
 
 ```eval_rst
-.. literalinclude:: ../../../tamr_client/examples/get_tamr_version.py
+.. literalinclude:: ../../../examples/get_tamr_version.py
     :language: python
 ```
 To run the script via command line:

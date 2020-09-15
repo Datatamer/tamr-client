@@ -36,6 +36,9 @@ def typecheck(session):
     tc = repo / "tamr_client"
     session.run("mypy", "--package", str(tc))
 
+    tc_examples = [str(x) for x in (repo / "examples").glob("**/*.py")]
+    session.run("mypy", *tc_examples)
+
     tc_tests = [str(x) for x in (repo / "tests" / "tamr_client").glob("**/*.py")]
     session.run("mypy", *tc_tests)
 
