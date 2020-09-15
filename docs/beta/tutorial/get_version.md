@@ -25,55 +25,36 @@ A `Session` carries authentication credentials derived from a username and passw
 
  - Use your username and password to create an instance of `tamr_client.UsernamePasswordAuth`.
  - Use the function `tamr_client.session.from.auth` to create a `Session`.
-```python
-from getpass import getpass
-import tamr_client as tc
-
-username = input("Tamr Username:")
-password = getpass("Tamr Password:")
-
-auth = tc.UsernamePasswordAuth(username, password)
-session = tc.session.from_auth(auth)
+```eval_rst
+.. literalinclude:: ../../../examples/get_tamr_version.py
+    :language: python
+    :lines: 1-9
 ```
 ### The Instance
 An `Instance` models the installation or instance of Tamr with which a user interacts via the Python client.
 
 - Create an `Instance` using the `protocol`, `host`, and `port` of your Tamr instance.
-```python
-protocol = "http"
-host = "localhost"
-port = 9100
-
-instance = tc.Instance(protocol=protocol, host=host, port=port)
+```eval_rst
+.. literalinclude:: ../../../examples/get_tamr_version.py
+    :language: python
+    :lines: 11-15
 ```
 ### Getting the version of Tamr
 With the `Session` and `Instance` defined, you can now interact with the API of the Tamr instance.  One simple example is fetching the version of the Tamr software running on the server.
 
-- Use the function `tc.version` and print the returned value.
+- Use the function `tc.instance.version` and print the returned value.
 
-```python
-print(tc.version(session, instance))
+```eval_rst
+.. literalinclude:: ../../../examples/get_tamr_version.py
+    :language: python
+    :lines: 17
 ```
 
 All of the above steps can be combined into the following script `get_tamr_version.py`:
 
-```python
-from getpass import getpass
-import tamr_client as tc
-
-username = input("Tamr Username:")
-password = getpass("Tamr Password:")
-
-auth = tc.UsernamePasswordAuth(username, password)
-session = tc.session.from_auth(auth)
-
-protocol = "http"
-host = "localhost"
-port = 9100
-
-instance = tc.Instance(protocol=protocol, host=host, port=port)
-
-print(tc.version(session, instance))
+```eval_rst
+.. literalinclude:: ../../../examples/get_tamr_version.py
+    :language: python
 ```
 To run the script via command line:
 ```bash
