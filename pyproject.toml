@@ -29,7 +29,6 @@ include = ["tamr_client/py.typed"]
 [tool.poetry.dependencies]
 python = "^3.6.1"
 requests = "^2.22"
-simplejson = "^3.16"
 dataclasses = "^0.6.0"
 
 [tool.poetry.dev-dependencies]

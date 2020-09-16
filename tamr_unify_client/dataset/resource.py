@@ -1,8 +1,7 @@
 from copy import deepcopy
+import json
 import os
 from typing import TYPE_CHECKING
-
-import simplejson as json
 
 from tamr_unify_client.attribute.collection import AttributeCollection
 from tamr_unify_client.base_resource import BaseResource
@@ -64,20 +63,18 @@ class Dataset(BaseResource):
         alias = self.api_path + "/attributes"
         return AttributeCollection(self.client, alias)
 
-    def _update_records(self, updates, **json_args):
+    def _update_records(self, updates):
         """Send a batch of record creations/updates/deletions to this dataset.
         You probably want to use :func:`~tamr_unify_client.dataset.resource.Dataset.upsert_records`
         or :func:`~tamr_unify_client.dataset.resource.Dataset.delete_records` instead.
 
         :param records: Each record should be formatted as specified in the `Public Docs for Dataset updates <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
         :type records: iterable[dict]
-        :param `**json_args`: Arguments to pass to the JSON `dumps` function, as documented `here <https://simplejson.readthedocs.io/en/latest/#simplejson.dumps>`_.
-            Some of these, such as `indent`, may not work with Tamr.
         :returns: JSON response body from server.
         :rtype: :py:class:`dict`
         """
         stringified_updates = (
-            json.dumps(update, **json_args).encode("utf-8") for update in updates
+            json.dumps(update, allow_nan=False).encode("utf-8") for update in updates
         )
 
         return (
@@ -91,14 +88,13 @@ class Dataset(BaseResource):
         )
 
     def upsert_from_dataframe(
-        self, df: "pd.DataFrame", *, primary_key_name: str, ignore_nan: bool = True
+        self, df: "pd.DataFrame", *, primary_key_name: str
     ) -> dict:
         """Upserts a record for each row of `df` with attributes for each column in `df`.
 
         Args:
             df: The data to upsert records from.
             primary_key_name: The name of the primary key of the dataset.  Must be a column of `df`.
-            ignore_nan: Whether to convert `NaN` values to `null` before upserting records to Tamr. If `False` and `NaN` is in `df`, this function will fail. Optional, default is `True`.
 
         Returns:
             JSON response body from the server.
@@ -110,18 +106,20 @@ class Dataset(BaseResource):
         if primary_key_name not in df.columns:
             raise KeyError(f"{primary_key_name} is not an attribute of the data")
 
-        records = df.to_dict(orient="records")
-        return self.upsert_records(records, primary_key_name, ignore_nan=ignore_nan)
+        # serialize records via to_json to handle `np.nan` values
+        serialized_records = ((pk, row.to_json()) for pk, row in df.iterrows())
+        records = (
+            {primary_key_name: pk, **json.loads(row)} for pk, row in serialized_records
+        )
+        return self.upsert_records(records, primary_key_name)
 
-    def upsert_records(self, records, primary_key_name, **json_args):
+    def upsert_records(self, records, primary_key_name):
         """Creates or updates the specified records.
 
         :param records: The records to update, as dictionaries.
         :type records: iterable[dict]
         :param primary_key_name: The name of the primary key for these records, which must be a key in each record dictionary.
         :type primary_key_name: str
-        :param `**json_args`: Arguments to pass to the JSON `dumps` function, as documented `here <https://simplejson.readthedocs.io/en/latest/#simplejson.dumps>`_.
-            Some of these, such as `indent`, may not work with Tamr.
         :return: JSON response body from the server.
         :rtype: dict
         """
@@ -129,7 +127,7 @@ class Dataset(BaseResource):
             {"action": "CREATE", "recordId": record[primary_key_name], "record": record}
             for record in records
         )
-        return self._update_records(updates, **json_args)
+        return self._update_records(updates)
 
     def delete_records(self, records, primary_key_name):
         """Deletes the specified records.

@@ -107,9 +107,7 @@ class DatasetCollection(BaseCollection):
         data = self.client.post(self.api_path, json=creation_spec).successful().json()
         return Dataset.from_json(self.client, data)
 
-    def create_from_dataframe(
-        self, df, primary_key_name, dataset_name, ignore_nan=True
-    ):
+    def create_from_dataframe(self, df, primary_key_name, dataset_name):
         """Creates a dataset in this collection with the given name, creates an attribute for each column in the `df`
         (with `primary_key_name` as the key attribute), and upserts a record for each row of `df`.
 
@@ -125,9 +123,6 @@ class DatasetCollection(BaseCollection):
         :type primary_key_name: str
         :param dataset_name: What to name the dataset in Tamr. There cannot already be a dataset with this name.
         :type dataset_name: str
-        :param ignore_nan: Whether to convert `NaN` values to `null` before upserting records to Tamr. If `False` and
-            `NaN` is in `df`, this function will fail. Optional, default is `True`.
-        :type ignore_nan: bool
         :returns: The newly created dataset.
         :rtype: :class:`~tamr_unify_client.dataset.resource.Dataset`
         :raises KeyError: If `primary_key_name` is not a column in `df`.
@@ -158,10 +153,9 @@ class DatasetCollection(BaseCollection):
             except HTTPError:
                 self._handle_creation_failure(dataset, "An attribute was not created")
 
-        records = df.to_dict(orient="records")
         try:
-            response = dataset.upsert_records(
-                records, primary_key_name, ignore_nan=ignore_nan
+            response = dataset.upsert_from_dataframe(
+                df, primary_key_name=primary_key_name
             )
         except HTTPError:
             self._handle_creation_failure(dataset, "Records could not be created")
