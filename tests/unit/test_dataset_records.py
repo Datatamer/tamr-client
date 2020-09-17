@@ -58,16 +58,20 @@ class TestDatasetRecords(TestCase):
         dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
 
         records_url = f"{self._dataset_url}:updateRecords"
-        updates = TestDatasetRecords.records_to_updates(self._nan_records_json)
-
+        nan_updates = TestDatasetRecords.records_to_updates(self._nan_records_json)
+        null_updates = TestDatasetRecords.records_to_updates(self._null_records_json)
         snoop = {}
+
         responses.add_callback(
             responses.POST,
             records_url,
             partial(create_callback, snoop=snoop, status=200),
         )
 
-        self.assertRaises(ValueError, lambda: dataset._update_records(updates))
+        self.assertRaises(ValueError, lambda: dataset._update_records(nan_updates))
+        response = dataset._update_records(nan_updates, ignore_nan=True)
+        self.assertEqual(response, self._response_json)
+        self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(null_updates))
 
     @responses.activate
     def test_upsert(self):

@@ -1,5 +1,6 @@
 from copy import deepcopy
 import json
+from math import isnan
 import os
 from typing import TYPE_CHECKING
 
@@ -63,18 +64,39 @@ class Dataset(BaseResource):
         alias = self.api_path + "/attributes"
         return AttributeCollection(self.client, alias)
 
-    def _update_records(self, updates):
+    def _update_records(self, updates, ignore_nan=False):
         """Send a batch of record creations/updates/deletions to this dataset.
         You probably want to use :func:`~tamr_unify_client.dataset.resource.Dataset.upsert_records`
         or :func:`~tamr_unify_client.dataset.resource.Dataset.delete_records` instead.
 
         :param records: Each record should be formatted as specified in the `Public Docs for Dataset updates <https://docs.tamr.com/reference#modify-a-datasets-records>`_.
         :type records: iterable[dict]
+        :param ignore_nan: Whether to treat `NaN` values as null.  Unconverted `NaN`s will raise an error if found.
+        :type ignore_nan: bool
         :returns: JSON response body from server.
         :rtype: :py:class:`dict`
         """
+
+        def dumps(update, ignore_nan):
+            """Optionally handle `NaN`s in JSON-serialization of records to be upserted
+            Convert `Nan` to `None` when found at the top-level if `ignore_nan`=True
+            """
+            try:
+                return json.dumps(update, allow_nan=False)
+            except ValueError as err:
+                if not ignore_nan:
+                    raise err
+                else:
+                    clean_record = {
+                        k: (None if isinstance(v, float) and isnan(v) else v)
+                        for k, v in update["record"].items()
+                    }
+                    return json.dumps(
+                        {**update, "record": clean_record}, allow_nan=False
+                    )
+
         stringified_updates = (
-            json.dumps(update, allow_nan=False).encode("utf-8") for update in updates
+            dumps(update, ignore_nan=ignore_nan).encode("utf-8") for update in updates
         )
 
         return (
@@ -113,13 +135,15 @@ class Dataset(BaseResource):
         )
         return self.upsert_records(records, primary_key_name)
 
-    def upsert_records(self, records, primary_key_name):
+    def upsert_records(self, records, primary_key_name, ignore_nan=False):
         """Creates or updates the specified records.
 
         :param records: The records to update, as dictionaries.
         :type records: iterable[dict]
         :param primary_key_name: The name of the primary key for these records, which must be a key in each record dictionary.
         :type primary_key_name: str
+        :param ignore_nan: Whether to convert `NaN` values to `null` when upserting records.  If `False` and `NaN` is found this function will fail.
+        :type ignore_nan: bool
         :return: JSON response body from the server.
         :rtype: dict
         """
@@ -127,7 +151,7 @@ class Dataset(BaseResource):
             {"action": "CREATE", "recordId": record[primary_key_name], "record": record}
             for record in records
         )
-        return self._update_records(updates)
+        return self._update_records(updates, ignore_nan=ignore_nan)
 
     def delete_records(self, records, primary_key_name):
         """Deletes the specified records.
