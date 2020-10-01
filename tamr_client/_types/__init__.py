@@ -22,6 +22,7 @@ from tamr_client._types.json import JsonDict
 from tamr_client._types.operation import Operation
 from tamr_client._types.project import (
     CategorizationProject,
+    GoldenRecordsProject,
     MasteringProject,
     Project,
     SchemaMappingProject,

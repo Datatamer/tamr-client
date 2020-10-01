@@ -12,6 +12,7 @@
   * [Auth](beta/auth)
   * [Categorization](beta/categorization)
   * [Dataset](beta/dataset)
+  * [Golden Records](beta/golden_records)
   * [Instance](beta/instance)
   * [Mastering](beta/mastering)
   * [Operation](beta/operation)

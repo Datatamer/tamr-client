@@ -22,6 +22,7 @@ from tamr_client._types import (
     AttributeType,
     CategorizationProject,
     Dataset,
+    GoldenRecordsProject,
     InputTransformation,
     Instance,
     MasteringProject,
@@ -42,6 +43,7 @@ from tamr_client._types import (
 from tamr_client import attribute
 from tamr_client import categorization
 from tamr_client import dataset
+from tamr_client import golden_records
 from tamr_client import instance
 from tamr_client import mastering
 from tamr_client import operation

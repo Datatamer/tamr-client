@@ -172,6 +172,14 @@ def categorization_project() -> tc.CategorizationProject:
     return categorization_project
 
 
+def golden_records_project() -> tc.GoldenRecordsProject:
+    url = tc.URL(path="projects/3")
+    golden_records_project = tc.GoldenRecordsProject(
+        url, name="Project 3", description="A Golden Records Project"
+    )
+    return golden_records_project
+
+
 def transforms() -> tc.Transformations:
     return tc.Transformations(
         input_scope=[
