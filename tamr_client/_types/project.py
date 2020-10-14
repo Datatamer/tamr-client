@@ -55,4 +55,23 @@ class SchemaMappingProject:
     description: Optional[str] = None
 
 
-Project = Union[CategorizationProject, MasteringProject, SchemaMappingProject]
+@dataclass(frozen=True)
+class GoldenRecordsProject:
+    """A Tamr Golden Records project
+
+    See https://docs.tamr.com/reference/the-project-object
+
+    Args:
+        url
+        name
+        description
+    """
+
+    url: URL
+    name: str
+    description: Optional[str] = None
+
+
+Project = Union[
+    CategorizationProject, MasteringProject, SchemaMappingProject, GoldenRecordsProject
+]

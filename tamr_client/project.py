@@ -4,6 +4,7 @@ from tamr_client import response
 from tamr_client._types import Instance, JsonDict, Project, Session, URL
 from tamr_client.categorization import project as categorization_project
 from tamr_client.exception import TamrClientException
+from tamr_client.golden_records import project as golden_records_project
 from tamr_client.mastering import project as mastering_project
 from tamr_client.schema_mapping import project as schema_mapping_project
 
@@ -106,6 +107,8 @@ def _from_json(url: URL, data: JsonDict) -> Project:
         return categorization_project._from_json(url, data)
     elif proj_type == "SCHEMA_MAPPING_RECOMMENDATIONS":
         return schema_mapping_project._from_json(url, data)
+    elif proj_type == "GOLDEN_RECORDS":
+        return golden_records_project._from_json(url, data)
     else:
         raise ValueError(f"Unrecognized project type '{proj_type}' in {repr(data)}")
 
