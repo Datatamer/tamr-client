@@ -19,6 +19,29 @@ class NotFound(TamrClientException):
     pass
 
 
+class Failed(TamrClientException):
+    """Raised when checking a failed operation.
+    """
+
+    pass
+
+
+def check(session: Session, operation: Operation):
+    """Waits for the operation to finish and raises an exception if the operation was not successful.
+
+    Args:
+        operation: Operation to be checked.
+
+    Raises:
+        Failed: If the operation failed.
+    """
+    op = wait(session, operation)
+    if not succeeded(op):
+        raise Failed(
+            f"Checked operation '{str(op.url)}', but it failed with status: {op.status}"
+        )
+
+
 def poll(session: Session, operation: Operation) -> Operation:
     """Poll this operation for server-side updates.
 

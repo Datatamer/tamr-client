@@ -110,3 +110,25 @@ def test_operation_poll():
     assert op2.url == op1.url
     assert not tc.operation.succeeded(op1)
     assert tc.operation.succeeded(op2)
+
+
+def test_operation_check_success():
+    s = fake.session()
+    url = tc.URL(path="operations/1")
+    op_json = utils.load_json("operation_succeeded.json")
+    op = tc.operation._from_json(url, op_json)
+
+    tc.operation.check(s, op)
+
+
+def test_operation_failed_success():
+    s = fake.session()
+    url = tc.URL(path="operations/1")
+    op_json = utils.load_json("operation_failed.json")
+    op = tc.operation._from_json(url, op_json)
+
+    with pytest.raises(tc.operation.Failed) as exc_info:
+        tc.operation.check(s, op)
+    err_msg = str(exc_info.value)
+    assert str(url) in err_msg
+    assert op.status is not None and str(op.status["state"]) in err_msg
