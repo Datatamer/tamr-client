@@ -38,6 +38,7 @@ Maintainer responsabilities:
 
 Current maintainers:
 - [pcattori](https://github.com/pcattori)
+- [skalish](https://github.com/skalish)
 
 Want to become a maintainer?
 Open a pull request that adds your name to the list of current maintainers!
