@@ -125,8 +125,7 @@ class DatasetCollection(BaseCollection):
         :type primary_key_name: str
         :param dataset_name: What to name the dataset in Tamr. There cannot already be a dataset with this name.
         :type dataset_name: str
-        :param ignore_nan: Whether to convert `NaN` values to `null` before upserting records to Tamr. If `False` and
-            `NaN` is in `df`, this function will fail. Optional, default is `True`.
+        :param ignore_nan: Legacy parameter that does nothing
         :type ignore_nan: bool
         :returns: The newly created dataset.
         :rtype: :class:`~tamr_unify_client.dataset.resource.Dataset`
@@ -158,10 +157,9 @@ class DatasetCollection(BaseCollection):
             except HTTPError:
                 self._handle_creation_failure(dataset, "An attribute was not created")
 
-        records = df.to_dict(orient="records")
         try:
-            response = dataset.upsert_records(
-                records, primary_key_name, ignore_nan=ignore_nan
+            response = dataset.upsert_from_dataframe(
+                df, primary_key_name=primary_key_name
             )
         except HTTPError:
             self._handle_creation_failure(dataset, "Records could not be created")
