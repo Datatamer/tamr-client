@@ -3,7 +3,7 @@ import json
 import os
 from typing import TYPE_CHECKING
 
-from tamr_unify_client._custom_encoder import JSONEncoder
+from tamr_unify_client._custom_encoder import IgnoreNanEncoder
 from tamr_unify_client.attribute.collection import AttributeCollection
 from tamr_unify_client.base_resource import BaseResource
 from tamr_unify_client.dataset.profile import DatasetProfile
@@ -76,7 +76,7 @@ class Dataset(BaseResource):
         :returns: JSON response body from server.
         :rtype: :py:class:`dict`
         """
-        encoder = JSONEncoder if ignore_nan else None
+        encoder = IgnoreNanEncoder if ignore_nan else None
         stringified_updates = (
             json.dumps(update, cls=encoder).encode("utf-8") for update in updates
         )
