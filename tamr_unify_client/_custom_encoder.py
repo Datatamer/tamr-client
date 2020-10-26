@@ -1,5 +1,7 @@
 # flake8: noqa: C901
-"""Implementation of JSONEncoder
+"""Adaptation of the Python standard library JSONEncoder to encode `NaN` as 'null'
+Compare to https://github.com/python/cpython/blob/3.9/Lib/json/encoder.py
+The only functional difference is in the definition of `floatstr` where 'NaN', 'Infinity', and '-Infinity' are encoded as 'null'
 """
 import re
 
