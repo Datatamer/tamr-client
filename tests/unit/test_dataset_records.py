@@ -3,11 +3,9 @@ import json
 from unittest import TestCase
 
 from pandas import DataFrame
-from requests.exceptions import HTTPError
 import responses
 
 from tamr_unify_client import Client
-from tamr_unify_client._custom_encoder import JSONEncoder
 from tamr_unify_client.auth import UsernamePasswordAuth
 
 
@@ -66,17 +64,13 @@ class TestDatasetRecords(TestCase):
         responses.add_callback(
             responses.POST,
             records_url,
-            partial(create_callback, snoop=snoop, status=400),
-        )
-        responses.add_callback(
-            responses.POST,
-            records_url,
             partial(create_callback, snoop=snoop, status=200),
         )
 
-        self.assertRaises(HTTPError, lambda: dataset._update_records(updates))
-        self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, False))
+        # First call raises a ValueError and makes no request because NaN is not valid JSON
+        self.assertRaises(ValueError, lambda: dataset._update_records(updates))
 
+        # Second call has payload with NaN replaced by null and makes a successful request
         response = dataset._update_records(updates, ignore_nan=True)
         self.assertEqual(response, self._response_json)
         self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, True))
@@ -211,8 +205,8 @@ class TestDatasetRecords(TestCase):
 
     @staticmethod
     def stringify(updates, ignore_nan):
-        encoder = JSONEncoder if ignore_nan else None
-        return [json.dumps(u, cls=encoder).encode("utf-8") for u in updates]
+        nan_fill = "null" if ignore_nan else "NaN"
+        return [json.dumps(u).replace("NaN", nan_fill).encode("utf-8") for u in updates]
 
     _dataset_id = "1"
     _dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/{_dataset_id}"
