@@ -78,7 +78,8 @@ class Dataset(BaseResource):
         """
         encoder = IgnoreNanEncoder if ignore_nan else None
         stringified_updates = (
-            json.dumps(update, cls=encoder).encode("utf-8") for update in updates
+            json.dumps(update, cls=encoder, allow_nan=False).encode("utf-8")
+            for update in updates
         )
 
         return (
