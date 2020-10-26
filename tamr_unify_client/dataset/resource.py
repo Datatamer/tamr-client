@@ -1,7 +1,8 @@
 from copy import deepcopy
 import json
 import os
-from typing import TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING
+import warnings
 
 from tamr_unify_client._custom_encoder import IgnoreNanEncoder
 from tamr_unify_client.attribute.collection import AttributeCollection
@@ -76,6 +77,11 @@ class Dataset(BaseResource):
         :returns: JSON response body from server.
         :rtype: :py:class:`dict`
         """
+        if ignore_nan:
+            warnings.warn(
+                "'ignore_nan' is deprecated. Users are expected to provide valid JSON representations instead",
+                DeprecationWarning,
+            )
         encoder = IgnoreNanEncoder if ignore_nan else None
         stringified_updates = (
             json.dumps(update, cls=encoder, allow_nan=False).encode("utf-8")
@@ -93,7 +99,11 @@ class Dataset(BaseResource):
         )
 
     def upsert_from_dataframe(
-        self, df: "pd.DataFrame", *, primary_key_name: str, ignore_nan: bool = True
+        self,
+        df: "pd.DataFrame",
+        *,
+        primary_key_name: str,
+        ignore_nan: Optional[bool] = None,
     ) -> dict:
         """Upserts a record for each row of `df` with attributes for each column in `df`.
 
@@ -109,6 +119,11 @@ class Dataset(BaseResource):
             KeyError: If `primary_key_name` is not a column in `df`.
 
         """
+        if ignore_nan is not None:
+            warnings.warn(
+                "'ignore_nan' is deprecated. DataFrame `NaN`s are always ignored in upsert",
+                DeprecationWarning,
+            )
         if primary_key_name not in df.columns:
             raise KeyError(f"{primary_key_name} is not an attribute of the data")
 
@@ -131,6 +146,11 @@ class Dataset(BaseResource):
         :return: JSON response body from the server.
         :rtype: dict
         """
+        if ignore_nan:
+            warnings.warn(
+                "'ignore_nan' is deprecated. Users are expected to provide valid JSON representations instead",
+                DeprecationWarning,
+            )
         updates = (
             {"action": "CREATE", "recordId": record[primary_key_name], "record": record}
             for record in records

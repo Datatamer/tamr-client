@@ -1,3 +1,5 @@
+import warnings
+
 from requests.exceptions import HTTPError
 
 from tamr_unify_client.base_collection import BaseCollection
@@ -108,7 +110,7 @@ class DatasetCollection(BaseCollection):
         return Dataset.from_json(self.client, data)
 
     def create_from_dataframe(
-        self, df, primary_key_name, dataset_name, ignore_nan=True
+        self, df, primary_key_name, dataset_name, ignore_nan=None
     ):
         """Creates a dataset in this collection with the given name, creates an attribute for each column in the `df`
         (with `primary_key_name` as the key attribute), and upserts a record for each row of `df`.
@@ -132,6 +134,11 @@ class DatasetCollection(BaseCollection):
         :raises KeyError: If `primary_key_name` is not a column in `df`.
         :raises CreationError: If a step in creating the dataset fails.
         """
+        if ignore_nan is not None:
+            warnings.warn(
+                "'ignore_nan' is deprecated. DataFrame `NaN`s are always ignored in upsert",
+                DeprecationWarning,
+            )
         if primary_key_name not in df.columns:
             raise KeyError(f"{primary_key_name} is not an attribute of the data")
 
