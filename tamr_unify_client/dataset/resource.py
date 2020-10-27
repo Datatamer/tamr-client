@@ -4,7 +4,7 @@ import os
 from typing import Optional, TYPE_CHECKING
 import warnings
 
-from tamr_unify_client._custom_encoder import IgnoreNanEncoder
+from tamr_unify_client._ignore_nan_encoder import IgnoreNanEncoder
 from tamr_unify_client.attribute.collection import AttributeCollection
 from tamr_unify_client.base_resource import BaseResource
 from tamr_unify_client.dataset.profile import DatasetProfile
