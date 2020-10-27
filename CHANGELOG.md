@@ -24,6 +24,10 @@
   **NEW FEATURES**
   - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id
 
+  **BREAKING CHANGES**
+  - [#468](https://github.com/Datatamer/tamr-client/pull/468) `Dataset.upsert_records` and `Dataset._update_records` no longer take general `**json_args` arguments and will only accept `ignore_nan`
+    - The `ignore_nan` argument in `Dataset.upsert_records`, `Dataset._update_records`, `Dataset.upsert_from_dataframe`, and `DatasetCollection.create_from_dataframe` is now deprecated and will be removed in a future release
+
 ## 0.12.0
   **BETA**
   Important: Do not use BETA features for production workflows.

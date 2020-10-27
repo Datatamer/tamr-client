@@ -1,10 +1,9 @@
 from functools import partial
+import json
 from unittest import TestCase
 
 from pandas import DataFrame
-from requests.exceptions import HTTPError
 import responses
-import simplejson
 
 from tamr_unify_client import Client
 from tamr_unify_client.auth import UsernamePasswordAuth
@@ -22,7 +21,7 @@ class TestDatasetRecords(TestCase):
         responses.add(
             responses.GET,
             records_url,
-            body="\n".join([simplejson.dumps(x) for x in self._records_json]),
+            body="\n".join([json.dumps(x) for x in self._records_json]),
         )
 
         dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
@@ -33,7 +32,7 @@ class TestDatasetRecords(TestCase):
     def test_update(self):
         def create_callback(request, snoop):
             snoop["payload"] = list(request.body)
-            return 200, {}, simplejson.dumps(self._response_json)
+            return 200, {}, json.dumps(self._response_json)
 
         responses.add(responses.GET, self._dataset_url, json={})
         dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
@@ -53,7 +52,7 @@ class TestDatasetRecords(TestCase):
     def test_nan_update(self):
         def create_callback(request, snoop, status):
             snoop["payload"] = list(request.body)
-            return status, {}, simplejson.dumps(self._response_json)
+            return status, {}, json.dumps(self._response_json)
 
         responses.add(responses.GET, self._dataset_url, json={})
         dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
@@ -65,17 +64,13 @@ class TestDatasetRecords(TestCase):
         responses.add_callback(
             responses.POST,
             records_url,
-            partial(create_callback, snoop=snoop, status=400),
-        )
-        responses.add_callback(
-            responses.POST,
-            records_url,
             partial(create_callback, snoop=snoop, status=200),
         )
 
-        self.assertRaises(HTTPError, lambda: dataset._update_records(updates))
-        self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, False))
+        # First call raises a ValueError and makes no request because NaN is not valid JSON
+        self.assertRaises(ValueError, lambda: dataset._update_records(updates))
 
+        # Second call has payload with NaN replaced by null and makes a successful request
         response = dataset._update_records(updates, ignore_nan=True)
         self.assertEqual(response, self._response_json)
         self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, True))
@@ -84,7 +79,7 @@ class TestDatasetRecords(TestCase):
     def test_upsert(self):
         def create_callback(request, snoop):
             snoop["payload"] = list(request.body)
-            return 200, {}, simplejson.dumps(self._response_json)
+            return 200, {}, json.dumps(self._response_json)
 
         responses.add(responses.GET, self._dataset_url, json={})
         dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
@@ -104,7 +99,7 @@ class TestDatasetRecords(TestCase):
     def test_upsert_from_dataframe(self):
         def create_callback(request, snoop):
             snoop["payload"] = list(request.body)
-            return 200, {}, simplejson.dumps(self._response_json)
+            return 200, {}, json.dumps(self._response_json)
 
         responses.add(responses.GET, self._dataset_url, json={})
         dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
@@ -123,10 +118,32 @@ class TestDatasetRecords(TestCase):
         self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, False))
 
     @responses.activate
+    def test_upsert_from_dataframe_nan(self):
+        def create_callback(request, snoop):
+            snoop["payload"] = list(request.body)
+            return 200, {}, json.dumps(self._response_json)
+
+        responses.add(responses.GET, self._dataset_url, json={})
+        dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
+
+        records_url = f"{self._dataset_url}:updateRecords"
+        updates = TestDatasetRecords.records_to_updates(self._null_records_json)
+        snoop = {}
+        responses.add_callback(
+            responses.POST, records_url, partial(create_callback, snoop=snoop)
+        )
+
+        response = dataset.upsert_from_dataframe(
+            self._dataframe_nan, primary_key_name="pk"
+        )
+        self.assertEqual(response, self._response_json)
+        self.assertEqual(snoop["payload"], TestDatasetRecords.stringify(updates, True))
+
+    @responses.activate
     def test_delete(self):
         def create_callback(request, snoop):
             snoop["payload"] = list(request.body)
-            return 200, {}, simplejson.dumps(self._response_json)
+            return 200, {}, json.dumps(self._response_json)
 
         responses.add(responses.GET, self._dataset_url, json={})
         dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
@@ -146,7 +163,7 @@ class TestDatasetRecords(TestCase):
     def test_delete_ids(self):
         def create_callback(request, snoop):
             snoop["payload"] = list(request.body)
-            return 200, {}, simplejson.dumps(self._response_json)
+            return 200, {}, json.dumps(self._response_json)
 
         responses.add(responses.GET, self._dataset_url, json={})
         dataset = self.tamr.datasets.by_resource_id(self._dataset_id)
@@ -188,16 +205,22 @@ class TestDatasetRecords(TestCase):
 
     @staticmethod
     def stringify(updates, ignore_nan):
-        return [
-            simplejson.dumps(u, ignore_nan=ignore_nan).encode("utf-8") for u in updates
-        ]
+        nan_fill = "null" if ignore_nan else "NaN"
+        return [json.dumps(u).replace("NaN", nan_fill).encode("utf-8") for u in updates]
 
     _dataset_id = "1"
     _dataset_url = f"http://localhost:9100/api/versioned/v1/datasets/{_dataset_id}"
 
     _records_json = [{"attribute1": 1}, {"attribute1": 2}]
-    _dataframe = DataFrame(_records_json, columns=["attribute1"])
-    _nan_records_json = [{"attribute1": float("nan")}, {"attribute1": float("nan")}]
+    _dataframe = DataFrame(_records_json, columns=["attribute1"], dtype=object)
+    _nan_records_json = [
+        {"pk": 1, "attribute1": float("nan")},
+        {"pk": 2, "attribute1": float("nan")},
+    ]
+    _dataframe_nan = DataFrame(
+        _nan_records_json, columns=["pk", "attribute1"], dtype=object
+    )
+    _null_records_json = [{"pk": 1, "attribute1": None}, {"pk": 2, "attribute1": None}]
     _response_json = {
         "numCommandsProcessed": 2,
         "allCommandsSucceeded": True,

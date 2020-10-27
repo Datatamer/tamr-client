@@ -446,14 +446,6 @@ six = "*"
 tests = ["pytest", "coverage (>=3.7.1,<5.0.0)", "pytest-cov", "pytest-localserver", "flake8"]
 
 [[package]]
-category = "main"
-description = "Simple, fast, extensible JSON encoder/decoder for Python"
-name = "simplejson"
-optional = false
-python-versions = ">=2.5, !=3.0.*, !=3.1.*, !=3.2.*"
-version = "3.16.0"
-
-[[package]]
 category = "dev"
 description = "Python 2 and 3 compatibility utilities"
 name = "six"
@@ -549,7 +541,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pathlib2", "contextlib2", "unittest2"]
 
 [metadata]
-content-hash = "eb1a510dfdc339cc884ea39cc411306e4593c01a46c13bb15e4aaf9fff85cad5"
+content-hash = "891a70e0fce285518c0ac4b762d18e79ccc02d48163ad526d9553cc0895e26e8"
 python-versions = "^3.6.1"
 
 [metadata.files]
@@ -772,29 +764,6 @@ requests = [
 responses = [
     {file = "responses-0.10.6-py2.py3-none-any.whl", hash = "sha256:97193c0183d63fba8cd3a041c75464e4b09ea0aff6328800d1546598567dde0b"},
     {file = "responses-0.10.6.tar.gz", hash = "sha256:502d9c0c8008439cfcdef7e251f507fcfdd503b56e8c0c87c3c3e3393953f790"},
-]
-simplejson = [
-    {file = "simplejson-3.16.0-cp27-cp27m-macosx_10_12_x86_64.whl", hash = "sha256:6c3258ffff58712818a233b9737fe4be943d306c40cf63d14ddc82ba563f483a"},
-    {file = "simplejson-3.16.0-cp27-cp27m-win32.whl", hash = "sha256:2fc546e6af49fb45b93bbe878dea4c48edc34083729c0abd09981fe55bdf7f91"},
-    {file = "simplejson-3.16.0-cp27-cp27m-win_amd64.whl", hash = "sha256:3b919fc9cf508f13b929a9b274c40786036b31ad28657819b3b9ba44ba651f50"},
-    {file = "simplejson-3.16.0-cp33-cp33m-win32.whl", hash = "sha256:3af610ee72efbe644e19d5eaad575c73fb83026192114e5f6719f4901097fce2"},
-    {file = "simplejson-3.16.0-cp33-cp33m-win_amd64.whl", hash = "sha256:fb2530b53c28f0d4d84990e945c2ebb470edb469d63e389bf02ff409012fe7c5"},
-    {file = "simplejson-3.16.0-cp34-cp34m-win32.whl", hash = "sha256:37e685986cf6f8144607f90340cff72d36acf654f3653a6c47b84c5c38d00df7"},
-    {file = "simplejson-3.16.0-cp34-cp34m-win_amd64.whl", hash = "sha256:ee9625fc8ee164902dfbb0ff932b26df112da9f871c32f0f9c1bcf20c350fe2a"},
-    {file = "simplejson-3.16.0-cp35-cp35m-macosx_10_12_x86_64.whl", hash = "sha256:354fa32b02885e6dae925f1b5bbf842c333c1e11ea5453ddd67309dc31fdb40a"},
-    {file = "simplejson-3.16.0-cp35-cp35m-win32.whl", hash = "sha256:3dd289368bbd064974d9a5961101f080e939cbe051e6689a193c99fb6e9ac89b"},
-    {file = "simplejson-3.16.0-cp35-cp35m-win_amd64.whl", hash = "sha256:067a7177ddfa32e1483ba5169ebea1bc2ea27f224853211ca669325648ca5642"},
-    {file = "simplejson-3.16.0-cp36-cp36m-win_amd64.whl", hash = "sha256:75e3f0b12c28945c08f54350d91e624f8dd580ab74fd4f1bbea54bc6b0165610"},
-    {file = "simplejson-3.16.0.tar.gz", hash = "sha256:b1f329139ba647a9548aa05fb95d046b4a677643070dc2afc05fa2e975d09ca5"},
-    {file = "simplejson-3.16.0.win-amd64-py2.7.exe", hash = "sha256:495511fe5f10ccf4e3ed4fc0c48318f533654db6c47ecbc970b4ed215c791968"},
-    {file = "simplejson-3.16.0.win-amd64-py3.3.exe", hash = "sha256:d8e238f20bcf70063ee8691d4a72162bcec1f4c38f83c93e6851e72ad545dabb"},
-    {file = "simplejson-3.16.0.win-amd64-py3.4.exe", hash = "sha256:feadb95170e45f439455354904768608e356c5b174ca30b3d11b0e3f24b5c0df"},
-    {file = "simplejson-3.16.0.win-amd64-py3.5.exe", hash = "sha256:65b41a5cda006cfa7c66eabbcf96aa704a6be2a5856095b9e2fd8c293bad2b46"},
-    {file = "simplejson-3.16.0.win-amd64-py3.6.exe", hash = "sha256:c206f47cbf9f32b573c9885f0ec813d2622976cf5effcf7e472344bc2e020ac1"},
-    {file = "simplejson-3.16.0.win32-py2.7.exe", hash = "sha256:491de7acc423e871a814500eb2dcea8aa66c4a4b1b4825d18f756cdf58e370cb"},
-    {file = "simplejson-3.16.0.win32-py3.3.exe", hash = "sha256:79b129fe65fdf3765440f7a73edaffc89ae9e7885d4e2adafe6aa37913a00fbb"},
-    {file = "simplejson-3.16.0.win32-py3.4.exe", hash = "sha256:2b8cb601d9ba0381499db719ccc9dfbb2fbd16013f5ff096b1a68a4775576a04"},
-    {file = "simplejson-3.16.0.win32-py3.5.exe", hash = "sha256:2c139daf167b96f21542248f8e0a06596c9b9a7a41c162cc5c9ee9f3833c93cd"},
 ]
 six = [
     {file = "six-1.12.0-py2.py3-none-any.whl", hash = "sha256:3350809f0555b11f552448330d0b52d5f24c91a322ea4a15ef22629740f3761c"},
