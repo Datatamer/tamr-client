@@ -20,6 +20,7 @@
   - [#456](https://github.com/Datatamer/tamr-client/pull/456) Added first example `tamr_client` script `examples/get_tamr_version.py`
   - [#461](https://github.com/Datatamer/tamr-client/pull/461) Added functions for golden record workflow operations in `tc.golden_records`
   - [#462](https://github.com/Datatamer/tamr-client/issues/462) Added function for checking operations, raising exception when operation has failed
+  - [#469](https://github.com/Datatamer/tamr-client/pull/469) Added "Continuous Mastering" `tamr_client` tutorial
   
   **NEW FEATURES**
   - [#383](https://github.com/Datatamer/tamr-client/issues/383) Now able to create an Operation from Job resource id

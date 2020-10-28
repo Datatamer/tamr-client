@@ -5,6 +5,7 @@
 
 ## Tutorials
   * [Get Tamr version](beta/tutorial/get_version)
+  * [Continuous Mastering](beta/tutorial/continuous_mastering)
 
 ## Reference
 
