@@ -1,4 +1,4 @@
-## 0.13.0-dev
+## 0.13.0
   **BETA** 
   Important: Do not use BETA features for production workflows.
   - [#383](https://github.com/Datatamer/tamr-client/issues/383) Added function to get operation from resource ID
