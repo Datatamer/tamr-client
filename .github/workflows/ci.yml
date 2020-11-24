@@ -14,9 +14,9 @@ jobs:
   Lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Install python
-      uses: actions/setup-python@v1.1.1
+      uses: actions/setup-python@v2
       with:
         python-version: 3.6
     - name: Install poetry
@@ -25,13 +25,13 @@ jobs:
       run: pip install nox==2020.5.24
     - name: Run flake8
       run: nox -s lint
-  
+
   Format:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Install python
-      uses: actions/setup-python@v1.1.1
+      uses: actions/setup-python@v2
       with:
         python-version: 3.6
     - name: Install poetry
@@ -44,9 +44,9 @@ jobs:
   Typecheck:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Install python
-      uses: actions/setup-python@v1.1.1
+      uses: actions/setup-python@v2
       with:
         python-version: 3.6
     - name: Install poetry
@@ -62,9 +62,9 @@ jobs:
         python_version: [3.6, 3.7, 3.8]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Install python
-      uses: actions/setup-python@v1.1.1
+      uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python_version }}
     - name: Install poetry
@@ -77,9 +77,9 @@ jobs:
   Docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Install python
-      uses: actions/setup-python@v1.1.1
+      uses: actions/setup-python@v2
       with:
         python-version: 3.6
     - name: Install nox
