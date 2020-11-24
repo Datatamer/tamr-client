@@ -17,14 +17,15 @@ class NotFound(TamrClientException):
     pass
 
 
-def _from_json(data: JsonDict) -> Restore:
+def _from_json(url: URL, data: JsonDict) -> Restore:
     """Make restore from JSON data (deserialize).
 
     Args:
+        url: Restore url
         data: Restore JSON data from Tamr server
     """
     return Restore(
-        url=data["id"],
+        url=url,
         resource_id=data["relativeId"],
         backup_path=data["backupPath"],
         state=data["state"],
@@ -49,7 +50,7 @@ def get(session: Session, instance: Instance) -> Restore:
     r = session.get(str(url))
     if r.status_code == 404:
         raise NotFound(str(url))
-    return response.successful(r).json()
+    return _from_json(url, response.successful(r).json())
 
 
 def initiate(session: Session, instance: Instance, backup_path: str) -> Restore:
@@ -70,15 +71,15 @@ def initiate(session: Session, instance: Instance, backup_path: str) -> Restore:
     r = session.post(str(url), data=backup_path)
     if r.status_code == 400:
         raise InvalidOperation(str(url), r.json()["message"])
-    return _from_json(response.successful(r).json())
+    return _from_json(url, response.successful(r).json())
 
 
-def cancel(session: Session, instance: Instance) -> Restore:
+def cancel(session: Session, restore: Restore) -> Restore:
     """Cancel a Tamr restore.
 
     Args:
         session: Tamr session
-        instance: Tamr instance
+        restore: A Tamr restore
 
     Returns:
         Canceled restore
@@ -87,10 +88,9 @@ def cancel(session: Session, instance: Instance) -> Restore:
         restore.NotFound: If no backup file found at the specified path
         restore.InvalidOperation: If attempting an invalid operation
     """
-    url = URL(instance=instance, path="instance/restore:cancel")
-    r = session.post(str(url))
+    r = session.post(f"{restore.url}:cancel")
     if r.status_code == 404:
-        raise NotFound(str(url))
+        raise NotFound(str(restore.url))
     if r.status_code == 400:
-        raise InvalidOperation(str(url), r.json()["message"])
-    return _from_json(response.successful(r).json())
+        raise InvalidOperation(str(restore.url), r.json()["message"])
+    return _from_json(restore.url, response.successful(r).json())

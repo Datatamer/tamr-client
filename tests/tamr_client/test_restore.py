@@ -22,6 +22,17 @@ def test_initiate():
 @fake.json
 def test_cancel():
     s = fake.session()
-    instance = fake.instance()
+    data = {
+        "id": "unify://unified-data/v1/restore/restore-2020-08-19_20-01-20-233",
+        "relativeId": "restore-2020-08-19_20-01-20-233",
+        "user": "admin",
+        "backupPath": "/home/ubuntu/tamr/backups/2020-08-17_22-07-11-100",
+        "state": "CANCELED",
+        "stage": "",
+        "errorMessage": "",
+        "created": "2020-08-19_20-01-20-233",
+        "lastModified": "2020-08-19_20-02-19-351",
+    }
+    restore = tc.restore._from_json(url=tc.URL(path="instance/restore"), data=data)
 
-    tc.restore.cancel(session=s, instance=instance)
+    tc.restore.cancel(session=s, restore=restore)

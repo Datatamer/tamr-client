@@ -6,8 +6,7 @@
     },
     "response": {
       "status": 200,
-      "json": [
-        {
+      "json": {
           "id": "unify://unified-data/v1/restore/restore-2020-08-19_19-57-57-366",
           "relativeId": "restore-2020-08-19_19-57-57-366",
           "user": "admin",
@@ -17,8 +16,7 @@
           "errorMessage": "",
           "created": "2020-08-19_19-57-57-366",
           "lastModified": "2020-08-19_19-57-57-508"
-        }
-      ]
+      }
     }
   }
 ]
