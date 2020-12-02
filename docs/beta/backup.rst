@@ -7,6 +7,7 @@ Backup
 .. autofunction:: tamr_client.backup.by_resource_id
 .. autofunction:: tamr_client.backup.initiate
 .. autofunction:: tamr_client.backup.cancel
+.. autofunction:: tamr_client.backup.poll
 
 Exceptions
 ----------

@@ -46,3 +46,24 @@ def test_cancel():
     )
 
     tc.backup.cancel(session=s, backup=backup)
+
+
+@fake.json
+def test_poll():
+    s = fake.session()
+    data = {
+        "id": "unify://unified-data/v1/backups/2020-08-17_21-32-10-961",
+        "relativeId": "2020-08-17_21-32-10-961",
+        "user": "admin",
+        "backupPath": "/home/ubuntu/tamr/backups/2020-08-17_21-32-10-961",
+        "state": "RUNNING",
+        "stage": "",
+        "errorMessage": "",
+        "created": "2020-08-17_21-32-10-961",
+        "lastModified": "2020-08-17_21-51-57-600",
+    }
+    backup = tc.backup._from_json(
+        url=tc.URL(path="backups/2020-08-17_21-32-10-961"), data=data
+    )
+
+    tc.backup.poll(session=s, backup=backup)

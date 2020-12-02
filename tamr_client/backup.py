@@ -125,3 +125,26 @@ def cancel(session: Session, backup: Backup) -> Backup:
     if r.status_code == 400:
         raise InvalidOperation(cancel_url, r.json()["message"])
     return _from_json(backup.url, response.successful(r).json())
+
+
+def poll(session: Session, backup: Backup) -> Backup:
+    """Poll this backup for server-side updates.
+
+    Does not update the :class:`~tamr_client.backup.Backup` object.
+    Instead, returns a new :class:`~tamr_client.backup.Backup`.
+
+    Args:
+        session: Tamr session
+        backup: Tamr backup to be polled
+
+    Returns:
+        A Tamr backup
+
+    Raises:
+        backup.NotFound: If no backup found at the specified URL
+    """
+    url = backup.url
+    r = session.get(str(url))
+    if r.status_code == 404:
+        raise NotFound(str(url))
+    return _from_json(url, response.successful(r).json())
