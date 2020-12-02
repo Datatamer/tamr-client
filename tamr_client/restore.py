@@ -26,7 +26,6 @@ def _from_json(url: URL, data: JsonDict) -> Restore:
     """
     return Restore(
         url=url,
-        resource_id=data["relativeId"],
         backup_path=data["backupPath"],
         state=data["state"],
         error_message=data["errorMessage"],
@@ -88,9 +87,10 @@ def cancel(session: Session, restore: Restore) -> Restore:
         restore.NotFound: If no backup file found at the specified path
         restore.InvalidOperation: If attempting an invalid operation
     """
-    r = session.post(f"{restore.url}:cancel")
+    cancel_url = f"{restore.url}:cancel"
+    r = session.post(cancel_url)
     if r.status_code == 404:
-        raise NotFound(str(restore.url))
+        raise NotFound(cancel_url)
     if r.status_code == 400:
-        raise InvalidOperation(str(restore.url), r.json()["message"])
+        raise InvalidOperation(cancel_url, r.json()["message"])
     return _from_json(restore.url, response.successful(r).json())

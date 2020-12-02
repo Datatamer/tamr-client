@@ -30,7 +30,6 @@ def _from_json(url: URL, data: JsonDict) -> Backup:
     cp = deepcopy(data)
     return Backup(
         url=url,
-        resource_id=cp["relativeId"],
         path=cp["backupPath"],
         state=cp["state"],
         error_message=cp["errorMessage"],
@@ -119,10 +118,10 @@ def cancel(session: Session, backup: Backup) -> Backup:
         backup.NotFound: If no backup found at the specified URL
         backup.InvalidOperation: If attempting an invalid operation
     """
-    r = session.post(f"{backup.url}:cancel")
+    cancel_url = f"{backup.url}:cancel"
+    r = session.post(cancel_url)
     if r.status_code == 404:
-        raise NotFound(f"{backup.url}:cancel")
+        raise NotFound(cancel_url)
     if r.status_code == 400:
-        raise InvalidOperation(f"{backup.url}:cancel", r.json()["message"])
-
+        raise InvalidOperation(cancel_url, r.json()["message"])
     return _from_json(backup.url, response.successful(r).json())

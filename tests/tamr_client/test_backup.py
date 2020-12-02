@@ -35,7 +35,7 @@ def test_cancel():
         "relativeId": "2020-08-17_21-32-10-961",
         "user": "admin",
         "backupPath": "/home/ubuntu/tamr/backups/2020-08-17_21-32-10-961",
-        "state": "CANCELED",
+        "state": "RUNNING",
         "stage": "",
         "errorMessage": "",
         "created": "2020-08-17_21-32-10-961",

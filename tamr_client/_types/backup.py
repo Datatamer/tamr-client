@@ -11,14 +11,12 @@ class Backup:
 
     Args:
         url
-        resource_id
         path
         state
         error_message
     """
 
     url: URL
-    resource_id: str
     path: str
     state: str
     error_message: str

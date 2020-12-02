@@ -11,14 +11,12 @@ class Restore:
 
     Args:
         url
-        resource_id
         backup_path
         state
         error_message
     """
 
     url: URL
-    resource_id: str
     backup_path: str
     state: str
     error_message: str
