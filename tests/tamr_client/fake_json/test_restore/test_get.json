@@ -1,0 +1,22 @@
+[
+  {
+    "request": {
+      "method": "GET",
+      "path": "instance/restore"
+    },
+    "response": {
+      "status": 200,
+      "json": {
+          "id": "unify://unified-data/v1/restore/restore-2020-08-19_19-57-57-366",
+          "relativeId": "restore-2020-08-19_19-57-57-366",
+          "user": "admin",
+          "backupPath": "/home/ubuntu/tamr/backups/2020-08-17_22-07-11-100",
+          "state": "RUNNING",
+          "stage": "",
+          "errorMessage": "",
+          "created": "2020-08-19_19-57-57-366",
+          "lastModified": "2020-08-19_19-57-57-508"
+      }
+    }
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "request": {
+      "method": "GET",
+      "path": "backups"
+    },
+    "response": {
+      "status": 200,
+      "json": [
+        {
+          "id": "unify://unified-data/v1/backups/2020-08-17_21-32-10-961",
+          "relativeId": "2020-08-17_21-32-10-961",
+          "user": "admin",
+          "backupPath": "/home/ubuntu/tamr/backups/2020-08-17_21-32-10-961",
+          "state": "CANCELED",
+          "stage": "",
+          "errorMessage": "",
+          "created": "2020-08-17_21-32-10-961",
+          "lastModified": "2020-08-17_21-51-57-600"
+        },
+        {
+          "id": "unify://unified-data/v1/backups/2020-08-17_21-58-01-205",
+          "relativeId": "2020-08-17_21-58-01-205",
+          "user": "admin",
+          "backupPath": "/home/ubuntu/tamr/backups/2020-08-17_21-58-01-205",
+          "state": "RUNNING",
+          "stage": "",
+          "errorMessage": "",
+          "created": "2020-08-17_21-58-01-205",
+          "lastModified": "2020-08-17_21-58-01-351"
+        },
+        {
+          "id": "unify://unified-data/v1/backups/2020-08-17_21-58-45-062",
+          "relativeId": "2020-08-17_21-58-45-062",
+          "user": "admin",
+          "backupPath": "/home/ubuntu/tamr/backups/2020-08-17_21-58-45-062",
+          "state": "FAILED",
+          "stage": "",
+          "errorMessage": "A system operation is already in progress",
+          "created": "2020-08-17_21-58-45-062",
+          "lastModified": "2020-08-17_21-58-45-249"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "request": {
+      "method": "POST",
+      "path": "backups"
+    },
+    "response": {
+      "status": 200,
+      "json": {
+        "id": "unify://unified-data/v1/backups/2020-08-17_21-32-10-961",
+        "relativeId": "2020-08-17_21-32-10-961",
+        "user": "admin",
+        "backupPath": "/home/ubuntu/tamr/backups/2020-08-17_21-32-10-961",
+        "state": "PENDING",
+        "stage": "",
+        "errorMessage": "",
+        "created": "2020-08-17_21-32-10-961",
+        "lastModified": "2020-08-17_21-32-10-961"
+      }
+    }
+  }
+]

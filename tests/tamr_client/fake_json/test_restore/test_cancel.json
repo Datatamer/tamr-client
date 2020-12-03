@@ -1,0 +1,22 @@
+[
+  {
+    "request": {
+      "method": "POST",
+      "path": "instance/restore:cancel"
+    },
+    "response": {
+      "status": 200,
+      "json": {
+        "id": "unify://unified-data/v1/restore/restore-2020-08-19_20-01-20-233",
+        "relativeId": "restore-2020-08-19_20-01-20-233",
+        "user": "admin",
+        "backupPath": "/home/ubuntu/tamr/backups/2020-08-17_22-07-11-100",
+        "state": "CANCELED",
+        "stage": "",
+        "errorMessage": "",
+        "created": "2020-08-19_20-01-20-233",
+        "lastModified": "2020-08-19_20-02-19-351"
+      }
+    }
+  }
+]
