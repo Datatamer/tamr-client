@@ -86,3 +86,18 @@ jobs:
         run: pip install nox==2020.5.24
       - name: Run sphinx-build
         run: nox -s docs
+
+  Commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install npm
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Install commitlint
+        run: npm install -g @commitlint/cli @commitlint/config-conventional
+      - name: Run commitlint
+        run: commitlint --from=origin/master
