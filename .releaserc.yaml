@@ -1,0 +1,16 @@
+repositoryUrl: https://github.com/Datatamer/tamr-client
+branches:
+  - master
+plugins:
+  - "@semantic-release/commit-analyzer"
+  - "@semantic-release/release-notes-generator"
+  - [
+      "@semantic-release/exec",
+      {
+        # Set the project version according to semantic-release (depends on `toml-cli`)
+        prepareCmd: "toml set --toml-path pyproject.toml tool.poetry.version ${nextRelease.version}",
+        # Publish the project to PyPI (depends on `python` and `poetry`)
+        publishCmd: "poetry install --no-dev && poetry publish --build",
+      },
+    ]
+  - "@semantic-release/github"
