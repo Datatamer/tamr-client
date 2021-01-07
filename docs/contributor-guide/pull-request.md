@@ -37,7 +37,12 @@ Contributions / PRs should follow the
 
 Split and squash commits as necessary to create a clean `git` history. Once you ask for review, only add new commits (do not change existing commits) for reviewer convenience. You may change commits in your PR only if reviewers are ok with it.
 
-Also, write [good commit messages](https://chris.beams.io/posts/git-commit/)!
+Commit messages **must** follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+CI for pull requests will enforce this and fail if commit messages are not formatted correctly.
+
+We recommend the [Commitzen CLI](https://github.com/commitizen/cz-cli) to make writing Conventional Commits easy, but you may write commit messages manually or use any other tools.
+
+Also, your commit messages should [explain any things that are not obvious](https://chris.beams.io/posts/git-commit/#why-not-how) from reading your code!
 
 ### CI checks
 

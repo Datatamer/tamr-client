@@ -28,6 +28,9 @@ Submit feature requests as [Github issues](https://github.com/Datatamer/tamr-cli
 * [How to write tests](contributor-guide/how-to-write-tests)
 * [Submit a pull request](contributor-guide/pull-request)
 
+## Release process
+Releases are automated by [semantic-release](https://semantic-release.gitbook.io/semantic-release/).
+
 ## Maintainers
 
 Maintainer responsabilities:
