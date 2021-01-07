@@ -6,7 +6,7 @@ The Python Client just cares about features, and will try everything it knows to
 
 If you are starting a new project or your existing project does not yet use the Python Client, we encourage you to use the **latest stable version** of the Python Client.
 
-Otherwise, check the [Change Log](https://github.com/Datatamer/tamr-client/blob/master/CHANGELOG.md) to see:
+Otherwise, check the [Releases](https://github.com/Datatamer/tamr-client/releases) to see:
 
 * what new features and bug fixes are available in newer versions
 * which breaking changes (if any) will require changes in your code to get those new features and bug fixes
