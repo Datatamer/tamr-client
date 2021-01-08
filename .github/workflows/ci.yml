@@ -123,5 +123,6 @@ jobs:
         run: npm install -g semantic-release@17 @semantic-release/exec@5
       - name: Run semantic-release
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
         run: semantic-release
