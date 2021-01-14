@@ -1,0 +1,168 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "datasets",
+            "json": {
+                "name": "df_dataset",
+                "keyAttributeNames": [
+                    "primary_key"
+                ],
+                "description": null,
+                "externalId": null
+            }
+        },
+        "response": {
+            "status": 201,
+            "json": {
+                "id": "unify://unified-data/v1/datasets/1",
+                "externalId": "number 1",
+                "name": "df_dataset",
+                "description": null,
+                "version": "dataset version",
+                "keyAttributeNames": [
+                    "primary_key"
+                ],
+                "tags": [],
+                "created": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.636Z",
+                    "version": "dataset 1 created version"
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.851Z",
+                    "version": "dataset 1 modified version"
+                },
+                "relativeId": "datasets/1",
+                "upstreamDatasetIds": []
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets/1"
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "id": "unify://unified-data/v1/datasets/1",
+                "externalId": "number 1",
+                "name": "df_dataset",
+                "description": null,
+                "version": "dataset version",
+                "keyAttributeNames": [
+                    "primary_key"
+                ],
+                "tags": [],
+                "created": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.636Z",
+                    "version": "dataset 1 created version"
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.851Z",
+                    "version": "dataset 1 modified version"
+                },
+                "relativeId": "datasets/1",
+                "upstreamDatasetIds": []
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "path": "datasets/1/attributes",
+            "json": {
+                "name": "attribute",
+                "isNullable": true,
+                "type": {
+                    "baseType": "ARRAY",
+                    "innerType": {
+                        "baseType": "STRING"
+                    }
+                }
+            }
+        },
+        "response": {
+            "status": 201,
+            "json": {
+                "name": "attribute",
+                "isNullable": true,
+                "type": {
+                    "baseType": "ARRAY",
+                    "innerType": {
+                        "baseType": "STRING"
+                    }
+                },
+                "description": null
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "path": "datasets/1:updateRecords",
+            "ndjson": [
+                {
+                    "action": "CREATE",
+                    "recordId": 1,
+                    "record": {
+                        "primary_key": 1,
+                        "attribute": 1
+                    }
+                },
+                {
+                    "action": "CREATE",
+                    "recordId": 2,
+                    "record": {
+                        "primary_key": 2,
+                        "attribute": 2
+                    }
+                }
+            ]
+        },
+        "response": {
+            "status": 204,
+            "json": {
+                "numCommandsProcessed": 2,
+                "allCommandsSucceeded": true,
+                "validationErrors": []
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets/1"
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "id": "unify://unified-data/v1/datasets/1",
+                "externalId": "number 1",
+                "name": "df_dataset",
+                "description": null,
+                "version": "dataset version",
+                "keyAttributeNames": [
+                    "primary_key"
+                ],
+                "tags": [],
+                "created": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.636Z",
+                    "version": "dataset 1 created version"
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.851Z",
+                    "version": "dataset 1 modified version"
+                },
+                "relativeId": "datasets/1",
+                "upstreamDatasetIds": []
+            }
+        }
+    }
+]
