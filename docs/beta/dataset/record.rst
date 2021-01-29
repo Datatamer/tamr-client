@@ -1,5 +1,5 @@
 Record
-=========
+======
 
 .. automodule:: tamr_client.record
   :no-members:

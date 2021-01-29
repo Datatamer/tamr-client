@@ -1,0 +1,69 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "projects/4/attributeMappings",
+            "json": {
+                "relativeInputAttributeId": "datasets/1/attributes/RowNum",
+                "relativeUnifiedAttributeId": "datasets/2/attributes/SourceRowNum"
+            }
+        },
+        "response": {
+            "status": 201,
+            "json": {
+                "id": "unify://unified-data/v1/projects/4/attributeMappings/123-456",
+                "relativeId": "projects/4/attributeMappings/123-456",
+                "inputAttributeId": "unify://unified-data/v1/datasets/1/attributes/RowNum",
+                "relativeInputAttributeId": "datasets/1/attributes/RowNum",
+                "inputDatasetName": "dataset.csv",
+                "inputAttributeName": "RowNum",
+                "unifiedAttributeId": "unify://unified-data/v1/datasets/2/attributes/SourceRowNum",
+                "relativeUnifiedAttributeId": "datasets/2/attributes/SourceRowNum",
+                "unifiedDatasetName": "Project 4_unified_dataset",
+                "unifiedAttributeName": "SourceRowNum"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets/1/attributes/RowNum"
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "name": "RowNum",
+                "description": "Synthetic row number",
+                "type": {
+                    "baseType": "ARRAY",
+                    "innerType": {
+                        "baseType": "STRING",
+                        "attributes": []
+                    }
+                },
+                "isNullable": false
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets/2/attributes/SourceRowNum"
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "name": "SourceRowNum",
+                "description": "Synthetic row number",
+                "type": {
+                    "baseType": "ARRAY",
+                    "innerType": {
+                        "baseType": "STRING",
+                        "attributes": []
+                    }
+                },
+                "isNullable": false
+            }
+        }
+    }
+]

@@ -1,0 +1,18 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "projects/9/attributeMappings",
+            "json": {
+                "relativeInputAttributeId": "datasets/1/attributes/RowNum",
+                "relativeUnifiedAttributeId": "datasets/2/attributes/SourceRowNum"
+            }
+        },
+        "response": {
+            "status": 404,
+            "json": {
+                "message": "com.tamr.persist.client.exceptions.PersistenceNotFound: Could not find id '9' on persistence namespace 'projects'"
+            }
+        }
+    }
+]
