@@ -20,3 +20,4 @@ To author new ADRs, we recommend [adr-tools](https://github.com/npryce/adr-tools
 * [tamr_client package](/contributor-guide/adr/0007-tamr-client-package)
 * [Standardized imports](/contributor-guide/adr/0008-standardized-imports)
 * [Separate types and functions](/contributor-guide/adr/0009-separate-types-and-functions)
+* [Confirm performance issues before optimizing](/contributor-guide/adr/0010-confirm-performance-issues-before-optimizing)
