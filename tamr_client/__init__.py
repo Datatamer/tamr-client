@@ -35,6 +35,7 @@ from tamr_client._types import (
     SubAttribute,
     Transformations,
     UnifiedDataset,
+    UnknownProject,
     URL,
     UsernamePasswordAuth,
 )

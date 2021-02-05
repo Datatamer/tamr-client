@@ -27,6 +27,7 @@ from tamr_client._types.project import (
     MasteringProject,
     Project,
     SchemaMappingProject,
+    UnknownProject,
 )
 from tamr_client._types.restore import Restore
 from tamr_client._types.session import Session
