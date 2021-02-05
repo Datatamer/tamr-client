@@ -1,7 +1,7 @@
 from typing import List, Optional, Tuple, Union
 
 from tamr_client import response
-from tamr_client._types import Instance, JsonDict, Project, Session, URL
+from tamr_client._types import Instance, JsonDict, Project, Session, UnknownProject, URL
 from tamr_client.categorization import project as categorization_project
 from tamr_client.exception import TamrClientException
 from tamr_client.golden_records import project as golden_records_project
@@ -110,7 +110,9 @@ def _from_json(url: URL, data: JsonDict) -> Project:
     elif proj_type == "GOLDEN_RECORDS":
         return golden_records_project._from_json(url, data)
     else:
-        raise ValueError(f"Unrecognized project type '{proj_type}' in {repr(data)}")
+        return UnknownProject(
+            url, name=data["name"], description=data.get("description")
+        )
 
 
 def _create(

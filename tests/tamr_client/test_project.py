@@ -132,6 +132,16 @@ def test_create_project_already_exists():
 def test_from_json_unrecognized_project_type():
     instance = fake.instance()
     url = tc.URL("project/1", instance)
-    data: tc._types.JsonDict = {"type": "NOT_A_PROJECT_TYPE"}
-    with pytest.raises(ValueError):
-        tc.project._from_json(url, data)
+    data: tc._types.JsonDict = {
+        "id": "unify://unified-data/v1/projects/1",
+        "name": "project 1",
+        "description": "A project of unknown type",
+        "type": "UNKNOWN",
+        "unifiedDatasetName": "",
+        "relativeId": "projects/1",
+        "externalId": "58bdbe72-3c08-427d-97bd-45b16d92c79c",
+    }
+    project = tc.project._from_json(url, data)
+    assert isinstance(project, tc.UnknownProject)
+    assert project.name == "project 1"
+    assert project.description == "A project of unknown type"

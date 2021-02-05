@@ -72,6 +72,27 @@ class GoldenRecordsProject:
     description: Optional[str] = None
 
 
+@dataclass(frozen=True)
+class UnknownProject:
+    """A Tamr project of an unrecognized type
+
+    See https://docs.tamr.com/reference/the-project-object
+
+    Args:
+        url
+        name
+        description
+    """
+
+    url: URL
+    name: str
+    description: Optional[str] = None
+
+
 Project = Union[
-    CategorizationProject, MasteringProject, SchemaMappingProject, GoldenRecordsProject
+    CategorizationProject,
+    MasteringProject,
+    SchemaMappingProject,
+    GoldenRecordsProject,
+    UnknownProject,
 ]
