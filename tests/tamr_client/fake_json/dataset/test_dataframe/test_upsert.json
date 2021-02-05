@@ -1,0 +1,32 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "datasets/1:updateRecords",
+            "ndjson": [
+                {
+                    "action": "CREATE",
+                    "recordId": 1,
+                    "record": {
+                        "primary_key": 1
+                    }
+                },
+                {
+                    "action": "CREATE",
+                    "recordId": 2,
+                    "record": {
+                        "primary_key": 2
+                    }
+                }
+            ]
+        },
+        "response": {
+            "status": 204,
+            "json": {
+                "numCommandsProcessed": 2,
+                "allCommandsSucceeded": true,
+                "validationErrors": []
+            }
+        }
+    }
+]

@@ -4,11 +4,11 @@
             "method": "POST",
             "path": "datasets",
             "json": {
-                "name": "new dataset",
+                "name": "df_dataset",
                 "keyAttributeNames": [
                     "primary_key"
                 ],
-                "description": "a new dataset",
+                "description": null,
                 "externalId": null
             }
         },
@@ -17,8 +17,8 @@
             "json": {
                 "id": "unify://unified-data/v1/datasets/1",
                 "externalId": "number 1",
-                "name": "new dataset",
-                "description": "a new dataset",
+                "name": "df_dataset",
+                "description": null,
                 "version": "dataset version",
                 "keyAttributeNames": [
                     "primary_key"
@@ -49,8 +49,8 @@
             "json": {
                 "id": "unify://unified-data/v1/datasets/1",
                 "externalId": "number 1",
-                "name": "new dataset",
-                "description": "a new dataset",
+                "name": "df_dataset",
+                "description": null,
                 "version": "dataset version",
                 "keyAttributeNames": [
                     "primary_key"
@@ -69,6 +69,35 @@
                 "relativeId": "datasets/1",
                 "upstreamDatasetIds": []
             }
+        }
+    },
+    {
+        "request": {
+            "method": "POST",
+            "path": "datasets/1/attributes",
+            "json": {
+                "name": "attribute",
+                "isNullable": true,
+                "type": {
+                    "baseType": "ARRAY",
+                    "innerType": {
+                        "baseType": "STRING"
+                    }
+                }
+            }
+        },
+        "response": {
+            "status": 500,
+            "json": {}
+        }
+    },
+    {
+        "request": {
+            "method": "DELETE",
+            "path": "datasets/1?cascade=false"
+        },
+        "response": {
+            "status": 204
         }
     }
 ]
