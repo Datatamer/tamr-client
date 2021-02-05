@@ -148,7 +148,7 @@ def stream(session: Session, dataset: AnyDataset) -> Iterator[JsonDict]:
         Python generator yielding records
     """
     with session.get(str(dataset.url) + "/records", stream=True) as r:
-        return response.ndjson(r)
+        yield from response.ndjson(r)
 
 
 def delete_all(session: Session, dataset: AnyDataset):
