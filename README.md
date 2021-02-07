@@ -13,7 +13,7 @@ Programmatically 💻 interact with Tamr using Python 🐍
 *Quick links:*
 **[Docs](https://tamr-client.readthedocs.io/en/stable/)** |
 **[Contributing](https://tamr-client.readthedocs.io/en/stable/contributor-guide.html)** |
-**[License](https://github.com/Datatamer/tamr-client/blob/master/LICENSE)**
+**[License](https://github.com/Datatamer/tamr-client/blob/main/LICENSE)**
 
 ---
 

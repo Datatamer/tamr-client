@@ -13,4 +13,4 @@ Please look for any issues that this PR resolves and tag them in the PR.
 
 - [ ] Testing for this change
 - [ ] Links to related issues/PRs
-- [ ] Update relevant [docs](https://github.com/Datatamer/tamr-client/tree/master/docs) + docstrings
+- [ ] Update relevant [docs](https://github.com/Datatamer/tamr-client/tree/main/docs) + docstrings

@@ -15,7 +15,7 @@
     cd tamr-client
     ```
 
-2. Install all Python versions in [.python-version](https://github.com/Datatamer/tamr-client/blob/master/.python-version):
+2. Install all Python versions in [.python-version](https://github.com/Datatamer/tamr-client/blob/main/.python-version):
 
     [Dev tasks](dev-tasks) will use these Python versions.
 
