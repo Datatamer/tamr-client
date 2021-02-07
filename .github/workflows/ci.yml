@@ -3,10 +3,10 @@ name: CI
 on:
   pull_request:
     branches:
-      - master
+      - main
   push:
     branches:
-      - master
+      - main
 
 jobs:
   Lint:
@@ -98,10 +98,10 @@ jobs:
       - name: Install commitlint
         run: npm install -g @commitlint/cli @commitlint/config-conventional
       - name: Run commitlint
-        run: commitlint --from=origin/master
+        run: commitlint --from=origin/main
 
   Release:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: [Lint, Format, Typecheck, Test, Docs, Commitlint]
     steps:
