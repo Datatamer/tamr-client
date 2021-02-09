@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional, Union
 
+from tamr_client._types.attribute import Attribute
 from tamr_client._types.url import URL
 
 
@@ -96,3 +97,20 @@ Project = Union[
     GoldenRecordsProject,
     UnknownProject,
 ]
+
+
+@dataclass(frozen=True)
+class AttributeMapping:
+    """A Tamr Attribute Mapping.
+
+    See https://docs.tamr.com/new/reference/retrieve-projects-mappings
+
+    Args:
+        url
+        input_attribute
+        unified_attribute
+    """
+
+    url: URL
+    input_attribute: Attribute
+    unified_attribute: Attribute

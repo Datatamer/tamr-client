@@ -1,0 +1,14 @@
+[
+    {
+        "request": {
+            "method": "DELETE",
+            "path": "projects/4/attributeMappings/000-000"
+        },
+        "response": {
+            "status": 404,
+            "json": {
+                "message": "No result found"
+            }
+        }
+    }
+]

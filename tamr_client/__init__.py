@@ -19,6 +19,7 @@ _beta.check()
 from tamr_client._types import (
     AnyDataset,
     Attribute,
+    AttributeMapping,
     AttributeType,
     Backup,
     CategorizationProject,

@@ -180,6 +180,14 @@ def golden_records_project() -> tc.GoldenRecordsProject:
     return golden_records_project
 
 
+def schema_mapping_project() -> tc.SchemaMappingProject:
+    url = tc.URL(path="projects/4")
+    schema_mapping_project = tc.SchemaMappingProject(
+        url, name="Project 4", description="A Schema Mapping Project"
+    )
+    return schema_mapping_project
+
+
 def transforms() -> tc.Transformations:
     return tc.Transformations(
         input_scope=[
@@ -197,4 +205,18 @@ def attribute() -> tc.Attribute:
         type=tc.attribute.type.DEFAULT,
         description="Synthetic row number",
         is_nullable=False,
+    )
+
+
+def attribute_mapping() -> tc.AttributeMapping:
+    return tc.AttributeMapping(
+        url=tc.URL(path="projects/4/attributeMappings/123-456"),
+        input_attribute=attribute(),
+        unified_attribute=tc.Attribute(
+            url=tc.URL(path="datasets/2/attributes/SourceRowNum"),
+            name="RowNum",
+            type=tc.attribute.type.DEFAULT,
+            description="Synthetic row number",
+            is_nullable=False,
+        ),
     )

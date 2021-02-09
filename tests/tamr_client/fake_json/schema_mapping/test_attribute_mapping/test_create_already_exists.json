@@ -1,0 +1,15 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "projects/4/attributeMappings",
+            "json": {
+                "relativeInputAttributeId": "datasets/1/attributes/RowNum",
+                "relativeUnifiedAttributeId": "datasets/2/attributes/SourceRowNum"
+            }
+        },
+        "response": {
+            "status": 204
+        }
+    }
+]

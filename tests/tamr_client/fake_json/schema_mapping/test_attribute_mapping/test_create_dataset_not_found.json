@@ -1,0 +1,18 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "projects/4/attributeMappings",
+            "json": {
+                "relativeInputAttributeId": "datasets/1/attributes/RowNum",
+                "relativeUnifiedAttributeId": "datasets/9/attributes/SourceRowNum"
+            }
+        },
+        "response": {
+            "status": 404,
+            "json": {
+                "message": "Dataset with id 9 not found."
+            }
+        }
+    }
+]

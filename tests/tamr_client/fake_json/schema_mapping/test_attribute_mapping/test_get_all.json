@@ -1,0 +1,159 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "path": "projects/4/attributeMappings"
+        },
+        "response": {
+            "status": 200,
+            "json": [
+                {
+                    "id": "unify://unified-data/v1/projects/4/attributeMappings/123-456",
+                    "relativeId": "projects/4/attributeMappings/123-456",
+                    "inputAttributeId": "unify://unified-data/v1/datasets/1/attributes/RowNum",
+                    "relativeInputAttributeId": "datasets/1/attributes/RowNum",
+                    "inputDatasetName": "dataset.csv",
+                    "inputAttributeName": "RowNum",
+                    "unifiedAttributeId": "unify://unified-data/v1/datasets/2/attributes/SourceRowNum",
+                    "relativeUnifiedAttributeId": "datasets/2/attributes/SourceRowNum",
+                    "unifiedDatasetName": "Project 4_unified_dataset",
+                    "unifiedAttributeName": "SourceRowNum"
+                },
+                {
+                    "id": "unify://unified-data/v1/projects/4/attributeMappings/890-567",
+                    "relativeId": "projects/4/attributeMappings/890-567",
+                    "inputAttributeId": "unify://unified-data/v1/datasets/1/attributes/RowNum",
+                    "relativeInputAttributeId": "datasets/1/attributes/RowNum",
+                    "inputDatasetName": "dataset.csv",
+                    "inputAttributeName": "RowNum",
+                    "unifiedAttributeId": "unify://unified-data/v1/datasets/2/attributes/OtherSourceRowNum",
+                    "relativeUnifiedAttributeId": "datasets/2/attributes/OtherSourceRowNum",
+                    "unifiedDatasetName": "Project 4_unified_dataset",
+                    "unifiedAttributeName": "OtherSourceRowNum"
+                }
+            ]
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets/1"
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "id": "unify://unified-data/v1/datasets/1",
+                "externalId": "number 1",
+                "name": "dataset 1 name",
+                "description": "dataset 1 description",
+                "version": "dataset 1 version",
+                "keyAttributeNames": [
+                    "tamr_id"
+                ],
+                "tags": [],
+                "created": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.636Z",
+                    "version": "dataset 1 created version"
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.851Z",
+                    "version": "dataset 1 modified version"
+                },
+                "relativeId": "datasets/1",
+                "upstreamDatasetIds": []
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets/1/attributes"
+        },
+        "response": {
+            "status": 200,
+            "json": [
+                {
+                    "name": "RowNum",
+                    "description": "Synthetic row number",
+                    "type": {
+                        "baseType": "ARRAY",
+                        "innerType": {
+                            "baseType": "STRING",
+                            "attributes": []
+                        }
+                    },
+                    "isNullable": false
+                }
+            ]
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets/2"
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "id": "unify://unified-data/v1/datasets/2",
+                "externalId": "number 1",
+                "name": "dataset 2 name",
+                "description": "dataset 2 description",
+                "version": "dataset 2 version",
+                "keyAttributeNames": [
+                    "tamr_id"
+                ],
+                "tags": [],
+                "created": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.636Z",
+                    "version": "dataset 2 created version"
+                },
+                "lastModified": {
+                    "username": "admin",
+                    "time": "2018-09-10T16:06:20.851Z",
+                    "version": "dataset 2 modified version"
+                },
+                "relativeId": "datasets/2",
+                "upstreamDatasetIds": []
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "path": "datasets/2/attributes"
+        },
+        "response": {
+            "status": 200,
+            "json": [
+                {
+                    "name": "SourceRowNum",
+                    "description": "Synthetic row number",
+                    "type": {
+                        "baseType": "ARRAY",
+                        "innerType": {
+                            "baseType": "STRING",
+                            "attributes": []
+                        }
+                    },
+                    "isNullable": false
+                },
+                {
+                    "name": "OtherSourceRowNum",
+                    "description": "Synthetic row number",
+                    "type": {
+                        "baseType": "ARRAY",
+                        "innerType": {
+                            "baseType": "STRING",
+                            "attributes": []
+                        }
+                    },
+                    "isNullable": false
+                }
+            ]
+        }
+    }
+]
