@@ -53,6 +53,16 @@ methods:
 response = tamr.get('relative/path/to/resource')
 ```
 
+Request headers and data can be supplied by passing dictionaries or lists with the `headers` and `json` arguments:
+
+```python
+# e.g. `post` with headers and data
+headers = {...}
+body = {...}
+
+response = tamr.post('relative/path/to/resource', headers=headers, json=body) 
+``` 
+
 ### Custom Host / Port / Base API path
 
 If you need to repeatedly send requests to another port or base API path (i.e. not `/api/versioned/v1/`), you can simply instantiate a different client.
