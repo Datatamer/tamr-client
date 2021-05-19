@@ -6,6 +6,7 @@ import requests
 import requests.auth
 import requests.exceptions
 
+from tamr_unify_client.auth.token import TokenAuth
 from tamr_unify_client.dataset.collection import DatasetCollection
 from tamr_unify_client.project.collection import ProjectCollection
 import tamr_unify_client.response as response
@@ -47,6 +48,7 @@ class Client:
         port: Optional[int] = 9100,
         base_path: str = "/api/versioned/v1/",
         session: Optional[requests.Session] = None,
+        store_auth_cookie: bool = False,
     ):
         self.auth = auth
         self.host = host
@@ -55,6 +57,8 @@ class Client:
         self.base_path = base_path
         self.session = session or requests.Session()
         self.session.auth = auth
+        if store_auth_cookie:
+            self.set_auth_cookie()
 
         self._projects = ProjectCollection(self)
         self._datasets = DatasetCollection(self)
@@ -95,7 +99,16 @@ class Client:
             url = self.origin + endpoint
         else:
             url = self.origin + self.base_path + endpoint
+
+        # Attempt request with auth cookie
         response = self.session.request(method, url, **kwargs)
+        if response.status_code == 401 and "credentials" in response.text.lower():
+            first_response = response
+            self.set_auth_cookie()
+            response = self.session.request(method, url, **kwargs)
+            if response.status_code == 401 and "credentials" in response.text.lower():
+                # Login credentials are bad, return original response
+                response = first_response
 
         logger.info(
             f"{response.request.method} {response.url} : {response.status_code}"
@@ -121,6 +134,22 @@ class Client:
         """Calls :func:`~tamr_unify_client.Client.request` with the ``"DELETE"`` method.
         """
         return self.request("DELETE", endpoint, **kwargs)
+
+    def set_auth_cookie(self):
+        """Fetch and store an auth token for the given client configuration"""
+        # Fetch auth token and store as cookie
+        if isinstance(self.auth, TokenAuth):
+            raise TypeError("Auth cookie not supported for TokenAuth authentication")
+        r = self.post(
+            "./instance:login",
+            json={"username": self.auth.username, "password": self.auth.password},
+        )
+        if r.status_code != 200:
+            raise Exception  # TODO: Replace with sensible handling
+        auth_token = r.json()["token"]
+        self.session.cookies.set("authToken", auth_token)  # TODO: Set domain
+        # Clear session auth.  It is still accessible as self.auth if needed
+        self.session.auth = None
 
     @property
     def projects(self) -> ProjectCollection:
