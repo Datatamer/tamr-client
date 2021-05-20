@@ -10,7 +10,7 @@ class DatasetUsage(BaseResource):
     """
 
     @classmethod
-    def from_json(self, client, resource_json, api_path):
+    def from_json(cls, client, resource_json, api_path):
         return super().from_data(client, resource_json, api_path)
 
     @property
