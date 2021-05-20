@@ -89,7 +89,12 @@ class Client:
         Returns:
             HTTP response from the Tamr server
         """
-        url = urljoin(self.origin + self.base_path, endpoint)
+        # imperfect solution needed to allow passing absolute urls
+        if f"{self.host}:" in endpoint or endpoint[0] == "/":
+            url = urljoin(self.origin + self.base_path, endpoint)
+        else:
+            # prefix endpoint with "./" to handle endpoints with a colon and no other slashes
+            url = urljoin(self.origin + self.base_path, "./" + endpoint)
         response = self.session.request(method, url, **kwargs)
 
         logger.info(
