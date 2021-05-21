@@ -23,7 +23,7 @@ class TestAttributeConfigurationCollection(TestCase):
     @responses.activate
     def test_by_relative_id(self):
         ac_url = "http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
-        alias = "projects/1/attributeConfigurations/"
+        alias = "projects/1/attributeConfigurations"
         ac_test = AttributeConfigurationCollection(self.tamr, alias)
         expected = self.acc_json[0]["relativeId"]
         responses.add(responses.GET, ac_url, json=self.acc_json[0])
@@ -35,7 +35,7 @@ class TestAttributeConfigurationCollection(TestCase):
     @responses.activate
     def test_by_resource_id(self):
         ac_url = "http://localhost:9100/api/versioned/v1/projects/1/attributeConfigurations/1"
-        alias = "projects/1/attributeConfigurations/"
+        alias = "projects/1/attributeConfigurations"
         ac_test = AttributeConfigurationCollection(self.tamr, alias)
         expected = self.acc_json[0]["relativeId"]
         responses.add(responses.GET, ac_url, json=self.acc_json[0])
