@@ -90,11 +90,12 @@ class Client:
             HTTP response from the Tamr server
         """
         # imperfect solution needed to allow passing absolute urls
-        if f"{self.host}:" in endpoint or endpoint[0] == "/":
-            url = urljoin(self.origin + self.base_path, endpoint)
-        else:
-            # prefix endpoint with "./" to handle endpoints with a colon and no other slashes
+        if endpoint.count(":") == 1 and "/" not in endpoint:
+            # prefix endpoint with "./" to handle endpoints with a colon and no slashes
             url = urljoin(self.origin + self.base_path, "./" + endpoint)
+        else:
+            # can handle with standard urljoin
+            url = urljoin(self.origin + self.base_path, endpoint)
         response = self.session.request(method, url, **kwargs)
 
         logger.info(
