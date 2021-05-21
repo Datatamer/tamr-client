@@ -132,8 +132,12 @@ def json(test_fn):
     return wrapper
 
 
-def session() -> tc.Session:
-    auth = tc.UsernamePasswordAuth("username", "password")
+def username_password_auth() -> tc.UsernamePasswordAuth:
+    return tc.UsernamePasswordAuth("username", "password")
+
+
+def session() -> tc._types.Session:
+    auth = username_password_auth()
     s = tc.session.from_auth(auth)
     return s
 
