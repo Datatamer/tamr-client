@@ -1,6 +1,6 @@
 import logging
 from typing import Optional
-from urllib.parse import urljoin
+from urllib.parse import urlparse
 
 import requests
 import requests.auth
@@ -89,7 +89,12 @@ class Client:
         Returns:
             HTTP response from the Tamr server
         """
-        url = urljoin(self.origin + self.base_path, endpoint)
+        if urlparse(endpoint).scheme != "" and urlparse(endpoint).netloc != "":
+            url = endpoint
+        elif endpoint.startswith("/"):
+            url = self.origin + endpoint
+        else:
+            url = self.origin + self.base_path + endpoint
         response = self.session.request(method, url, **kwargs)
 
         logger.info(
