@@ -224,3 +224,25 @@ def attribute_mapping() -> tc.AttributeMapping:
             is_nullable=False,
         ),
     )
+
+
+def project_attribute() -> tc.Attribute:
+    return tc.Attribute(
+        url=tc.URL(path="projects/1/attributes/StreetAddress"),
+        name="StreetAddress",
+        type=tc.attribute.type.DEFAULT,
+        description="A Mastering Project attribute",
+        is_nullable=False,
+    )
+
+
+def attribute_configuration() -> tc.AttributeConfiguration:
+    return tc.AttributeConfiguration(
+        url=tc.URL(path="projects/1/attributeConfigurations/1600"),
+        attribute=project_attribute(),
+        attribute_role=tc.attribute.configuration.AttributeRole.NONE,
+        similarity_function=tc.attribute.configuration.SimilarityFunction.COSINE,
+        enabled_for_ml=True,
+        tokenizer=tc.attribute.configuration.Tokenizer.DEFAULT,
+        numeric_field_resolution=[],
+    )

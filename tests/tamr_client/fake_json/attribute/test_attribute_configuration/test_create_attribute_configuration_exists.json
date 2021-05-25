@@ -1,0 +1,11 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "projects/1/attributeConfigurations"
+        },
+        "response": {
+            "status": 409
+        }
+    }
+]

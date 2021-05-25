@@ -22,12 +22,16 @@ from tamr_client._types.instance import Instance
 from tamr_client._types.json import JsonDict
 from tamr_client._types.operation import Operation
 from tamr_client._types.project import (
+    AttributeConfiguration,
     AttributeMapping,
+    AttributeRole,
     CategorizationProject,
     GoldenRecordsProject,
     MasteringProject,
     Project,
     SchemaMappingProject,
+    SimilarityFunction,
+    Tokenizer,
     UnknownProject,
 )
 from tamr_client._types.restore import Restore
