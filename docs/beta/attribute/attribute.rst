@@ -20,3 +20,6 @@ Exceptions
 
 .. autoclass:: tamr_client.attribute.ReservedName
   :no-inherited-members:
+
+.. autoclass:: tamr_client.attribute.CannotCreateAttributesOnUnifiedDataset
+  :no-inherited-members:

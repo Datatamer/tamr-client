@@ -2,7 +2,6 @@
 See https://docs.tamr.com/reference/dataset-models
 """
 from copy import deepcopy
-from dataclasses import replace
 from typing import List, Optional, Tuple, Union
 
 from tamr_client import operation, response
@@ -15,7 +14,7 @@ from tamr_client._types import (
     Session,
     URL,
 )
-from tamr_client.attribute import _from_json as _attribute_from_json
+from tamr_client.attribute import _get_all_from_parent
 from tamr_client.exception import TamrClientException
 
 
@@ -136,17 +135,7 @@ def attributes(session: Session, dataset: Dataset) -> Tuple[Attribute, ...]:
     Raises:
         requests.HTTPError: If an HTTP error is encountered.
     """
-    attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
-    r = session.get(str(attrs_url))
-    attrs_json = response.successful(r).json()
-
-    attrs = []
-    for attr_json in attrs_json:
-        id = attr_json["name"]
-        attr_url = replace(attrs_url, path=attrs_url.path + f"/{id}")
-        attr = _attribute_from_json(attr_url, attr_json)
-        attrs.append(attr)
-    return tuple(attrs)
+    return _get_all_from_parent(session, dataset)
 
 
 def materialize(session: Session, dataset: Dataset) -> Operation:

@@ -1,0 +1,119 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "projects/1/attributes",
+            "json": {
+                "name": "attr",
+                "isNullable": false,
+                "type": {
+                    "baseType": "RECORD",
+                    "attributes": [
+                        {
+                            "name": "0",
+                            "isNullable": true,
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING"
+                                }
+                            }
+                        },
+                        {
+                            "name": "1",
+                            "isNullable": true,
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING"
+                                }
+                            }
+                        },
+                        {
+                            "name": "2",
+                            "isNullable": true,
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING"
+                                }
+                            }
+                        },
+                        {
+                            "name": "3",
+                            "isNullable": true,
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING"
+                                }
+                            }
+                        }
+                    ]
+                },
+                "description": "an attribute"
+            }
+        },
+        "response": {
+            "status": 201,
+            "json": {
+                "name": "attr",
+                "description": "an attribute",
+                "type": {
+                    "baseType": "RECORD",
+                    "attributes": [
+                        {
+                            "name": "0",
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING",
+                                    "attributes": []
+                                },
+                                "attributes": []
+                            },
+                            "isNullable": true
+                        },
+                        {
+                            "name": "1",
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING",
+                                    "attributes": []
+                                },
+                                "attributes": []
+                            },
+                            "isNullable": true
+                        },
+                        {
+                            "name": "2",
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING",
+                                    "attributes": []
+                                },
+                                "attributes": []
+                            },
+                            "isNullable": true
+                        },
+                        {
+                            "name": "3",
+                            "type": {
+                                "baseType": "ARRAY",
+                                "innerType": {
+                                    "baseType": "STRING",
+                                    "attributes": []
+                                },
+                                "attributes": []
+                            },
+                            "isNullable": true
+                        }
+                    ]
+                },
+                "isNullable": false
+            }
+        }
+    }
+]

@@ -3,10 +3,19 @@ See https://docs.tamr.com/reference/attribute-types
 """
 from copy import deepcopy
 from dataclasses import replace
-from typing import Optional
+from typing import Optional, Tuple, Union
 
 from tamr_client import response
-from tamr_client._types import Attribute, AttributeType, Dataset, JsonDict, Session, URL
+from tamr_client._types import (
+    Attribute,
+    AttributeType,
+    Dataset,
+    JsonDict,
+    Project,
+    Session,
+    UnifiedDataset,
+    URL,
+)
 from tamr_client.attribute import type as attribute_type
 from tamr_client.exception import TamrClientException
 
@@ -29,6 +38,8 @@ _RESERVED_NAMES = frozenset(
     ]
 )
 
+Parent = Union[Dataset, Project]
+
 
 class AlreadyExists(TamrClientException):
     """Raised when trying to create an attribute that already exists on the server"""
@@ -50,13 +61,21 @@ class ReservedName(TamrClientException):
     pass
 
 
-def by_resource_id(session: Session, dataset: Dataset, id: str) -> Attribute:
+class CannotCreateAttributesOnUnifiedDataset(TamrClientException):
+    """Raised when attempting to create an attribute on a unified dataset"""
+
+    pass
+
+
+def by_resource_id(
+    session: Session, parent: Union[Dataset, Project], id: str
+) -> Attribute:
     """Get attribute by resource ID
 
     Fetches attribute from Tamr server
 
     Args:
-        dataset: Dataset containing this attribute
+        parent: Dataset or project containing this attribute
         id: Attribute ID
 
     Raises:
@@ -64,7 +83,7 @@ def by_resource_id(session: Session, dataset: Dataset, id: str) -> Attribute:
             Corresponds to a 404 HTTP error.
         requests.HTTPError: If any other HTTP error is encountered.
     """
-    url = replace(dataset.url, path=dataset.url.path + f"/attributes/{id}")
+    url = replace(parent.url, path=parent.url.path + f"/attributes/{id}")
     return _by_url(session, url)
 
 
@@ -126,7 +145,7 @@ def to_json(attr: Attribute) -> JsonDict:
 
 def create(
     session: Session,
-    dataset: Dataset,
+    parent: Parent,
     *,
     name: str,
     is_nullable: bool,
@@ -138,7 +157,7 @@ def create(
     Posts a creation request to the Tamr server
 
     Args:
-        dataset: Dataset that should contain the new attribute
+        parent: Dataset or project that should contain the new attribute
         name: Name for the new attribute
         type: Attribute type for the new attribute
         is_nullable: Determines if the new attribute can contain NULL values
@@ -157,9 +176,15 @@ def create(
     if name in _RESERVED_NAMES:
         raise ReservedName(name)
 
+    if isinstance(parent, UnifiedDataset):
+        raise CannotCreateAttributesOnUnifiedDataset(
+            "Attributes for unified datasets must be created as attributes of the "
+            "containing project"
+        )
+
     return _create(
         session,
-        dataset,
+        parent,
         name=name,
         is_nullable=is_nullable,
         type=type,
@@ -169,7 +194,7 @@ def create(
 
 def _create(
     session: Session,
-    dataset: Dataset,
+    parent: Parent,
     *,
     name: str,
     is_nullable: bool,
@@ -179,7 +204,7 @@ def _create(
     """Same as `tc.attribute.create`, but does not check for reserved attribute
     names.
     """
-    attrs_url = replace(dataset.url, path=dataset.url.path + "/attributes")
+    attrs_url = replace(parent.url, path=parent.url.path + "/attributes")
     url = replace(attrs_url, path=attrs_url.path + f"/{name}")
 
     body = {
@@ -242,3 +267,26 @@ def delete(session: Session, attribute: Attribute):
     if r.status_code == 404:
         raise NotFound(str(attribute.url))
     response.successful(r)
+
+
+def _get_all_from_parent(session: Session, parent: Parent) -> Tuple[Attribute, ...]:
+    """Get all attributes belonging to a parent entity
+
+    Args:
+        parent: Entity to fetch attributes from
+
+    Returns:
+        The attributes for the specified parent
+
+    Raises:
+        requests.HTTPError: If an HTTP error is encountered.
+    """
+    attrs_url = replace(parent.url, path=parent.url.path + "/attributes")
+    r = session.get(str(attrs_url))
+    attrs_json = response.successful(r).json()
+
+    def attr_from_json(attr_json: JsonDict) -> Attribute:
+        attr_url = replace(attrs_url, path=attrs_url.path + f'/{attr_json["name"]}')
+        return _from_json(attr_url, attr_json)
+
+    return tuple(attr_from_json(attr_json) for attr_json in attrs_json)
