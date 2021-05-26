@@ -145,3 +145,19 @@ def test_from_json_unrecognized_project_type():
     assert isinstance(project, tc.UnknownProject)
     assert project.name == "project 1"
     assert project.description == "A project of unknown type"
+
+
+@fake.json
+def test_attributes():
+    s = fake.session()
+    project = fake.mastering_project()
+
+    attrs = tc.project.attributes(s, project)
+
+    row_num = attrs[0]
+    assert row_num.name == "RowNum"
+    assert row_num.type == tc.attribute.type.STRING
+
+    geom = attrs[1]
+    assert geom.name == "geom"
+    assert isinstance(geom.type, tc.attribute.type.Record)
