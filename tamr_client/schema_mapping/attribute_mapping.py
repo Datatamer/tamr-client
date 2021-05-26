@@ -2,7 +2,7 @@
 See https://docs.tamr.com/new/reference/retrieve-projects-mappings
 """
 from copy import deepcopy
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Optional, Tuple
 
 from tamr_client import attribute, dataset, response
 from tamr_client import project as tc_project
@@ -88,7 +88,7 @@ def create(
     )
 
 
-def get_all(session: Session, tamr_project: Project) -> List[AttributeMapping]:
+def get_all(session: Session, tamr_project: Project) -> Tuple[AttributeMapping, ...]:
     """Get all attribute mappings of a Tamr project
 
     Args:
@@ -114,7 +114,7 @@ def get_all(session: Session, tamr_project: Project) -> List[AttributeMapping]:
             attribute_memo=attribute_memo,
         )
         mapping_list.append(mapping)
-    return mapping_list
+    return tuple(mapping_list)
 
 
 def _get(
