@@ -144,8 +144,10 @@ class Client:
             "./instance:login",
             json={"username": self.auth.username, "password": self.auth.password},
         )
-        if r.status_code != 200:
-            raise Exception  # TODO: Replace with sensible handling
+        # If login request fails for any reason do not set cookie so following responses use
+        # header credentials for authentication
+        if not r.ok:
+            return
         auth_token = r.json()["token"]
         self.session.cookies.set("authToken", auth_token)  # TODO: Set domain
         # Clear session auth.  It is still accessible as self.auth if needed
