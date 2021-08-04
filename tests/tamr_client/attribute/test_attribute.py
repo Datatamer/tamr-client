@@ -177,3 +177,11 @@ def test_delete_attribute_not_found():
 
     with pytest.raises(tc.attribute.NotFound):
         tc.attribute.delete(s, attr)
+
+
+def test_create_attribute_on_unified_dataset():
+    s = fake.session()
+    dataset = fake.unified_dataset()
+
+    with pytest.raises(tc.attribute.CannotCreateAttributesOnUnifiedDataset):
+        tc.attribute.create(s, dataset, name="attr", is_nullable=False)  # type: ignore
