@@ -60,6 +60,38 @@ def test_create():
 
 
 @fake.json
+def test_create_project_attribute():
+    s = fake.session()
+    project = fake.mastering_project()
+
+    attrs = tuple(
+        [
+            tc.SubAttribute(
+                name=str(i),
+                is_nullable=True,
+                type=tc.attribute.type.Array(tc.attribute.type.STRING),
+            )
+            for i in range(4)
+        ]
+    )
+
+    attr = tc.attribute.create(
+        s,
+        project,
+        name="attr",
+        is_nullable=False,
+        type=tc.attribute.type.Record(attributes=attrs),
+        description="an attribute",
+    )
+
+    assert attr.name == "attr"
+    assert not attr.is_nullable
+    assert isinstance(attr.type, tc.attribute.type.Record)
+    assert attr.type.attributes == attrs
+    assert attr.description == "an attribute"
+
+
+@fake.json
 def test_update():
     s = fake.session()
     attr = fake.attribute()
@@ -145,3 +177,11 @@ def test_delete_attribute_not_found():
 
     with pytest.raises(tc.attribute.NotFound):
         tc.attribute.delete(s, attr)
+
+
+def test_create_attribute_on_unified_dataset():
+    s = fake.session()
+    dataset = fake.unified_dataset()
+
+    with pytest.raises(tc.attribute.CannotCreateAttributesOnUnifiedDataset):
+        tc.attribute.create(s, dataset, name="attr", is_nullable=False)  # type: ignore

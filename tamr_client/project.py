@@ -1,7 +1,16 @@
 from typing import List, Optional, Tuple, Union
 
 from tamr_client import response
-from tamr_client._types import Instance, JsonDict, Project, Session, UnknownProject, URL
+from tamr_client._types import (
+    Attribute,
+    Instance,
+    JsonDict,
+    Project,
+    Session,
+    UnknownProject,
+    URL,
+)
+from tamr_client.attribute import _get_all_from_parent
 from tamr_client.categorization import project as categorization_project
 from tamr_client.exception import TamrClientException
 from tamr_client.golden_records import project as golden_records_project
@@ -198,3 +207,18 @@ def get_all(
         project = _from_json(project_url, project_json)
         projects.append(project)
     return tuple(projects)
+
+
+def attributes(session: Session, project: Project) -> Tuple[Attribute, ...]:
+    """Get all attributes from a project
+
+    Args:
+        project: Project containing the desired attributes
+
+    Returns:
+        The attributes for the specified project
+
+    Raises:
+        requests.HTTPError: If an HTTP error is encountered.
+    """
+    return _get_all_from_parent(session, project)

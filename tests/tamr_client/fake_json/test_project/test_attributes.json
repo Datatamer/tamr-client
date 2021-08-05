@@ -1,0 +1,80 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "path": "projects/1/attributes"
+        },
+        "response": {
+            "status": 200,
+            "json": [
+                {
+                    "name": "RowNum",
+                    "description": "Synthetic row number",
+                    "type": {
+                        "baseType": "STRING",
+                        "attributes": []
+                    },
+                    "isNullable": false
+                },
+                {
+                    "name": "geom",
+                    "description": "",
+                    "type": {
+                        "baseType": "RECORD",
+                        "attributes": [
+                            {
+                                "name": "point",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "DOUBLE",
+                                        "attributes": []
+                                    },
+                                    "attributes": []
+                                },
+                                "isNullable": true
+                            },
+                            {
+                                "name": "lineString",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "ARRAY",
+                                        "innerType": {
+                                            "baseType": "DOUBLE",
+                                            "attributes": []
+                                        },
+                                        "attributes": []
+                                    },
+                                    "attributes": []
+                                },
+                                "isNullable": true
+                            },
+                            {
+                                "name": "polygon",
+                                "type": {
+                                    "baseType": "ARRAY",
+                                    "innerType": {
+                                        "baseType": "ARRAY",
+                                        "innerType": {
+                                            "baseType": "ARRAY",
+                                            "innerType": {
+                                                "baseType": "DOUBLE",
+                                                "attributes": []
+                                            },
+                                            "attributes": []
+                                        },
+                                        "attributes": []
+                                    },
+                                    "attributes": []
+                                },
+                                "isNullable": true
+                            }
+                        ]
+                    },
+                    "isNullable": false
+                }
+            ]
+        }
+    }
+]
