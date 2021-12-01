@@ -43,7 +43,7 @@ def typecheck(session):
     session.run("mypy", *tc_tests)
 
 
-@nox.session(python=["3.6", "3.7", "3.8"])
+@nox.session(python=["3.6", "3.7", "3.8", "3.9"])
 def test(session):
     session.run("poetry", "install", external=True)
     session.run("pytest", *session.posargs, env={"TAMR_CLIENT_BETA": "1"})
