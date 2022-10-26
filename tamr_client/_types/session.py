@@ -1,14 +1,14 @@
-from typing import Optional
+from typing import Optional, Union
 
 import requests
 
-from tamr_client._types.auth import UsernamePasswordAuth
+from tamr_client._types.auth import JwtTokenAuth, UsernamePasswordAuth
 
 
 class Session(requests.Session):
     def __init__(self):
         super(self.__class__, self).__init__()
-        self._stored_auth: Optional[UsernamePasswordAuth] = None
+        self._stored_auth: Optional[Union[UsernamePasswordAuth, JwtTokenAuth]] = None
 
     def request(self, *args, **kwargs):
         # signature of `requests` requires not naming positional args
@@ -30,6 +30,10 @@ class Session(requests.Session):
 
         # Fetch auth token and store as cookie
         socket_address = parent_url.split("/api/")[0]
+        if not isinstance(self._stored_auth, UsernamePasswordAuth):
+            raise TypeError(
+                "Auth cookie only supported for UsernamePasswordAuth authentication"
+            )
         r = self.post(
             socket_address + "/api/versioned/v1/instance:login",
             json={

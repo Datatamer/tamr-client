@@ -6,7 +6,8 @@ import requests
 import requests.auth
 import requests.exceptions
 
-from tamr_unify_client.auth.token import TokenAuth
+from tamr_unify_client.auth.jwt_token import JwtTokenAuth
+from tamr_unify_client.auth.username_password import UsernamePasswordAuth
 from tamr_unify_client.dataset.collection import DatasetCollection
 from tamr_unify_client.project.collection import ProjectCollection
 import tamr_unify_client.response as response
@@ -102,7 +103,11 @@ class Client:
 
         # Attempt request with auth cookie
         response = self.session.request(method, url, **kwargs)
-        if response.status_code == 401 and "credentials" in response.text.lower():
+        if (
+            response.status_code == 401
+            and "credentials" in response.text.lower()
+            and not isinstance(self.session.auth, JwtTokenAuth)
+        ):
             first_response = response
             self.set_auth_cookie()
             response = self.session.request(method, url, **kwargs)
@@ -138,8 +143,10 @@ class Client:
     def set_auth_cookie(self):
         """Fetch and store an auth token for the given client configuration"""
         # Fetch auth token and store as cookie
-        if isinstance(self.auth, TokenAuth):
-            raise TypeError("Auth cookie not supported for TokenAuth authentication")
+        if not isinstance(self.auth, UsernamePasswordAuth):
+            raise TypeError(
+                "Auth cookie only supported for UsernamePasswordAuth authentication"
+            )
         r = self.post(
             "./instance:login",
             json={"username": self.auth.username, "password": self.auth.password},

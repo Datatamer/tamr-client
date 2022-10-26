@@ -15,7 +15,7 @@ from tamr_client._types.attribute import (
     STRING,
     SubAttribute,
 )
-from tamr_client._types.auth import UsernamePasswordAuth
+from tamr_client._types.auth import JwtTokenAuth, UsernamePasswordAuth
 from tamr_client._types.backup import Backup
 from tamr_client._types.dataset import AnyDataset, Dataset, UnifiedDataset
 from tamr_client._types.instance import Instance

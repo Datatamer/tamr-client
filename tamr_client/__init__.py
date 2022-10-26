@@ -27,6 +27,7 @@ from tamr_client._types import (
     GoldenRecordsProject,
     InputTransformation,
     Instance,
+    JwtTokenAuth,
     MasteringProject,
     Operation,
     Project,
