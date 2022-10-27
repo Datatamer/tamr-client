@@ -15,8 +15,8 @@ class UsernamePasswordAuth(requests.auth.HTTPBasicAuth):
     Sets the `Authorization` HTTP header with Tamr's custom `BasicCreds` format.
 
     Args:
-        username:
-        password:
+        username: Tamr username for authentication
+        password: Tamr password for authentication
 
     Example:
         >>> import tamr_client as tc
@@ -38,3 +38,30 @@ class UsernamePasswordAuth(requests.auth.HTTPBasicAuth):
             f"username={repr(self.username)}"
             f"password=<redacted>)"
         )
+
+
+class JwtTokenAuth(requests.auth.AuthBase):
+    """Provides JWT authentication for Tamr.
+
+    Specifically, sets the `Authorization` HTTP header with `Bearer` format. This
+    feature is only supported in Tamr releases beginning with v2022.010.0
+
+    Args:
+        token: The JWT value to be used for authentication
+
+    Usage:
+        >>> import tamr_client as tc
+        >>> auth = tc.JwtTokenAuth('my token')
+        >>> s = tc.Session(auth)
+    """
+
+    def __init__(self, token):
+        self.token = token
+
+    def __call__(self, r):
+        r.headers["Authorization"] = "Bearer " + self.token
+        return r
+
+    def __repr__(self):
+        # intentionally leave out the token (potentially sensitive)
+        return f"{self.__class__.__module__}." f"{self.__class__.__qualname__}()"
