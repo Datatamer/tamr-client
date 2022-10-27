@@ -6,7 +6,6 @@ import requests
 import requests.auth
 import requests.exceptions
 
-from tamr_unify_client.auth.jwt_token import JwtTokenAuth
 from tamr_unify_client.auth.username_password import UsernamePasswordAuth
 from tamr_unify_client.dataset.collection import DatasetCollection
 from tamr_unify_client.project.collection import ProjectCollection
@@ -106,7 +105,7 @@ class Client:
         if (
             response.status_code == 401
             and "credentials" in response.text.lower()
-            and not isinstance(self.session.auth, JwtTokenAuth)
+            and isinstance(self.auth, UsernamePasswordAuth)
         ):
             first_response = response
             self.set_auth_cookie()
