@@ -15,8 +15,8 @@ class UsernamePasswordAuth(requests.auth.HTTPBasicAuth):
     Sets the `Authorization` HTTP header with Tamr's custom `BasicCreds` format.
 
     Args:
-        username:
-        password:
+        username: Tamr username for authentication
+        password: Tamr password for authentication
 
     Example:
         >>> import tamr_client as tc
@@ -50,10 +50,9 @@ class JwtTokenAuth(requests.auth.AuthBase):
         token: The JWT value to be used for authentication
 
     Usage:
-        >>> from tamr_unify_client.auth import JwtTokenAuth
-        >>> auth = JwtTokenAuth('my token')
-        >>> import tamr_unify_client as api
-        >>> unify = api.Client(auth)
+        >>> import tamr_client as tc
+        >>> auth = tc.JwtTokenAuth('my token')
+        >>> s = tc.Session(auth)
     """
 
     def __init__(self, token):
