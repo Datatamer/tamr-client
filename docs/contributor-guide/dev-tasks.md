@@ -60,11 +60,11 @@ poetry run nox -s test # without alias
 
 ---
 
-To run tests for a specific Python version e.g. 3.6:
+To run tests for a specific Python version e.g. 3.10:
 
 ```sh
-prn -s test-3.6 # with alias
-poetry run nox -s test-3.6 # without alias
+prn -s test-3.10 # with alias
+poetry run nox -s test-3.10 # without alias
 ```
 
 See [`nox --list`](https://nox.thea.codes/en/stable/tutorial.html#selecting-which-sessions-to-run) for more details.

@@ -11,13 +11,13 @@ def _find_packages(path: Path):
             yield pkg
 
 
-@nox.session(python="3.6")
+@nox.session(python="3.10")
 def lint(session):
     session.run("poetry", "install", external=True)
     session.run("flake8", "--extend-exclude=.nox", ".")
 
 
-@nox.session(python="3.6")
+@nox.session(python="3.10")
 def format(session):
     session.run("poetry", "install", external=True)
     if "--fix" in session.posargs:
@@ -28,7 +28,7 @@ def format(session):
         session.run("black", ".", "--check")
 
 
-@nox.session(python="3.6")
+@nox.session(python="3.10")
 def typecheck(session):
     session.run("poetry", "install", external=True)
     repo = Path(".")
@@ -43,13 +43,13 @@ def typecheck(session):
     session.run("mypy", *tc_tests)
 
 
-@nox.session(python=["3.6", "3.7", "3.8", "3.9"])
+@nox.session(python=["3.7", "3.8", "3.9", "3.10"])
 def test(session):
     session.run("poetry", "install", external=True)
     session.run("pytest", *session.posargs, env={"TAMR_CLIENT_BETA": "1"})
 
 
-@nox.session(python="3.6")
+@nox.session(python="3.10")
 def docs(session):
     # RTD uses pip for managing dependencies, so we mirror that approach
     session.install(".")

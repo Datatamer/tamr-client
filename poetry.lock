@@ -546,7 +546,7 @@ version = "3.6.0"
 description = "Backport of pathlib-compatible object wrapper for zip files"
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [package.extras]
 docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
@@ -554,7 +554,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.6.1"
+python-versions = "^3.7.1"
 content-hash = "2eaeff30717689af657e57937588628e0625c3e5a7bf3b0896ca68a30a0d4bdc"
 
 [metadata.files]

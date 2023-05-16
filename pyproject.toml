@@ -16,10 +16,10 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9"
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
 ]
 packages = [
     { include = "tamr_client" },
@@ -28,10 +28,9 @@ packages = [
 include = ["tamr_client/py.typed"]
 
 [tool.poetry.dependencies]
-python = "^3.6.1"
+python = "^3.7.1"
 requests = "^2.22"
 urllib3 = "^1.26.14"
-dataclasses = { version = "^0.6.0", python = "<3.7"}
 
 [tool.poetry.dev-dependencies]
 responses = "^0.10.6"
