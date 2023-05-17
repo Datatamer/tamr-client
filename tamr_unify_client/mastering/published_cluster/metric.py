@@ -1,5 +1,5 @@
 class Metric:
-    """ A metric for a published cluster.
+    """A metric for a published cluster.
 
     This is not a `BaseResource` because it does not have its own API endpoint.
 

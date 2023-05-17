@@ -150,7 +150,7 @@ def materialize(session: Session, dataset: Dataset) -> Operation:
 
 
 def _materialize_async(session: Session, dataset: Dataset) -> Operation:
-    r = session.post(str(dataset.url) + ":refresh",)
+    r = session.post(str(dataset.url) + ":refresh")
     return operation._from_response(dataset.url.instance, r)
 
 

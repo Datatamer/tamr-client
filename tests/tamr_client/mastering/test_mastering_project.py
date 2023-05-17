@@ -8,7 +8,7 @@ def test_create():
     instance = fake.instance()
 
     project = tc.mastering.project.create(
-        s, instance, name="New Mastering Project", description="A Mastering Project",
+        s, instance, name="New Mastering Project", description="A Mastering Project"
     )
     assert isinstance(project, tc.MasteringProject)
     assert project.name == "New Mastering Project"

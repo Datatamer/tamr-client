@@ -593,11 +593,11 @@ class DatasetSpec:
     def with_key_attribute_names(self, new_key_attribute_names):
         """Creates a new spec with the same properties, updating key attribute names.
 
-       :param new_key_attribute_names: The new key attribute names.
-       :type new_key_attribute_names: list[str]
-       :return: A new spec.
-       :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
-       """
+        :param new_key_attribute_names: The new key attribute names.
+        :type new_key_attribute_names: list[str]
+        :return: A new spec.
+        :rtype: :class:`~tamr_unify_client.dataset.resource.DatasetSpec`
+        """
         return self.from_data(
             {**self._data, "keyAttributeNames": new_key_attribute_names}
         )

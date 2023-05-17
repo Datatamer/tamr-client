@@ -43,11 +43,11 @@ class AttributeMappingCollection:
     def by_relative_id(self, relative_id):
         """Retrieve an item in this collection by relative ID.
 
-       :param relative_id: The relative ID.
-       :type relative_id: str
-       :returns: The specified attribute mapping.
-       :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMapping`
-       """
+        :param relative_id: The relative ID.
+        :type relative_id: str
+        :returns: The specified attribute mapping.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.resource.AttributeMapping`
+        """
         resource_id = relative_id.split("attributeMappings/")[1]
         return self.by_resource_id(resource_id)
 
@@ -70,7 +70,7 @@ class AttributeMappingCollection:
         :type resource_id: str
         :returns: HTTP response from the server
         :rtype: :class:`requests.Response`
-         """
+        """
         path = self.api_path + "/" + resource_id
         response = self.client.delete(path).successful()
         return response

@@ -140,7 +140,7 @@ def test_auth_cookie_refresh():
         responses.POST,
         auth_endpoint,
         partial(
-            create_callback, snoop=snoop_dict_2, status=200, response_body=auth_json,
+            create_callback, snoop=snoop_dict_2, status=200, response_body=auth_json
         ),
     )
 

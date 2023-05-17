@@ -44,9 +44,7 @@ class IgnoreNanEncoder(JSONEncoder):
         else:
             _encoder = encode_basestring
 
-        def floatstr(
-            o, _repr=float.__repr__, _inf=INFINITY, _neginf=-INFINITY,
-        ):
+        def floatstr(o, _repr=float.__repr__, _inf=INFINITY, _neginf=-INFINITY):
             if o != o or o == _inf or o == _neginf:
                 return "null"
             else:

@@ -6,8 +6,8 @@ from tamr_unify_client.base_resource import BaseResource
 class AttributeConfiguration(BaseResource):
     """The configurations of Tamr Attributes.
 
-   See https://docs.tamr.com/reference#the-attribute-configuration-object
-   """
+    See https://docs.tamr.com/reference#the-attribute-configuration-object
+    """
 
     @classmethod
     def from_json(
@@ -52,7 +52,7 @@ class AttributeConfiguration(BaseResource):
 
     @property
     def numeric_field_resolution(self):
-        """:type: list """
+        """:type: list"""
         return self._data.get("numericFieldResolution")
 
     @property
@@ -63,9 +63,9 @@ class AttributeConfiguration(BaseResource):
     def spec(self):
         """Returns this attribute configuration's spec.
 
-         :return: The spec of this attribute configuration.
-         :rtype: :class:`~tamr_unify_client.project.attribute_configuration.resource.AttributeConfigurationSpec`
-         """
+        :return: The spec of this attribute configuration.
+        :rtype: :class:`~tamr_unify_client.project.attribute_configuration.resource.AttributeConfigurationSpec`
+        """
         return AttributeConfigurationSpec.of(self)
 
     def __repr__(self):

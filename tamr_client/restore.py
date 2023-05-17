@@ -4,15 +4,13 @@ from tamr_client.exception import TamrClientException
 
 
 class InvalidOperation(TamrClientException):
-    """Raised when attempting an invalid operation.
-    """
+    """Raised when attempting an invalid operation."""
 
     pass
 
 
 class NotFound(TamrClientException):
-    """Raised when referencing a restore that does not exist on the server.
-    """
+    """Raised when referencing a restore that does not exist on the server."""
 
     pass
 
