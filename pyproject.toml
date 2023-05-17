@@ -44,5 +44,5 @@ mypy = "^1.2.0"
 types-requests = "^2.30.0"
 
 [build-system]
-requires = ["poetry>=1.0"]
+requires = ["poetry>=1.4"]
 build-backend = "poetry.masonry.api"
