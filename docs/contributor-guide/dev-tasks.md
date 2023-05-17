@@ -36,8 +36,8 @@ poetry run nox -s format # without alias
 Run the formatter with the `--fix` flag to autofix formatting:
 
 ```sh
-prn -s format -- --fix # with alias
-poetry run nox -s format -- --fix # without alias
+prn -s format -- -- --fix # with alias
+poetry run nox -s format -- -- --fix # without alias
 ```
 
 ## Typechecks
@@ -71,11 +71,11 @@ See [`nox --list`](https://nox.thea.codes/en/stable/tutorial.html#selecting-whic
 
 ---
 
-To run specific tests, see [these pytest docs](https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests) and pass `pytest` args after `--` e.g.:
+To run specific tests, see [these pytest docs](https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests) and pass `pytest` args after `-- --` e.g.:
 
 ```sh
-prn -s test -- tests/unit/test_attribute.py # with alias
-poetry run nox -s test -- tests/unit/test_attribute.py # without alias
+prn -s test -- -- tests/unit/test_attribute.py # with alias
+poetry run nox -s test -- -- tests/unit/test_attribute.py # without alias
 ```
 
 
