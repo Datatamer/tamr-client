@@ -49,7 +49,7 @@ def test(session):
     session.run("pytest", *session.posargs, env={"TAMR_CLIENT_BETA": "1"})
 
 
-@nox.session(python="3.10")
+@nox.session(python="3.7")
 def docs(session):
     # RTD uses pip for managing dependencies, so we mirror that approach
     session.install(".")
