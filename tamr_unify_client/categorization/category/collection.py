@@ -68,7 +68,7 @@ class CategoryCollection(BaseCollection):
         return super().stream(Category)
 
     def create(self, creation_spec):
-        """ Creates a new category.
+        """Creates a new category.
 
         :param creation_spec: Category creation specification, formatted as specified in the
             `Public Docs for Creating a Category <https://docs.tamr.com/reference#create-a-category>`_.

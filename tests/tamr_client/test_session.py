@@ -98,7 +98,7 @@ def test_request_headers():
         responses.POST,
         auth_endpoint,
         partial(
-            create_callback, snoop=snoop_dict_2, status=200, response_body=auth_json,
+            create_callback, snoop=snoop_dict_2, status=200, response_body=auth_json
         ),
     )
 
@@ -106,7 +106,7 @@ def test_request_headers():
     responses.add_callback(
         responses.GET,
         endpoint,
-        partial(create_callback, snoop=snoop_dict_3, status=200, response_body={},),
+        partial(create_callback, snoop=snoop_dict_3, status=200, response_body={}),
     )
 
     s = fake.session()

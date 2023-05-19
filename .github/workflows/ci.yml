@@ -16,9 +16,9 @@ jobs:
       - name: Install python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.6
+          python-version: '3.10'
       - name: Install poetry
-        run: pip install poetry==1.0.5
+        run: pip install poetry==1.4.2
       - name: Install nox
         run: pip install nox==2020.5.24
       - name: Run flake8
@@ -31,9 +31,9 @@ jobs:
       - name: Install python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.6
+          python-version: '3.10'
       - name: Install poetry
-        run: pip install poetry==1.0.5
+        run: pip install poetry==1.4.2
       - name: Install nox
         run: pip install nox==2020.5.24
       - name: Run black
@@ -46,9 +46,9 @@ jobs:
       - name: Install python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.6
+          python-version: '3.10'
       - name: Install poetry
-        run: pip install poetry==1.0.5
+        run: pip install poetry==1.4.2
       - name: Install nox
         run: pip install nox==2020.5.24
       - name: Run mypy
@@ -57,7 +57,7 @@ jobs:
   Test:
     strategy:
       matrix:
-        python_version: [3.6, 3.7, 3.8, 3.9]
+        python_version: [3.7, 3.8, 3.9, '3.10']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -66,7 +66,7 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
       - name: Install poetry
-        run: pip install poetry==1.0.5
+        run: pip install poetry==1.4.2
       - name: Install nox
         run: pip install nox==2020.5.24
       - name: Run pytest
@@ -79,7 +79,7 @@ jobs:
       - name: Install python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.6
+          python-version: '3.10'
       - name: Install nox
         run: pip install nox==2020.5.24
       - name: Run sphinx-build
@@ -109,11 +109,11 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.6
+          python-version: '3.10'
       - name: Install poetry
-        uses: snok/install-poetry@v1.1.1
+        uses: snok/install-poetry@v1.3.3
         with:
-          version: 1.1.4
+          version: 1.4.2
       - name: Install toml-cli
         run: |
           pip install --upgrade pip

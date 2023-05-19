@@ -36,8 +36,8 @@ poetry run nox -s format # without alias
 Run the formatter with the `--fix` flag to autofix formatting:
 
 ```sh
-prn -s format -- --fix # with alias
-poetry run nox -s format -- --fix # without alias
+prn -s format -- -- --fix # with alias
+poetry run nox -s format -- -- --fix # without alias
 ```
 
 ## Typechecks
@@ -60,22 +60,22 @@ poetry run nox -s test # without alias
 
 ---
 
-To run tests for a specific Python version e.g. 3.6:
+To run tests for a specific Python version e.g. 3.10:
 
 ```sh
-prn -s test-3.6 # with alias
-poetry run nox -s test-3.6 # without alias
+prn -s test-3.10 # with alias
+poetry run nox -s test-3.10 # without alias
 ```
 
 See [`nox --list`](https://nox.thea.codes/en/stable/tutorial.html#selecting-which-sessions-to-run) for more details.
 
 ---
 
-To run specific tests, see [these pytest docs](https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests) and pass `pytest` args after `--` e.g.:
+To run specific tests, see [these pytest docs](https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests) and pass `pytest` args after `-- --` e.g.:
 
 ```sh
-prn -s test -- tests/unit/test_attribute.py # with alias
-poetry run nox -s test -- tests/unit/test_attribute.py # without alias
+prn -s test -- -- tests/unit/test_attribute.py # with alias
+poetry run nox -s test -- -- tests/unit/test_attribute.py # without alias
 ```
 
 

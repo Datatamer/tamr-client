@@ -27,11 +27,11 @@ class AttributeConfigurationCollection(BaseCollection):
     def by_relative_id(self, relative_id):
         """Retrieve an attribute configuration by relative ID.
 
-       :param relative_id: The relative ID.
-       :type relative_id: str
-       :returns: The specified attribute configuration.
-       :rtype: :class:`~tamr_unify_client.project.attribute_configuration.resource.AttributeConfiguration`
-       """
+        :param relative_id: The relative ID.
+        :type relative_id: str
+        :returns: The specified attribute configuration.
+        :rtype: :class:`~tamr_unify_client.project.attribute_configuration.resource.AttributeConfiguration`
+        """
         return super().by_relative_id(AttributeConfiguration, relative_id)
 
     def by_external_id(self, external_id):
@@ -52,17 +52,17 @@ class AttributeConfigurationCollection(BaseCollection):
 
     def stream(self):
         """Stream attribute configurations in this collection. Implicitly called when iterating
-         over this collection.
+        over this collection.
 
-         :returns: Stream of attribute configurations.
-         :rtype: Python generator yielding :class:`~tamr_unify_client.project.attribute_configuration.resource.AttributeConfiguration`
+        :returns: Stream of attribute configurations.
+        :rtype: Python generator yielding :class:`~tamr_unify_client.project.attribute_configuration.resource.AttributeConfiguration`
 
-         Usage:
-             >>> for attributeConfiguration in collection.stream(): # explicit
-             >>>     do_stuff(attributeConfiguration)
-             >>> for attributeConfiguration in collection: # implicit
-             >>>     do_stuff(attributeConfiguration)
-         """
+        Usage:
+            >>> for attributeConfiguration in collection.stream(): # explicit
+            >>>     do_stuff(attributeConfiguration)
+            >>> for attributeConfiguration in collection: # implicit
+            >>>     do_stuff(attributeConfiguration)
+        """
 
         return super().stream(AttributeConfiguration)
 

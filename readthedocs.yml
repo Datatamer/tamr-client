@@ -3,8 +3,7 @@ build:
     image: latest
 
 python:
-    version: 3.6
-    # TODO(pcattori): Remove `pip_install` and `requirements_file` once RTD fully support poetry
+    version: 3.10
     # https://github.com/rtfd/readthedocs.org/issues/4912#issuecomment-483756581
     pip_install: true
 

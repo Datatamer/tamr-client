@@ -148,9 +148,9 @@ class Project(BaseResource):
     def attribute_mappings(self):
         """Project's attribute's mappings.
 
-       :returns: The attribute mappings of a project.
-       :rtype: :class:`~tamr_unify_client.project.attribute_mapping.collection.AttributeMappingCollection`
-       """
+        :returns: The attribute mappings of a project.
+        :rtype: :class:`~tamr_unify_client.project.attribute_mapping.collection.AttributeMappingCollection`
+        """
         alias = self.api_path + "/attributeMappings"
         info = AttributeMappingCollection(self.client, alias)
         return info

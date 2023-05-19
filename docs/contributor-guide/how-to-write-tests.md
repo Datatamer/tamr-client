@@ -10,7 +10,7 @@ See the [pytest docs](https://docs.pytest.org/en/stable/) for:
 Note that you will need to pass any `pytest` arguments after `--` so that `nox` passes the arguments correctly to `pytest`:
 
 ```sh
-prn -s test-3.6 -- -s tests/tamr_client/test_project.py::test_from_resource_id_mastering
+prn -s test-3.10 -- -s tests/tamr_client/test_project.py::test_from_resource_id_mastering
 ```
 
 ## Unit tests

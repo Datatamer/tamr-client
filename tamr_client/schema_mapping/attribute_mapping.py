@@ -80,10 +80,10 @@ def create(
     return AttributeMapping(
         url,
         input_attribute=attribute._attribute._by_url(
-            session, URL(instance=instance, path=data["relativeInputAttributeId"]),
+            session, URL(instance=instance, path=data["relativeInputAttributeId"])
         ),
         unified_attribute=attribute._attribute._by_url(
-            session, URL(instance=instance, path=data["relativeUnifiedAttributeId"]),
+            session, URL(instance=instance, path=data["relativeUnifiedAttributeId"])
         ),
     )
 

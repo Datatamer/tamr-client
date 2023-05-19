@@ -13,15 +13,13 @@ from tamr_client.exception import TamrClientException
 
 
 class NotFound(TamrClientException):
-    """Raised when referencing an operation that does not exist on the server.
-    """
+    """Raised when referencing an operation that does not exist on the server."""
 
     pass
 
 
 class Failed(TamrClientException):
-    """Raised when checking a failed operation.
-    """
+    """Raised when checking a failed operation."""
 
     pass
 
@@ -86,8 +84,7 @@ def wait(
 
 
 def succeeded(operation: Operation) -> bool:
-    """Convenience method for checking if operation was successful.
-    """
+    """Convenience method for checking if operation was successful."""
     return operation.status is not None and operation.status["state"] == "SUCCEEDED"
 
 

@@ -4,7 +4,7 @@ from tamr_unify_client.base_resource import BaseResource
 
 
 class BinningModel(BaseResource):
-    """ A binning model object."""
+    """A binning model object."""
 
     @classmethod
     def from_json(cls, client, resource_json, api_path=None):

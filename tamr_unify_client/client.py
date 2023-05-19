@@ -120,23 +120,19 @@ class Client:
         return response
 
     def get(self, endpoint, **kwargs):
-        """Calls :func:`~tamr_unify_client.Client.request` with the ``"GET"`` method.
-        """
+        """Calls :func:`~tamr_unify_client.Client.request` with the ``"GET"`` method."""
         return self.request("GET", endpoint, **kwargs)
 
     def post(self, endpoint, **kwargs):
-        """Calls :func:`~tamr_unify_client.Client.request` with the ``"POST"`` method.
-        """
+        """Calls :func:`~tamr_unify_client.Client.request` with the ``"POST"`` method."""
         return self.request("POST", endpoint, **kwargs)
 
     def put(self, endpoint, **kwargs):
-        """Calls :func:`~tamr_unify_client.Client.request` with the ``"PUT"`` method.
-        """
+        """Calls :func:`~tamr_unify_client.Client.request` with the ``"PUT"`` method."""
         return self.request("PUT", endpoint, **kwargs)
 
     def delete(self, endpoint, **kwargs):
-        """Calls :func:`~tamr_unify_client.Client.request` with the ``"DELETE"`` method.
-        """
+        """Calls :func:`~tamr_unify_client.Client.request` with the ``"DELETE"`` method."""
         return self.request("DELETE", endpoint, **kwargs)
 
     def set_auth_cookie(self):

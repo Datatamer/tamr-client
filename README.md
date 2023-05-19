@@ -38,5 +38,4 @@ For more see the [official docs](https://tamr-client.readthedocs.io/en/stable/).
 
 ## Maintainers
 
-- [Pedro Cattori](https://github.com/pcattori)
 - [Samuel Kalish](https://github.com/skalish)

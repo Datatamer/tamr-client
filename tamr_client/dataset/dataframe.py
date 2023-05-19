@@ -19,8 +19,7 @@ if TYPE_CHECKING or BUILDING_DOCS:
 
 
 class CreationFailure(TamrClientException):
-    """Raised when a dataset could not be created from a pandas DataFrame
-    """
+    """Raised when a dataset could not be created from a pandas DataFrame"""
 
     pass
 
