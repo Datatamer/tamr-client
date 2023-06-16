@@ -1,0 +1,30 @@
+[
+    {
+        "request": {
+            "method": "POST",
+            "path": "projects/1/attributeConfigurations",
+            "json": {
+                "attributeRole": "CLUSTER_NAME_ATTRIBUTE",
+                "similarityFunction": "COSINE",
+                "enabledForMl": true,
+                "tokenizer": "DEFAULT",
+                "numericFieldResolution": [],
+                "attributeName": "StreetAddress"
+            }
+        },
+        "response": {
+            "status": 201,
+            "json": {
+                "id": "unify://unified-data/v1/projects/1/attributeConfigurations/1600",
+                "relativeId": "projects/1/attributeConfigurations/1600",
+                "relativeAttributeId": "datasets/1/attributes/StreetAddress",
+                "attributeRole": "CLUSTER_NAME_ATTRIBUTE",
+                "similarityFunction": "COSINE",
+                "enabledForMl": true,
+                "tokenizer": "DEFAULT",
+                "numericFieldResolution": [],
+                "attributeName": "StreetAddress"
+            }
+        }
+    }
+]

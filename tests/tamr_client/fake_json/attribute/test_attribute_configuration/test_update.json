@@ -1,0 +1,34 @@
+[
+    {
+        "request": {
+            "method": "PUT",
+            "path": "projects/1/attributeConfigurations/1600",
+            "json": {
+                "attributeRole": "SUM_ATTRIBUTE",
+                "similarityFunction": "ABSOLUTE_DIFF",
+                "enabledForMl": true,
+                "tokenizer": "",
+                "numericFieldResolution": [
+                    10
+                ],
+                "attributeName": "StreetAddress"
+            }
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "id": "unify://unified-data/v1/projects/1/attributeConfigurations/1600",
+                "relativeId": "projects/1/attributeConfigurations/1600",
+                "relativeAttributeId": "datasets/1/attributes/StreetAddress",
+                "attributeRole": "SUM_ATTRIBUTE",
+                "similarityFunction": "ABSOLUTE_DIFF",
+                "enabledForMl": true,
+                "tokenizer": "",
+                "numericFieldResolution": [
+                    10
+                ],
+                "attributeName": "StreetAddress"
+            }
+        }
+    }
+]

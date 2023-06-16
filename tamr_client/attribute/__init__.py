@@ -1,6 +1,8 @@
+from tamr_client.attribute import configuration
 from tamr_client.attribute import sub
 from tamr_client.attribute import type
 from tamr_client.attribute._attribute import (
+    _by_url,
     _from_json,
     _get_all_from_parent,
     AlreadyExists,

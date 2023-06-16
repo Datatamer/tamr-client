@@ -1,0 +1,44 @@
+[
+    {
+        "request": {
+            "method": "GET",
+            "path": "projects/1/attributeConfigurations/1600"
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "id": "unify://unified-data/v1/projects/1/attributeConfigurations/1600",
+                "relativeId": "projects/1/attributeConfigurations/1600",
+                "relativeAttributeId": "datasets/1/attributes/StreetAddress",
+                "attributeRole": "",
+                "similarityFunction": "COSINE",
+                "enabledForMl": true,
+                "tokenizer": "DEFAULT",
+                "numericFieldResolution": [],
+                "attributeName": "StreetAddress"
+            }
+        }
+    },
+    {
+        "request": {
+            "method": "GET",
+            "path": "projects/1/attributes/StreetAddress"
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "name": "StreetAddress",
+                "description": "A Mastering Project attribute",
+                "type": {
+                    "baseType": "ARRAY",
+                    "innerType": {
+                        "baseType": "STRING",
+                        "attributes": []
+                    },
+                    "attributes": []
+                },
+                "isNullable": false
+            }
+        }
+    }
+]
